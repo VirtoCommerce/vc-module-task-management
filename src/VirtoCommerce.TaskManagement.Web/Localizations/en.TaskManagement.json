@@ -1,0 +1,28 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Open TaskManagement menu",
+    "TaskManagement:create": "Create TaskManagement related data",
+    "TaskManagement:read": "View TaskManagement related data",
+    "TaskManagement:update": "Update TaskManagement related data",
+    "TaskManagement:delete": "Delete TaskManagement related data"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskManagementEnabled": {
+        "title": "TaskManagement Enabled",
+        "description": "TaskManagement Enabled setting"
+      },
+      "TaskManagementPassword": {
+        "title": "TaskManagement Password",
+        "description": "TaskManagement Password setting"
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using VirtoCommerce.TaskManagement.Core;
+using VirtoCommerce.TaskManagement.Core.Models;
 
 namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
 {
@@ -15,9 +18,29 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet]
         [Route("")]
         [Authorize(ModuleConstants.Security.Permissions.Read)]
-        public ActionResult<string> Get()
+        public ActionResult<Task> Get(string id)
         {
-            return Ok(new { result = "Hello world!" });
+            dynamic jsonObject = new JObject();
+            jsonObject["Create-Date"] = DateTime.Now; //<-Index use
+            jsonObject.Album = "Me Against the world"; //<- Property use
+            jsonObject["Create-Year"] = 1995; //<-Index use
+            jsonObject.Artist = "2Pac"; //<-Property use
+
+            return new Task { Id = "Test", Type = "QuoteApprove", IsCompleted = false, Description = "Please review the quote proposal.", Parameters = jsonObject };
+        }
+
+        [HttpPost]
+        [Route("complete")]
+        [Authorize(ModuleConstants.Security.Permissions.Read)]
+        public ActionResult<Task> Complete(string id, [FromBody] JObject result)
+        {
+            dynamic jsonObject = new JObject();
+            jsonObject["Create-Date"] = DateTime.Now; //<-Index use
+            jsonObject.Album = "Me Against the world"; //<- Property use
+            jsonObject["Create-Year"] = 1995; //<-Index use
+            jsonObject.Artist = "2Pac"; //<-Property use
+
+            return new Task { Id = "Test", Type = "QuoteApprove", IsCompleted = true, Description = "Please review the quote proposal.", Parameters = jsonObject, Result = result };
         }
     }
 }

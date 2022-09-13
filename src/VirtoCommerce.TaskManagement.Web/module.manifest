@@ -8,8 +8,17 @@
 <!--        <dependency id="VirtoCommerce.Core" version="3.200.0" /> -->
     </dependencies>
 
-    <title>VirtoCommerce Task Management extension module</title>
-    <description>VirtoCommerce Task Management extension module</description>
+    <apps>
+        <app>
+            <id>tasks</id>
+            <title>Tasks</title>
+            <description>Tasks</description>
+            <iconUrl></iconUrl>
+        </app>
+    </apps>
+
+    <title>Task Management</title>
+    <description>Virto Commerce Task Management module</description>
 
     <authors>
         <author>Oleg Zhuk</author>
@@ -27,7 +36,7 @@
 
     <releaseNotes>First version.</releaseNotes>
     <copyright>Copyright © 2022 VirtoCommerce. All rights reserved</copyright>
-    <tags>extension module</tags>
+    <tags></tags>
     <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 
 </module>

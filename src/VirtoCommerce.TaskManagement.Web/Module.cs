@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,9 @@ using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
+using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Repositories;
+using VirtoCommerce.TaskManagement.Data.Services;
 
 namespace VirtoCommerce.TaskManagement.Web
 {
@@ -29,7 +32,11 @@ namespace VirtoCommerce.TaskManagement.Web
             //AbstractTypeFactory<OriginalEntity>.OverrideType<OriginalEntity, ExtendedEntity>();
 
             // Register services
-            //serviceCollection.AddTransient<IMyService, MyService>();
+            serviceCollection.AddTransient<IWorkTaskRepository, WorkTaskRepository>();
+            serviceCollection.AddTransient<Func<IWorkTaskRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IWorkTaskRepository>());
+            serviceCollection.AddTransient<IWorkTaskService, WorkTaskService>();
+            serviceCollection.AddTransient<IWorkTaskSearchService, WorkTaskSearchService>();
+            serviceCollection.AddTransient<Func<IWorkTaskSearchService>>(provider => provider.GetRequiredService<IWorkTaskSearchService>);
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)

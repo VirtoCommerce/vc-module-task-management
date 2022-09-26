@@ -15,6 +15,7 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     StoreId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    WorkflowId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Priority = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),

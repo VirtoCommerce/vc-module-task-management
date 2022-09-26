@@ -8,6 +8,8 @@ namespace VirtoCommerce.TaskManagement.Core.Models
     {
         public string StoreId { get; set; }
 
+        public string WorkflowId { get; set; }
+
         public string Type { get; set; }
 
         public string Description { get; set; }

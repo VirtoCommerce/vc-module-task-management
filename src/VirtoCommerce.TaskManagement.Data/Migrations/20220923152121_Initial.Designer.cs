@@ -12,7 +12,7 @@ using VirtoCommerce.TaskManagement.Data.Repositories;
 namespace VirtoCommerce.TaskManagement.Data.Migrations
 {
     [DbContext(typeof(TaskManagementDbContext))]
-    [Migration("20220915113130_Initial")]
+    [Migration("20220923152121_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,10 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                     b.Property<string>("Type")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("WorkflowId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 

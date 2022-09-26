@@ -13,6 +13,9 @@ namespace VirtoCommerce.TaskManagement.Data.Models
         [StringLength(128)]
         public string StoreId { get; set; }
 
+        [StringLength(128)]
+        public string WorkflowId { get; set; }
+
         [StringLength(64)]
         public string Type { get; set; }
 
@@ -48,6 +51,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             ModifiedBy = model.ModifiedBy;
 
             StoreId = model.StoreId;
+            WorkflowId = model.WorkflowId;
             Type = model.Type;
             Description = model.Description;
             Priority = model.Priority.ToString();
@@ -72,6 +76,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.ModifiedBy = ModifiedBy;
 
             model.StoreId = StoreId;
+            model.WorkflowId = WorkflowId;
             model.Type = Type;
             model.Description = Description;
             model.Priority = EnumUtility.SafeParse(Priority, TaskPriority.Low);
@@ -89,6 +94,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
         public void Patch(WorkTaskEntity target)
         {
             target.StoreId = StoreId;
+            target.WorkflowId = WorkflowId;
             target.Type = Type;
             target.Description = Description;
             target.Priority = Priority;

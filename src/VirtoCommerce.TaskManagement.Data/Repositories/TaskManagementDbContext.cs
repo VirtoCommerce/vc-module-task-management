@@ -1,10 +1,13 @@
 using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.TaskManagement.Data.Models;
 
 namespace VirtoCommerce.TaskManagement.Data.Repositories
 {
     public class TaskManagementDbContext : DbContextWithTriggers
     {
+        private const int _maxLength = 128;
+
         public TaskManagementDbContext(DbContextOptions<TaskManagementDbContext> options)
             : base(options)
         {
@@ -19,8 +22,13 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<TaskManagementEntity>().ToTable("TaskManagement").HasKey(x => x.Id);
-            //modelBuilder.Entity<TaskManagementEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+            modelBuilder.Entity<WorkTaskEntity>().ToTable("WorkTask").HasKey(x => x.Id);
+            modelBuilder.Entity<WorkTaskEntity>().Property(x => x.Id).HasMaxLength(_maxLength).ValueGeneratedOnAdd();
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.IsActive);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.Completed);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.DueDate);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ResponsibleId);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.StoreId);
         }
     }
 }

@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
     <Folder Include="Notifications\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,9 +24,6 @@ namespace VirtoCommerce.TaskManagement.Data.Models
         [StringLength(64)]
         public string Priority { get; set; }
 
-        [StringLength(128)]
-        public string ResponsibleId { get; set; }
-
         [StringLength(256)]
         public string ResponsibleName { get; set; }
 
@@ -55,7 +52,6 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             Type = model.Type;
             Description = model.Description;
             Priority = model.Priority.ToString();
-            ResponsibleId = model.ResponsibleId;
             ResponsibleName = model.ResponsibleName;
             DueDate = model.DueDate;
             IsActive = model.IsActive;
@@ -80,7 +76,6 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.Type = Type;
             model.Description = Description;
             model.Priority = EnumUtility.SafeParse(Priority, TaskPriority.Low);
-            model.ResponsibleId = ResponsibleId;
             model.ResponsibleName = ResponsibleName;
             model.DueDate = DueDate;
             model.IsActive = IsActive;
@@ -98,7 +93,6 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             target.Type = Type;
             target.Description = Description;
             target.Priority = Priority;
-            target.ResponsibleId = ResponsibleId;
             target.ResponsibleName = ResponsibleName;
             target.DueDate = DueDate;
             target.IsActive = IsActive;

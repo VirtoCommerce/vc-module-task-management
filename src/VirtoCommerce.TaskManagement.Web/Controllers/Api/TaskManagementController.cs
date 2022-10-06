@@ -20,13 +20,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             _workTaskSearchService = workTaskSearchService;
         }
 
-        // GET: api/task-management
-        /// <summary>
-        /// Get message
-        /// </summary>
-        /// <remarks>Return "Hello world!" message</remarks>
-        [HttpGet]
-        [Route("")]
+        [HttpGet("")]
         [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<WorkTask>> Get(string id)
         {
@@ -34,8 +28,15 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return workTask;
         }
 
-        [HttpPost]
-        [Route("")]
+        [HttpPost("search")]
+        [Authorize(ModuleConstants.Security.Permissions.Read)]
+        public async Task<ActionResult<WorkTaskSearchResult>> SearchTasks([FromBody] WorkTaskSearchCriteria criteria)
+        {
+            var result = await _workTaskSearchService.SearchAsync(criteria);
+            return result;
+        }
+
+        [HttpPost("")]
         [Authorize(ModuleConstants.Security.Permissions.Create)]
         public async Task<ActionResult<WorkTask>> Create([FromBody] WorkTask workTask)
         {
@@ -43,8 +44,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return workTask;
         }
 
-        [HttpPost]
-        [Route("complete")]
+        [HttpPost("complete")]
         [Authorize(ModuleConstants.Security.Permissions.Update)]
         public async Task<ActionResult<WorkTask>> Complete(string id, [FromBody] JObject result)
         {
@@ -52,8 +52,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return workTask;
         }
 
-        [HttpPost]
-        [Route("cancel")]
+        [HttpPost("cancel")]
         [Authorize(ModuleConstants.Security.Permissions.Update)]
         public async Task<ActionResult<WorkTask>> Cancel(string id, [FromBody] JObject result)
         {

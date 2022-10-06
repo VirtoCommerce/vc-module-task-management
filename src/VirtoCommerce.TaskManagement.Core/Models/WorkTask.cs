@@ -16,7 +16,6 @@ namespace VirtoCommerce.TaskManagement.Core.Models
 
         public TaskPriority Priority { get; set; }
 
-        public string ResponsibleId { get; set; }
         public string ResponsibleName { get; set; }
 
         public DateTime? DueDate { get; set; }

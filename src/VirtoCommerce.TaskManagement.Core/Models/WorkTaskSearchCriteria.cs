@@ -6,7 +6,7 @@ namespace VirtoCommerce.TaskManagement.Core.Models
 {
     public class WorkTaskSearchCriteria : SearchCriteriaBase
     {
-        public IList<string> ResponsibleIds { get; set; }
+        public IList<string> ResponsibleNames { get; set; }
 
         public IList<string> StoreIds { get; set; }
 

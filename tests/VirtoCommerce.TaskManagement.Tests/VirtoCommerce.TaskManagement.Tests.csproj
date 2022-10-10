@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -12,18 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Data\VirtoCommerce.TaskManagement.Data.csproj" />
+    <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.ExperienceApi\VirtoCommerce.TaskManagement.ExperienceApi.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Web\VirtoCommerce.TaskManagement.Web.csproj" />
   </ItemGroup>
 

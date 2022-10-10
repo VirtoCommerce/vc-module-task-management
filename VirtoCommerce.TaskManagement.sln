@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 16
-VisualStudioVersion = 16.0.29920.165
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CFC1B42A-2604-4030-BD28-7706B47C6365}"
 EndProject
@@ -13,6 +13,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.TaskManagement.Tests", "tests\VirtoCommerce.TaskManagement.Tests\VirtoCommerce.TaskManagement.Tests.csproj", "{E5AA385D-F8FA-4939-9BF0-99EA6782867B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.TaskManagement.Core", "src\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj", "{431DE198-6FD5-441B-AB0C-70C754C88C3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtoCommerce.TaskManagement.ExperienceApi", "src\VirtoCommerce.TaskManagement.ExperienceApi\VirtoCommerce.TaskManagement.ExperienceApi.csproj", "{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,17 +38,22 @@ Global
 		{431DE198-6FD5-441B-AB0C-70C754C88C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431DE198-6FD5-441B-AB0C-70C754C88C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431DE198-6FD5-441B-AB0C-70C754C88C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-    GlobalSection(NestedProjects) = preSolution
+	GlobalSection(NestedProjects) = preSolution
 		{F7613323-0238-4FA7-8ECF-E5E1779E6BCA} = {CFC1B42A-2604-4030-BD28-7706B47C6365}
 		{1164BED1-E71D-41A0-B910-B85E8B059867} = {CFC1B42A-2604-4030-BD28-7706B47C6365}
-		{431DE198-6FD5-441B-AB0C-70C754C88C3B} = {CFC1B42A-2604-4030-BD28-7706B47C6365}
 		{E5AA385D-F8FA-4939-9BF0-99EA6782867B} = {60C5F34E-58CA-43A7-AFAF-57F20755E996}
+		{431DE198-6FD5-441B-AB0C-70C754C88C3B} = {CFC1B42A-2604-4030-BD28-7706B47C6365}
+		{55B6D1D3-8460-4EA6-95A7-6C29B549D2A5} = {CFC1B42A-2604-4030-BD28-7706B47C6365}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		C6A112C9-3F38-471F-B29F-B9678CC73B6A = {C6A112C9-3F38-471F-B29F-B9678CC73B6A}
+		SolutionGuid = {01DA9F9B-8453-48A9-95C4-A5B8B4629257}
 	EndGlobalSection
 EndGlobal

@@ -1,17 +1,13 @@
 using Xunit;
 
-namespace VirtoCommerce.TaskManagement.Tests
-{
-    public class Test
-    {
-        public Test()
-        {
-        }
+namespace VirtoCommerce.TaskManagement.Tests;
 
-        [Fact]
-        public void Run_Test()
-        {
-            Assert.Equal(0, 0);
-        }
+[Trait("Category", "Unit")]
+public class Test
+{
+    [Fact]
+    public void Run_Test()
+    {
+        Assert.Equal(0, 0);
     }
 }

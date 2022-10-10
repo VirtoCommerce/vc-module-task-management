@@ -3,9 +3,10 @@
     <id>VirtoCommerce.TaskManagement</id>
     <version>3.200.0</version>
     <version-tag></version-tag>
+
     <platformVersion>3.200.0</platformVersion>
     <dependencies>
-<!--        <dependency id="VirtoCommerce.Core" version="3.200.0" /> -->
+        <dependency id="VirtoCommerce.ExperienceApi" version="3.233.0" />
     </dependencies>
 
     <apps>
@@ -21,6 +22,7 @@
     <description>Virto Commerce Task Management module</description>
 
     <authors>
+        <author>Artem Dudarev</author>
         <author>Oleg Zhuk</author>
         <author>Evgeny Okhrimenko</author>
     </authors>
@@ -39,7 +41,4 @@
     <copyright>Copyright © 2022 VirtoCommerce. All rights reserved</copyright>
     <tags></tags>
     <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
-
 </module>
-
-

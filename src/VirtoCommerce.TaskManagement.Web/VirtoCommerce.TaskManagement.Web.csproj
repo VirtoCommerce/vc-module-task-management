@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj" />
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.Data\VirtoCommerce.TaskManagement.Data.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.TaskManagement.ExperienceApi\VirtoCommerce.TaskManagement.ExperienceApi.csproj" />
   </ItemGroup>
 
 </Project>

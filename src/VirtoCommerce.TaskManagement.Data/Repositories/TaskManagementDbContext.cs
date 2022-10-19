@@ -29,6 +29,8 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.DueDate);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ResponsibleName);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.StoreId);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectId);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectType);
         }
     }
 }

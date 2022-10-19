@@ -27,6 +27,9 @@ namespace VirtoCommerce.TaskManagement.Core.Models
 
         public JObject Result { get; set; }
 
+        public string ObjectId { get; set; }
+        public string ObjectType { get; set; }
+
         public object Clone()
         {
             return MemberwiseClone();

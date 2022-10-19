@@ -34,9 +34,14 @@ public abstract class WorkTaskCommandHandler<TCommand> : IRequestHandler<TComman
             throw new ExecutionError("Work task is not active") { Code = Constants.ValidationErrorCode };
         }
 
-        task.IsActive = false;
-        task.Completed = completed;
-        await _workTaskService.SaveChangesAsync(new[] { task });
+        if (completed)
+        {
+            await _workTaskService.CompleteAsync(task.Id, null);
+        }
+        else
+        {
+            await _workTaskService.CancelAsync(task.Id, null);
+        }
 
         return task;
     }

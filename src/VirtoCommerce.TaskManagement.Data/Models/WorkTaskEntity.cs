@@ -36,6 +36,11 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
         public string Result { get; set; }
 
+        [StringLength(128)]
+        public string ObjectId { get; set; }
+        [StringLength(256)]
+        public string ObjectType { get; set; }
+
         public WorkTaskEntity FromModel(WorkTask model, PrimaryKeyResolvingMap pkMap)
         {
             pkMap.AddPair(model, this);
@@ -58,6 +63,8 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             Completed = model.Completed;
             Parameters = JsonConvert.SerializeObject(model.Parameters);
             Result = JsonConvert.SerializeObject(model.Result);
+            ObjectId = model.ObjectId;
+            ObjectType = model.ObjectType;
 
             return this;
         }
@@ -82,6 +89,8 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.Completed = Completed;
             model.Parameters = JsonConvert.DeserializeObject<JObject>(Parameters);
             model.Result = JsonConvert.DeserializeObject<JObject>(Result);
+            model.ObjectId = ObjectId;
+            model.ObjectType = ObjectType;
 
             return model;
         }
@@ -99,6 +108,8 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             target.Completed = Completed;
             target.Parameters = Parameters;
             target.Result = Result;
+            target.ObjectId = ObjectId;
+            target.ObjectType = ObjectType;
         }
     }
 }

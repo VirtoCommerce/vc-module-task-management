@@ -22,5 +22,6 @@ public class WorkTaskType : ExtendableGraphType<WorkTask>
         Field(x => x.StoreId, nullable: true);
         Field(x => x.Type, nullable: true);
         Field(x => x.WorkflowId, nullable: true);
+        Field<StringGraphType>(nameof(WorkTask.Parameters), resolve: context => context.Source?.Parameters?.ToString());
     }
 }

@@ -9,5 +9,6 @@ namespace VirtoCommerce.TaskManagement.Core.Services
     {
         Task<WorkTask> CompleteAsync(string id, JObject result);
         Task<WorkTask> CancelAsync(string id, JObject result);
+        Task<WorkTask> TimeoutAsync(string id);
     }
 }

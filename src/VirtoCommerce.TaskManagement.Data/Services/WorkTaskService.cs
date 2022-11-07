@@ -64,6 +64,15 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             return workTask;
         }
 
+        public async Task<WorkTask> TimeoutAsync(string id)
+        {
+            var workTask = await GetByIdAsync(id);
+            workTask.IsActive = false;
+            await SaveChangesAsync(new[] { workTask });
+
+            return workTask;
+        }
+
         protected override async Task<IEnumerable<WorkTaskEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
         {
             return await ((IWorkTaskRepository)repository).GetWorkTaskByIds(ids.ToList());

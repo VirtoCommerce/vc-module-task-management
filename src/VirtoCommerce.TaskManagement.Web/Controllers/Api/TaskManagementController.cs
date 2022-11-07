@@ -59,5 +59,13 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             var workTask = await _workTaskService.CancelAsync(id, result);
             return workTask;
         }
+
+        [HttpPost("timeout")]
+        [Authorize(ModuleConstants.Security.Permissions.Update)]
+        public async Task<ActionResult<WorkTask>> Timeout(string id)
+        {
+            var workTask = await _workTaskService.TimeoutAsync(id);
+            return workTask;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace VirtoCommerce.TaskManagement.ExperienceApi.Queries;
 
 public class WorkTasksQuery : SearchQuery<WorkTaskSearchResult>
 {
-    public string ResponsibleName { get; set; }
+    public string ResponsibleId { get; set; }
     public string StoreId { get; set; }
     public DateTime? StartDueDate { get; set; }
     public DateTime? EndDueDate { get; set; }
@@ -23,7 +23,7 @@ public class WorkTasksQuery : SearchQuery<WorkTaskSearchResult>
             yield return argument;
         }
 
-        yield return Argument<StringGraphType>(nameof(ResponsibleName));
+        yield return Argument<StringGraphType>(nameof(ResponsibleId));
         yield return Argument<StringGraphType>(nameof(StoreId));
         yield return Argument<DateTimeGraphType>(nameof(StartDueDate));
         yield return Argument<DateTimeGraphType>(nameof(EndDueDate));
@@ -35,7 +35,7 @@ public class WorkTasksQuery : SearchQuery<WorkTaskSearchResult>
     {
         base.Map(context);
 
-        ResponsibleName = context.GetArgument<string>(nameof(ResponsibleName));
+        ResponsibleId = context.GetArgument<string>(nameof(ResponsibleId));
         StoreId = context.GetArgument<string>(nameof(StoreId));
         StartDueDate = context.GetArgument<DateTime?>(nameof(StartDueDate));
         EndDueDate = context.GetArgument<DateTime?>(nameof(EndDueDate));

@@ -45,6 +45,10 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Group")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -54,6 +58,16 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Number"), 1L, 1);
 
                     b.Property<string>("ObjectId")
                         .HasMaxLength(128)
@@ -70,6 +84,10 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("ResponsibleId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("ResponsibleName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -77,13 +95,17 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                     b.Property<string>("Result")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("StoreId")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Type")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("WorkflowId")
                         .HasMaxLength(128)
@@ -97,11 +119,15 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
 
                     b.HasIndex("IsActive");
 
+                    b.HasIndex("Number");
+
                     b.HasIndex("ObjectId");
 
                     b.HasIndex("ObjectType");
 
-                    b.HasIndex("ResponsibleName");
+                    b.HasIndex("ResponsibleId");
+
+                    b.HasIndex("Status");
 
                     b.HasIndex("StoreId");
 

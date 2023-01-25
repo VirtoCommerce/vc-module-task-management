@@ -44,6 +44,22 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return workTask;
         }
 
+        [HttpPut("")]
+        [Authorize(ModuleConstants.Security.Permissions.Update)]
+        public async Task<ActionResult<WorkTask>> Update([FromBody] WorkTask workTask)
+        {
+            await _workTaskService.SaveChangesAsync(new[] { workTask });
+            return workTask;
+        }
+
+        [HttpDelete("")]
+        [Authorize(ModuleConstants.Security.Permissions.Delete)]
+        public async Task<ActionResult> Delete([FromBody] string id)
+        {
+            await _workTaskService.DeleteAsync(new[] { id });
+            return NoContent();
+        }
+
         [HttpPost("complete")]
         [Authorize(ModuleConstants.Security.Permissions.Update)]
         public async Task<ActionResult<WorkTask>> Complete(string id, [FromBody] JObject result)

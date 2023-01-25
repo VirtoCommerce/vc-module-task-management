@@ -28,9 +28,9 @@ public class QuotesQueryHandler : IQueryHandler<WorkTasksQuery, WorkTaskSearchRe
     {
         var criteria = request.GetSearchCriteria<WorkTaskSearchCriteria>();
 
-        if (!string.IsNullOrEmpty(request.ResponsibleName))
+        if (!string.IsNullOrEmpty(request.ResponsibleId))
         {
-            criteria.ResponsibleNames = new[] { request.ResponsibleName };
+            criteria.ResponsibleIds = new[] { request.ResponsibleId };
         }
 
         if (!string.IsNullOrEmpty(request.StoreId))

@@ -10,30 +10,35 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 {
     public class WorkTaskEntity : AuditableEntity, IDataEntity<WorkTaskEntity, WorkTask>
     {
-        [StringLength(128)]
-        public string StoreId { get; set; }
-
-        [StringLength(128)]
-        public string WorkflowId { get; set; }
-
-        [StringLength(64)]
-        public string Type { get; set; }
-
+        public long Number { get; set; }
+        [StringLength(256)]
+        public string Name { get; set; }
         public string Description { get; set; }
 
+        [StringLength(128)]
+        public string Group { get; set; }
+        [StringLength(128)]
+        public string Type { get; set; }
         [StringLength(64)]
         public string Priority { get; set; }
 
+        [StringLength(128)]
+        public string ResponsibleId { get; set; }
         [StringLength(256)]
         public string ResponsibleName { get; set; }
 
         public DateTime? DueDate { get; set; }
 
+        [StringLength(64)]
+        public string Status { get; set; }
         public bool IsActive { get; set; }
         public bool? Completed { get; set; }
 
+        [StringLength(128)]
+        public string StoreId { get; set; }
+        [StringLength(128)]
+        public string WorkflowId { get; set; }
         public string Parameters { get; set; }
-
         public string Result { get; set; }
 
         [StringLength(128)]
@@ -52,17 +57,28 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             CreatedBy = model.CreatedBy;
             ModifiedBy = model.ModifiedBy;
 
-            StoreId = model.StoreId;
-            WorkflowId = model.WorkflowId;
-            Type = model.Type;
+            Number = model.Number;
+            Name = model.Name;
             Description = model.Description;
+
+            Group = model.Group;
+            Type = model.Type;
             Priority = model.Priority.ToString();
+
+            ResponsibleId = model.ResponsibleId;
             ResponsibleName = model.ResponsibleName;
+
             DueDate = model.DueDate;
+
+            Status = model.Status;
             IsActive = model.IsActive;
             Completed = model.Completed;
+
+            StoreId = model.StoreId;
+            WorkflowId = model.WorkflowId;
             Parameters = JsonConvert.SerializeObject(model.Parameters);
             Result = JsonConvert.SerializeObject(model.Result);
+
             ObjectId = model.ObjectId;
             ObjectType = model.ObjectType;
 
@@ -78,17 +94,27 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.CreatedBy = CreatedBy;
             model.ModifiedBy = ModifiedBy;
 
-            model.StoreId = StoreId;
-            model.WorkflowId = WorkflowId;
-            model.Type = Type;
+            model.Name = Name;
             model.Description = Description;
+
+            model.Group = Group;
+            model.Type = Type;
             model.Priority = EnumUtility.SafeParse(Priority, TaskPriority.Low);
+
+            model.ResponsibleId = ResponsibleId;
             model.ResponsibleName = ResponsibleName;
+
             model.DueDate = DueDate;
+
+            model.Status = Status;
             model.IsActive = IsActive;
             model.Completed = Completed;
+
+            model.StoreId = StoreId;
+            model.WorkflowId = WorkflowId;
             model.Parameters = JsonConvert.DeserializeObject<JObject>(Parameters);
             model.Result = JsonConvert.DeserializeObject<JObject>(Result);
+
             model.ObjectId = ObjectId;
             model.ObjectType = ObjectType;
 
@@ -97,17 +123,27 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
         public void Patch(WorkTaskEntity target)
         {
-            target.StoreId = StoreId;
-            target.WorkflowId = WorkflowId;
-            target.Type = Type;
+            target.Name = Name;
             target.Description = Description;
+
+            target.Group = Group;
+            target.Type = Type;
             target.Priority = Priority;
+
+            target.ResponsibleId = ResponsibleId;
             target.ResponsibleName = ResponsibleName;
+
             target.DueDate = DueDate;
+
+            target.Status = Status;
             target.IsActive = IsActive;
             target.Completed = Completed;
+
+            target.StoreId = StoreId;
+            target.WorkflowId = WorkflowId;
             target.Parameters = Parameters;
             target.Result = Result;
+
             target.ObjectId = ObjectId;
             target.ObjectType = ObjectType;
         }

@@ -22,4 +22,8 @@
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.200.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -14,18 +14,25 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    StoreId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    WorkflowId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Number = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Group = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Priority = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     ResponsibleId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     ResponsibleName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Completed = table.Column<bool>(type: "bit", nullable: true),
+                    StoreId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    WorkflowId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Parameters = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Result = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ObjectId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    ObjectType = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
@@ -52,9 +59,29 @@ namespace VirtoCommerce.TaskManagement.Data.Migrations
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WorkTask_Number",
+                table: "WorkTask",
+                column: "Number");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkTask_ObjectId",
+                table: "WorkTask",
+                column: "ObjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkTask_ObjectType",
+                table: "WorkTask",
+                column: "ObjectType");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WorkTask_ResponsibleId",
                 table: "WorkTask",
                 column: "ResponsibleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkTask_Status",
+                table: "WorkTask",
+                column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkTask_StoreId",

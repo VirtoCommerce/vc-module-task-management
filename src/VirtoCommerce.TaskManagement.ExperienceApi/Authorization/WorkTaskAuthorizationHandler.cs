@@ -27,7 +27,7 @@ public class WorkTaskAuthorizationHandler : AuthorizationHandler<WorkTaskAuthori
                     break;
                 case WorkTasksQuery query:
                     result = currentUserName != null;
-                    query.ResponsibleName = currentUserName;
+                    query.ResponsibleId = currentUserName;
                     break;
             }
         }

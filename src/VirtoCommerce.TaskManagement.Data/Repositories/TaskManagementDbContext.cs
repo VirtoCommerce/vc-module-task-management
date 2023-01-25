@@ -24,13 +24,16 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
 
             modelBuilder.Entity<WorkTaskEntity>().ToTable("WorkTask").HasKey(x => x.Id);
             modelBuilder.Entity<WorkTaskEntity>().Property(x => x.Id).HasMaxLength(_maxLength).ValueGeneratedOnAdd();
+            modelBuilder.Entity<WorkTaskEntity>().Property(x => x.Number).ValueGeneratedOnAdd();
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.Status);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.IsActive);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.Completed);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.DueDate);
-            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ResponsibleName);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ResponsibleId);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.StoreId);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectId);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectType);
+            modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.Number);
         }
     }
 }

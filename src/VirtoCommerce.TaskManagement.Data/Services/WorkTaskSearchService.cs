@@ -35,11 +35,16 @@ namespace VirtoCommerce.TaskManagement.Data.Services
                     : query.Where(x => criteria.StoreIds.Contains(x.StoreId));
             }
 
-            if (!criteria.ResponsibleNames.IsNullOrEmpty())
+            if (!criteria.ResponsibleIds.IsNullOrEmpty())
             {
-                query = criteria.ResponsibleNames.Count == 1
-                    ? query.Where(x => x.ResponsibleName == criteria.ResponsibleNames.First())
-                    : query.Where(x => criteria.ResponsibleNames.Contains(x.ResponsibleName));
+                query = criteria.ResponsibleIds.Count == 1
+                    ? query.Where(x => x.ResponsibleName == criteria.ResponsibleIds.First())
+                    : query.Where(x => criteria.ResponsibleIds.Contains(x.ResponsibleName));
+            }
+
+            if (criteria.Priority != null)
+            {
+                query = query.Where(x => x.Priority == criteria.Priority);
             }
 
             if (criteria.IsActive != null)

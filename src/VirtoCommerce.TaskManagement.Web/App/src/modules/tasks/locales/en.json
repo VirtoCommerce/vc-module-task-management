@@ -1,12 +1,15 @@
 {
   "TASKS": {
     "MENU": {
-      "TITLE": "Tasks",
-      "CREATE": "Create new task"
+      "MY_TASKS_TITLE": "My",
+      "ACTIVE_TASKS_TITLE": "Active",
+      "ARCHIVE_TASKS_TITLE": "Archive"
     },
     "PAGES": {
       "LIST": {
-        "TITLE": "Tasks",
+        "TASKS_ARCHIVE_TITLE": "Tasks archive",
+        "ACTIVE_TASKS_TITLE": "Active tasks",
+        "MY_TASKS_TITLE": "My tasks",
         "TOOLBAR": {
           "REFRESH": "Refresh",
           "CREATE":"Create"
@@ -24,7 +27,8 @@
             "REPORTER": "Reporter",
             "DUEDATE": "Due",
             "CREATED": "Created",
-            "MODIFIED": "Updated"
+            "MODIFIED": "Updated",
+            "STATUS": "Status"
           },
           "ACTIONS": {
             "ACCEPT": "Accept",
@@ -34,23 +38,22 @@
         },
         "FILTERS": {
           "TITLE": "Filters",
-          "STATUS_FILTER": "Status filter",
-          "UNPAID": "Unpaid",
-          "PAID": "Paid",
-          "ACCEPTED": "Accepted",
-          "SHIPPED": "Shipped",
-          "CANCELLED": "Cancelled",
-          "ORDER_DATE": "Order date",
-          "START_DATE": "Start date",
-          "END_DATE": "End date",
-          "RESET_FILTERS": "Reset filters",
+          "PRIORITY": "Priority filter",
+          "DUEDATE": "Due date",
+          "STARTDATE": "Start date",
+          "ENDDATE": "End date",
+          "RESETFILTERS": "Reset filters",
           "APPLY": "Apply"
         },
-        "NOT_FOUND": {
-          "NO_ORDERS": "No orders found.",
+        "NOTFOUND": {
+          "NOTASKS": "No tasks found.",
           "RESET": "Reset search"
         },
-        "EMPTY": "There are no orders yet",
+        "EMPTY": {
+          "NOTASKS":"There are no tasks yet",
+          "NOMYTASKS": "There are no tasks for you",
+          "ADD": "Add new task"
+        },
         "STATUS": {
           "TOTAL": "Total",
           "CREATED": "Created"
@@ -60,18 +63,19 @@
         "TASK_INFO":{
           "TITLE": "Task details",
           "DESCRIPTION": "Description",
-          "CREATED_DATE": "Created",
-          "STORE": "Store",
-          "WORKFLOW_ID": "Workflow ID",
-          "RESPONSIBLE_NAME": "Responsible username",
           "PRIORITY": "Priority",
-          "OBJECT_ID": "Object ID",
-          "OBJECT_TYPE": "Object type",
-          "STATUS": "Status"
+          "TYPE": "Type",
+          "ASSIGNEE": "Assignee",
+          "REPORTER": "Reporter",
+          "CREATED": "Created",
+          "MODIFIED": "Updated",
+          "DUEDATE": "Due"
         },
         "ACTIONS": {
           "ACCEPT_TASK": "Accept",
-          "REJECT_TASK": "Reject"
+          "REJECT_TASK": "Reject",
+          "DELETE_TASK": "Delete",
+          "SAVE_TASK": "Save"
         }
       },
       "NEW":{
@@ -110,6 +114,11 @@
           }
         }
       }
+    },
+    "STATUS": {
+      "TODO": "To Do",
+      "CANCELED": "Canceled",
+      "DONE": "Done"
     }
   }
 }

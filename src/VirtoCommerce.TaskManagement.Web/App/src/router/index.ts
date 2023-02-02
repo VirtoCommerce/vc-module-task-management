@@ -17,7 +17,12 @@ import App from "./../pages/App.vue";
 /**
  * Modules
  */
-import { WorkTasksList } from "../modules/tasks";
+import {
+  WorkTaskDetails,
+  WorkTasksList,
+  MyWorkTasksList,
+  ArchiveWorkTasksList,
+} from "../modules/tasks";
 
 // eslint-disable-next-line import/no-unresolved
 import whiteLogoImage from "/assets/logo-white.svg";
@@ -32,20 +37,32 @@ const routes: RouteRecordRaw[] = [
     component: App,
     name: "App",
     children: [
-      {
-        name: "Dashboard",
-        path: "",
-        alias: "/",
-        component: Dashboard,
-      },
       /**
        * Modules routes
        */
       {
-        name: "My tasks",
-        path: "tasks",
+        name: "Active tasks",
+        path: "/active",
         props: true,
         component: WorkTasksList,
+      },
+      {
+        name: "My tasks",
+        path: "/my",
+        props: true,
+        component: MyWorkTasksList,
+      },
+      {
+        name: "Archive",
+        path: "/archive",
+        props: true,
+        component: ArchiveWorkTasksList,
+      },
+      {
+        name: "Task",
+        path: "/task/:param",
+        props: true,
+        component: WorkTaskDetails,
       },
     ],
     beforeEnter: [checkAuth],
@@ -57,7 +74,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       logo: whiteLogoImage,
       background: bgImage,
-      title: "Vendor Portal",
+      title: "Tasks Portal",
     },
   },
   {

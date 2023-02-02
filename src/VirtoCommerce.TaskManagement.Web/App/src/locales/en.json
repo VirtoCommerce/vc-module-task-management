@@ -172,6 +172,9 @@
         "TITLE": "Latest review",
         "MORE": "More reviews"
       }
+    },
+    "APP":{
+      "NAME": "Tasks by VirtoCommerce"
     }
   }
 }

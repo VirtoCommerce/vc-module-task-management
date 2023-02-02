@@ -6,8 +6,8 @@
     :toolbarItems="toolbarItems"
     :isReady="isReady"
     :isAuthorized="isAuthorized"
-    :logo="uiSettings.logo"
-    :title="uiSettings.title"
+    :logo="'/apps/tasks/img/tasks-logo.png'"
+    :title="$t('SHELL.APP.NAME')"
     :version="version"
     :pages="pages"
     :bladesRefs="bladesRefs"
@@ -72,7 +72,9 @@ import {
   useBladeNavigation,
   VcBladeNavigation,
   IOpenBlade,
-  IBladeElement,
+  VcApp,
+  VcLoading,
+  VcNotification,
 } from "@vc-shell/framework";
 import {
   computed,
@@ -95,7 +97,11 @@ import avatarImage from "/assets/avatar.jpg";
 // eslint-disable-next-line import/no-unresolved
 import logoImage from "/assets/logo.svg";
 
-import { WorkTasksList } from "../modules/tasks";
+import {
+  ArchiveWorkTasksList,
+  MyWorkTasksList,
+  WorkTasksList,
+} from "../modules/tasks";
 const {
   t,
   locale: currentLocale,
@@ -251,29 +257,22 @@ const mobileMenuItems = ref<IBladeToolbar[]>([
 
 const menuItems = reactive<IMenuItems[]>([
   {
-    title: computed(() => t("SHELL.MENU.DASHBOARD")),
-    icon: "fas fa-home",
-    isVisible: true,
-    clickHandler(app: IBladeElement) {
-      app.openDashboard();
-    },
-  },
-  {
-    title: computed(() => t("TASKS.MENU.TITLE")),
+    title: computed(() => t("TASKS.MENU.ACTIVE_TASKS_TITLE")),
     icon: "fas fa-file-alt",
     isVisible: true,
-    children: [
-      {
-        title: "My tasks",
-        component: shallowRef(WorkTasksList),
-        bladeOptions: {},
-      },
-      {
-        title: "Tasks for me",
-        component: shallowRef(WorkTasksList),
-        bladeOptions: {},
-      },
-    ],
+    component: shallowRef(WorkTasksList),
+  },
+  {
+    title: computed(() => t("TASKS.MENU.MY_TASKS_TITLE")),
+    icon: "fas fa-file-alt",
+    isVisible: true,
+    component: shallowRef(MyWorkTasksList),
+  },
+  {
+    title: computed(() => t("TASKS.MENU.ARCHIVE_TASKS_TITLE")),
+    icon: "fas fa-file-alt",
+    isVisible: true,
+    component: shallowRef(ArchiveWorkTasksList),
   },
   {
     title: computed(() => t("SHELL.ACCOUNT.CHANGE_PASSWORD")),

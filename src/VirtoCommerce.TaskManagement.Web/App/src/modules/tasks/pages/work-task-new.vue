@@ -14,7 +14,6 @@
           <VcCol class="tw-p-1">
             <Field
               name="name"
-              rules="required|min:3"
               :modelValue="newWorkTask.name"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
@@ -26,32 +25,6 @@
                 v-model="newWorkTask.name"
                 :clearable="true"
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.NAME.PLACEHOLDER')"
-                maxlength="1024"
-                required
-                :error="!!errors.length"
-                :error-message="errorMessage"
-                @update:modelValue="handleChange"
-              >
-              </VcInput>
-            </Field>
-          </VcCol>
-          <VcCol class="tw-p-1">
-            <Field
-              name="dueDate"
-              rules="required"
-              :modelValue="newWorkTask.dueDate"
-              v-slot="{ field, errorMessage, handleChange, errors }"
-            >
-              <VcInput
-                type="date"
-                v-bind="field"
-                name="dueDate"
-                class="tw-mb-4"
-                :label="$t('TASKS.PAGES.NEW.FIELDS.DUEDATE.TITLE')"
-                v-model="newWorkTask.dueDate"
-                :clearable="true"
-                :placeholder="$t('TASKS.PAGES.NEW.FIELDS.DUEDATE.PLACEHOLDER')"
-                required
                 :error="!!errors.length"
                 :error-message="errorMessage"
                 @update:modelValue="handleChange"
@@ -63,8 +36,31 @@
         <VcRow class="tw-p-1">
           <VcCol class="tw-p-1">
             <Field
+              name="description"
+              :modelValue="newWorkTask.description"
+              v-slot="{ field, errorMessage, handleChange, errors }"
+            >
+              <VcTextarea
+                v-bind="field"
+                class="tw-mb-4"
+                :label="$t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.TITLE')"
+                v-model="newWorkTask.description"
+                :clearable="true"
+                :placeholder="
+                  $t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.PLACEHOLDER')
+                "
+                :error="!!errors.length"
+                :error-message="errorMessage"
+                @update:modelValue="handleChange"
+              >
+              </VcTextarea>
+            </Field>
+          </VcCol>
+        </VcRow>
+        <VcRow class="tw-p-1">
+          <VcCol class="tw-p-1">
+            <Field
               name="type"
-              rules="required|min:3"
               :modelValue="newWorkTask.type"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
@@ -77,7 +73,6 @@
                 :clearable="true"
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
                 maxlength="1024"
-                required
                 :error="!!errors.length"
                 :error-message="errorMessage"
                 @update:modelValue="handleChange"
@@ -87,21 +82,19 @@
           </VcCol>
           <VcCol class="tw-p-1">
             <Field
-              name="group"
-              rules="required|min:3"
-              :modelValue="newWorkTask.group"
+              name="dueDate"
+              :modelValue="newWorkTask.dueDate"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
               <VcInput
+                type="date"
                 v-bind="field"
-                name="group"
+                name="dueDate"
                 class="tw-mb-4"
-                :label="$t('TASKS.PAGES.NEW.FIELDS.GROUP.TITLE')"
-                v-model="newWorkTask.group"
+                :label="$t('TASKS.PAGES.NEW.FIELDS.DUEDATE.TITLE')"
+                v-model="newWorkTask.dueDate"
                 :clearable="true"
-                :placeholder="$t('TASKS.PAGES.NEW.FIELDS.GROUP.PLACEHOLDER')"
-                maxlength="1024"
-                required
+                :placeholder="$t('TASKS.PAGES.NEW.FIELDS.DUEDATE.PLACEHOLDER')"
                 :error="!!errors.length"
                 :error-message="errorMessage"
                 @update:modelValue="handleChange"
@@ -114,14 +107,12 @@
           <VcCol class="tw-p-1">
             <Field
               name="priority"
-              rules="required"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
               <VcSelect
                 v-bind="field"
                 name="priority"
                 class="tw-mb-4"
-                required
                 v-model="newWorkTask.priority"
                 option-value="typeName"
                 option-label="typeName"
@@ -139,7 +130,6 @@
           <VcCol class="tw-p-1">
             <Field
               name="responsibleId"
-              rules="required"
               :modelValue="newWorkTask.responsibleId"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
@@ -147,7 +137,6 @@
                 v-bind="field"
                 name="responsibleId"
                 class="tw-mb-4"
-                required
                 v-model="newWorkTask.responsibleId"
                 option-value="id"
                 option-label="userName"
@@ -162,33 +151,6 @@
                 @update:modelValue="handleChange"
               >
               </VcSelect>
-            </Field>
-          </VcCol>
-        </VcRow>
-        <VcRow class="tw-p-1">
-          <VcCol class="tw-p-1">
-            <Field
-              name="description"
-              rules="required|min:3"
-              :modelValue="newWorkTask.description"
-              v-slot="{ field, errorMessage, handleChange, errors }"
-            >
-              <VcTextarea
-                v-bind="field"
-                class="tw-mb-4"
-                :label="$t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.TITLE')"
-                v-model="newWorkTask.description"
-                :clearable="true"
-                :placeholder="
-                  $t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.PLACEHOLDER')
-                "
-                maxlength="1024"
-                required
-                :error="!!errors.length"
-                :error-message="errorMessage"
-                @update:modelValue="handleChange"
-              >
-              </VcTextarea>
             </Field>
           </VcCol>
         </VcRow>
@@ -213,8 +175,8 @@ import {
   UserSearchCriteria,
   VcSelect,
 } from "@vc-shell/framework";
-import { WorkTaskPriority } from "../../../api_client/taskmanagement";
-import { useIsFormValid, Field } from "vee-validate";
+import { WorkTask, WorkTaskPriority } from "../../../api_client/taskmanagement";
+import { Field } from "vee-validate";
 import _ from "lodash";
 </script>
 
@@ -241,35 +203,35 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>();
 
 const { t } = useI18n();
-const { workTask, newWorkTask, loading, createWorkTask } = useWorkTask();
+const { workTask, loading, createWorkTask } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
 const priorities = Object.values(WorkTaskPriority);
+let newWorkTask = { priority: WorkTaskPriority.Normal } as WorkTask;
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
     title: computed(() => t("TASKS.PAGES.NEW.TOOLBAR.CREATE")),
-    icon: "fas fa-check",
+    icon: "fas fa-save",
     async clickHandler() {
-      newWorkTask.value.isActive = true;
+      newWorkTask.isActive = true;
 
       const responsible = _.find(users.value, function (user) {
-        if (user.id === newWorkTask.value.responsibleId) {
+        if (user.id === newWorkTask.responsibleId) {
           return true;
         }
       });
 
-      newWorkTask.value.responsibleName = responsible.userName;
+      newWorkTask.responsibleName = responsible?.userName;
 
-      await createWorkTask(newWorkTask.value);
-
+      await createWorkTask(newWorkTask);
+      newWorkTask = {} as WorkTask;
       emit("parent:call", { method: "reload" });
       emit("close:blade");
       emit("parent:call", {
         method: "onItemClick",
-        args: { item: { id: workTask.value.id } },
+        args: { id: workTask.value.id },
       });
     },
-    disabled: false,
   },
 ]);
 

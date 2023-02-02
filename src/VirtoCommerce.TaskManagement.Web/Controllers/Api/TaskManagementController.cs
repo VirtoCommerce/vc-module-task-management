@@ -41,6 +41,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<WorkTask>> Create([FromBody] WorkTask workTask)
         {
             await _workTaskService.SaveChangesAsync(new[] { workTask });
+            workTask = await _workTaskService.GetByIdAsync(workTask.Id);
             return workTask;
         }
 

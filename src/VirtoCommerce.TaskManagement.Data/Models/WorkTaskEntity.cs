@@ -94,6 +94,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.CreatedBy = CreatedBy;
             model.ModifiedBy = ModifiedBy;
 
+            model.Number = Number;
             model.Name = Name;
             model.Description = Description;
 

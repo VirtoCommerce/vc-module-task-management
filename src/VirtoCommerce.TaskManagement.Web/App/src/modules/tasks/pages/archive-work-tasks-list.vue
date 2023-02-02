@@ -1,6 +1,6 @@
 <template>
   <VcBlade
-    :title="$t('TASKS.PAGES.LIST.ACTIVE_TASKS_TITLE')"
+    :title="$t('TASKS.PAGES.LIST.TASKS_ARCHIVE_TITLE')"
     :expanded="expanded"
     :closable="closable"
     width="70%"
@@ -126,9 +126,6 @@
             {{ $t("TASKS.PAGES.LIST.EMPTY.NOTASKS") }}
           </div>
         </div>
-        <VcButton @click="createTask">{{
-          $t("TASKS.PAGES.LIST.EMPTY.ADD")
-        }}</VcButton>
       </template>
 
       <!-- Override priority column template -->
@@ -139,8 +136,8 @@
       <!-- Override status column template -->
       <template v-slot:item_status="itemData">
         <TaskStatus
-          v-bind:active="itemData.item.isActive"
-          v-bind:completed="itemData.item.completed"
+          :active="itemData.item.isActive"
+          :completed="itemData.item.completed"
         ></TaskStatus>
       </template>
 
@@ -200,12 +197,12 @@ import {
   watch,
   shallowRef,
 } from "vue";
-import { WorkTaskCreate, WorkTaskDetails } from ".";
+import { WorkTaskDetails } from ".";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskStatus from "../components/taskStatus.vue";
 
 export default defineComponent({
-  url: "/active",
+  url: "/archive",
 });
 </script>
 
@@ -228,6 +225,7 @@ import {
 } from "@vc-shell/framework";
 import moment from "moment";
 import {
+  WorkTask,
   WorkTaskPriority,
   WorkTaskSearchCriteria,
 } from "../../../api_client/taskmanagement";
@@ -289,15 +287,6 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     icon: "fas fa-sync-alt",
     async clickHandler() {
       await reload();
-    },
-  },
-  {
-    title: computed(() => t("TASKS.PAGES.LIST.TOOLBAR.CREATE")),
-    icon: "fas fa-plus",
-    async clickHandler() {
-      emit("open:blade", {
-        component: shallowRef(WorkTaskCreate),
-      });
     },
   },
 ]);
@@ -363,12 +352,6 @@ const onItemClick = (item: { id: string }) => {
     onClose() {
       selectedItemId.value = undefined;
     },
-  });
-};
-
-const createTask = () => {
-  emit("open:blade", {
-    component: shallowRef(WorkTaskCreate),
   });
 };
 
@@ -439,7 +422,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.startDueDate = filter["startDate"];
   criteria.endDueDate = filter["endDate"];
   criteria.keyword = searchValue.value;
-  criteria.isActive = true;
+  criteria.isActive = false;
 
   return criteria;
 }

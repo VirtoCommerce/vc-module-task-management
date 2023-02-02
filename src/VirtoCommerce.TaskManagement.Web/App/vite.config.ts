@@ -46,7 +46,7 @@ export default {
     VitePWA({
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
-        name: "Vendor Portal",
+        name: "Tasks Portal",
         theme_color: "#319ED4",
         display: "fullscreen",
         start_url: "/index.html",

@@ -1,5 +1,5 @@
 # v2.0.0
-name: Vendor Portal CI
+name: Tasks Portal CI
 
 on:
   workflow_dispatch:

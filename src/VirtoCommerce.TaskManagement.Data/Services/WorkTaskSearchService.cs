@@ -38,8 +38,8 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             if (!criteria.ResponsibleIds.IsNullOrEmpty())
             {
                 query = criteria.ResponsibleIds.Count == 1
-                    ? query.Where(x => x.ResponsibleName == criteria.ResponsibleIds.First())
-                    : query.Where(x => criteria.ResponsibleIds.Contains(x.ResponsibleName));
+                    ? query.Where(x => x.ResponsibleId == criteria.ResponsibleIds.First())
+                    : query.Where(x => criteria.ResponsibleIds.Contains(x.ResponsibleId));
             }
 
             if (criteria.Priority != null)
@@ -65,6 +65,11 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             if (criteria.EndDueDate != null)
             {
                 query = query.Where(x => x.DueDate <= criteria.EndDueDate);
+            }
+
+            if (!criteria.Keyword.IsNullOrEmpty())
+            {
+                query = query.Where(x => x.Name.Contains(criteria.Keyword) || x.Description.Contains(criteria.Keyword));
             }
 
             return query;

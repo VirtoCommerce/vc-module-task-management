@@ -1,6 +1,6 @@
 {
-  "name": "app-boilerplate",
-  "version": "1.0.42",
+  "name": "tasks-app",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "serve": "cross-env APP_ENV=development vite",
@@ -54,6 +54,7 @@
     "@microsoft/signalr": "^5.0.7",
     "@vc-shell/config-generator": "^1.0.40",
     "@vc-shell/framework": "^1.0.40",
+    "cross-env": "^7.0.3",
     "moment": "^2.29.1",
     "roboto-fontface": "^0.10.0",
     "vee-validate": "^4.7.3",

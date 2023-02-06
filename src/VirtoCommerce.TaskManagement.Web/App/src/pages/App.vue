@@ -6,7 +6,7 @@
     :toolbarItems="toolbarItems"
     :isReady="isReady"
     :isAuthorized="isAuthorized"
-    :logo="'/apps/tasks/img/tasks-logo.png'"
+    :logo="'/apps/tasks/img/logo.svg'"
     :title="$t('SHELL.APP.NAME')"
     :version="version"
     :pages="pages"
@@ -99,6 +99,7 @@ import logoImage from "/assets/logo.svg";
 
 import {
   ArchiveWorkTasksList,
+  MyArchiveTasksList,
   MyWorkTasksList,
   WorkTasksList,
 } from "../modules/tasks";
@@ -257,16 +258,27 @@ const mobileMenuItems = ref<IBladeToolbar[]>([
 
 const menuItems = reactive<IMenuItems[]>([
   {
+    title: computed(() => t("TASKS.MENU.MY_TASKS_TITLE")),
+    icon: "fa-solid fa-thumbtack",
+    isVisible: true,
+    children: [
+      {
+        title: computed(() => t("TASKS.MENU.MY_ACTIVE_TASKS_TITLE")),
+        isVisible: true,
+        component: shallowRef(MyWorkTasksList),
+      },
+      {
+        title: computed(() => t("TASKS.MENU.MY_ARCHIVE_TASKS_TITLE")),
+        isVisible: true,
+        component: shallowRef(MyArchiveTasksList),
+      },
+    ],
+  },
+  {
     title: computed(() => t("TASKS.MENU.ACTIVE_TASKS_TITLE")),
     icon: "fas fa-file-alt",
     isVisible: true,
     component: shallowRef(WorkTasksList),
-  },
-  {
-    title: computed(() => t("TASKS.MENU.MY_TASKS_TITLE")),
-    icon: "fas fa-file-alt",
-    isVisible: true,
-    component: shallowRef(MyWorkTasksList),
   },
   {
     title: computed(() => t("TASKS.MENU.ARCHIVE_TASKS_TITLE")),

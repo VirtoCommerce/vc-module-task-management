@@ -22,6 +22,7 @@ import {
   WorkTasksList,
   MyWorkTasksList,
   ArchiveWorkTasksList,
+  MyArchiveTasksList,
 } from "../modules/tasks";
 
 // eslint-disable-next-line import/no-unresolved
@@ -51,6 +52,12 @@ const routes: RouteRecordRaw[] = [
         path: "/my",
         props: true,
         component: MyWorkTasksList,
+      },
+      {
+        name: "My arhive tasks list",
+        path: "/my-archive-tasks",
+        props: true,
+        component: MyArchiveTasksList,
       },
       {
         name: "Archive",

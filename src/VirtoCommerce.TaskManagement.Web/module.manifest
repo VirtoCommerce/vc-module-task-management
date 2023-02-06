@@ -13,7 +13,7 @@
         <app id="tasks">
             <title>Tasks</title>
             <description>Tasks</description>
-            <iconUrl>/apps/tasks/img/tasks-logo.png</iconUrl>
+            <iconUrl>/apps/tasks/img/logo.svg</iconUrl>
         </app>
     </apps>
 

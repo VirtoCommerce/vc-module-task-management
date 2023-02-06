@@ -1,15 +1,18 @@
 {
   "TASKS": {
     "MENU": {
-      "MY_TASKS_TITLE": "My",
-      "ACTIVE_TASKS_TITLE": "Active",
-      "ARCHIVE_TASKS_TITLE": "Archive"
+      "MY_TASKS_TITLE": "MY TASKS",
+      "ACTIVE_TASKS_TITLE": "ALL TASKS",
+      "ARCHIVE_TASKS_TITLE": "ARCHIVE",
+      "MY_ACTIVE_TASKS_TITLE": "Active",
+      "MY_ARCHIVE_TASKS_TITLE": "Completed"
     },
     "PAGES": {
       "LIST": {
-        "TASKS_ARCHIVE_TITLE": "Tasks archive",
-        "ACTIVE_TASKS_TITLE": "Active tasks",
-        "MY_TASKS_TITLE": "My tasks",
+        "ARCHIVE_TASKS_TITLE": "Tasks archive",
+        "ALL_TASKS_TITLE": "All tasks",
+        "MY_ACTIVE_TASKS_TITLE": "My active tasks",
+        "MY_ARCHIVE_TASKS_TITLE": "My completed tasks",
         "TOOLBAR": {
           "REFRESH": "Refresh",
           "CREATE":"Create"
@@ -22,7 +25,7 @@
           "HEADER": {
             "NAME": "Summary",
             "NUMBER": "Key",
-            "PRIORITY": "P",
+            "PRIORITY": "Priority",
             "ASSIGNEE": "Assignee",
             "REPORTER": "Reporter",
             "DUEDATE": "Due",

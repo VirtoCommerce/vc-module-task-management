@@ -208,7 +208,7 @@ import TaskPriority from "../components/taskPriority.vue";
 import TaskStatus from "../components/taskStatus.vue";
 
 export default defineComponent({
-  url: "/my",
+  url: "/my-archive-tasks",
 });
 </script>
 
@@ -401,7 +401,7 @@ const columns = computed(() => {
     return tableColumns.value.filter((item) => item.alwaysVisible === true);
   }
 });
-const title = computed(() => t("TASKS.PAGES.LIST.MY_ACTIVE_TASKS_TITLE"));
+const title = computed(() => t("TASKS.PAGES.LIST.MY_ARCHIVE_TASKS_TITLE"));
 
 function setFilterDate(key: string, value: string) {
   const date = moment(value).toDate();
@@ -431,7 +431,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.endDueDate = filter["endDate"];
   criteria.keyword = searchValue.value;
   criteria.responsibleIds = [user.value.id];
-  criteria.isActive = true;
+  criteria.isActive = false;
 
   return criteria;
 }

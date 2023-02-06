@@ -1,6 +1,6 @@
 <template>
   <VcBlade
-    :title="$t('TASKS.PAGES.LIST.TASKS_ARCHIVE_TITLE')"
+    :title="title"
     :expanded="expanded"
     :closable="closable"
     width="70%"
@@ -142,41 +142,47 @@
       </template>
 
       <template v-slot:mobile-item="itemData">
-        <div class="p-3">
-          <div class="w-full flex justify-evenly">
-            <div class="grow basis-0">
-              <div class="font-bold text-lg">
+        <div class="tw-p-3">
+          <div class="tw-w-full tw-flex tw-justify-evenly">
+            <div class="tw-grow tw-basis-0">
+              <div class="tw-font-bold tw-text-lg">
                 {{ itemData.item.number }}
               </div>
-              <VcHint class="mt-1">{{ itemData.item.customerName }}</VcHint>
+              <VcHint class="tw-mt-1">{{ itemData.item.name }}</VcHint>
             </div>
             <div>
-              <VcStatus></VcStatus>
+              <TaskStatus
+                v-bind:active="itemData.item.isActive"
+                v-bind:completed="itemData.item.completed"
+              ></TaskStatus>
             </div>
           </div>
           <div>
-            <div class="mt-3 w-full flex justify-between">
+            <div class="tw-mt-3 tw-w-full tw-flex tw-justify-between">
               <div
-                class="text-ellipsis overflow-hidden whitespace-nowrap grow basis-0 mr-2"
+                class="tw-text-ellipsis tw-overflow-hidden tw-whitespace-nowrap tw-grow tw-basis-0 tw-mr-2"
               >
-                <VcHint>{{ $t("ORDERS.PAGES.LIST.STATUS.TOTAL") }}</VcHint>
+                <VcHint>{{
+                  $t("TASKS.PAGES.LIST.TABLE.HEADER.PRIORITY")
+                }}</VcHint>
                 <div
-                  class="text-ellipsis overflow-hidden whitespace-nowrap mt-1"
+                  class="tw-text-ellipsis tw-overflow-hidden tw-whitespace-nowrap tw-mt-1"
                 >
-                  {{ itemData.item.total }} {{ itemData.item.currency }}
+                  <TaskPriority
+                    :workTaskPriority="itemData.item.priority"
+                  ></TaskPriority>
                 </div>
               </div>
               <div
-                class="text-ellipsis overflow-hidden whitespace-nowrap grow basis-0 mr-2"
+                class="tw-text-ellipsis tw-overflow-hidden tw-whitespace-nowrap tw-grow tw-basis-0 tw-mr-2"
               >
-                <VcHint>{{ $t("ORDERS.PAGES.LIST.STATUS.CREATED") }}</VcHint>
+                <VcHint>{{
+                  $t("TASKS.PAGES.LIST.TABLE.HEADER.DUEDATE")
+                }}</VcHint>
                 <div
-                  class="text-ellipsis overflow-hidden whitespace-nowrap mt-1"
+                  class="tw-text-ellipsis tw-overflow-hidden tw-whitespace-nowrap tw-mt-1"
                 >
-                  {{
-                    itemData.item.createdDate &&
-                    moment(itemData.item.createdDate).fromNow()
-                  }}
+                  {{ moment(itemData.item.dueDate).format("DD MMM") }}
                 </div>
               </div>
             </div>
@@ -393,7 +399,7 @@ const columns = computed(() => {
     return tableColumns.value.filter((item) => item.alwaysVisible === true);
   }
 });
-const title = computed(() => t("ORDERS.PAGES.LIST.TITLE"));
+const title = computed(() => t("TASKS.PAGES.LIST.ARCHIVE_TASKS_TITLE"));
 
 function setFilterDate(key: string, value: string) {
   const date = moment(value).toDate();

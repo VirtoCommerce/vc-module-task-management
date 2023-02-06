@@ -1,6 +1,10 @@
 <template>
-  <VcIcon v-bind:icon="priorityIcon()" :class="getClass()"></VcIcon>
-  <span>{{ showText() }}</span>
+  <VcIcon
+    icon="fas fa-circle"
+    class="tw-text-[10px]"
+    :class="getClass()"
+  ></VcIcon>
+  <span>{{ " " + props.workTaskPriority }}</span>
 </template>
 
 <script lang="ts">
@@ -25,37 +29,6 @@ const props = withDefaults(defineProps<Props>(), {
   withText: false,
 });
 
-const priorityIcon = () => {
-  let result = "fas fa-equals";
-
-  switch (props.workTaskPriority) {
-    case WorkTaskPriority.Lowest:
-      result = "fas fa-chevron-down";
-      break;
-    case WorkTaskPriority.Low:
-      result = "fas fa-chevron-down";
-      break;
-    case WorkTaskPriority.Normal:
-      result = "fas fa-equals";
-      break;
-    case WorkTaskPriority.High:
-      result = "fas fa-chevron-up";
-      break;
-    case WorkTaskPriority.Highest:
-      result = "fas fa-chevron-up";
-      break;
-    default:
-      result = "fas fa-equals";
-      break;
-  }
-
-  return result;
-};
-
-const showText = () => {
-  return props.withText ? " " + props.workTaskPriority : "";
-};
-
 const getClass = () => {
   return props.workTaskPriority?.toString().toLowerCase();
 };
@@ -63,18 +36,22 @@ const getClass = () => {
 
 <style lang="scss">
 .lowest {
-  color: #9fdb31;
+  color: #80b4e3;
 }
+
 .low {
-  color: yellowgreen;
+  color: #80b4e3;
 }
+
 .normal {
-  color: #d1b717;
+  color: #87b563;
 }
+
 .high {
-  color: orange;
+  color: #eb4f4d;
 }
+
 .highest {
-  color: orangered;
+  color: #eb4f4d;
 }
 </style>

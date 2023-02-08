@@ -1,43 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<module>
-    <id>VirtoCommerce.TaskManagement</id>
-    <version>3.200.0</version>
-    <version-tag></version-tag>
-
-    <platformVersion>3.200.0</platformVersion>
-    <dependencies>
-        <dependency id="VirtoCommerce.ExperienceApi" version="3.233.0" />
-    </dependencies>
-
-    <apps>
-        <app id="tasks">
-            <title>Tasks</title>
-            <description>Tasks</description>
-            <iconUrl>/apps/tasks/img/logo.svg</iconUrl>
-        </app>
-    </apps>
-
-    <title>Task Management</title>
-    <description>Virto Commerce Task Management module</description>
-
-    <authors>
-        <author>Artem Dudarev</author>
-        <author>Oleg Zhuk</author>
-        <author>Evgeny Okhrimenko</author>
-    </authors>
-    <owners>
-        <owner>VirtoCommerce</owner>
-    </owners>
-
-    <projectUrl>https://github.com/VirtoCommerce/vc-module-TaskManagement</projectUrl>
-    <iconUrl>Modules/$(VirtoCommerce.TaskManagement)/Content/logo.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-
-    <assemblyFile>VirtoCommerce.TaskManagement.Web.dll</assemblyFile>
-    <moduleType>VirtoCommerce.TaskManagement.Web.Module, VirtoCommerce.TaskManagement.Web</moduleType>
-
-    <releaseNotes>First version.</releaseNotes>
-    <copyright>Copyright © 2022 VirtoCommerce. All rights reserved</copyright>
-    <tags></tags>
-    <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <id>VirtoCommerce.TaskManagement</id>
+  <version>3.201.0</version>
+  <version-tag />
+  <platformVersion>3.200.0</platformVersion>
+  <title>Task Management</title>
+  <description>Virto Commerce Task Management module</description>
+  <authors>
+    <author>Artem Dudarev</author>
+    <author>Oleg Zhuk</author>
+    <author>Evgeny Okhrimenko</author>
+  </authors>
+  <owners>
+    <owner>VirtoCommerce</owner>
+  </owners>
+  <projectUrl>https://github.com/VirtoCommerce/vc-module-TaskManagement</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.TaskManagement)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2022 VirtoCommerce. All rights reserved</copyright>
+  <tags />
+  <assemblyFile>VirtoCommerce.TaskManagement.Web.dll</assemblyFile>
+  <moduleType>VirtoCommerce.TaskManagement.Web.Module, VirtoCommerce.TaskManagement.Web</moduleType>
+  <dependencies>
+    <dependency id="VirtoCommerce.ExperienceApi" version="3.233.0" />
+  </dependencies>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>

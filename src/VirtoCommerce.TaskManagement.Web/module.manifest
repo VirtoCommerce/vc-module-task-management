@@ -37,7 +37,7 @@
     <moduleType>VirtoCommerce.TaskManagement.Web.Module, VirtoCommerce.TaskManagement.Web</moduleType>
 
     <releaseNotes>First version.</releaseNotes>
-    <copyright>Copyright © 2022 VirtoCommerce. All rights reserved</copyright>
+    <copyright>Copyright © 2023 VirtoCommerce. All rights reserved</copyright>
     <tags></tags>
     <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>

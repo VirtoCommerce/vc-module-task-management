@@ -110,7 +110,7 @@ jobs:
           login: ${{secrets.SONAR_TOKEN}}
 
       - name: Packaging
-        run: vc-build CompressWithCustomApp -skip Clean+Restore+Compile+Test
+        run: vc-build CompressWithCustomApp -skip CleanWithCustomApp+Restore+Compile+Test
       
       - name: Publish Nuget
         if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}

@@ -39,13 +39,16 @@ export class TaskManagementClient extends AuthApiBase {
     }
 
     /**
-     * @param id (optional) 
+     * @param respGroup (optional) 
      * @return Success
      */
-    get(id: string | null | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management?";
-        if (id !== undefined && id !== null)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
+    get(id: string | null, respGroup: string | null | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/{id}?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (respGroup !== undefined && respGroup !== null)
+            url_ += "respGroup=" + encodeURIComponent("" + respGroup) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -86,6 +89,58 @@ export class TaskManagementClient extends AuthApiBase {
             });
         }
         return Promise.resolve<WorkTask>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    searchTasks(body: WorkTaskSearchCriteria | null | undefined): Promise<WorkTaskSearchResult> {
+        let url_ = this.baseUrl + "/api/task-management/search";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processSearchTasks(_response);
+        });
+    }
+
+    protected processSearchTasks(response: Response): Promise<WorkTaskSearchResult> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = WorkTaskSearchResult.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<WorkTaskSearchResult>(null as any);
     }
 
     /**
@@ -238,58 +293,6 @@ export class TaskManagementClient extends AuthApiBase {
             });
         }
         return Promise.resolve<void>(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    searchTasks(body: WorkTaskSearchCriteria | null | undefined): Promise<WorkTaskSearchResult> {
-        let url_ = this.baseUrl + "/api/task-management/search";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.processSearchTasks(_response);
-        });
-    }
-
-    protected processSearchTasks(response: Response): Promise<WorkTaskSearchResult> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = WorkTaskSearchResult.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<WorkTaskSearchResult>(null as any);
     }
 
     /**
@@ -461,6 +464,66 @@ export enum TaskPriority {
     Highest = "Highest",
 }
 
+export class WorkTaskAttachment implements IWorkTaskAttachment {
+    name?: string | undefined;
+    url?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: IWorkTaskAttachment) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.url = _data["url"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): WorkTaskAttachment {
+        data = typeof data === 'object' ? data : {};
+        let result = new WorkTaskAttachment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["url"] = this.url;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IWorkTaskAttachment {
+    name?: string | undefined;
+    url?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
 export class WorkTask implements IWorkTask {
     number?: number;
     name?: string | undefined;
@@ -480,6 +543,7 @@ export class WorkTask implements IWorkTask {
     result?: any | undefined;
     objectId?: string | undefined;
     objectType?: string | undefined;
+    attachments?: WorkTaskAttachment[] | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -515,6 +579,11 @@ export class WorkTask implements IWorkTask {
             this.result = _data["result"];
             this.objectId = _data["objectId"];
             this.objectType = _data["objectType"];
+            if (Array.isArray(_data["attachments"])) {
+                this.attachments = [] as any;
+                for (let item of _data["attachments"])
+                    this.attachments!.push(WorkTaskAttachment.fromJS(item));
+            }
             this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
             this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
             this.createdBy = _data["createdBy"];
@@ -550,6 +619,11 @@ export class WorkTask implements IWorkTask {
         data["result"] = this.result;
         data["objectId"] = this.objectId;
         data["objectType"] = this.objectType;
+        if (Array.isArray(this.attachments)) {
+            data["attachments"] = [];
+            for (let item of this.attachments)
+                data["attachments"].push(item.toJSON());
+        }
         data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
         data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
         data["createdBy"] = this.createdBy;
@@ -578,6 +652,7 @@ export interface IWorkTask {
     result?: any | undefined;
     objectId?: string | undefined;
     objectType?: string | undefined;
+    attachments?: WorkTaskAttachment[] | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;

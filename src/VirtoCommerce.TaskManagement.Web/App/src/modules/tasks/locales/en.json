@@ -64,7 +64,8 @@
       },
       "DETAILS": {
         "TASK_INFO":{
-          "TITLE": "Task details",
+          "CREDENTIALS_TITLE": "Credentials",
+          "ATTACHMENTS_TITLE": "Attachments",
           "DESCRIPTION": "Description",
           "PRIORITY": "Priority",
           "TYPE": "Type",
@@ -78,7 +79,8 @@
           "ACCEPT_TASK": "Accept",
           "REJECT_TASK": "Reject",
           "DELETE_TASK": "Delete",
-          "SAVE_TASK": "Save"
+          "SAVE_TASK": "Save",
+          "RESET_TASK": "Restore"
         }
       },
       "NEW":{

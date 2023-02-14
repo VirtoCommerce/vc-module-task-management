@@ -1,5 +1,7 @@
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VirtoCommerce.Platform.Core.Common;
@@ -46,6 +48,9 @@ namespace VirtoCommerce.TaskManagement.Data.Models
         [StringLength(256)]
         public string ObjectType { get; set; }
 
+        public ObservableCollection<WorkTaskAttachmentEntity> Attachments { get; set; } =
+            new NullCollection<WorkTaskAttachmentEntity>();
+
         public WorkTaskEntity FromModel(WorkTask model, PrimaryKeyResolvingMap pkMap)
         {
             pkMap.AddPair(model, this);
@@ -81,6 +86,11 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
             ObjectId = model.ObjectId;
             ObjectType = model.ObjectType;
+
+            if (model.Attachments != null)
+            {
+                Attachments = new ObservableCollection<WorkTaskAttachmentEntity>(model.Attachments.Select(x => AbstractTypeFactory<WorkTaskAttachmentEntity>.TryCreateInstance().FromModel(x, pkMap)));
+            }
 
             return this;
         }
@@ -119,6 +129,8 @@ namespace VirtoCommerce.TaskManagement.Data.Models
             model.ObjectId = ObjectId;
             model.ObjectType = ObjectType;
 
+            model.Attachments = Attachments.Select(x => x.ToModel(AbstractTypeFactory<WorkTaskAttachment>.TryCreateInstance())).ToList();
+
             return model;
         }
 
@@ -147,6 +159,11 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
             target.ObjectId = ObjectId;
             target.ObjectType = ObjectType;
+
+            if (!Attachments.IsNullCollection())
+            {
+                Attachments.Patch(target.Attachments, (sourceAttachment, targetAttachment) => { sourceAttachment.Patch(targetAttachment); });
+            }
         }
     }
 }

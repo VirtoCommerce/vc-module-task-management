@@ -9,7 +9,8 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
     public interface IWorkTaskRepository : IRepository
     {
         IQueryable<WorkTaskEntity> WorkTasks { get; }
+        IQueryable<WorkTaskAttachmentEntity> WorkTaskAttachments { get; }
 
-        Task<IEnumerable<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids);
+        Task<IEnumerable<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids, string responseGroup);
     }
 }

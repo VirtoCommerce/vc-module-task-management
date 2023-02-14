@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -31,9 +33,13 @@ namespace VirtoCommerce.TaskManagement.Core.Models
         public string ObjectId { get; set; }
         public string ObjectType { get; set; }
 
+        public ICollection<WorkTaskAttachment> Attachments { get; set; } = new List<WorkTaskAttachment>();
+
         public object Clone()
         {
-            return MemberwiseClone();
+            var clone = MemberwiseClone() as WorkTask;
+            clone.Attachments = Attachments?.Select(x => x.Clone()).OfType<WorkTaskAttachment>().ToList();
+            return clone;
         }
     }
 }

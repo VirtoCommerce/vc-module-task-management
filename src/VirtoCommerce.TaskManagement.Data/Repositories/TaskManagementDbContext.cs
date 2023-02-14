@@ -34,6 +34,11 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectId);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.ObjectType);
             modelBuilder.Entity<WorkTaskEntity>().HasIndex(x => x.Number);
+
+            modelBuilder.Entity<WorkTaskAttachmentEntity>().ToTable("WorkTaskAttachment").HasKey(x => x.Id);
+            modelBuilder.Entity<WorkTaskAttachmentEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+            modelBuilder.Entity<WorkTaskAttachmentEntity>().HasOne(x => x.WorkTask).WithMany(x => x.Attachments)
+                .HasForeignKey(x => x.WorkTaskId).IsRequired().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -14,16 +14,17 @@
           <VcCol class="tw-p-1">
             <Field
               name="name"
+              rules="required|min:3"
               :modelValue="newWorkTask.name"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
               <VcInput
                 v-bind="field"
-                name="name"
                 class="tw-mb-4"
                 :label="$t('TASKS.PAGES.NEW.FIELDS.NAME.TITLE')"
                 v-model="newWorkTask.name"
                 :clearable="true"
+                required
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.NAME.PLACEHOLDER')"
                 :error="!!errors.length"
                 :error-message="errorMessage"
@@ -37,6 +38,7 @@
           <VcCol class="tw-p-1">
             <Field
               name="description"
+              rules="required|min:3"
               :modelValue="newWorkTask.description"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
@@ -46,6 +48,7 @@
                 :label="$t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.TITLE')"
                 v-model="newWorkTask.description"
                 :clearable="true"
+                required
                 :placeholder="
                   $t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.PLACEHOLDER')
                 "
@@ -61,16 +64,17 @@
           <VcCol class="tw-p-1">
             <Field
               name="type"
+              rules="required|min:3"
               :modelValue="newWorkTask.type"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
               <VcInput
                 v-bind="field"
-                name="type"
                 class="tw-mb-4"
                 :label="$t('TASKS.PAGES.NEW.FIELDS.TYPE.TITLE')"
                 v-model="newWorkTask.type"
                 :clearable="true"
+                required
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
                 maxlength="1024"
                 :error="!!errors.length"
@@ -89,7 +93,6 @@
               <VcInput
                 type="date"
                 v-bind="field"
-                name="dueDate"
                 class="tw-mb-4"
                 :label="$t('TASKS.PAGES.NEW.FIELDS.DUEDATE.TITLE')"
                 v-model="newWorkTask.dueDate"
@@ -111,14 +114,12 @@
             >
               <VcSelect
                 v-bind="field"
-                name="priority"
                 class="tw-mb-4"
                 v-model="newWorkTask.priority"
                 option-value="typeName"
                 option-label="typeName"
                 :label="$t('TASKS.PAGES.NEW.FIELDS.PRIORITY.TITLE')"
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.PRIORITY.PLACEHOLDER')"
-                :clearable="true"
                 :error="!!errors.length"
                 :error-message="errorMessage"
                 :options="priorities"
@@ -135,7 +136,6 @@
             >
               <VcSelect
                 v-bind="field"
-                name="responsibleId"
                 class="tw-mb-4"
                 v-model="newWorkTask.responsibleId"
                 option-value="id"
@@ -154,6 +154,44 @@
             </Field>
           </VcCol>
         </VcRow>
+        <VcCard
+          :header="$t('TASKS.PAGES.DETAILS.TASK_INFO.ATTACHMENTS_TITLE')"
+          is-collapsable
+          :is-collapsed="restoreCollapsed('files')"
+          @state:collapsed="handleCollapsed('files', $event)"
+        >
+          <div class="tw-flex tw-flex-wrap tw-p-5">
+            <div class="tw-flex tw-flex-wrap tw-flex-1">
+              <div
+                class="vc-file-upload vc-file-upload_gallery tw-relative tw-h-[155px] tw-box-border tw-border tw-border-dashed tw-border-[#c8dbea] tw-rounded-[6px] tw-p-4 tw-m-2 tw-flex tw-flex-col tw-items-center tw-justify-center"
+                v-for="attachment in newWorkTask.attachments"
+                v-bind:key="attachment.id"
+              >
+                <i
+                  class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
+                  @click="deleteAttachment(attachment)"
+                ></i>
+                <i
+                  class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"
+                ></i>
+                <div
+                  class="tw-text-[#9db0be] tw-text-center tw-text-lg tw-leading-lg tw-mt-4"
+                >
+                  <a
+                    class="vc-link attachment-wrap"
+                    :href="attachment.url"
+                    target="_blank"
+                    >{{ attachment.name }}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tw-flex tw-flex-wrap tw-p-5">
+            <VcFileUpload @upload="fileUpload" class="tw-m-2"></VcFileUpload>
+            <VcLoading :active="fileUploading"></VcLoading>
+          </div>
+        </VcCard>
       </VcForm>
     </VcContainer>
   </VcBlade>
@@ -174,10 +212,18 @@ import {
   VcCol,
   UserSearchCriteria,
   VcSelect,
+  VcCard,
+  VcFileUpload,
+  VcLoading,
+  useUser,
 } from "@vc-shell/framework";
-import { WorkTask, WorkTaskPriority } from "../../../api_client/taskmanagement";
-import { Field } from "vee-validate";
-import _ from "lodash";
+import {
+  WorkTask,
+  WorkTaskAttachment,
+  WorkTaskPriority,
+} from "../../../api_client/taskmanagement";
+import { Field, useForm, useIsFormValid } from "vee-validate";
+import _, { filter, forEach, uniqueId } from "lodash";
 </script>
 
 <script lang="ts" setup>
@@ -206,7 +252,15 @@ const { t } = useI18n();
 const { workTask, loading, createWorkTask } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
 const priorities = Object.values(WorkTaskPriority);
-let newWorkTask = { priority: WorkTaskPriority.Normal } as WorkTask;
+let newWorkTask = {
+  priority: WorkTaskPriority.Normal,
+  attachments: [],
+} as WorkTask;
+useForm({ validateOnMount: false });
+const isValid = useIsFormValid();
+const { getAccessToken } = useUser();
+const fileUploading = ref(false);
+const defaultTaskAttachmentFolder = "Draft";
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
@@ -223,6 +277,12 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 
       newWorkTask.responsibleName = responsible?.userName;
 
+      forEach(newWorkTask.attachments, function (attachment) {
+        if (attachment.id.startsWith("Draft")) {
+          attachment.id = null;
+        }
+      });
+
       await createWorkTask(newWorkTask);
       newWorkTask = {} as WorkTask;
       emit("parent:call", { method: "reload" });
@@ -232,6 +292,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         args: { id: workTask.value.id },
       });
     },
+    disabled: computed(() => isValid.value === false),
   },
 ]);
 
@@ -242,6 +303,54 @@ function getCriteria(skip?: number): UserSearchCriteria {
   criteria.skip = skip;
 
   return criteria;
+}
+
+const fileUpload = async (files: FileList) => {
+  try {
+    fileUploading.value = true;
+    for (let i = 0; i < files.length; i++) {
+      const formData = new FormData();
+      formData.append("file", files[i]);
+      const authToken = await getAccessToken();
+      const result = await fetch(
+        `/api/assets?folderUrl=/workTaskAttachment/${defaultTaskAttachmentFolder}`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      const response = await result.json();
+      if (response?.length) {
+        const attachment = new WorkTaskAttachment(response[0]);
+        attachment.id = uniqueId("Draft-");
+        attachment.createdDate = new Date();
+        newWorkTask.attachments.push(attachment);
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  } finally {
+    fileUploading.value = false;
+  }
+  files = null;
+};
+
+const deleteAttachment = (attachment: WorkTaskAttachment) => {
+  workTask.value.attachments = filter(workTask.value.attachments, function (a) {
+    if (attachment.id) {
+      return a.id !== attachment.id;
+    }
+  });
+};
+
+function handleCollapsed(key: string, value: boolean): void {
+  localStorage?.setItem(key, `${value}`);
+}
+function restoreCollapsed(key: string): boolean {
+  return localStorage?.getItem(key) === "true";
 }
 
 onMounted(async () => {

@@ -17,6 +17,7 @@ interface IUseWorkTask {
   approveWorkTask(id: string, result: any): void;
   rejectWorkTask(id: string, result: any): void;
   updateWorktask(): void;
+  resetWorkTask(): void;
   deleteWorkTask(id: string): void;
 }
 
@@ -51,7 +52,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.get(id);
+      workTask.value = await client.get(id, "WithAttachments");
       workTaskCopy = cloneDeep(workTask.value);
     } catch (e) {
       logger.error(e);
@@ -116,6 +117,10 @@ export default (): IUseWorkTask => {
     }
   }
 
+  function resetWorkTask(): void {
+    workTask.value = cloneDeep(workTaskCopy);
+  }
+
   async function deleteWorkTask(id: string): Promise<void> {
     loading.value = true;
     const client = await getApiClient();
@@ -140,6 +145,7 @@ export default (): IUseWorkTask => {
     approveWorkTask,
     rejectWorkTask,
     updateWorktask,
+    resetWorkTask,
     deleteWorkTask,
   };
 };

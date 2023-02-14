@@ -75,7 +75,7 @@ namespace VirtoCommerce.TaskManagement.Data.Services
 
         protected override async Task<IEnumerable<WorkTaskEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
         {
-            return await ((IWorkTaskRepository)repository).GetWorkTaskByIds(ids.ToList());
+            return await ((IWorkTaskRepository)repository).GetWorkTaskByIds(ids.ToList(), responseGroup);
         }
     }
 }

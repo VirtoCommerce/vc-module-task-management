@@ -20,9 +20,9 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             _workTaskSearchService = workTaskSearchService;
         }
 
-        [HttpGet("")]
+        [HttpGet("{id}")]
         [Authorize(ModuleConstants.Security.Permissions.Read)]
-        public async Task<ActionResult<WorkTask>> Get(string id)
+        public async Task<ActionResult<WorkTask>> Get(string id, [FromQuery] string respGroup = null)
         {
             var workTask = await _workTaskService.GetByIdAsync(id);
             return workTask;

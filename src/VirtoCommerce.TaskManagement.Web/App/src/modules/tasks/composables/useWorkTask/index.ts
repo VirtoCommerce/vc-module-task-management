@@ -5,7 +5,7 @@ import {
   WorkTask,
   WorkTaskPriority,
 } from "../../../../api_client/taskmanagement";
-import { cloneDeep, isEqual } from "lodash-es";
+import { cloneDeep, forEach, isEqual } from "lodash-es";
 
 interface IUseWorkTask {
   workTask: Ref<WorkTask>;
@@ -67,6 +67,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
+      validateAttachments(newWorkTask);
       workTask.value = await client.create(newWorkTask);
     } catch (e) {
       logger.error(e);
@@ -107,6 +108,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
+      validateAttachments(workTask.value);
       workTask.value = await client.update(workTask.value);
       workTaskCopy = cloneDeep(workTask.value);
     } catch (e) {
@@ -133,6 +135,14 @@ export default (): IUseWorkTask => {
     } finally {
       loading.value = false;
     }
+  }
+
+  function validateAttachments(task: WorkTask) {
+    forEach(task.attachments, function (attachment) {
+      if (attachment.id.startsWith("Draft")) {
+        attachment.id = null;
+      }
+    });
   }
 
   return {

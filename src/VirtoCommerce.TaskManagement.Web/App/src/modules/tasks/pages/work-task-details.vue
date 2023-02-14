@@ -241,42 +241,7 @@
             @state:collapsed="handleCollapsed('files', $event)"
             v-if="workTask.isActive === true || workTask.attachments?.length"
           >
-            <div class="tw-flex tw-flex-wrap tw-p-5">
-              <div class="tw-flex tw-flex-wrap tw-flex-1">
-                <div
-                  class="vc-file-upload vc-file-upload_gallery tw-relative tw-h-[155px] tw-box-border tw-border tw-border-dashed tw-border-[#c8dbea] tw-rounded-[6px] tw-p-4 tw-m-2 tw-flex tw-flex-col tw-items-center tw-justify-center"
-                  v-for="attachment in workTask.attachments"
-                  v-bind:key="attachment.id"
-                >
-                  <i
-                    class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
-                    @click="deleteAttachment(attachment)"
-                    v-if="workTask.isActive === true"
-                  ></i>
-                  <i
-                    class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"
-                  ></i>
-                  <div
-                    class="tw-text-[#9db0be] tw-text-center tw-text-lg tw-leading-lg tw-mt-4"
-                  >
-                    <a
-                      class="vc-link attachment-wrap"
-                      :href="attachment.url"
-                      target="_blank"
-                      >{{ attachment.name }}</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-wrap tw-p-5">
-              <VcFileUpload
-                @upload="fileUpload"
-                v-if="workTask.isActive === true"
-                class="tw-m-2"
-              ></VcFileUpload>
-              <VcLoading :active="fileUploading"></VcLoading>
-            </div>
+            <TaskAttachments :workTask="workTask"></TaskAttachments>
           </VcCard>
         </VcForm>
       </div>
@@ -287,7 +252,11 @@
 <script lang="ts">
 import moment from "moment";
 
-import { useUserSearch, useWorkTask } from "../composables";
+import {
+  useUserSearch,
+  useWorkTask,
+  useWorkTaskAttachments,
+} from "../composables";
 import {
   useI18n,
   IBladeToolbar,
@@ -303,22 +272,18 @@ import {
   VcSelect,
   UserSearchCriteria,
   VcTextarea,
-  VcFileUpload,
   VcCard,
 } from "@vc-shell/framework";
-import { defineComponent, computed, onMounted, ref, Ref } from "vue";
+import { defineComponent, computed, onMounted, ref } from "vue";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskStatus from "../components/taskStatus.vue";
-
+import TaskAttachments from "../components/taskAttachments.vue";
 import { Field } from "vee-validate";
-import { WorkTaskAttachment } from "../../../api_client/taskmanagement";
-import filter from "lodash-es/filter";
-import uniqueId from "lodash-es/uniqueId";
 import { forEach } from "lodash";
 
 export default defineComponent({
   url: "task",
-  components: { VcFileUpload, VcCard },
+  components: { VcCard },
 });
 </script>
 
@@ -356,8 +321,7 @@ const {
   deleteWorkTask,
 } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
-const { user, getAccessToken } = useUser();
-const fileUploading = ref(false);
+const { user } = useUser();
 
 onMounted(async () => {
   if (props.param) {
@@ -441,47 +405,6 @@ function getCriteria(skip?: number): UserSearchCriteria {
   return criteria;
 }
 
-const fileUpload = async (files: FileList) => {
-  try {
-    fileUploading.value = true;
-    for (let i = 0; i < files.length; i++) {
-      const formData = new FormData();
-      formData.append("file", files[i]);
-      const authToken = await getAccessToken();
-      const result = await fetch(
-        `/api/assets?folderUrl=/workTaskAttachment/${workTask.value.id}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      const response = await result.json();
-      if (response?.length) {
-        const attachment = new WorkTaskAttachment(response[0]);
-        attachment.id = uniqueId("Draft-");
-        attachment.createdDate = new Date();
-        workTask.value.attachments.push(attachment);
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  } finally {
-    fileUploading.value = false;
-  }
-  files = null;
-};
-
-const deleteAttachment = (attachment: WorkTaskAttachment) => {
-  workTask.value.attachments = filter(workTask.value.attachments, function (a) {
-    if (attachment.id) {
-      return a.id !== attachment.id;
-    }
-  });
-};
-
 function handleCollapsed(key: string, value: boolean): void {
   localStorage?.setItem(key, `${value}`);
 }
@@ -510,22 +433,3 @@ onMounted(async () => {
   await searchUsers(getCriteria());
 });
 </script>
-
-<style lang="scss">
-.attachment-wrap {
-  overflow-wrap: anywhere;
-}
-.delete-icon {
-  position: absolute;
-  top: 2px;
-  right: 0px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  border: 0;
-  font-weight: bold;
-  font-size: 20px;
-  cursor: pointer;
-}
-</style>

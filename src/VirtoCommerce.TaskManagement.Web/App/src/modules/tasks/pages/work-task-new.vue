@@ -160,37 +160,7 @@
           :is-collapsed="restoreCollapsed('files')"
           @state:collapsed="handleCollapsed('files', $event)"
         >
-          <div class="tw-flex tw-flex-wrap tw-p-5">
-            <div class="tw-flex tw-flex-wrap tw-flex-1">
-              <div
-                class="vc-file-upload vc-file-upload_gallery tw-relative tw-h-[155px] tw-box-border tw-border tw-border-dashed tw-border-[#c8dbea] tw-rounded-[6px] tw-p-4 tw-m-2 tw-flex tw-flex-col tw-items-center tw-justify-center"
-                v-for="attachment in newWorkTask.attachments"
-                v-bind:key="attachment.id"
-              >
-                <i
-                  class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
-                  @click="deleteAttachment(attachment)"
-                ></i>
-                <i
-                  class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"
-                ></i>
-                <div
-                  class="tw-text-[#9db0be] tw-text-center tw-text-lg tw-leading-lg tw-mt-4"
-                >
-                  <a
-                    class="vc-link attachment-wrap"
-                    :href="attachment.url"
-                    target="_blank"
-                    >{{ attachment.name }}</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tw-flex tw-flex-wrap tw-p-5">
-            <VcFileUpload @upload="fileUpload" class="tw-m-2"></VcFileUpload>
-            <VcLoading :active="fileUploading"></VcLoading>
-          </div>
+          <TaskAttachments :workTask="newWorkTask"></TaskAttachments>
         </VcCard>
       </VcForm>
     </VcContainer>
@@ -213,17 +183,12 @@ import {
   UserSearchCriteria,
   VcSelect,
   VcCard,
-  VcFileUpload,
-  VcLoading,
   useUser,
 } from "@vc-shell/framework";
-import {
-  WorkTask,
-  WorkTaskAttachment,
-  WorkTaskPriority,
-} from "../../../api_client/taskmanagement";
+import { WorkTask, WorkTaskPriority } from "../../../api_client/taskmanagement";
 import { Field, useForm, useIsFormValid } from "vee-validate";
-import _, { filter, forEach, uniqueId } from "lodash";
+import TaskAttachments from "../components/taskAttachments.vue";
+import _, { forEach } from "lodash";
 </script>
 
 <script lang="ts" setup>
@@ -253,6 +218,7 @@ const { workTask, loading, createWorkTask } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
 const priorities = Object.values(WorkTaskPriority);
 let newWorkTask = {
+  isActive: true,
   priority: WorkTaskPriority.Normal,
   attachments: [],
 } as WorkTask;
@@ -304,47 +270,6 @@ function getCriteria(skip?: number): UserSearchCriteria {
 
   return criteria;
 }
-
-const fileUpload = async (files: FileList) => {
-  try {
-    fileUploading.value = true;
-    for (let i = 0; i < files.length; i++) {
-      const formData = new FormData();
-      formData.append("file", files[i]);
-      const authToken = await getAccessToken();
-      const result = await fetch(
-        `/api/assets?folderUrl=/workTaskAttachment/${defaultTaskAttachmentFolder}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      const response = await result.json();
-      if (response?.length) {
-        const attachment = new WorkTaskAttachment(response[0]);
-        attachment.id = uniqueId("Draft-");
-        attachment.createdDate = new Date();
-        newWorkTask.attachments.push(attachment);
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  } finally {
-    fileUploading.value = false;
-  }
-  files = null;
-};
-
-const deleteAttachment = (attachment: WorkTaskAttachment) => {
-  workTask.value.attachments = filter(workTask.value.attachments, function (a) {
-    if (attachment.id) {
-      return a.id !== attachment.id;
-    }
-  });
-};
 
 function handleCollapsed(key: string, value: boolean): void {
   localStorage?.setItem(key, `${value}`);

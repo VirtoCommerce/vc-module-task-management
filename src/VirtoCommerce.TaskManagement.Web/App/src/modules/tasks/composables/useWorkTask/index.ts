@@ -139,7 +139,7 @@ export default (): IUseWorkTask => {
 
   function validateAttachments(task: WorkTask) {
     forEach(task.attachments, function (attachment) {
-      if (attachment.id.startsWith("Draft")) {
+      if (attachment.id && attachment.id.startsWith("Draft")) {
         attachment.id = null;
       }
     });

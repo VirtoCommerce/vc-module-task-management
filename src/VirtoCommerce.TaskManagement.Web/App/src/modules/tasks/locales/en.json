@@ -73,7 +73,8 @@
           "REPORTER": "Reporter",
           "CREATED": "Created",
           "MODIFIED": "Updated",
-          "DUEDATE": "Due"
+          "DUEDATE": "Due",
+          "STATUS": "Status"
         },
         "ACTIONS": {
           "ACCEPT_TASK": "Accept",

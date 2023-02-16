@@ -8,7 +8,7 @@
       >
         <i
           class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
-          @click="deleteAttachment(item.id, props.workTask)"
+          @click="deleteAttachment(item.id)"
           v-if="workTask.isActive === true"
         ></i>
         <i class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"></i>
@@ -24,11 +24,11 @@
   </div>
   <div class="tw-flex tw-flex-wrap tw-p-5">
     <VcFileUpload
-      @upload="addAttachments($event, props.workTask)"
+      @upload="addAttachments($event)"
       v-if="workTask.isActive === true"
       class="tw-m-2"
     ></VcFileUpload>
-    <VcLoading :active="fileUploading"></VcLoading>
+    <VcLoading :active="props.fileUploading"></VcLoading>
   </div>
 </template>
 
@@ -36,7 +36,6 @@
 import { WorkTask } from "../../../api_client/taskmanagement";
 import { defineComponent } from "vue";
 import { VcFileUpload, VcLoading } from "@vc-shell/framework";
-import { useWorkTaskAttachments } from "../composables";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -45,14 +44,23 @@ export default defineComponent({
 <script lang="ts" setup>
 export interface Props {
   workTask: WorkTask;
+  fileUploading: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   workTask: undefined,
+  fileUploading: false,
 });
 
-const { fileUploading, addAttachments, deleteAttachment } =
-  useWorkTaskAttachments();
+const emit = defineEmits(["addAttachments", "deleteAttachment"]);
+
+const addAttachments = async (files: FileList) => {
+  emit("addAttachments", files);
+};
+
+const deleteAttachment = async (id: string) => {
+  emit("deleteAttachment", id);
+};
 </script>
 
 <style lang="scss">

@@ -1,15 +1,14 @@
 import { useUser } from "@vc-shell/framework";
-import { uniqueId, filter } from "lodash-es";
+import { uniqueId } from "lodash-es";
 import { computed, ref, Ref } from "vue";
-import {
-  WorkTask,
-  WorkTaskAttachment,
-} from "../../../../api_client/taskmanagement";
+import { WorkTaskAttachment } from "../../../../api_client/taskmanagement";
 
 interface IUseWorkTaskAttachments {
   fileUploading: Ref<boolean>;
-  addAttachments(files: FileList, workTask: WorkTask);
-  deleteAttachment(id: string, workTask: WorkTask);
+  uploadAttachments(
+    id: string,
+    files: FileList
+  ): Promise<Array<WorkTaskAttachment>>;
 }
 
 export default (): IUseWorkTaskAttachments => {
@@ -17,7 +16,11 @@ export default (): IUseWorkTaskAttachments => {
   const { getAccessToken } = useUser();
   const defaultAttachmentsFolder = "Draft";
 
-  const addAttachments = async (files: FileList, workTask: WorkTask) => {
+  const uploadAttachments = async (
+    id: string,
+    files: FileList
+  ): Promise<Array<WorkTaskAttachment>> => {
+    const attachments = [] as Array<WorkTaskAttachment>;
     try {
       fileUploading.value = true;
       for (let i = 0; i < files.length; i++) {
@@ -26,7 +29,7 @@ export default (): IUseWorkTaskAttachments => {
         const authToken = await getAccessToken();
         const result = await fetch(
           `/api/assets?folderUrl=/workTaskAttachment/${
-            workTask.id || defaultAttachmentsFolder
+            id || defaultAttachmentsFolder
           }`,
           {
             method: "POST",
@@ -39,9 +42,9 @@ export default (): IUseWorkTaskAttachments => {
         const response = await result.json();
         if (response?.length) {
           const attachment = new WorkTaskAttachment(response[0]);
-          attachment.id = uniqueId(defaultAttachmentsFolder);
+          attachment.id = uniqueId("Draft");
           attachment.createdDate = new Date();
-          workTask.attachments.push(attachment);
+          attachments.push(attachment);
         }
       }
     } catch (e) {
@@ -50,19 +53,11 @@ export default (): IUseWorkTaskAttachments => {
       fileUploading.value = false;
     }
     files = null;
-  };
-
-  const deleteAttachment = (id: string, workTask: WorkTask) => {
-    workTask.attachments = filter(workTask.attachments, function (a) {
-      if (id) {
-        return a.id !== id;
-      }
-    });
+    return attachments;
   };
 
   return {
     fileUploading: computed(() => fileUploading.value),
-    addAttachments,
-    deleteAttachment,
+    uploadAttachments,
   };
 };

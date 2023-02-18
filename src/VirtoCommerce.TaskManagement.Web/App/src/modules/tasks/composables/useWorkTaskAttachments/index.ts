@@ -1,14 +1,18 @@
 import { useUser } from "@vc-shell/framework";
-import { uniqueId } from "lodash-es";
+import { filter, uniqueId } from "lodash-es";
 import { computed, ref, Ref } from "vue";
-import { WorkTaskAttachment } from "../../../../api_client/taskmanagement";
+import {
+  WorkTask,
+  WorkTaskAttachment,
+} from "../../../../api_client/taskmanagement";
 
 interface IUseWorkTaskAttachments {
   fileUploading: Ref<boolean>;
   uploadAttachments(
-    id: string,
-    files: FileList
+    files: FileList,
+    workTask: Ref<WorkTask>
   ): Promise<Array<WorkTaskAttachment>>;
+  deleteAttachment(id: string, workTask: Ref<WorkTask>): void;
 }
 
 export default (): IUseWorkTaskAttachments => {
@@ -17,8 +21,8 @@ export default (): IUseWorkTaskAttachments => {
   const defaultAttachmentsFolder = "Draft";
 
   const uploadAttachments = async (
-    id: string,
-    files: FileList
+    files: FileList,
+    workTask: Ref<WorkTask>
   ): Promise<Array<WorkTaskAttachment>> => {
     const attachments = [] as Array<WorkTaskAttachment>;
     try {
@@ -29,7 +33,7 @@ export default (): IUseWorkTaskAttachments => {
         const authToken = await getAccessToken();
         const result = await fetch(
           `/api/assets?folderUrl=/workTaskAttachment/${
-            id || defaultAttachmentsFolder
+            workTask.value.id || defaultAttachmentsFolder
           }`,
           {
             method: "POST",
@@ -44,7 +48,7 @@ export default (): IUseWorkTaskAttachments => {
           const attachment = new WorkTaskAttachment(response[0]);
           attachment.id = uniqueId("Draft");
           attachment.createdDate = new Date();
-          attachments.push(attachment);
+          workTask.value.attachments.push(attachment);
         }
       }
     } catch (e) {
@@ -56,8 +60,20 @@ export default (): IUseWorkTaskAttachments => {
     return attachments;
   };
 
+  const deleteAttachment = (id: string, workTask: Ref<WorkTask>) => {
+    workTask.value.attachments = filter(
+      workTask.value.attachments,
+      function (a) {
+        if (id) {
+          return a.id !== id;
+        }
+      }
+    );
+  };
+
   return {
     fileUploading: computed(() => fileUploading.value),
     uploadAttachments,
+    deleteAttachment,
   };
 };

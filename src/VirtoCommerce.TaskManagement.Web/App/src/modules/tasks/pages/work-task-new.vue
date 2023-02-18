@@ -125,6 +125,12 @@
                 :options="priorities"
                 @update:modelValue="handleChange"
               >
+                <template v-slot:selected-item="item">
+                  <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
+                </template>
+                <template v-slot:option="item">
+                  <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
+                </template>
               </VcSelect>
             </Field>
           </VcCol>
@@ -160,37 +166,12 @@
           :is-collapsed="restoreCollapsed('files')"
           @state:collapsed="handleCollapsed('files', $event)"
         >
-          <div class="tw-flex tw-flex-wrap tw-p-5">
-            <div class="tw-flex tw-flex-wrap tw-flex-1">
-              <div
-                class="vc-file-upload vc-file-upload_gallery tw-relative tw-h-[155px] tw-box-border tw-border tw-border-dashed tw-border-[#c8dbea] tw-rounded-[6px] tw-p-4 tw-m-2 tw-flex tw-flex-col tw-items-center tw-justify-center"
-                v-for="attachment in newWorkTask.attachments"
-                v-bind:key="attachment.id"
-              >
-                <i
-                  class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
-                  @click="deleteAttachment(attachment)"
-                ></i>
-                <i
-                  class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"
-                ></i>
-                <div
-                  class="tw-text-[#9db0be] tw-text-center tw-text-lg tw-leading-lg tw-mt-4"
-                >
-                  <a
-                    class="vc-link attachment-wrap"
-                    :href="attachment.url"
-                    target="_blank"
-                    >{{ attachment.name }}</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tw-flex tw-flex-wrap tw-p-5">
-            <VcFileUpload @upload="fileUpload" class="tw-m-2"></VcFileUpload>
-            <VcLoading :active="fileUploading"></VcLoading>
-          </div>
+          <TaskAttachments
+            :workTask="newWorkTask"
+            :fileUploading="fileUploading"
+            @addAttachments="filesUpload($event)"
+            @deleteAttachment="deleteWorkTaskAttachment($event)"
+          ></TaskAttachments>
         </VcCard>
       </VcForm>
     </VcContainer>
@@ -212,21 +193,20 @@ import {
   UserSearchCriteria,
   VcSelect,
   VcCard,
-  VcFileUpload,
-  VcLoading,
-  useUser,
 } from "@vc-shell/framework";
-import {
-  WorkTask,
-  WorkTaskAttachment,
-  WorkTaskPriority,
-} from "../../../api_client/taskmanagement";
+import { WorkTask, WorkTaskPriority } from "../../../api_client/taskmanagement";
 import { Field, useForm, useIsFormValid } from "vee-validate";
-import _, { filter, forEach, remove, uniqueId } from "lodash";
+import _, { forEach } from "lodash";
+import TaskPriority from "../components/taskPriority.vue";
+import TaskAttachments from "../components/taskAttachments.vue";
 </script>
 
 <script lang="ts" setup>
-import { useWorkTask, useUserSearch } from "../composables";
+import {
+  useWorkTask,
+  useUserSearch,
+  useWorkTaskAttachments,
+} from "../composables";
 export interface Props {
   expanded?: boolean;
   closable?: boolean;
@@ -245,16 +225,17 @@ const emit = defineEmits<Emits>();
 const { t } = useI18n();
 const { workTask, loading, createWorkTask } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
+const { fileUploading, uploadAttachments, deleteAttachment } =
+  useWorkTaskAttachments();
 const priorities = Object.values(WorkTaskPriority);
 const newWorkTask = ref({
   priority: WorkTaskPriority.Normal,
   attachments: [],
+  isActive: true,
 } as WorkTask);
 useForm({ validateOnMount: false });
 const isValid = useIsFormValid();
-const { getAccessToken } = useUser();
-const fileUploading = ref(false);
-const defaultTaskAttachmentFolder = "Draft";
+
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
     title: computed(() => t("TASKS.PAGES.NEW.TOOLBAR.CREATE")),
@@ -290,51 +271,15 @@ function getCriteria(skip?: number): UserSearchCriteria {
   criteria.skip = skip;
   return criteria;
 }
-const fileUpload = async (files: FileList) => {
-  try {
-    fileUploading.value = true;
-    for (let i = 0; i < files.length; i++) {
-      const formData = new FormData();
-      formData.append("file", files[i]);
-      const authToken = await getAccessToken();
-      const result = await fetch(
-        `/api/assets?folderUrl=/workTaskAttachment/${defaultTaskAttachmentFolder}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      const response = await result.json();
-      if (response?.length) {
-        const attachment = new WorkTaskAttachment(response[0]);
-        attachment.id = uniqueId("Draft-");
-        attachment.createdDate = new Date();
-        newWorkTask.value.attachments.push(attachment);
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  } finally {
-    fileUploading.value = false;
-  }
-  files = null;
+
+const filesUpload = async (files: FileList) => {
+  await uploadAttachments(files, newWorkTask);
 };
-const deleteAttachment = (attachment: WorkTaskAttachment) => {
-  console.log(newWorkTask.value.attachments);
-  console.log(attachment.id);
-  newWorkTask.value.attachments = filter(
-    newWorkTask.value.attachments,
-    function (a) {
-      if (attachment.id) {
-        return a.id !== attachment.id;
-      }
-    }
-  );
-  console.log(newWorkTask.value.attachments);
+
+const deleteWorkTaskAttachment = (id: string) => {
+  deleteAttachment(id, newWorkTask);
 };
+
 function handleCollapsed(key: string, value: boolean): void {
   localStorage?.setItem(key, `${value}`);
 }

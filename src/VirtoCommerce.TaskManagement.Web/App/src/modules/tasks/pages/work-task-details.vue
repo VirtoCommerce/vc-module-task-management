@@ -55,14 +55,11 @@
                 <Field
                   v-if="workTask.isActive === true"
                   name="priority"
-                  rules="required"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
                   <VcSelect
                     v-bind="field"
-                    name="priority"
                     class="tw-mb-4"
-                    required
                     v-model="workTask.priority"
                     option-value="typeName"
                     option-label="typeName"
@@ -73,23 +70,16 @@
                     @update:modelValue="handleChange"
                   >
                     <template v-slot:selected-item="item">
-                      <TaskPriority
-                        :workTaskPriority="item.opt"
-                        :withText="true"
-                      ></TaskPriority>
+                      <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
                     </template>
                     <template v-slot:option="item">
-                      <TaskPriority
-                        :workTaskPriority="item.opt"
-                        :withText="true"
-                      ></TaskPriority>
+                      <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
                     </template>
                   </VcSelect>
                 </Field>
                 <div class="tw-text-base" v-else>
                   <TaskPriority
                     :workTaskPriority="workTask.priority"
-                    :withText="true"
                   ></TaskPriority>
                 </div>
               </VcCol>
@@ -144,7 +134,6 @@
                 >
                   <VcInput
                     v-bind="field"
-                    name="type"
                     class="tw-mb-4"
                     v-model="workTask.type"
                     :clearable="true"
@@ -196,7 +185,6 @@
                 <Field
                   v-if="workTask.isActive"
                   name="responsibleId"
-                  rules="required"
                   :modelValue="workTask.responsibleId"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
@@ -208,7 +196,7 @@
                     v-model="workTask.responsibleId"
                     option-value="id"
                     option-label="userName"
-                    :clearable="false"
+                    :clearable="true"
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="users"
@@ -243,42 +231,12 @@
             @state:collapsed="handleCollapsed('files', $event)"
             v-if="workTask.isActive === true || workTask.attachments?.length"
           >
-            <div class="tw-flex tw-flex-wrap tw-p-5">
-              <div class="tw-flex tw-flex-wrap tw-flex-1">
-                <div
-                  class="vc-file-upload vc-file-upload_gallery tw-relative tw-h-[155px] tw-box-border tw-border tw-border-dashed tw-border-[#c8dbea] tw-rounded-[6px] tw-p-4 tw-m-2 tw-flex tw-flex-col tw-items-center tw-justify-center"
-                  v-for="attachment in workTask.attachments"
-                  v-bind:key="attachment.id"
-                >
-                  <i
-                    class="vc-icon vc-icon_s fa-solid fa-xmark tw-text-[#c8dbea] hover:tw-text-[color:var(--app-bar-button-color-hover)] delete-icon"
-                    @click="deleteAttachment(attachment)"
-                    v-if="workTask.isActive === true"
-                  ></i>
-                  <i
-                    class="vc-icon vc-icon_xxl fa-solid fa-file tw-text-[#c8dbea]"
-                  ></i>
-                  <div
-                    class="tw-text-[#9db0be] tw-text-center tw-text-lg tw-leading-lg tw-mt-4"
-                  >
-                    <a
-                      class="vc-link attachment-wrap"
-                      :href="attachment.url"
-                      target="_blank"
-                      >{{ attachment.name }}</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-wrap tw-p-5">
-              <VcFileUpload
-                @upload="fileUpload"
-                v-if="workTask.isActive === true"
-                class="tw-m-2"
-              ></VcFileUpload>
-              <VcLoading :active="fileUploading"></VcLoading>
-            </div>
+            <TaskAttachments
+              :workTask="workTask"
+              :fileUploading="fileUploading"
+              @addAttachments="filesUpload($event)"
+              @deleteAttachment="deleteWorkTaskAttachment($event)"
+            ></TaskAttachments>
           </VcCard>
         </VcForm>
       </div>
@@ -287,7 +245,11 @@
 </template>
 <script lang="ts">
 import moment from "moment";
-import { useUserSearch, useWorkTask } from "../composables";
+import {
+  useUserSearch,
+  useWorkTask,
+  useWorkTaskAttachments,
+} from "../composables";
 import {
   useI18n,
   IBladeToolbar,
@@ -303,20 +265,16 @@ import {
   VcSelect,
   UserSearchCriteria,
   VcTextarea,
-  VcFileUpload,
   VcCard,
 } from "@vc-shell/framework";
 import { defineComponent, computed, onMounted, ref } from "vue";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskStatus from "../components/taskStatus.vue";
-import { Field } from "vee-validate";
-import { WorkTaskAttachment } from "../../../api_client/taskmanagement";
-import filter from "lodash-es/filter";
-import uniqueId from "lodash-es/uniqueId";
+import { Field, useForm, useIsFormValid } from "vee-validate";
 import { forEach } from "lodash";
+import TaskAttachments from "../components/taskAttachments.vue";
 export default defineComponent({
   url: "task",
-  components: { VcFileUpload, VcCard },
 });
 </script>
 <script lang="ts" setup>
@@ -349,8 +307,11 @@ const {
   deleteWorkTask,
 } = useWorkTask();
 const { users, searchUsers } = useUserSearch();
-const { user, getAccessToken } = useUser();
-const fileUploading = ref(false);
+const { user } = useUser();
+const { fileUploading, uploadAttachments, deleteAttachment } =
+  useWorkTaskAttachments();
+useForm({ validateOnMount: false });
+const isValid = useIsFormValid();
 
 onMounted(async () => {
   if (props.param) {
@@ -403,7 +364,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         emit("parent:call", { method: "reload" });
       }
     },
-    disabled: computed(() => !modified.value),
+    disabled: computed(() => !modified.value || !isValid.value),
     isVisible: computed(() => workTask.value.isActive === true),
   },
   {
@@ -429,45 +390,14 @@ function getCriteria(skip?: number): UserSearchCriteria {
   return criteria;
 }
 
-const fileUpload = async (files: FileList) => {
-  try {
-    fileUploading.value = true;
-    for (let i = 0; i < files.length; i++) {
-      const formData = new FormData();
-      formData.append("file", files[i]);
-      const authToken = await getAccessToken();
-      const result = await fetch(
-        `/api/assets?folderUrl=/workTaskAttachment/${workTask.value.id}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      const response = await result.json();
-      if (response?.length) {
-        const attachment = new WorkTaskAttachment(response[0]);
-        attachment.id = uniqueId("Draft-");
-        attachment.createdDate = new Date();
-        workTask.value.attachments.push(attachment);
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  } finally {
-    fileUploading.value = false;
-  }
-  files = null;
+const filesUpload = async (files: FileList) => {
+  await uploadAttachments(files, workTask);
 };
-const deleteAttachment = (attachment: WorkTaskAttachment) => {
-  workTask.value.attachments = filter(workTask.value.attachments, function (a) {
-    if (attachment.id) {
-      return a.id !== attachment.id;
-    }
-  });
+
+const deleteWorkTaskAttachment = (id: string) => {
+  deleteAttachment(id, workTask);
 };
+
 function handleCollapsed(key: string, value: boolean): void {
   localStorage?.setItem(key, `${value}`);
 }

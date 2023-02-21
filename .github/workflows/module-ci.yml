@@ -61,6 +61,10 @@ jobs:
         run: |
           echo "RELEASE_STATUS=true" >> $GITHUB_ENV
 
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0

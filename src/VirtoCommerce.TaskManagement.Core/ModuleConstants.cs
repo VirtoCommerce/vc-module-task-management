@@ -46,21 +46,38 @@ namespace VirtoCommerce.TaskManagement.Core
                     DefaultValue = "qwerty",
                 };
 
-                public static IEnumerable<SettingDescriptor> AllGeneralSettings
+                public static SettingDescriptor TaskNotificationsEnabled { get; } = new SettingDescriptor
+                {
+                    Name = "TaskManagement.TaskNotificationsEnabled",
+                    GroupName = "TaskManagement|Notification",
+                    ValueType = SettingValueType.Boolean,
+                    DefaultValue = false,
+                };
+
+                public static SettingDescriptor TaskNotificationNoReplyEmail { get; } = new SettingDescriptor
+                {
+                    Name = "TaskManagement.TaskNotificationNoReplyEmail",
+                    GroupName = "TaskManagement|Notification",
+                    ValueType = SettingValueType.ShortText,
+                };
+
+                public static SettingDescriptor TaskAppTaskDetailsBaseUrl { get; } = new SettingDescriptor
+                {
+                    Name = "TaskManagement.TaskAppUrl",
+                    GroupName = "TaskManagement|Notification",
+                    ValueType = SettingValueType.ShortText,
+                };
+
+                public static IEnumerable<SettingDescriptor> AllSettings
                 {
                     get
                     {
                         yield return TaskManagementEnabled;
                         yield return TaskManagementPassword;
+                        yield return TaskNotificationsEnabled;
+                        yield return TaskNotificationNoReplyEmail;
+                        yield return TaskAppTaskDetailsBaseUrl;
                     }
-                }
-            }
-
-            public static IEnumerable<SettingDescriptor> AllSettings
-            {
-                get
-                {
-                    return General.AllGeneralSettings;
                 }
             }
         }

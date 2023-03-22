@@ -1,7 +1,11 @@
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
@@ -13,11 +17,13 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
     {
         private readonly IWorkTaskService _workTaskService;
         private readonly IWorkTaskSearchService _workTaskSearchService;
+        private readonly IMemberService _memberService;
 
-        public TaskManagementController(IWorkTaskService workTaskService, IWorkTaskSearchService workTaskSearchService)
+        public TaskManagementController(IWorkTaskService workTaskService, IWorkTaskSearchService workTaskSearchService, IMemberService memberService)
         {
             _workTaskService = workTaskService;
             _workTaskSearchService = workTaskSearchService;
+            _memberService = memberService;
         }
 
         [HttpGet("{id}")]
@@ -83,6 +89,27 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         {
             var workTask = await _workTaskService.TimeoutAsync(id);
             return workTask;
+        }
+
+        [HttpGet("contact/icon/{id}")]
+        public async Task<ActionResult> ContactIcon(string id)
+        {
+            var contact = await _memberService.GetByIdAsync(id, memberType: "Contact");
+
+            if (contact != null && !string.IsNullOrEmpty(contact.IconUrl))
+            {
+                using var client = new HttpClient();
+                using var response = await client.GetAsync(contact.IconUrl);
+                await using var stream = await response.Content.ReadAsStreamAsync();
+                var contentTypeHeader = response.Content.Headers.FirstOrDefault(h => h.Key == "Content-Type").Value.FirstOrDefault();
+
+                var memoryStream = new MemoryStream();
+                stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                return File(memoryStream, contentTypeHeader);
+            }
+
+            return null;
         }
     }
 }

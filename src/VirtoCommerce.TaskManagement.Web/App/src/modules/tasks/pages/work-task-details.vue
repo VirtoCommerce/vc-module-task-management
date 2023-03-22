@@ -109,7 +109,7 @@
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :modelValue="getDueDate()"
-                    @update:modelValue="setDueDate($event)"
+                    @update:modelValue="(e : string) => setDueDate(e)"
                   >
                   </VcInput>
                 </Field>
@@ -160,8 +160,7 @@
               <VcCol class="tw-p-1">
                 <div>
                   <TaskStatus
-                    :active="workTask.isActive"
-                    :completed="workTask.completed"
+                    :work-task-status="calculateStatus(workTask)"
                   ></TaskStatus>
                 </div>
               </VcCol>
@@ -195,17 +194,40 @@
                     required
                     v-model="workTask.responsibleId"
                     option-value="id"
-                    option-label="userName"
+                    option-label="fullName"
                     :clearable="true"
                     :error="!!errors.length"
                     :error-message="errorMessage"
-                    :options="users"
+                    :options="searchContacts"
                     @update:modelValue="handleChange"
                   >
+                    <template v-slot:selected-item="item">
+                      <img
+                        class="tw-w-5 tw-h-5 tw-rounded-full"
+                        :src="getContactIcon(item.opt.id)"
+                        onerror="javascript:this.src='/assets/userpic.svg'"
+                      />
+                      <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                    </template>
+                    <template v-slot:option="item">
+                      <img
+                        class="tw-w-5 tw-h-5 tw-rounded-full"
+                        :src="getContactIcon(item.opt.id)"
+                        onerror="javascript:this.src='/assets/userpic.svg'"
+                      />
+                      <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                    </template>
                   </VcSelect>
                 </Field>
-                <div class="tw-p-3" v-else>
-                  {{ workTask.responsibleName }}
+                <div class="tw-p-3 tw-flex" v-else>
+                  <img
+                    class="tw-w-5 tw-h-5 tw-rounded-full"
+                    :src="getContactIcon(workTask.responsibleId)"
+                    onerror="javascript:this.src='/assets/userpic.svg'"
+                  />
+                  <span class="tw-ml-1 tw-pt-0.5">{{
+                    workTask.responsibleName
+                  }}</span>
                 </div>
               </VcCol>
             </VcRow>
@@ -246,7 +268,7 @@
 <script lang="ts">
 import moment from "moment";
 import {
-  useUserSearch,
+  useContacts,
   useWorkTask,
   useWorkTaskAttachments,
 } from "../composables";
@@ -263,7 +285,6 @@ import {
   VcForm,
   VcInput,
   VcSelect,
-  UserSearchCriteria,
   VcTextarea,
   VcCard,
 } from "@vc-shell/framework";
@@ -273,6 +294,9 @@ import TaskStatus from "../components/taskStatus.vue";
 import { Field, useForm, useIsFormValid } from "vee-validate";
 import { forEach } from "lodash";
 import TaskAttachments from "../components/taskAttachments.vue";
+import { MembersSearchCriteria } from "../../../api_client/customer";
+import { env } from "process";
+import { WorkTask } from "../../../api_client/taskmanagement";
 export default defineComponent({
   url: "task",
 });
@@ -306,7 +330,7 @@ const {
   resetWorkTask,
   deleteWorkTask,
 } = useWorkTask();
-const { users, searchUsers } = useUserSearch();
+const { getContact, searchContacts } = useContacts();
 const { user } = useUser();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
@@ -360,6 +384,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
             attachment.id = null;
           }
         });
+        const contact = await getContact(workTask.value.responsibleId);
+        workTask.value.responsibleName = contact?.fullName;
         await updateWorktask();
         emit("parent:call", { method: "reload" });
       }
@@ -383,10 +409,11 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 const getTitle = () => {
   return "# " + workTask.value.number + ": " + workTask.value.name;
 };
-function getCriteria(skip?: number): UserSearchCriteria {
-  const criteria = new UserSearchCriteria();
+function getCriteria(skip?: number): MembersSearchCriteria {
+  const criteria = new MembersSearchCriteria();
   criteria.take = 20;
   criteria.skip = skip;
+  criteria.memberType = "Contact";
   return criteria;
 }
 
@@ -419,9 +446,36 @@ function getDueDate() {
   }
   return undefined;
 }
-onMounted(async () => {
-  await searchUsers(getCriteria());
-});
+
+const getContactIcon = (id: string) => {
+  return "/api/task-management/contact/icon/" + id;
+};
+
+const calculateStatus = (workTask: WorkTask) => {
+  let result = "ToDo";
+  if (workTask.isActive === true) {
+    switch (workTask.completed) {
+      case null:
+        result = "ToDo";
+        break;
+      case false:
+      case true:
+        result = "Canceled";
+        break;
+    }
+  } else {
+    switch (workTask.completed) {
+      case null:
+      case false:
+        result = "Canceled";
+        break;
+      case true:
+        result = "Done";
+        break;
+    }
+  }
+  return result;
+};
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
-  <VcStatus v-bind="statusStyle()">
-    {{ status() }}
+  <VcStatus v-bind="statusStyles[workTaskStatus]">
+    {{ localizedStatus() }}
   </VcStatus>
 </template>
 
@@ -16,75 +16,45 @@ export default defineComponent({
 import { useI18n, VcStatus } from "@vc-shell/framework";
 
 export interface Props {
-  active: boolean;
-  completed: boolean | null;
+  workTaskStatus: string;
 }
 
 const { t } = useI18n();
 
 const props = withDefaults(defineProps<Props>(), {
-  active: false,
-  completed: null,
+  workTaskStatus: "ToDo",
 });
 
-const status = () => {
+const localizedStatus = () => {
   let result = t("TASKS.STATUS.TODO");
 
-  if (props.active === true) {
-    switch (props.completed) {
-      case null:
-        result = t("TASKS.STATUS.TODO");
-        break;
-      case false:
-      case true:
-        result = t("TASKS.STATUS.CANCELED");
-        break;
-    }
-  } else {
-    switch (props.completed) {
-      case null:
-      case false:
-        result = t("TASKS.STATUS.CANCELED");
-        break;
-      case true:
-        result = t("TASKS.STATUS.DONE");
-        break;
-    }
+  switch (props.workTaskStatus) {
+    case "ToDo":
+      result = t("TASKS.STATUS.TODO");
+      break;
+    case "Canceled":
+      result = t("TASKS.STATUS.CANCELED");
+      break;
+    case 'Done':
+      result = t("TASKS.STATUS.DONE");
+      break;
   }
   return result;
 };
 
-const statusStyle = () => {
-  const result = {
-    outline: true,
+const statusStyles = {
+  ToDo: {
+    outline: false,
     variant: "info",
-  };
-
-  if (props.active === true) {
-    result.outline = false;
-
-    switch (props.completed) {
-      case null:
-        result.variant = "info";
-        break;
-      case false:
-      case true:
-        result.variant = "danger";
-        break;
-    }
-  } else {
-    result.outline = false;
-
-    switch (props.completed) {
-      case null:
-      case false:
-        result.variant = "danger";
-        break;
-      case true:
-        result.variant = "success";
-        break;
-    }
+  },
+  Canceled: {
+    outline: false,
+    variant: "danger",
+  },
+  Done: {
+    outline: false,
+    variant: "success",
   }
-  return result;
 };
+
 </script>

@@ -24,5 +24,11 @@
         "description": "TaskManagement Password setting"
       }
     }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Notification on assigned work task",
+      "description": "The manager will get an email notification when new work task assigned"
+    }
   }
 }

@@ -25,7 +25,7 @@
       <VcBladeNavigation
         @onOpen="openBlade($event.blade, $event.id)"
         @onClose="closeBlade($event)"
-        @onParentCall="(e) => onParentCall(e.id, e.cb)"
+        @onParentCall="(e) => onParentCall(e.id, e.args)"
         :blades="blades"
         :parentBladeOptions="parentBladeOptions"
         :parentBladeParam="parentBladeParam"
@@ -63,7 +63,6 @@ import {
   useAppSwitcher,
   useFunctions,
   useI18n,
-  useLogger,
   useNotifications,
   usePermissions,
   useSettings,
@@ -75,6 +74,7 @@ import {
   VcApp,
   VcLoading,
   VcNotification,
+  ExtendedComponent,
 } from "@vc-shell/framework";
 import {
   computed,
@@ -109,7 +109,6 @@ const {
   availableLocales,
   getLocaleMessage,
 } = useI18n();
-const log = useLogger();
 const { user, loadUser, signOut } = useUser();
 const {
   popupNotifications,
@@ -136,7 +135,7 @@ const router = useRouter();
 const isAuthorized = ref(false);
 const isReady = ref(false);
 const isChangePasswordActive = ref(false);
-const pages = inject("pages");
+const pages = inject<ExtendedComponent[]>("pages");
 const signalR = inject<HubConnection>("connection");
 const isDesktop = inject<Ref<boolean>>("isDesktop");
 const isMobile = inject<Ref<boolean>>("isMobile");
@@ -175,7 +174,7 @@ watch(
   { deep: true }
 );
 
-log.debug(`Initializing App`);
+console.debug(`Initializing App`);
 
 const toolbarItems = ref<IBladeToolbar[]>([
   {

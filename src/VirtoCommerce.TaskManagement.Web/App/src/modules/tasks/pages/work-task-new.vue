@@ -145,7 +145,7 @@
                 class="tw-mb-4"
                 v-model="newWorkTask.responsibleId"
                 option-value="id"
-                option-label="userName"
+                option-label="fullName"
                 :label="$t('TASKS.PAGES.NEW.FIELDS.ASSIGNEDTO.TITLE')"
                 :placeholder="
                   $t('TASKS.PAGES.NEW.FIELDS.ASSIGNEDTO.PLACEHOLDER')
@@ -153,9 +153,25 @@
                 :clearable="true"
                 :error="!!errors.length"
                 :error-message="errorMessage"
-                :options="users"
+                :options="searchContacts"
                 @update:modelValue="handleChange"
               >
+                <template v-slot:selected-item="item">
+                  <img
+                    class="tw-w-5 tw-h-5 tw-rounded-full"
+                    :src="getContactIcon(item.opt.id)"
+                    onerror="javascript:this.src='/assets/userpic.svg'"
+                  />
+                  <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                </template>
+                <template v-slot:option="item">
+                  <img
+                    class="tw-w-5 tw-h-5 tw-rounded-full"
+                    :src="getContactIcon(item.opt.id)"
+                    onerror="javascript:this.src='/assets/userpic.svg'"
+                  />
+                  <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                </template>
               </VcSelect>
             </Field>
           </VcCol>
@@ -178,7 +194,7 @@
   </VcBlade>
 </template>
 <script lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import {
   VcInput,
   useI18n,
@@ -190,7 +206,6 @@ import {
   VcForm,
   VcRow,
   VcCol,
-  UserSearchCriteria,
   VcSelect,
   VcCard,
 } from "@vc-shell/framework";
@@ -203,8 +218,8 @@ import TaskAttachments from "../components/taskAttachments.vue";
 
 <script lang="ts" setup>
 import {
+  useContacts,
   useWorkTask,
-  useUserSearch,
   useWorkTaskAttachments,
 } from "../composables";
 export interface Props {
@@ -224,7 +239,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
 const { workTask, loading, createWorkTask } = useWorkTask();
-const { users, searchUsers } = useUserSearch();
+const { getContact, searchContacts } = useContacts();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
 const priorities = Object.values(WorkTaskPriority);
@@ -242,12 +257,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     icon: "fas fa-save",
     async clickHandler() {
       newWorkTask.value.isActive = true;
-      const responsible = _.find(users.value, function (user) {
-        if (user.id === newWorkTask.value.responsibleId) {
-          return true;
-        }
-      });
-      newWorkTask.value.responsibleName = responsible?.userName;
+      const contact = await getContact(newWorkTask.value.responsibleId);
+      newWorkTask.value.responsibleName = contact?.fullName;
       forEach(newWorkTask.value.attachments, function (attachment) {
         if (attachment.id.startsWith("Draft")) {
           attachment.id = null;
@@ -265,12 +276,6 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     disabled: computed(() => isValid.value === false),
   },
 ]);
-function getCriteria(skip?: number): UserSearchCriteria {
-  const criteria = new UserSearchCriteria();
-  criteria.take = 20;
-  criteria.skip = skip;
-  return criteria;
-}
 
 const filesUpload = async (files: FileList) => {
   await uploadAttachments(files, newWorkTask);
@@ -286,7 +291,8 @@ function handleCollapsed(key: string, value: boolean): void {
 function restoreCollapsed(key: string): boolean {
   return localStorage?.getItem(key) === "true";
 }
-onMounted(async () => {
-  await searchUsers(getCriteria());
-});
+
+const getContactIcon = (id: string) => {
+  return "/api/task-management/contact/icon/" + id;
+};
 </script>

@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem" Version="3.213.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj" />
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.Data\VirtoCommerce.TaskManagement.Data.csproj" />
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.ExperienceApi\VirtoCommerce.TaskManagement.ExperienceApi.csproj" />

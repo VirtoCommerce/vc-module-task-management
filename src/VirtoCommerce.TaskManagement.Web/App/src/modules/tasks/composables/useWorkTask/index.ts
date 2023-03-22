@@ -1,5 +1,5 @@
 import { computed, Ref, ref, watch } from "vue";
-import { useLogger, useUser } from "@vc-shell/framework";
+import { useUser } from "@vc-shell/framework";
 import {
   TaskManagementClient,
   WorkTask,
@@ -24,7 +24,6 @@ interface IUseWorkTask {
 const workTask: Ref<WorkTask> = ref({} as WorkTask);
 
 export default (): IUseWorkTask => {
-  const logger = useLogger();
   const loading = ref(false);
   const priorities = Object.values(WorkTaskPriority);
 
@@ -55,7 +54,7 @@ export default (): IUseWorkTask => {
       workTask.value = await client.get(id, "WithAttachments");
       workTaskCopy = cloneDeep(workTask.value);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;
@@ -70,7 +69,7 @@ export default (): IUseWorkTask => {
       validateAttachments(newWorkTask);
       workTask.value = await client.create(newWorkTask);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;
@@ -83,7 +82,7 @@ export default (): IUseWorkTask => {
       loading.value = true;
       workTask.value = await client.complete(id, result);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;
@@ -96,7 +95,7 @@ export default (): IUseWorkTask => {
       loading.value = true;
       workTask.value = await client.cancel(id, result);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;
@@ -112,7 +111,7 @@ export default (): IUseWorkTask => {
       workTask.value = await client.update(workTask.value);
       workTaskCopy = cloneDeep(workTask.value);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;
@@ -130,7 +129,7 @@ export default (): IUseWorkTask => {
       loading.value = true;
       await client.delete(id);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;

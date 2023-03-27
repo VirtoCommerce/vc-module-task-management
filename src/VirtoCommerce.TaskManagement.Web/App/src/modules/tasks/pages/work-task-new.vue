@@ -162,7 +162,7 @@
                     :src="getContactIcon(item.opt.id)"
                     onerror="javascript:this.src='/assets/userpic.svg'"
                   />
-                  <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
                 </template>
                 <template v-slot:option="item">
                   <img
@@ -170,7 +170,7 @@
                     :src="getContactIcon(item.opt.id)"
                     onerror="javascript:this.src='/assets/userpic.svg'"
                   />
-                  <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
                 </template>
               </VcSelect>
             </Field>
@@ -258,7 +258,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     async clickHandler() {
       newWorkTask.value.isActive = true;
       const contact = await getContact(newWorkTask.value.responsibleId);
-      newWorkTask.value.responsibleName = contact?.fullName;
+      newWorkTask.value.responsibleName = contact?.name;
       forEach(newWorkTask.value.attachments, function (attachment) {
         if (attachment.id.startsWith("Draft")) {
           attachment.id = null;

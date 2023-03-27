@@ -42,7 +42,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param respGroup (optional) 
      * @return Success
      */
-    get(id: string | null, respGroup: string | null | undefined): Promise<WorkTask> {
+    get(id: string | null, respGroup?: string | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -95,7 +95,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    searchTasks(body: WorkTaskSearchCriteria | null | undefined): Promise<WorkTaskSearchResult> {
+    searchTasks(body?: WorkTaskSearchCriteria | null | undefined): Promise<WorkTaskSearchResult> {
         let url_ = this.baseUrl + "/api/task-management/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -147,7 +147,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    create(body: WorkTask | null | undefined): Promise<WorkTask> {
+    create(body?: WorkTask | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -179,14 +179,6 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = WorkTask.fromJS(resultData200);
             return result200;
             });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -199,7 +191,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    update(body: WorkTask | null | undefined): Promise<WorkTask> {
+    update(body?: WorkTask | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -251,7 +243,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    delete(body: string | null | undefined): Promise<void> {
+    delete(body?: string | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/task-management";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -300,7 +292,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    complete(id: string | null | undefined, body: any | null | undefined): Promise<WorkTask> {
+    complete(id?: string | null | undefined, body?: any | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management/complete?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
@@ -355,7 +347,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    cancel(id: string | null | undefined, body: any | null | undefined): Promise<WorkTask> {
+    cancel(id?: string | null | undefined, body?: any | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management/cancel?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
@@ -409,7 +401,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param id (optional) 
      * @return Success
      */
-    timeout(id: string | null | undefined): Promise<WorkTask> {
+    timeout(id?: string | null | undefined): Promise<WorkTask> {
         let url_ = this.baseUrl + "/api/task-management/timeout?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
@@ -453,6 +445,88 @@ export class TaskManagementClient extends AuthApiBase {
             });
         }
         return Promise.resolve<WorkTask>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    contactIcon(id: string | null): Promise<void> {
+        let url_ = this.baseUrl + "/api/task-management/contact/icon/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processContactIcon(_response);
+        });
+    }
+
+    protected processContactIcon(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    searchAssignMembers(body?: MembersSearchCriteria | null | undefined): Promise<MemberSearchResult> {
+        let url_ = this.baseUrl + "/api/task-management/member/search";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processSearchAssignMembers(_response);
+        });
+    }
+
+    protected processSearchAssignMembers(response: Response): Promise<MemberSearchResult> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MemberSearchResult.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<MemberSearchResult>(null as any);
     }
 }
 
@@ -897,6 +971,902 @@ export interface IWorkTaskSearchResult {
     results?: WorkTask[] | undefined;
 }
 
+export class MembersSearchCriteria implements IMembersSearchCriteria {
+    memberType?: string | undefined;
+    memberTypes?: string[] | undefined;
+    group?: string | undefined;
+    groups?: string[] | undefined;
+    memberId?: string | undefined;
+    deepSearch?: boolean;
+    outerIds?: string[] | undefined;
+    responseGroup?: string | undefined;
+    objectType?: string | undefined;
+    objectTypes?: string[] | undefined;
+    objectIds?: string[] | undefined;
+    keyword?: string | undefined;
+    searchPhrase?: string | undefined;
+    languageCode?: string | undefined;
+    sort?: string | undefined;
+    readonly sortInfos?: SortInfo[] | undefined;
+    skip?: number;
+    take?: number;
+
+    constructor(data?: IMembersSearchCriteria) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.memberType = _data["memberType"];
+            if (Array.isArray(_data["memberTypes"])) {
+                this.memberTypes = [] as any;
+                for (let item of _data["memberTypes"])
+                    this.memberTypes!.push(item);
+            }
+            this.group = _data["group"];
+            if (Array.isArray(_data["groups"])) {
+                this.groups = [] as any;
+                for (let item of _data["groups"])
+                    this.groups!.push(item);
+            }
+            this.memberId = _data["memberId"];
+            this.deepSearch = _data["deepSearch"];
+            if (Array.isArray(_data["outerIds"])) {
+                this.outerIds = [] as any;
+                for (let item of _data["outerIds"])
+                    this.outerIds!.push(item);
+            }
+            this.responseGroup = _data["responseGroup"];
+            this.objectType = _data["objectType"];
+            if (Array.isArray(_data["objectTypes"])) {
+                this.objectTypes = [] as any;
+                for (let item of _data["objectTypes"])
+                    this.objectTypes!.push(item);
+            }
+            if (Array.isArray(_data["objectIds"])) {
+                this.objectIds = [] as any;
+                for (let item of _data["objectIds"])
+                    this.objectIds!.push(item);
+            }
+            this.keyword = _data["keyword"];
+            this.searchPhrase = _data["searchPhrase"];
+            this.languageCode = _data["languageCode"];
+            this.sort = _data["sort"];
+            if (Array.isArray(_data["sortInfos"])) {
+                (<any>this).sortInfos = [] as any;
+                for (let item of _data["sortInfos"])
+                    (<any>this).sortInfos!.push(SortInfo.fromJS(item));
+            }
+            this.skip = _data["skip"];
+            this.take = _data["take"];
+        }
+    }
+
+    static fromJS(data: any): MembersSearchCriteria {
+        data = typeof data === 'object' ? data : {};
+        let result = new MembersSearchCriteria();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["memberType"] = this.memberType;
+        if (Array.isArray(this.memberTypes)) {
+            data["memberTypes"] = [];
+            for (let item of this.memberTypes)
+                data["memberTypes"].push(item);
+        }
+        data["group"] = this.group;
+        if (Array.isArray(this.groups)) {
+            data["groups"] = [];
+            for (let item of this.groups)
+                data["groups"].push(item);
+        }
+        data["memberId"] = this.memberId;
+        data["deepSearch"] = this.deepSearch;
+        if (Array.isArray(this.outerIds)) {
+            data["outerIds"] = [];
+            for (let item of this.outerIds)
+                data["outerIds"].push(item);
+        }
+        data["responseGroup"] = this.responseGroup;
+        data["objectType"] = this.objectType;
+        if (Array.isArray(this.objectTypes)) {
+            data["objectTypes"] = [];
+            for (let item of this.objectTypes)
+                data["objectTypes"].push(item);
+        }
+        if (Array.isArray(this.objectIds)) {
+            data["objectIds"] = [];
+            for (let item of this.objectIds)
+                data["objectIds"].push(item);
+        }
+        data["keyword"] = this.keyword;
+        data["searchPhrase"] = this.searchPhrase;
+        data["languageCode"] = this.languageCode;
+        data["sort"] = this.sort;
+        if (Array.isArray(this.sortInfos)) {
+            data["sortInfos"] = [];
+            for (let item of this.sortInfos)
+                data["sortInfos"].push(item.toJSON());
+        }
+        data["skip"] = this.skip;
+        data["take"] = this.take;
+        return data;
+    }
+}
+
+export interface IMembersSearchCriteria {
+    memberType?: string | undefined;
+    memberTypes?: string[] | undefined;
+    group?: string | undefined;
+    groups?: string[] | undefined;
+    memberId?: string | undefined;
+    deepSearch?: boolean;
+    outerIds?: string[] | undefined;
+    responseGroup?: string | undefined;
+    objectType?: string | undefined;
+    objectTypes?: string[] | undefined;
+    objectIds?: string[] | undefined;
+    keyword?: string | undefined;
+    searchPhrase?: string | undefined;
+    languageCode?: string | undefined;
+    sort?: string | undefined;
+    sortInfos?: SortInfo[] | undefined;
+    skip?: number;
+    take?: number;
+}
+
+export enum AddressType {
+    Undefined = "Undefined",
+    Billing = "Billing",
+    Shipping = "Shipping",
+    BillingAndShipping = "BillingAndShipping",
+    Pickup = "Pickup",
+}
+
+export class CustomerAddress implements ICustomerAddress {
+    addressType?: CustomerAddressAddressType;
+    key?: string | undefined;
+    name?: string | undefined;
+    organization?: string | undefined;
+    countryCode?: string | undefined;
+    countryName?: string | undefined;
+    city?: string | undefined;
+    postalCode?: string | undefined;
+    zip?: string | undefined;
+    line1?: string | undefined;
+    line2?: string | undefined;
+    regionId?: string | undefined;
+    regionName?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phone?: string | undefined;
+    email?: string | undefined;
+    outerId?: string | undefined;
+    isDefault?: boolean;
+    description?: string | undefined;
+
+    constructor(data?: ICustomerAddress) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.addressType = _data["addressType"];
+            this.key = _data["key"];
+            this.name = _data["name"];
+            this.organization = _data["organization"];
+            this.countryCode = _data["countryCode"];
+            this.countryName = _data["countryName"];
+            this.city = _data["city"];
+            this.postalCode = _data["postalCode"];
+            this.zip = _data["zip"];
+            this.line1 = _data["line1"];
+            this.line2 = _data["line2"];
+            this.regionId = _data["regionId"];
+            this.regionName = _data["regionName"];
+            this.firstName = _data["firstName"];
+            this.middleName = _data["middleName"];
+            this.lastName = _data["lastName"];
+            this.phone = _data["phone"];
+            this.email = _data["email"];
+            this.outerId = _data["outerId"];
+            this.isDefault = _data["isDefault"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): CustomerAddress {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomerAddress();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["addressType"] = this.addressType;
+        data["key"] = this.key;
+        data["name"] = this.name;
+        data["organization"] = this.organization;
+        data["countryCode"] = this.countryCode;
+        data["countryName"] = this.countryName;
+        data["city"] = this.city;
+        data["postalCode"] = this.postalCode;
+        data["zip"] = this.zip;
+        data["line1"] = this.line1;
+        data["line2"] = this.line2;
+        data["regionId"] = this.regionId;
+        data["regionName"] = this.regionName;
+        data["firstName"] = this.firstName;
+        data["middleName"] = this.middleName;
+        data["lastName"] = this.lastName;
+        data["phone"] = this.phone;
+        data["email"] = this.email;
+        data["outerId"] = this.outerId;
+        data["isDefault"] = this.isDefault;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface ICustomerAddress {
+    addressType?: CustomerAddressAddressType;
+    key?: string | undefined;
+    name?: string | undefined;
+    organization?: string | undefined;
+    countryCode?: string | undefined;
+    countryName?: string | undefined;
+    city?: string | undefined;
+    postalCode?: string | undefined;
+    zip?: string | undefined;
+    line1?: string | undefined;
+    line2?: string | undefined;
+    regionId?: string | undefined;
+    regionName?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phone?: string | undefined;
+    email?: string | undefined;
+    outerId?: string | undefined;
+    isDefault?: boolean;
+    description?: string | undefined;
+}
+
+export class Note implements INote {
+    title?: string | undefined;
+    body?: string | undefined;
+    outerId?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: INote) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.body = _data["body"];
+            this.outerId = _data["outerId"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Note {
+        data = typeof data === 'object' ? data : {};
+        let result = new Note();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["body"] = this.body;
+        data["outerId"] = this.outerId;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface INote {
+    title?: string | undefined;
+    body?: string | undefined;
+    outerId?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export enum DynamicPropertyValueType {
+    Undefined = "Undefined",
+    ShortText = "ShortText",
+    LongText = "LongText",
+    Integer = "Integer",
+    Decimal = "Decimal",
+    DateTime = "DateTime",
+    Boolean = "Boolean",
+    Html = "Html",
+    Image = "Image",
+}
+
+export class DynamicPropertyObjectValue implements IDynamicPropertyObjectValue {
+    objectType?: string | undefined;
+    objectId?: string | undefined;
+    locale?: string | undefined;
+    value?: any | undefined;
+    valueId?: string | undefined;
+    valueType?: DynamicPropertyObjectValueValueType;
+    propertyId?: string | undefined;
+    propertyName?: string | undefined;
+
+    constructor(data?: IDynamicPropertyObjectValue) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.objectType = _data["objectType"];
+            this.objectId = _data["objectId"];
+            this.locale = _data["locale"];
+            this.value = _data["value"];
+            this.valueId = _data["valueId"];
+            this.valueType = _data["valueType"];
+            this.propertyId = _data["propertyId"];
+            this.propertyName = _data["propertyName"];
+        }
+    }
+
+    static fromJS(data: any): DynamicPropertyObjectValue {
+        data = typeof data === 'object' ? data : {};
+        let result = new DynamicPropertyObjectValue();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["objectType"] = this.objectType;
+        data["objectId"] = this.objectId;
+        data["locale"] = this.locale;
+        data["value"] = this.value;
+        data["valueId"] = this.valueId;
+        data["valueType"] = this.valueType;
+        data["propertyId"] = this.propertyId;
+        data["propertyName"] = this.propertyName;
+        return data;
+    }
+}
+
+export interface IDynamicPropertyObjectValue {
+    objectType?: string | undefined;
+    objectId?: string | undefined;
+    locale?: string | undefined;
+    value?: any | undefined;
+    valueId?: string | undefined;
+    valueType?: DynamicPropertyObjectValueValueType;
+    propertyId?: string | undefined;
+    propertyName?: string | undefined;
+}
+
+export class DynamicPropertyName implements IDynamicPropertyName {
+    locale?: string | undefined;
+    name?: string | undefined;
+
+    constructor(data?: IDynamicPropertyName) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.locale = _data["locale"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): DynamicPropertyName {
+        data = typeof data === 'object' ? data : {};
+        let result = new DynamicPropertyName();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["locale"] = this.locale;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IDynamicPropertyName {
+    locale?: string | undefined;
+    name?: string | undefined;
+}
+
+export class DynamicObjectProperty implements IDynamicObjectProperty {
+    objectId?: string | undefined;
+    values?: DynamicPropertyObjectValue[] | undefined;
+    name?: string | undefined;
+    description?: string | undefined;
+    objectType?: string | undefined;
+    isArray?: boolean;
+    isDictionary?: boolean;
+    isMultilingual?: boolean;
+    isRequired?: boolean;
+    displayOrder?: number | undefined;
+    valueType?: DynamicObjectPropertyValueType;
+    displayNames?: DynamicPropertyName[] | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: IDynamicObjectProperty) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.objectId = _data["objectId"];
+            if (Array.isArray(_data["values"])) {
+                this.values = [] as any;
+                for (let item of _data["values"])
+                    this.values!.push(DynamicPropertyObjectValue.fromJS(item));
+            }
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.objectType = _data["objectType"];
+            this.isArray = _data["isArray"];
+            this.isDictionary = _data["isDictionary"];
+            this.isMultilingual = _data["isMultilingual"];
+            this.isRequired = _data["isRequired"];
+            this.displayOrder = _data["displayOrder"];
+            this.valueType = _data["valueType"];
+            if (Array.isArray(_data["displayNames"])) {
+                this.displayNames = [] as any;
+                for (let item of _data["displayNames"])
+                    this.displayNames!.push(DynamicPropertyName.fromJS(item));
+            }
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): DynamicObjectProperty {
+        data = typeof data === 'object' ? data : {};
+        let result = new DynamicObjectProperty();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["objectId"] = this.objectId;
+        if (Array.isArray(this.values)) {
+            data["values"] = [];
+            for (let item of this.values)
+                data["values"].push(item.toJSON());
+        }
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["objectType"] = this.objectType;
+        data["isArray"] = this.isArray;
+        data["isDictionary"] = this.isDictionary;
+        data["isMultilingual"] = this.isMultilingual;
+        data["isRequired"] = this.isRequired;
+        data["displayOrder"] = this.displayOrder;
+        data["valueType"] = this.valueType;
+        if (Array.isArray(this.displayNames)) {
+            data["displayNames"] = [];
+            for (let item of this.displayNames)
+                data["displayNames"].push(item.toJSON());
+        }
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IDynamicObjectProperty {
+    objectId?: string | undefined;
+    values?: DynamicPropertyObjectValue[] | undefined;
+    name?: string | undefined;
+    description?: string | undefined;
+    objectType?: string | undefined;
+    isArray?: boolean;
+    isDictionary?: boolean;
+    isMultilingual?: boolean;
+    isRequired?: boolean;
+    displayOrder?: number | undefined;
+    valueType?: DynamicObjectPropertyValueType;
+    displayNames?: DynamicPropertyName[] | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class SeoInfo implements ISeoInfo {
+    name?: string | undefined;
+    /** Slug */
+    semanticUrl?: string | undefined;
+    /** head title tag content */
+    pageTitle?: string | undefined;
+    /** <meta name="description" /> */
+    metaDescription?: string | undefined;
+    imageAltDescription?: string | undefined;
+    /** <meta name="keywords" /> */
+    metaKeywords?: string | undefined;
+    /** Tenant StoreId which SEO defined */
+    storeId?: string | undefined;
+    /** SEO related object id */
+    objectId?: string | undefined;
+    /** SEO related object type name */
+    objectType?: string | undefined;
+    /** Active/Inactive */
+    isActive?: boolean;
+    languageCode?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: ISeoInfo) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.semanticUrl = _data["semanticUrl"];
+            this.pageTitle = _data["pageTitle"];
+            this.metaDescription = _data["metaDescription"];
+            this.imageAltDescription = _data["imageAltDescription"];
+            this.metaKeywords = _data["metaKeywords"];
+            this.storeId = _data["storeId"];
+            this.objectId = _data["objectId"];
+            this.objectType = _data["objectType"];
+            this.isActive = _data["isActive"];
+            this.languageCode = _data["languageCode"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): SeoInfo {
+        data = typeof data === 'object' ? data : {};
+        let result = new SeoInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["semanticUrl"] = this.semanticUrl;
+        data["pageTitle"] = this.pageTitle;
+        data["metaDescription"] = this.metaDescription;
+        data["imageAltDescription"] = this.imageAltDescription;
+        data["metaKeywords"] = this.metaKeywords;
+        data["storeId"] = this.storeId;
+        data["objectId"] = this.objectId;
+        data["objectType"] = this.objectType;
+        data["isActive"] = this.isActive;
+        data["languageCode"] = this.languageCode;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ISeoInfo {
+    name?: string | undefined;
+    /** Slug */
+    semanticUrl?: string | undefined;
+    /** head title tag content */
+    pageTitle?: string | undefined;
+    /** <meta name="description" /> */
+    metaDescription?: string | undefined;
+    imageAltDescription?: string | undefined;
+    /** <meta name="keywords" /> */
+    metaKeywords?: string | undefined;
+    /** Tenant StoreId which SEO defined */
+    storeId?: string | undefined;
+    /** SEO related object id */
+    objectId?: string | undefined;
+    /** SEO related object type name */
+    objectType?: string | undefined;
+    /** Active/Inactive */
+    isActive?: boolean;
+    languageCode?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class Member implements IMember {
+    name?: string | undefined;
+    memberType?: string | undefined;
+    outerId?: string | undefined;
+    status?: string | undefined;
+    addresses?: CustomerAddress[] | undefined;
+    phones?: string[] | undefined;
+    emails?: string[] | undefined;
+    notes?: Note[] | undefined;
+    groups?: string[] | undefined;
+    iconUrl?: string | undefined;
+    readonly objectType?: string | undefined;
+    dynamicProperties?: DynamicObjectProperty[] | undefined;
+    readonly seoObjectType?: string | undefined;
+    seoInfos?: SeoInfo[] | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: IMember) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.memberType = _data["memberType"];
+            this.outerId = _data["outerId"];
+            this.status = _data["status"];
+            if (Array.isArray(_data["addresses"])) {
+                this.addresses = [] as any;
+                for (let item of _data["addresses"])
+                    this.addresses!.push(CustomerAddress.fromJS(item));
+            }
+            if (Array.isArray(_data["phones"])) {
+                this.phones = [] as any;
+                for (let item of _data["phones"])
+                    this.phones!.push(item);
+            }
+            if (Array.isArray(_data["emails"])) {
+                this.emails = [] as any;
+                for (let item of _data["emails"])
+                    this.emails!.push(item);
+            }
+            if (Array.isArray(_data["notes"])) {
+                this.notes = [] as any;
+                for (let item of _data["notes"])
+                    this.notes!.push(Note.fromJS(item));
+            }
+            if (Array.isArray(_data["groups"])) {
+                this.groups = [] as any;
+                for (let item of _data["groups"])
+                    this.groups!.push(item);
+            }
+            this.iconUrl = _data["iconUrl"];
+            (<any>this).objectType = _data["objectType"];
+            if (Array.isArray(_data["dynamicProperties"])) {
+                this.dynamicProperties = [] as any;
+                for (let item of _data["dynamicProperties"])
+                    this.dynamicProperties!.push(DynamicObjectProperty.fromJS(item));
+            }
+            (<any>this).seoObjectType = _data["seoObjectType"];
+            if (Array.isArray(_data["seoInfos"])) {
+                this.seoInfos = [] as any;
+                for (let item of _data["seoInfos"])
+                    this.seoInfos!.push(SeoInfo.fromJS(item));
+            }
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Member {
+        data = typeof data === 'object' ? data : {};
+        let result = new Member();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["memberType"] = this.memberType;
+        data["outerId"] = this.outerId;
+        data["status"] = this.status;
+        if (Array.isArray(this.addresses)) {
+            data["addresses"] = [];
+            for (let item of this.addresses)
+                data["addresses"].push(item.toJSON());
+        }
+        if (Array.isArray(this.phones)) {
+            data["phones"] = [];
+            for (let item of this.phones)
+                data["phones"].push(item);
+        }
+        if (Array.isArray(this.emails)) {
+            data["emails"] = [];
+            for (let item of this.emails)
+                data["emails"].push(item);
+        }
+        if (Array.isArray(this.notes)) {
+            data["notes"] = [];
+            for (let item of this.notes)
+                data["notes"].push(item.toJSON());
+        }
+        if (Array.isArray(this.groups)) {
+            data["groups"] = [];
+            for (let item of this.groups)
+                data["groups"].push(item);
+        }
+        data["iconUrl"] = this.iconUrl;
+        data["objectType"] = this.objectType;
+        if (Array.isArray(this.dynamicProperties)) {
+            data["dynamicProperties"] = [];
+            for (let item of this.dynamicProperties)
+                data["dynamicProperties"].push(item.toJSON());
+        }
+        data["seoObjectType"] = this.seoObjectType;
+        if (Array.isArray(this.seoInfos)) {
+            data["seoInfos"] = [];
+            for (let item of this.seoInfos)
+                data["seoInfos"].push(item.toJSON());
+        }
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMember {
+    name?: string | undefined;
+    memberType?: string | undefined;
+    outerId?: string | undefined;
+    status?: string | undefined;
+    addresses?: CustomerAddress[] | undefined;
+    phones?: string[] | undefined;
+    emails?: string[] | undefined;
+    notes?: Note[] | undefined;
+    groups?: string[] | undefined;
+    iconUrl?: string | undefined;
+    objectType?: string | undefined;
+    dynamicProperties?: DynamicObjectProperty[] | undefined;
+    seoObjectType?: string | undefined;
+    seoInfos?: SeoInfo[] | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class MemberSearchResult implements IMemberSearchResult {
+    totalCount?: number;
+    results?: Member[] | undefined;
+
+    constructor(data?: IMemberSearchResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["results"])) {
+                this.results = [] as any;
+                for (let item of _data["results"])
+                    this.results!.push(Member.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): MemberSearchResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new MemberSearchResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.results)) {
+            data["results"] = [];
+            for (let item of this.results)
+                data["results"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IMemberSearchResult {
+    totalCount?: number;
+    results?: Member[] | undefined;
+}
+
 export enum WorkTaskPriority {
     Lowest = "Lowest",
     Low = "Low",
@@ -910,8 +1880,40 @@ export enum SortInfoSortDirection {
     Descending = "Descending",
 }
 
+export enum CustomerAddressAddressType {
+    Undefined = "Undefined",
+    Billing = "Billing",
+    Shipping = "Shipping",
+    BillingAndShipping = "BillingAndShipping",
+    Pickup = "Pickup",
+}
+
+export enum DynamicPropertyObjectValueValueType {
+    Undefined = "Undefined",
+    ShortText = "ShortText",
+    LongText = "LongText",
+    Integer = "Integer",
+    Decimal = "Decimal",
+    DateTime = "DateTime",
+    Boolean = "Boolean",
+    Html = "Html",
+    Image = "Image",
+}
+
+export enum DynamicObjectPropertyValueType {
+    Undefined = "Undefined",
+    ShortText = "ShortText",
+    LongText = "LongText",
+    Integer = "Integer",
+    Decimal = "Decimal",
+    DateTime = "DateTime",
+    Boolean = "Boolean",
+    Html = "Html",
+    Image = "Image",
+}
+
 export class ApiException extends Error {
-    message: string;
+    override message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };

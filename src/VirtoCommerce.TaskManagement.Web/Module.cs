@@ -14,6 +14,7 @@ using VirtoCommerce.ExperienceApiModule.Core.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem;
 using VirtoCommerce.Platform.Core.Bus;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -21,11 +22,13 @@ using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Events;
 using VirtoCommerce.TaskManagement.Core.Notifications;
 using VirtoCommerce.TaskManagement.Core.Services;
+using VirtoCommerce.TaskManagement.Data.Authorization;
 using VirtoCommerce.TaskManagement.Data.Handlers;
 using VirtoCommerce.TaskManagement.Data.Repositories;
 using VirtoCommerce.TaskManagement.Data.Services;
 using VirtoCommerce.TaskManagement.ExperienceApi;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;
+using VirtoCommerce.TaskManagement.Web.Authorization;
 
 namespace VirtoCommerce.TaskManagement.Web
 {
@@ -54,6 +57,7 @@ namespace VirtoCommerce.TaskManagement.Web
             serviceCollection.AddTransient<Func<IWorkTaskSearchService>>(provider => provider.GetRequiredService<IWorkTaskSearchService>);
 
             serviceCollection.AddTransient<SendNotificationsWorkTaskChangedEventHandler>();
+            serviceCollection.AddTransient<IAuthorizationHandler, TaskAssignAuthorizationHandler>();
 
             // GraphQL
             var assemblyMarker = typeof(AssemblyMarker);
@@ -78,6 +82,14 @@ namespace VirtoCommerce.TaskManagement.Web
             permissionsRegistrar.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions
                 .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "TaskManagement", Name = x })
                 .ToArray());
+
+            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMyOrganizationScope>();
+            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToAllScope>();
+
+            permissionsRegistrar.WithAvailabeScopesForPermissions(new[] {
+                ModuleConstants.Security.Permissions.Create,
+                ModuleConstants.Security.Permissions.Update,
+            }, new TaskAssignToMyOrganizationScope(), new TaskAssignToAllScope());
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<WorkTaskChangedEvent>((message, token) => appBuilder.ApplicationServices.GetService<SendNotificationsWorkTaskChangedEventHandler>().Handle(message));

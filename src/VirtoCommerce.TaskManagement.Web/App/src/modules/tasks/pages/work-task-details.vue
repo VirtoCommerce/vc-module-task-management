@@ -207,7 +207,7 @@
                         :src="getContactIcon(item.opt.id)"
                         onerror="javascript:this.src='/assets/userpic.svg'"
                       />
-                      <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                      <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
                     <template v-slot:option="item">
                       <img
@@ -215,7 +215,7 @@
                         :src="getContactIcon(item.opt.id)"
                         onerror="javascript:this.src='/assets/userpic.svg'"
                       />
-                      <span class="tw-ml-1">{{ item.opt.fullName }}</span>
+                      <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
                   </VcSelect>
                 </Field>
@@ -294,8 +294,6 @@ import TaskStatus from "../components/taskStatus.vue";
 import { Field, useForm, useIsFormValid } from "vee-validate";
 import { forEach } from "lodash";
 import TaskAttachments from "../components/taskAttachments.vue";
-import { MembersSearchCriteria } from "../../../api_client/customer";
-import { env } from "process";
 import { WorkTask } from "../../../api_client/taskmanagement";
 export default defineComponent({
   url: "task",
@@ -385,7 +383,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
           }
         });
         const contact = await getContact(workTask.value.responsibleId);
-        workTask.value.responsibleName = contact?.fullName;
+        workTask.value.responsibleName = contact?.name;
         await updateWorktask();
         emit("parent:call", { method: "reload" });
       }
@@ -409,13 +407,6 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 const getTitle = () => {
   return "# " + workTask.value.number + ": " + workTask.value.name;
 };
-function getCriteria(skip?: number): MembersSearchCriteria {
-  const criteria = new MembersSearchCriteria();
-  criteria.take = 20;
-  criteria.skip = skip;
-  criteria.memberType = "Contact";
-  return criteria;
-}
 
 const filesUpload = async (files: FileList) => {
   await uploadAttachments(files, workTask);

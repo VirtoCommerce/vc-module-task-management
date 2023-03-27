@@ -9,11 +9,11 @@ namespace VirtoCommerce.TaskManagement.Core
         {
             public static class Permissions
             {
-                public const string Access = "TaskManagement:access";
-                public const string Create = "TaskManagement:create";
-                public const string Read = "TaskManagement:read";
-                public const string Update = "TaskManagement:update";
-                public const string Delete = "TaskManagement:delete";
+                public const string Access = "task:access";
+                public const string Create = "task:create";
+                public const string Read = "task:read";
+                public const string Update = "task:update";
+                public const string Delete = "task:delete";
 
                 public static string[] AllPermissions { get; } =
                 {

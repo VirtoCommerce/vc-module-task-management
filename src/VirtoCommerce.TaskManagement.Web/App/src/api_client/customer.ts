@@ -98,7 +98,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of SearchCriteria type type will be created by using PolymorphicMemberSearchCriteriaJsonConverter
      * @return Success
      */
-    searchMember(body: MembersSearchCriteria | null | undefined): Promise<MemberSearchResult> {
+    searchMember(body?: MembersSearchCriteria | null | undefined): Promise<MemberSearchResult> {
         let url_ = this.baseUrl + "/api/members/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -153,7 +153,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param memberType (optional) member type
      * @return Success
      */
-    getMemberById(id: string | null, responseGroup: string | null | undefined, memberType: string | null | undefined): Promise<Member> {
+    getMemberById(id: string | null, responseGroup?: string | null | undefined, memberType?: string | null | undefined): Promise<Member> {
         let url_ = this.baseUrl + "/api/members/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -210,7 +210,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param memberTypes (optional) 
      * @return Success
      */
-    getMembersByIds(ids: string[] | null | undefined, responseGroup: string | null | undefined, memberTypes: string[] | null | undefined): Promise<Member[]> {
+    getMembersByIds(ids?: string[] | null | undefined, responseGroup?: string | null | undefined, memberTypes?: string[] | null | undefined): Promise<Member[]> {
         let url_ = this.baseUrl + "/api/members?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -272,7 +272,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of abstract member type will be created by using PolymorphicMemberJsonConverter
      * @return Success
      */
-    createMember(body: Member | null | undefined): Promise<Member> {
+    createMember(body?: Member | null | undefined): Promise<Member> {
         let url_ = this.baseUrl + "/api/members";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -325,7 +325,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of abstract member type will be created by using PolymorphicMemberJsonConverter
      * @return Success
      */
-    updateMember(body: Member | null | undefined): Promise<void> {
+    updateMember(body?: Member | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/members";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -374,7 +374,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) An array of members ids
      * @return Success
      */
-    deleteMembers(ids: string[] | null | undefined): Promise<void> {
+    deleteMembers(ids?: string[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/members?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -421,7 +421,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) Array of concrete instances of abstract member type will be created by using PolymorphicMemberJsonConverter
      * @return Success
      */
-    bulkCreateMembers(body: Member[] | null | undefined): Promise<Member[]> {
+    bulkCreateMembers(body?: Member[] | null | undefined): Promise<Member[]> {
         let url_ = this.baseUrl + "/api/members/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -481,7 +481,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) Array of concrete instances of abstract member type will be created by using PolymorphicMemberJsonConverter
      * @return Success
      */
-    bulkUpdateMembers(body: Member[] | null | undefined): Promise<void> {
+    bulkUpdateMembers(body?: Member[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/members/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -530,7 +530,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of SearchCriteria type will be created by using PolymorphicMemberSearchCriteriaJsonConverter
      * @return Success
      */
-    bulkDeleteMembersBySearchCriteria(body: MembersSearchCriteria | null | undefined): Promise<void> {
+    bulkDeleteMembersBySearchCriteria(body?: MembersSearchCriteria | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/members/delete";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -578,7 +578,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    resizeIcon(body: IconResizeRequest | null | undefined): Promise<void> {
+    resizeIcon(body?: IconResizeRequest | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/member/icon/resize";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -627,7 +627,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    createContact(body: Contact | null | undefined): Promise<Contact> {
+    createContact(body?: Contact | null | undefined): Promise<Contact> {
         let url_ = this.baseUrl + "/api/contacts";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -680,7 +680,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    updateContact(body: Contact | null | undefined): Promise<void> {
+    updateContact(body?: Contact | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contacts";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -729,7 +729,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) An array of contacts ids
      * @return Success
      */
-    deleteContacts(ids: string[] | null | undefined): Promise<void> {
+    deleteContacts(ids?: string[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contacts?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -776,7 +776,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) contact IDs
      * @return Success
      */
-    getContactsByIds(ids: string[] | null | undefined): Promise<Contact[]> {
+    getContactsByIds(ids?: string[] | null | undefined): Promise<Contact[]> {
         let url_ = this.baseUrl + "/api/contacts?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -834,7 +834,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    bulkCreateContacts(body: Contact[] | null | undefined): Promise<Contact[]> {
+    bulkCreateContacts(body?: Contact[] | null | undefined): Promise<Contact[]> {
         let url_ = this.baseUrl + "/api/contacts/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -894,7 +894,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    bulkUpdateContacts(body: Contact[] | null | undefined): Promise<void> {
+    bulkUpdateContacts(body?: Contact[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contacts/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -943,7 +943,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    createOrganization(body: Organization | null | undefined): Promise<Organization> {
+    createOrganization(body?: Organization | null | undefined): Promise<Organization> {
         let url_ = this.baseUrl + "/api/organizations";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -996,7 +996,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    updateOrganization(body: Organization | null | undefined): Promise<void> {
+    updateOrganization(body?: Organization | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/organizations";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1045,7 +1045,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) An array of organizations ids
      * @return Success
      */
-    deleteOrganizations(ids: string[] | null | undefined): Promise<void> {
+    deleteOrganizations(ids?: string[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/organizations?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -1092,7 +1092,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) Organization ids
      * @return Success
      */
-    getOrganizationsByIds(ids: string[] | null | undefined): Promise<Organization[]> {
+    getOrganizationsByIds(ids?: string[] | null | undefined): Promise<Organization[]> {
         let url_ = this.baseUrl + "/api/organizations?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -1150,7 +1150,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    bulkCreateOrganizations(body: Organization[] | null | undefined): Promise<void> {
+    bulkCreateOrganizations(body?: Organization[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/organizations/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1199,7 +1199,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    bulkUpdateOrganizations(body: Organization[] | null | undefined): Promise<void> {
+    bulkUpdateOrganizations(body?: Organization[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/organizations/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1300,7 +1300,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of SearchCriteria type type will be created by using PolymorphicMemberSearchCriteriaJsonConverter
      * @return Success
      */
-    searchOrganizations(body: MembersSearchCriteria | null | undefined): Promise<OrganizationSearchResult> {
+    searchOrganizations(body?: MembersSearchCriteria | null | undefined): Promise<OrganizationSearchResult> {
         let url_ = this.baseUrl + "/api/organizations/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1405,7 +1405,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of SearchCriteria type type will be created by using PolymorphicMemberSearchCriteriaJsonConverter
      * @return Success
      */
-    searchContacts(body: MembersSearchCriteria | null | undefined): Promise<ContactSearchResult> {
+    searchContacts(body?: MembersSearchCriteria | null | undefined): Promise<ContactSearchResult> {
         let url_ = this.baseUrl + "/api/contacts/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1510,7 +1510,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) Vendors IDs
      * @return Success
      */
-    getVendorsByIds(ids: string[] | null | undefined): Promise<Vendor[]> {
+    getVendorsByIds(ids?: string[] | null | undefined): Promise<Vendor[]> {
         let url_ = this.baseUrl + "/api/vendors?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -1568,7 +1568,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) concrete instance of SearchCriteria type type will be created by using PolymorphicMemberSearchCriteriaJsonConverter
      * @return Success
      */
-    searchVendors(body: MembersSearchCriteria | null | undefined): Promise<VendorSearchResult> {
+    searchVendors(body?: MembersSearchCriteria | null | undefined): Promise<VendorSearchResult> {
         let url_ = this.baseUrl + "/api/vendors/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1621,7 +1621,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    updateAddesses(memberId: string | null | undefined, body: CustomerAddress[] | null | undefined): Promise<void> {
+    updateAddesses(memberId?: string | null | undefined, body?: CustomerAddress[] | null | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/addresses?";
         if (memberId !== undefined && memberId !== null)
             url_ += "memberId=" + encodeURIComponent("" + memberId) + "&";
@@ -1672,7 +1672,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    createEmployee(body: Employee | null | undefined): Promise<Employee> {
+    createEmployee(body?: Employee | null | undefined): Promise<Employee> {
         let url_ = this.baseUrl + "/api/employees";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1725,7 +1725,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param ids (optional) contact IDs
      * @return Success
      */
-    getEmployeesByIds(ids: string[] | null | undefined): Promise<Employee[]> {
+    getEmployeesByIds(ids?: string[] | null | undefined): Promise<Employee[]> {
         let url_ = this.baseUrl + "/api/employees?";
         if (ids !== undefined && ids !== null)
             ids && ids.forEach(item => { url_ += "ids=" + encodeURIComponent("" + item) + "&"; });
@@ -1783,7 +1783,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    bulkCreateEmployees(body: Employee[] | null | undefined): Promise<Employee[]> {
+    bulkCreateEmployees(body?: Employee[] | null | undefined): Promise<Employee[]> {
         let url_ = this.baseUrl + "/api/employees/bulk";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1843,7 +1843,7 @@ export class CustomerModuleClient extends AuthApiBase {
      * @param idQuery (optional) member Id
      * @return Success
      */
-    getMemberOrganizations(idQuery: string | null | undefined, idPath: string): Promise<Organization[]> {
+    getMemberOrganizations(idPath: string, idQuery?: string | null | undefined): Promise<Organization[]> {
         let url_ = this.baseUrl + "/api/members/{id}/organizations?";
         if (idPath === undefined || idPath === null)
             throw new Error("The parameter 'idPath' must be defined.");
@@ -4411,7 +4411,7 @@ export enum ApplicationUserUserState {
 }
 
 export class ApiException extends Error {
-    message: string;
+    override message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };

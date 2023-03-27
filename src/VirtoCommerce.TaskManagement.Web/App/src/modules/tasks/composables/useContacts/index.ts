@@ -49,6 +49,7 @@ export default (): IUseContacts => {
     const client = await getApiClient();
     try {
       const criteria = new MembersSearchCriteria();
+      criteria.keyword = keyword;
       criteria.take = 20;
       criteria.skip = skip;
       criteria.objectIds = ids;

@@ -446,9 +446,6 @@ const calculateStatus = (workTask: WorkTask) => {
   let result = "ToDo";
   if (workTask.isActive === true) {
     switch (workTask.completed) {
-      case null:
-        result = "ToDo";
-        break;
       case false:
       case true:
         result = "Canceled";

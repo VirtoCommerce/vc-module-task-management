@@ -82,12 +82,9 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                             }
                         }
                     }
-                    else if (taskSucceed && memberSucceed)
+                    else if (taskSucceed && memberSucceed && memberId == workTask.ResponsibleId)
                     {
-                        if (memberId == workTask.ResponsibleId)
-                        {
-                            context.Succeed(requirement);
-                        }
+                        context.Succeed(requirement);
                     }
                 }
             }

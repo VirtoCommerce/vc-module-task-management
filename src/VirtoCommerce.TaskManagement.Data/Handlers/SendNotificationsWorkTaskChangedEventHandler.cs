@@ -22,7 +22,6 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
         private readonly INotificationSender _notificationSender;
         private readonly ISettingsManager _settingsManager;
         private readonly INotificationSearchService _notificationSearchService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SendNotificationsWorkTaskChangedEventHandler(
             IMemberService memberService,
@@ -35,7 +34,6 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
             _notificationSender = notificationSender;
             _settingsManager = settingsManager;
             _notificationSearchService = notificationSearchService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public virtual Task Handle(WorkTaskChangedEvent message)

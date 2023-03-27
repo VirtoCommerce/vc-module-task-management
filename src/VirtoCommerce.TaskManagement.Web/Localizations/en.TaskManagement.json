@@ -15,13 +15,17 @@
   },
   "settings": {
     "TaskManagement": {
-      "TaskManagementEnabled": {
-        "title": "TaskManagement Enabled",
-        "description": "TaskManagement Enabled setting"
+      "TaskNotificationsEnabled": {
+        "title": "Task notification",
+        "description": "(Restart required) Enable/Disable task assignment notification"
       },
-      "TaskManagementPassword": {
-        "title": "TaskManagement Password",
-        "description": "TaskManagement Password setting"
+      "TaskNotificationNoReplyEmail": {
+        "title": "Notification no-reply email",
+        "description": "Used as sender email"
+      },
+      "TaskAppUrl": {
+        "title": "Tasks portal base url",
+        "description": "URL of tasks portal, by default use - platformUrl/apps/tasks"
       }
     }
   },

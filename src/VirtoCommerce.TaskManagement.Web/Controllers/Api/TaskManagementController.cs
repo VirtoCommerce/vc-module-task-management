@@ -21,6 +21,8 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
     [Route("api/task-management")]
     public class TaskManagementController : Controller
     {
+        private const string MemberIdClaimType = "memberId";
+
         private readonly IWorkTaskService _workTaskService;
         private readonly IWorkTaskSearchService _workTaskSearchService;
         private readonly IMemberService _memberService;
@@ -78,8 +80,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPut("")]
         public async Task<ActionResult<WorkTask>> Update([FromBody] WorkTask workTask)
         {
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask,
-                new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
             if (!authorizationResult.Succeeded)
             {
                 return Unauthorized();
@@ -124,15 +125,14 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet("contact/icon/{id}")]
         public async Task<ActionResult> ContactIcon(string id)
         {
-            var contact = await _memberService.GetByIdAsync(id, memberType: "Contact");
+            var contact = await _memberService.GetByIdAsync(id);
 
             if (contact != null && !string.IsNullOrEmpty(contact.IconUrl))
             {
                 using var client = new HttpClient();
                 using var response = await client.GetAsync(contact.IconUrl);
                 await using var stream = await response.Content.ReadAsStreamAsync();
-                var contentTypeHeader = response.Content.Headers.FirstOrDefault(h => h.Key == "Content-Type").Value
-                    .FirstOrDefault();
+                var contentTypeHeader = response.Content.Headers.FirstOrDefault(h => h.Key == "Content-Type").Value.FirstOrDefault();
 
                 var memoryStream = new MemoryStream();
                 stream.CopyTo(memoryStream);
@@ -144,12 +144,10 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpPost("members/search")]
-        public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers(
-            [FromBody] MembersSearchCriteria criteria)
+        public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
-            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create,
-                _jsonOptions.SerializerSettings);
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
 
             if (userPermission == null)
             {
@@ -163,18 +161,14 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             else
             {
                 var assignToAllScope = userPermission.AssignedScopes.OfType<TaskAssignToAllScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = userPermission.AssignedScopes
-                    .OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = userPermission.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 
-                var memberId = User.FindFirstValue("memberId");
-                var memberExist = !string.IsNullOrEmpty(memberId);
+                var memberId = User.FindFirstValue(MemberIdClaimType);
                 string organizationId = null;
 
-                if (memberExist)
+                if (!string.IsNullOrEmpty(memberId))
                 {
                     var member = await _memberService.GetByIdAsync(memberId);
-                    memberExist = member != null;
-
                     organizationId = member?.MemberType switch
                     {
                         nameof(Contact) => (member as Contact)?.Organizations?.FirstOrDefault(),
@@ -183,18 +177,16 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                     };
                 }
 
-                var organizationExist = !string.IsNullOrEmpty(organizationId);
-
                 if (assignToAllScope != null)
                 {
                     result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
-                else if (organizationExist && assignToMyOrganizationScope != null)
+                else if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
                 {
                     criteria.MemberId = organizationId;
                     result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
-                else if (memberExist)
+                else if (!string.IsNullOrEmpty(memberId))
                 {
                     criteria.ObjectIds = new[] { memberId };
                     result = await _memberSearchService.SearchMembersAsync(criteria);
@@ -208,7 +200,6 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<Member>> GetMemberById([FromRoute] string id)
         {
             var member = await _memberService.GetByIdAsync(id);
-
             return Ok(member);
         }
     }

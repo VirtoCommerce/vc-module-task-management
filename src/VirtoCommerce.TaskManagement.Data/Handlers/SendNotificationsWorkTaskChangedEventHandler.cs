@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hangfire;
-using Microsoft.AspNetCore.Http;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Extensions;
 using VirtoCommerce.NotificationsModule.Core.Services;
@@ -27,8 +26,7 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
             IMemberService memberService,
             INotificationSender notificationSender,
             ISettingsManager settingsManager,
-            INotificationSearchService notificationSearchService,
-            IHttpContextAccessor httpContextAccessor)
+            INotificationSearchService notificationSearchService)
         {
             _memberService = memberService;
             _notificationSender = notificationSender;
@@ -38,17 +36,20 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
 
         public virtual Task Handle(WorkTaskChangedEvent message)
         {
-            var tasks = message.ChangedEntries
-                .Where(changedEntry =>
-                    (changedEntry.EntryState == EntryState.Added &&
-                     !string.IsNullOrEmpty(changedEntry.NewEntry.ResponsibleId))
-                    || (changedEntry.EntryState == EntryState.Modified
-                        && changedEntry.OldEntry.ResponsibleId != changedEntry.NewEntry.ResponsibleId
-                        && !string.IsNullOrEmpty(changedEntry.NewEntry.ResponsibleId)))
-                .Select(changedEntry => changedEntry.NewEntry)
-                .ToList();
+            if (_settingsManager.GetValueByDescriptor<bool>(ModuleConstants.Settings.General.TaskNotificationsEnabled))
+            {
+                var tasks = message.ChangedEntries
+                    .Where(changedEntry =>
+                        (changedEntry.EntryState == EntryState.Added &&
+                         !string.IsNullOrEmpty(changedEntry.NewEntry.ResponsibleId))
+                        || (changedEntry.EntryState == EntryState.Modified
+                            && changedEntry.OldEntry.ResponsibleId != changedEntry.NewEntry.ResponsibleId
+                            && !string.IsNullOrEmpty(changedEntry.NewEntry.ResponsibleId)))
+                    .Select(changedEntry => changedEntry.NewEntry)
+                    .ToList();
 
-            BackgroundJob.Enqueue(() => TryToSendOrderNotificationsAsync(tasks));
+                BackgroundJob.Enqueue(() => TryToSendOrderNotificationsAsync(tasks));
+            }
 
             return Task.CompletedTask;
         }
@@ -67,8 +68,8 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
                     notification.To = contact.Emails.FirstOrDefault();
                     notification.From = _settingsManager.GetValueByDescriptor<string>(ModuleConstants.Settings.General.TaskNotificationNoReplyEmail);
 
-                    var baseUrl = _settingsManager.GetValueByDescriptor<string>(ModuleConstants.Settings.General.TaskAppTaskDetailsBaseUrl);
-                    notification.WorkTaskUrl = $"{baseUrl}/{task.Id}";
+                    var baseUrl = _settingsManager.GetValueByDescriptor<string>(ModuleConstants.Settings.General.TaskAppBaseUrl);
+                    notification.WorkTaskUrl = $"{baseUrl}/#task/{task.Id}";
 
                     await _notificationSender.ScheduleSendNotificationAsync(notification);
                 }

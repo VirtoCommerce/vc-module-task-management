@@ -30,28 +30,13 @@ namespace VirtoCommerce.TaskManagement.Core
         {
             public static class General
             {
-                public static SettingDescriptor TaskManagementEnabled { get; } = new SettingDescriptor
-                {
-                    Name = "TaskManagement.TaskManagementEnabled",
-                    GroupName = "TaskManagement|General",
-                    ValueType = SettingValueType.Boolean,
-                    DefaultValue = false,
-                };
-
-                public static SettingDescriptor TaskManagementPassword { get; } = new SettingDescriptor
-                {
-                    Name = "TaskManagement.TaskManagementPassword",
-                    GroupName = "TaskManagement|Advanced",
-                    ValueType = SettingValueType.SecureString,
-                    DefaultValue = "qwerty",
-                };
-
                 public static SettingDescriptor TaskNotificationsEnabled { get; } = new SettingDescriptor
                 {
                     Name = "TaskManagement.TaskNotificationsEnabled",
                     GroupName = "TaskManagement|Notification",
                     ValueType = SettingValueType.Boolean,
                     DefaultValue = false,
+                    RestartRequired = true
                 };
 
                 public static SettingDescriptor TaskNotificationNoReplyEmail { get; } = new SettingDescriptor
@@ -61,7 +46,7 @@ namespace VirtoCommerce.TaskManagement.Core
                     ValueType = SettingValueType.ShortText,
                 };
 
-                public static SettingDescriptor TaskAppTaskDetailsBaseUrl { get; } = new SettingDescriptor
+                public static SettingDescriptor TaskAppBaseUrl { get; } = new SettingDescriptor
                 {
                     Name = "TaskManagement.TaskAppUrl",
                     GroupName = "TaskManagement|Notification",
@@ -72,11 +57,9 @@ namespace VirtoCommerce.TaskManagement.Core
                 {
                     get
                     {
-                        yield return TaskManagementEnabled;
-                        yield return TaskManagementPassword;
                         yield return TaskNotificationsEnabled;
                         yield return TaskNotificationNoReplyEmail;
-                        yield return TaskAppTaskDetailsBaseUrl;
+                        yield return TaskAppBaseUrl;
                     }
                 }
             }

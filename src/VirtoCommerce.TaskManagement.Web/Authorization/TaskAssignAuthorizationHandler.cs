@@ -16,7 +16,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
 {
     public sealed class TaskAssignAuthorizationHandler : PermissionAuthorizationHandlerBase<TaskAssignAuthorizationRequirement>
     {
-        public const string MemberIdClaimType = "memberId";
+        private const string MemberIdClaimType = "memberId";
 
         private readonly MvcNewtonsoftJsonOptions _jsonOptions;
         private readonly IMemberService _memberService;
@@ -44,16 +44,14 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                 {
                     var memberId = context.User.FindFirstValue(MemberIdClaimType);
                     var workTask = context.Resource as WorkTask;
-                    var taskSucceed = workTask != null;
-                    var memberSucceed = !string.IsNullOrEmpty(memberId);
 
                     var assignToAllScope = userPermission.AssignedScopes.OfType<TaskAssignToAllScope>().FirstOrDefault();
                     var assignToMyOrganizationScope = userPermission.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
-                    if (taskSucceed && assignToAllScope != null)
+                    if (workTask != null && assignToAllScope != null)
                     {
                         context.Succeed(requirement);
                     }
-                    else if (taskSucceed && memberSucceed && assignToMyOrganizationScope != null)
+                    else if (workTask != null && !string.IsNullOrEmpty(memberId) && assignToMyOrganizationScope != null)
                     {
                         var member = await _memberService.GetByIdAsync(memberId);
                         var organizationId = member?.MemberType switch
@@ -82,7 +80,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                             }
                         }
                     }
-                    else if (taskSucceed && memberSucceed && memberId == workTask.ResponsibleId)
+                    else if (workTask != null && !string.IsNullOrEmpty(memberId) && memberId == workTask.ResponsibleId)
                     {
                         context.Succeed(requirement);
                     }

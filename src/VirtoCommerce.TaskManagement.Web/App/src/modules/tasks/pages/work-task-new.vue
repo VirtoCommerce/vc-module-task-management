@@ -211,7 +211,7 @@ import {
 } from "@vc-shell/framework";
 import { WorkTask, WorkTaskPriority } from "../../../api_client/taskmanagement";
 import { Field, useForm, useIsFormValid } from "vee-validate";
-import _, { forEach } from "lodash";
+import { forEach } from "lodash";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskAttachments from "../components/taskAttachments.vue";
 </script>
@@ -239,7 +239,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
 const { workTask, loading, createWorkTask } = useWorkTask();
-const { getContact, searchContacts } = useContacts();
+const { getMember, searchContacts } = useContacts();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
 const priorities = Object.values(WorkTaskPriority);
@@ -257,8 +257,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     icon: "fas fa-save",
     async clickHandler() {
       newWorkTask.value.isActive = true;
-      const contact = await getContact(newWorkTask.value.responsibleId);
-      newWorkTask.value.responsibleName = contact?.name;
+      const member = await getMember(newWorkTask.value.responsibleId);
+      newWorkTask.value.responsibleName = member?.name;
       forEach(newWorkTask.value.attachments, function (attachment) {
         if (attachment.id.startsWith("Draft")) {
           attachment.id = null;

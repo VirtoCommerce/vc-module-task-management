@@ -1,15 +1,15 @@
 import { useUser } from "@vc-shell/framework";
 import {
+  Member,
   MemberSearchResult,
   MembersSearchCriteria,
   TaskManagementClient,
 } from "../../../../api_client/taskmanagement";
 import { computed, Ref, ref } from "vue";
-import { CustomerModuleClient, Member } from "../../../../api_client/customer";
 
 interface IUseContacts {
   readonly loading: Ref<boolean>;
-  getContact(id: string): Promise<Member>;
+  getMember(id: string): Promise<Member>;
   searchContacts(
     keyword?: string,
     skip?: number,
@@ -20,21 +20,14 @@ interface IUseContacts {
 export default (): IUseContacts => {
   const loading = ref(false);
 
-  async function getApiClient(): Promise<CustomerModuleClient> {
-    const { getAccessToken } = useUser();
-    const client = new CustomerModuleClient();
-    client.setAuthToken(await getAccessToken());
-    return client;
-  }
-
-  async function getTaskApiClient(): Promise<TaskManagementClient> {
+  async function getApiClient(): Promise<TaskManagementClient> {
     const { getAccessToken } = useUser();
     const client = new TaskManagementClient();
     client.setAuthToken(await getAccessToken());
     return client;
   }
 
-  async function getContact(id: string): Promise<Member> {
+  async function getMember(id: string): Promise<Member> {
     loading.value = true;
     const client = await getApiClient();
     try {
@@ -53,7 +46,7 @@ export default (): IUseContacts => {
     ids?: string[]
   ): Promise<MemberSearchResult> {
     loading.value = true;
-    const client = await getTaskApiClient();
+    const client = await getApiClient();
     try {
       const criteria = new MembersSearchCriteria();
       criteria.take = 20;
@@ -73,7 +66,7 @@ export default (): IUseContacts => {
 
   return {
     loading: computed(() => loading.value),
-    getContact,
+    getMember,
     searchContacts,
   };
 };

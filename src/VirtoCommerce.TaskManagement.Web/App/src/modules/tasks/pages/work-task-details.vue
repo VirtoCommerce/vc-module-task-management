@@ -328,7 +328,7 @@ const {
   resetWorkTask,
   deleteWorkTask,
 } = useWorkTask();
-const { getContact, searchContacts } = useContacts();
+const { getMember, searchContacts } = useContacts();
 const { user } = useUser();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
@@ -382,8 +382,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
             attachment.id = null;
           }
         });
-        const contact = await getContact(workTask.value.responsibleId);
-        workTask.value.responsibleName = contact?.name;
+        const member = await getMember(workTask.value.responsibleId);
+        workTask.value.responsibleName = member?.name;
         await updateWorktask();
         emit("parent:call", { method: "reload" });
       }

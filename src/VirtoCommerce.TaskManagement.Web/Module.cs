@@ -84,12 +84,12 @@ namespace VirtoCommerce.TaskManagement.Web
                 .ToArray());
 
             AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMyOrganizationScope>();
-            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToAllScope>();
+            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMeScope>();
 
             permissionsRegistrar.WithAvailabeScopesForPermissions(new[] {
                 ModuleConstants.Security.Permissions.Create,
                 ModuleConstants.Security.Permissions.Update,
-            }, new TaskAssignToMyOrganizationScope(), new TaskAssignToAllScope());
+            }, new TaskAssignToMyOrganizationScope(), new TaskAssignToMeScope());
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<WorkTaskChangedEvent>((message, token) => appBuilder.ApplicationServices.GetService<SendNotificationsWorkTaskChangedEventHandler>().Handle(message));

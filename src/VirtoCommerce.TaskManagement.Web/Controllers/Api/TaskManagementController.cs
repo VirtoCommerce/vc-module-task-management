@@ -147,9 +147,8 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
-            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
 
-            if (userPermission == null)
+            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Create))
             {
                 return Unauthorized();
             }
@@ -160,8 +159,9 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
             else
             {
-                var assignToAllScope = userPermission.AssignedScopes.OfType<TaskAssignToAllScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = userPermission.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
+                var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
+                var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
                 string organizationId = null;
@@ -177,7 +177,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                     };
                 }
 
-                if (assignToAllScope != null)
+                if (userPermission == null || !userPermission.AssignedScopes.Any())
                 {
                     result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
@@ -186,7 +186,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                     criteria.MemberId = organizationId;
                     result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
-                else if (!string.IsNullOrEmpty(memberId))
+                else if (assignToMeScope != null && !string.IsNullOrEmpty(memberId))
                 {
                     criteria.ObjectIds = new[] { memberId };
                     result = await _memberSearchService.SearchMembersAsync(criteria);

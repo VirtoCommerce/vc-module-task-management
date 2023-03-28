@@ -14,8 +14,8 @@ angular.module(moduleName, [])
     .run(['platformWebApp.permissionScopeResolver',
         function (scopeResolver) {
             var taskAssignToAllScope = {
-                type: 'TaskAssignToAllScope',
-                title: 'Assign tasks to all'
+                type: 'TaskAssignToMeScope',
+                title: 'Assign tasks only to me'
             };
             scopeResolver.register(taskAssignToAllScope);
 

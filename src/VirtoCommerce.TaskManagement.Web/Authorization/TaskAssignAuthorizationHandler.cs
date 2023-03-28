@@ -45,9 +45,9 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                     var memberId = context.User.FindFirstValue(MemberIdClaimType);
                     var workTask = context.Resource as WorkTask;
 
-                    var assignToAllScope = userPermission.AssignedScopes.OfType<TaskAssignToAllScope>().FirstOrDefault();
+                    var assignToMeScope = userPermission.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
                     var assignToMyOrganizationScope = userPermission.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
-                    if (workTask != null && assignToAllScope != null)
+                    if (workTask != null && !userPermission.AssignedScopes.Any())
                     {
                         context.Succeed(requirement);
                     }
@@ -80,7 +80,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                             }
                         }
                     }
-                    else if (workTask != null && !string.IsNullOrEmpty(memberId) && memberId == workTask.ResponsibleId)
+                    else if (workTask != null && assignToMeScope != null && !string.IsNullOrEmpty(memberId) && memberId == workTask.ResponsibleId)
                     {
                         context.Succeed(requirement);
                     }

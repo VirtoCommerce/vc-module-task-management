@@ -1,5 +1,9 @@
 <template>
-  <VcLoginForm :logo="logo" :background="background" :title="computedTitle">
+  <VcLoginForm
+    :logo="logo as string"
+    :background="background as string"
+    :title="computedTitle as string"
+  >
     <template v-if="isLogin">
       <VcForm @submit.prevent="login">
         <Field
@@ -141,7 +145,6 @@
 <script lang="ts" setup>
 import { ref, reactive, computed } from "vue";
 import {
-  useLogger,
   useUser,
   useForm,
   SignInResults,
@@ -151,7 +154,6 @@ import {
 import { useRouter, useRoute } from "vue-router";
 import { useIsFormValid, Field } from "vee-validate";
 
-const log = useLogger();
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
@@ -199,5 +201,5 @@ const togglePassRequest = () => {
   }
 };
 
-log.debug("Init login-page");
+console.debug("Init login-page");
 </script>

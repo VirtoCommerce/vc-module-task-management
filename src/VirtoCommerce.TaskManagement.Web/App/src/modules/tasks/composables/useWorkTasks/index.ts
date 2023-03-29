@@ -1,5 +1,5 @@
 import { computed, Ref, ref } from "vue";
-import { useLogger, useUser } from "@vc-shell/framework";
+import { useUser } from "@vc-shell/framework";
 import {
   TaskManagementClient,
   IWorkTask,
@@ -17,8 +17,7 @@ interface IUseWorkTasks {
 }
 
 export default (): IUseWorkTasks => {
-  const logger = useLogger();
-  const { getAccessToken, user } = useUser();
+  const { getAccessToken } = useUser();
   const loading = ref(false);
   const workTasks = ref(new WorkTaskSearchResult({ results: [] }));
   const currentPage = ref(1);
@@ -37,7 +36,7 @@ export default (): IUseWorkTasks => {
       currentPage.value =
         (criteria?.skip || 0) / Math.max(1, criteria?.take || 20) + 1;
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       throw e;
     } finally {
       loading.value = false;

@@ -1,0 +1,1 @@
+New Task Assignment - {{ work_task.type }} - {{ work_task.priority }} - {{ work_task.name }}

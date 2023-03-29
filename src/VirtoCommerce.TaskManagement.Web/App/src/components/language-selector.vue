@@ -28,9 +28,7 @@
         class="tw-p-3 tw-text-lg tw-text-black tw-border-l tw-border-solid tw-border-l-[#eef0f2] tw-border-b tw-border-b-[#eef0f2] tw-white tw-cursor-pointer hover:tw-bg-[#eff7fc]"
         v-for="(lang, i) in languageItems"
         :key="i"
-        @click="
-          lang.hasOwnProperty('clickHandler') && lang.clickHandler(lang.lang)
-        "
+        @click="lang.hasOwnProperty('clickHandler') && lang.clickHandler()"
       >
         {{ lang.title }}
       </div>

@@ -9,11 +9,11 @@ namespace VirtoCommerce.TaskManagement.Core
         {
             public static class Permissions
             {
-                public const string Access = "TaskManagement:access";
-                public const string Create = "TaskManagement:create";
-                public const string Read = "TaskManagement:read";
-                public const string Update = "TaskManagement:update";
-                public const string Delete = "TaskManagement:delete";
+                public const string Access = "task:access";
+                public const string Create = "task:create";
+                public const string Read = "task:read";
+                public const string Update = "task:update";
+                public const string Delete = "task:delete";
 
                 public static string[] AllPermissions { get; } =
                 {
@@ -30,37 +30,37 @@ namespace VirtoCommerce.TaskManagement.Core
         {
             public static class General
             {
-                public static SettingDescriptor TaskManagementEnabled { get; } = new SettingDescriptor
+                public static SettingDescriptor TaskNotificationsEnabled { get; } = new SettingDescriptor
                 {
-                    Name = "TaskManagement.TaskManagementEnabled",
-                    GroupName = "TaskManagement|General",
+                    Name = "TaskManagement.TaskNotificationsEnabled",
+                    GroupName = "TaskManagement|Notification",
                     ValueType = SettingValueType.Boolean,
                     DefaultValue = false,
+                    RestartRequired = true
                 };
 
-                public static SettingDescriptor TaskManagementPassword { get; } = new SettingDescriptor
+                public static SettingDescriptor TaskNotificationNoReplyEmail { get; } = new SettingDescriptor
                 {
-                    Name = "TaskManagement.TaskManagementPassword",
-                    GroupName = "TaskManagement|Advanced",
-                    ValueType = SettingValueType.SecureString,
-                    DefaultValue = "qwerty",
+                    Name = "TaskManagement.TaskNotificationNoReplyEmail",
+                    GroupName = "TaskManagement|Notification",
+                    ValueType = SettingValueType.ShortText,
                 };
 
-                public static IEnumerable<SettingDescriptor> AllGeneralSettings
+                public static SettingDescriptor TaskAppBaseUrl { get; } = new SettingDescriptor
+                {
+                    Name = "TaskManagement.TaskAppUrl",
+                    GroupName = "TaskManagement|Notification",
+                    ValueType = SettingValueType.ShortText,
+                };
+
+                public static IEnumerable<SettingDescriptor> AllSettings
                 {
                     get
                     {
-                        yield return TaskManagementEnabled;
-                        yield return TaskManagementPassword;
+                        yield return TaskNotificationsEnabled;
+                        yield return TaskNotificationNoReplyEmail;
+                        yield return TaskAppBaseUrl;
                     }
-                }
-            }
-
-            public static IEnumerable<SettingDescriptor> AllSettings
-            {
-                get
-                {
-                    return General.AllGeneralSettings;
                 }
             }
         }

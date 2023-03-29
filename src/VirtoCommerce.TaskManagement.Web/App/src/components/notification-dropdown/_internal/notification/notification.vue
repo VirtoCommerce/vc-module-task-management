@@ -43,19 +43,17 @@ import {
   IPushNotification,
   PushNotification,
 } from "@vc-shell/framework";
-import ImportPush from "./_internal/ImportPush.vue";
 import DefaultPush from "./_internal/DefaultPush.vue";
 import ProductPush from "./_internal/ProductPush.vue";
 import moment from "moment";
 
-interface IExtendedPush extends IPushNotification {
+export interface Props {
+  notification: PushNotification | IExtendedPush;
+}
+export interface IExtendedPush extends IPushNotification {
   finished: Date;
   errors: string[];
   newStatus: string;
-}
-
-export interface Props {
-  notification: PushNotification | IExtendedPush;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -65,22 +63,6 @@ const props = withDefaults(defineProps<Props>(), {
 const locale = window.navigator.language;
 const current = ref();
 const pushComponents = reactive({
-  ImportPushNotification: {
-    component: shallowRef(ImportPush),
-    styles: {
-      color: computed(() => {
-        const notification = props.notification as IExtendedPush;
-        return notification.finished &&
-          !(notification.errors && notification.errors.length)
-          ? "#87b563"
-          : !(notification.errors && notification.errors.length) &&
-            !notification.finished
-          ? "#A9BCCD"
-          : "#F14E4E";
-      }),
-      icon: "fas fa-download",
-    },
-  },
   OfferCreatedDomainEvent: {
     component: shallowRef(DefaultPush),
     styles: {

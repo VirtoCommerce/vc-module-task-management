@@ -10,6 +10,7 @@
     <!-- Blade contents -->
     <VcTable
       class="grow basis-0"
+      state-key="tasks_list"
       :expanded="expanded"
       :empty="empty"
       :loading="loading"
@@ -67,14 +68,14 @@
                   type="date"
                   class="tw-mb-3"
                   :modelValue="getFilterDate('startDate')"
-                  @update:modelValue="setFilterDate('startDate', $event)"
+                  @update:modelValue="(e: string) => setFilterDate('startDate', e)"
                   max="9999-12-31"
                 ></VcInput>
                 <VcInput
                   :label="$t('TASKS.PAGES.LIST.FILTERS.ENDDATE')"
                   type="date"
                   :modelValue="getFilterDate('endDate')"
-                  @update:modelValue="setFilterDate('endDate', $event)"
+                  @update:modelValue="(e: string) => setFilterDate('endDate', e)"
                   max="9999-12-31"
                 ></VcInput>
               </div>
@@ -136,9 +137,20 @@
       <!-- Override status column template -->
       <template v-slot:item_status="itemData">
         <TaskStatus
-          :active="itemData.item.isActive"
-          :completed="itemData.item.completed"
+          :work-task-status="calculateStatus(itemData.item)"
         ></TaskStatus>
+      </template>
+
+      <!-- Override responsible column template -->
+      <template v-slot:item_responsibleName="itemData">
+        <img
+          class="tw-w-5 tw-h-5 tw-rounded-full"
+          :src="getContactIcon(itemData.item.responsibleId)"
+          onerror="javascript:this.src='/assets/userpic.svg'"
+        />
+        <span class="tw-ml-1 tw-pt-0.5">{{
+          itemData.item.responsibleName
+        }}</span>
       </template>
 
       <template v-slot:mobile-item="itemData">
@@ -212,6 +224,7 @@ import {
 } from "@vc-shell/framework";
 import moment from "moment";
 import {
+  WorkTask,
   WorkTaskPriority,
   WorkTaskSearchCriteria,
 } from "../../../api_client/taskmanagement";
@@ -326,13 +339,14 @@ const tableColumns = ref<ITableColumns[]>([
   {
     id: "name",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NAME")),
-    width: 200,
+    width: 150,
     alwaysVisible: true,
   },
   {
     id: "responsibleName",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE")),
-    width: 80,
+    width: 150,
+    class: "tw-flex tw-py-5",
   },
   {
     id: "createdBy",
@@ -386,13 +400,27 @@ const reload = async () => {
 };
 
 const onHeaderClick = (item: ITableColumns) => {
-  const sortBy = [":DESC", ":ASC", ""];
+  const sortOptions = ["DESC", "ASC", ""];
   if (item.sortable) {
-    item.sortDirection = (item.sortDirection ?? 0) + 1;
-    if (sortBy[item.sortDirection % 3] === "") {
-      sort.value = `${sortBy[item.sortDirection % 3]}`;
+    if (sort.value.split(":")[0] === item.id) {
+      const index = sortOptions.findIndex((x) => {
+        const sorting = sort.value.split(":")[1];
+        if (sorting) {
+          return x === sorting;
+        } else {
+          return x === "";
+        }
+      });
+      if (index !== -1) {
+        const newSort = sortOptions[(index + 1) % sortOptions.length];
+        if (newSort === "") {
+          sort.value = `${item.id}`;
+        } else {
+          sort.value = `${item.id}:${newSort}`;
+        }
+      }
     } else {
-      sort.value = `${item.id}${sortBy[item.sortDirection % 3]}`;
+      sort.value = `${item.id}:${sortOptions[0]}`;
     }
   }
 };
@@ -468,6 +496,33 @@ async function resetFilters(closePanel: () => void) {
   await loadWorkTasks(getCriteria());
   appliedFilter.value = {};
 }
+
+const getContactIcon = (id: string) => {
+  return "/api/task-management/contact/icon/" + id;
+};
+
+const calculateStatus = (workTask: WorkTask | any) => {
+  let result = "ToDo";
+  if (workTask.isActive === true) {
+    switch (workTask.completed) {
+      case false:
+      case true:
+        result = "Canceled";
+        break;
+    }
+  } else {
+    switch (workTask.completed) {
+      case null:
+      case false:
+        result = "Canceled";
+        break;
+      case true:
+        result = "Done";
+        break;
+    }
+  }
+  return result;
+};
 
 defineExpose({
   reload,

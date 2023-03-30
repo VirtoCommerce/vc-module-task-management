@@ -160,7 +160,7 @@
                   <img
                     class="tw-w-5 tw-h-5 tw-rounded-full"
                     :src="getContactIcon(item.opt.id)"
-                    onerror="javascript:this.src='/assets/userpic.svg'"
+                    @error="(e) => imgPlaceholder(e)"
                   />
                   <span class="tw-ml-1">{{ item.opt.name }}</span>
                 </template>
@@ -168,7 +168,7 @@
                   <img
                     class="tw-w-5 tw-h-5 tw-rounded-full"
                     :src="getContactIcon(item.opt.id)"
-                    onerror="javascript:this.src='/assets/userpic.svg'"
+                    @error="(e) => imgPlaceholder(e)"
                   />
                   <span class="tw-ml-1">{{ item.opt.name }}</span>
                 </template>
@@ -214,6 +214,7 @@ import { Field, useForm, useIsFormValid } from "vee-validate";
 import { forEach } from "lodash";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskAttachments from "../components/taskAttachments.vue";
+import noCustomerIconImage from "/assets/userpic.svg";
 </script>
 
 <script lang="ts" setup>
@@ -295,4 +296,8 @@ function restoreCollapsed(key: string): boolean {
 const getContactIcon = (id: string) => {
   return "/api/task-management/contact/icon/" + id;
 };
+
+function imgPlaceholder(e: Event) {
+  e.target["src"] = noCustomerIconImage;
+}
 </script>

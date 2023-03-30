@@ -146,7 +146,7 @@
         <img
           class="tw-w-5 tw-h-5 tw-rounded-full"
           :src="getContactIcon(itemData.item.responsibleId)"
-          onerror="javascript:this.src='/assets/userpic.svg'"
+          @error="(e) => imgPlaceholder(e)"
         />
         <span class="tw-ml-1 tw-pt-0.5">{{
           itemData.item.responsibleName
@@ -240,6 +240,7 @@ import {
 } from "vue";
 import { useWorkTasks } from "../composables";
 import emptyImage from "/assets/empty.png";
+import noCustomerIconImage from "/assets/userpic.svg";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -523,6 +524,10 @@ const calculateStatus = (workTask: WorkTask | any) => {
   }
   return result;
 };
+
+function imgPlaceholder(e: Event) {
+  e.target["src"] = noCustomerIconImage;
+}
 
 defineExpose({
   reload,

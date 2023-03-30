@@ -205,7 +205,7 @@
                       <img
                         class="tw-w-5 tw-h-5 tw-rounded-full"
                         :src="getContactIcon(item.opt.id)"
-                        onerror="javascript:this.src='/assets/userpic.svg'"
+                        @error="(e) => imgPlaceholder(e)"
                       />
                       <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
@@ -213,7 +213,7 @@
                       <img
                         class="tw-w-5 tw-h-5 tw-rounded-full"
                         :src="getContactIcon(item.opt.id)"
-                        onerror="javascript:this.src='/assets/userpic.svg'"
+                        @error="(e) => imgPlaceholder(e)"
                       />
                       <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
@@ -223,7 +223,7 @@
                   <img
                     class="tw-w-5 tw-h-5 tw-rounded-full"
                     :src="getContactIcon(workTask.responsibleId)"
-                    onerror="javascript:this.src='/assets/userpic.svg'"
+                    @error="this.src = noCustomerIconImage"
                   />
                   <span class="tw-ml-1 tw-pt-0.5">{{
                     workTask.responsibleName
@@ -295,6 +295,8 @@ import { Field, useForm, useIsFormValid } from "vee-validate";
 import { forEach } from "lodash";
 import TaskAttachments from "../components/taskAttachments.vue";
 import { WorkTask } from "../../../api_client/taskmanagement";
+import noCustomerIconImage from "/assets/userpic.svg";
+
 export default defineComponent({
   url: "task",
 });
@@ -464,6 +466,10 @@ const calculateStatus = (workTask: WorkTask) => {
   }
   return result;
 };
+
+function imgPlaceholder(e: Event) {
+  e.target["src"] = noCustomerIconImage;
+}
 </script>
 
 <style lang="scss">

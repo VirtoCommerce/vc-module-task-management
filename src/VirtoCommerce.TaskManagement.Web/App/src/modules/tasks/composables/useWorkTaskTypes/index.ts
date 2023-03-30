@@ -7,7 +7,7 @@ import {
 
 interface IWorkTaskTypeResult {
   totalCount?: number;
-  results?: TaskType[] | undefined;
+  results?: TaskType[];
 }
 
 interface IUseWorkTaskTypes {

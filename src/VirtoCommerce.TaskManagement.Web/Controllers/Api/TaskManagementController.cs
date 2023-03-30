@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Model.Search;
 using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.Platform.Core;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Models;
@@ -147,8 +148,9 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
 
-            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Create))
+            if (!User.IsInRole(PlatformConstants.Security.SystemRoles.Administrator) && userPermission == null)
             {
                 return Unauthorized();
             }
@@ -159,7 +161,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
             else
             {
-                var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
+
                 var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
                 var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 

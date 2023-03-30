@@ -28,7 +28,7 @@ namespace VirtoCommerce.TaskManagement.Core
 
         public static class Settings
         {
-            public static class TaskTypes
+            public static class PredefinedTaskTypes
             {
                 public const string RegistrationReview = "Registration Review";
                 public const string OrderReview = "Order Review";
@@ -71,17 +71,17 @@ namespace VirtoCommerce.TaskManagement.Core
                     GroupName = "TaskManagement|General",
                     ValueType = SettingValueType.ShortText,
                     IsDictionary = true,
-                    DefaultValue = Settings.TaskTypes.RegistrationReview,
+                    DefaultValue = PredefinedTaskTypes.RegistrationReview,
                     AllowedValues = new[]
                     {
-                        Settings.TaskTypes.RegistrationReview,
-                        Settings.TaskTypes.OrderReview,
-                        Settings.TaskTypes.OrderProcessing,
-                        Settings.TaskTypes.ProductCatalogManagement,
-                        Settings.TaskTypes.PricingAndPromotions,
-                        Settings.TaskTypes.ContentManagement,
-                        Settings.TaskTypes.CustomerSupport,
-                        Settings.TaskTypes.Other
+                        PredefinedTaskTypes.RegistrationReview,
+                        PredefinedTaskTypes.OrderReview,
+                        PredefinedTaskTypes.OrderProcessing,
+                        PredefinedTaskTypes.ProductCatalogManagement,
+                        PredefinedTaskTypes.PricingAndPromotions,
+                        PredefinedTaskTypes.ContentManagement,
+                        PredefinedTaskTypes.CustomerSupport,
+                        PredefinedTaskTypes.Other
                     }
                 };
 

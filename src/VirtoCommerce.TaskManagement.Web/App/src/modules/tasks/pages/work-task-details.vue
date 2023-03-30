@@ -132,19 +132,26 @@
                   :modelValue="workTask.type"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
-                  <VcInput
-                    v-bind="field"
-                    class="tw-mb-4"
-                    v-model="workTask.type"
-                    :clearable="true"
-                    :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
-                    maxlength="1024"
-                    required
-                    :error="!!errors.length"
-                    :error-message="errorMessage"
-                    @update:modelValue="handleChange"
-                  >
-                  </VcInput>
+                <VcSelect
+                v-bind="field"
+                class="tw-mb-4"
+                v-model="workTask.type"
+                :clearable="false"
+                option-value="name"
+                option-label="name"
+                :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
+                :error="!!errors.length"
+                :error-message="errorMessage"
+                :options="getTaskTypes"
+                @update:modelValue="handleChange"
+              >
+                <template v-slot:selected-item="item">
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
+                </template>
+                <template v-slot:option="item">
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
+                </template>
+              </VcSelect>
                 </Field>
                 <div class="tw-text-base" v-else>
                   {{ workTask.type }}
@@ -271,6 +278,7 @@ import {
   useContacts,
   useWorkTask,
   useWorkTaskAttachments,
+  useWorkTaskTypes,
 } from "../composables";
 import {
   useI18n,
@@ -332,6 +340,7 @@ const { getMember, searchContacts } = useContacts();
 const { user } = useUser();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
+const { getTaskTypes } = useWorkTaskTypes();
 useForm({ validateOnMount: false });
 const isValid = useIsFormValid();
 

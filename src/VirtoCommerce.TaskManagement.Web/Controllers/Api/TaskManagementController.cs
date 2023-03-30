@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -11,6 +12,7 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Model.Search;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.Platform.Core.Security;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
@@ -28,6 +30,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         private readonly IMemberService _memberService;
         private readonly IMemberSearchService _memberSearchService;
         private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _settingsManager;
         private readonly MvcNewtonsoftJsonOptions _jsonOptions;
 
         public TaskManagementController(
@@ -36,13 +39,16 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             IMemberService memberService,
             IMemberSearchService memberSearchService,
             IAuthorizationService authorizationService,
-            IOptions<MvcNewtonsoftJsonOptions> jsonOptions)
+            ISettingsManager settingsManager,
+            IOptions<MvcNewtonsoftJsonOptions> jsonOptions
+            )
         {
             _workTaskService = workTaskService;
             _workTaskSearchService = workTaskSearchService;
             _memberService = memberService;
             _memberSearchService = memberSearchService;
             _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _jsonOptions = jsonOptions.Value;
         }
 
@@ -201,6 +207,15 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         {
             var member = await _memberService.GetByIdAsync(id);
             return Ok(member);
+        }
+
+        [HttpGet("tasks/types")]
+        public async Task<ActionResult<IEnumerable<TaskType>>> GetTaskTypes()
+        {
+            var setting = await _settingsManager.GetObjectSettingAsync(ModuleConstants.Settings.General.TaskTypes.Name);
+            var result = setting.AllowedValues.Select(x => new TaskType { Name = x as string }).ToList();
+
+            return Ok(result);
         }
     }
 }

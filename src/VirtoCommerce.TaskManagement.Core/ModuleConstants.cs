@@ -28,6 +28,18 @@ namespace VirtoCommerce.TaskManagement.Core
 
         public static class Settings
         {
+            public static class TaskTypes
+            {
+                public const string RegistrationReview = "Registration Review";
+                public const string OrderReview = "Order Review";
+                public const string OrderProcessing = "Order Processing";
+                public const string ProductCatalogManagement = "Product Catalog Management";
+                public const string PricingAndPromotions = "Pricing and Promotions";
+                public const string ContentManagement = "Content Management";
+                public const string CustomerSupport = "Customer Support";
+                public const string Other = "Other";
+            }
+
             public static class General
             {
                 public static SettingDescriptor TaskNotificationsEnabled { get; } = new SettingDescriptor
@@ -53,6 +65,26 @@ namespace VirtoCommerce.TaskManagement.Core
                     ValueType = SettingValueType.ShortText,
                 };
 
+                public static SettingDescriptor TaskTypes { get; } = new SettingDescriptor
+                {
+                    Name = "TaskManagement.TaskTypes",
+                    GroupName = "TaskManagement|General",
+                    ValueType = SettingValueType.ShortText,
+                    IsDictionary = true,
+                    DefaultValue = Settings.TaskTypes.RegistrationReview,
+                    AllowedValues = new[]
+                    {
+                        Settings.TaskTypes.RegistrationReview,
+                        Settings.TaskTypes.OrderReview,
+                        Settings.TaskTypes.OrderProcessing,
+                        Settings.TaskTypes.ProductCatalogManagement,
+                        Settings.TaskTypes.PricingAndPromotions,
+                        Settings.TaskTypes.ContentManagement,
+                        Settings.TaskTypes.CustomerSupport,
+                        Settings.TaskTypes.Other
+                    }
+                };
+
                 public static IEnumerable<SettingDescriptor> AllSettings
                 {
                     get
@@ -60,6 +92,7 @@ namespace VirtoCommerce.TaskManagement.Core
                         yield return TaskNotificationsEnabled;
                         yield return TaskNotificationNoReplyEmail;
                         yield return TaskAppBaseUrl;
+                        yield return TaskTypes;
                     }
                 }
             }

@@ -64,24 +64,30 @@
           <VcCol class="tw-p-1">
             <Field
               name="type"
-              rules="required|min:3"
               :modelValue="newWorkTask.type"
               v-slot="{ field, errorMessage, handleChange, errors }"
             >
-              <VcInput
+            <VcSelect
                 v-bind="field"
                 class="tw-mb-4"
-                :label="$t('TASKS.PAGES.NEW.FIELDS.TYPE.TITLE')"
                 v-model="newWorkTask.type"
-                :clearable="true"
-                required
+                option-value="name"
+                option-label="name"
+                :label="$t('TASKS.PAGES.NEW.FIELDS.TYPE.TITLE')"
                 :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
-                maxlength="1024"
+                :clearable="true"
                 :error="!!errors.length"
                 :error-message="errorMessage"
+                :options="getTaskTypes"
                 @update:modelValue="handleChange"
               >
-              </VcInput>
+                <template v-slot:selected-item="item">
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
+                </template>
+                <template v-slot:option="item">
+                  <span class="tw-ml-1">{{ item.opt.name }}</span>
+                </template>
+              </VcSelect>
             </Field>
           </VcCol>
           <VcCol class="tw-p-1">
@@ -221,6 +227,7 @@ import {
   useContacts,
   useWorkTask,
   useWorkTaskAttachments,
+  useWorkTaskTypes,
 } from "../composables";
 export interface Props {
   expanded?: boolean;
@@ -240,6 +247,7 @@ const emit = defineEmits<Emits>();
 const { t } = useI18n();
 const { workTask, loading, createWorkTask } = useWorkTask();
 const { getMember, searchContacts } = useContacts();
+const { getTaskTypes } = useWorkTaskTypes();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
 const priorities = Object.values(WorkTaskPriority);

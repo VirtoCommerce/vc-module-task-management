@@ -570,10 +570,55 @@ export class TaskManagementClient extends AuthApiBase {
         }
         return Promise.resolve<Member>(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    getTaskTypes(): Promise<TaskType[]> {
+        let url_ = this.baseUrl + "/api/task-management/tasks/types";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetTaskTypes(_response);
+        });
+    }
+
+    protected processGetTaskTypes(response: Response): Promise<TaskType[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(TaskType.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<TaskType[]>(null as any);
+    }
 }
 
 export enum AddressType {
-    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",
@@ -1521,6 +1566,42 @@ export enum TaskPriority {
     Highest = "Highest",
 }
 
+export class TaskType implements ITaskType {
+    name?: string | undefined;
+
+    constructor(data?: ITaskType) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): TaskType {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskType();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ITaskType {
+    name?: string | undefined;
+}
+
 export class WorkTask implements IWorkTask {
     number?: number;
     name?: string | undefined;
@@ -1910,7 +1991,6 @@ export interface IWorkTaskSearchResult {
 }
 
 export enum CustomerAddressAddressType {
-    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",

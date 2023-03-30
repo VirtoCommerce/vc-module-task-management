@@ -26,6 +26,10 @@
       "TaskAppUrl": {
         "title": "Tasks portal base url",
         "description": "URL of tasks portal, by default use - platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Tasks types",
+        "description": "List of task types that employees can select when creating a new task"
       }
     }
   },

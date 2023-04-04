@@ -36,11 +36,11 @@ public abstract class WorkTaskCommandHandler<TCommand> : IRequestHandler<TComman
 
         if (completed)
         {
-            await _workTaskService.CompleteAsync(task.Id, null);
+            await _workTaskService.ApproveAsync(task.Id, null);
         }
         else
         {
-            await _workTaskService.CancelAsync(task.Id, null);
+            await _workTaskService.DeclineAsync(task.Id, null);
         }
 
         return task;

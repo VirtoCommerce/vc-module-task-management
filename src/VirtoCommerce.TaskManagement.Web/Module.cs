@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using AutoMapper;
 using GraphQL.Server;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

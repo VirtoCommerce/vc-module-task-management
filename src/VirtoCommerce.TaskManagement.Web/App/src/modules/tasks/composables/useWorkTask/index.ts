@@ -80,7 +80,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.complete(id, result);
+      workTask.value = await client.approve(id, result);
     } catch (e) {
       console.error(e);
       throw e;
@@ -93,7 +93,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.cancel(id, result);
+      workTask.value = await client.decline(id, result);
     } catch (e) {
       console.error(e);
       throw e;

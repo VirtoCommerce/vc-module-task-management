@@ -7,8 +7,8 @@ namespace VirtoCommerce.TaskManagement.Core.Services
 {
     public interface IWorkTaskService : ICrudService<WorkTask>
     {
-        Task<WorkTask> CompleteAsync(string id, JObject result);
-        Task<WorkTask> CancelAsync(string id, JObject result);
+        Task<WorkTask> ApproveAsync(string id, JObject result);
+        Task<WorkTask> DeclineAsync(string id, JObject result);
         Task<WorkTask> TimeoutAsync(string id);
     }
 }

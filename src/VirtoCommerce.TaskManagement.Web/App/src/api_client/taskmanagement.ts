@@ -286,8 +286,8 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    complete(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/complete?";
+    approve(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/approve?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -308,11 +308,11 @@ export class TaskManagementClient extends AuthApiBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processComplete(_response);
+            return this.processApprove(_response);
         });
     }
 
-    protected processComplete(response: Response): Promise<WorkTask> {
+    protected processApprove(response: Response): Promise<WorkTask> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -343,8 +343,8 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return Success
      */
-    cancel(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/cancel?";
+    decline(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/decline?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -365,11 +365,11 @@ export class TaskManagementClient extends AuthApiBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processCancel(_response);
+            return this.processDecline(_response);
         });
     }
 
-    protected processCancel(response: Response): Promise<WorkTask> {
+    protected processDecline(response: Response): Promise<WorkTask> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {

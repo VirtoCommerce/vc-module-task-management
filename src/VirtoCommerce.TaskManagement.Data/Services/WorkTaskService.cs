@@ -22,7 +22,7 @@ namespace VirtoCommerce.TaskManagement.Data.Services
         {
         }
 
-        public virtual async Task<WorkTask> CancelAsync(string id, JObject result)
+        public virtual async Task<WorkTask> DeclineAsync(string id, JObject result)
         {
             var workTask = await GetByIdAsync(id);
             var originalWorkTask = (WorkTask)workTask.Clone();
@@ -43,7 +43,7 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             return workTask;
         }
 
-        public virtual async Task<WorkTask> CompleteAsync(string id, JObject result)
+        public virtual async Task<WorkTask> ApproveAsync(string id, JObject result)
         {
             var workTask = await GetByIdAsync(id);
             var originalWorkTask = (WorkTask)workTask.Clone();

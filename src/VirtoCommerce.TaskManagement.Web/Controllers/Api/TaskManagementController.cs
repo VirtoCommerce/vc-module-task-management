@@ -71,8 +71,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPost("")]
         public async Task<ActionResult<WorkTask>> Create([FromBody] WorkTask workTask)
         {
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask,
-                new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Create));
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Create));
             if (!authorizationResult.Succeeded)
             {
                 return Unauthorized();
@@ -104,19 +103,19 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return NoContent();
         }
 
-        [HttpPost("complete")]
-        [Authorize(ModuleConstants.Security.Permissions.Update)]
-        public async Task<ActionResult<WorkTask>> Complete(string id, [FromBody] JObject result)
+        [HttpPost("approve")]
+        [Authorize(ModuleConstants.Security.Permissions.Approve)]
+        public async Task<ActionResult<WorkTask>> Approve(string id, [FromBody] JObject result)
         {
-            var workTask = await _workTaskService.CompleteAsync(id, result);
+            var workTask = await _workTaskService.ApproveAsync(id, result);
             return workTask;
         }
 
-        [HttpPost("cancel")]
-        [Authorize(ModuleConstants.Security.Permissions.Update)]
-        public async Task<ActionResult<WorkTask>> Cancel(string id, [FromBody] JObject result)
+        [HttpPost("decline")]
+        [Authorize(ModuleConstants.Security.Permissions.Decline)]
+        public async Task<ActionResult<WorkTask>> Decline(string id, [FromBody] JObject result)
         {
-            var workTask = await _workTaskService.CancelAsync(id, result);
+            var workTask = await _workTaskService.DeclineAsync(id, result);
             return workTask;
         }
 
@@ -153,8 +152,9 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
 
-            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Create))
+            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Create) && userPermission == null)
             {
                 return Unauthorized();
             }
@@ -165,7 +165,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
             else
             {
-                var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
+
                 var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
                 var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 

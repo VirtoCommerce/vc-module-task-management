@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>VirtoCommerce.TaskManagement</id>
-  <version>3.211.0</version>
+  <version>3.212.0</version>
   <version-tag></version-tag>
   <platformVersion>3.271.0</platformVersion>
   <dependencies>

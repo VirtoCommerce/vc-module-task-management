@@ -72,6 +72,11 @@ namespace VirtoCommerce.TaskManagement.Data.Services
                 query = query.Where(x => x.Name.Contains(criteria.Keyword) || x.Description.Contains(criteria.Keyword));
             }
 
+            if (!criteria.Type.IsNullOrEmpty())
+            {
+                query = query.Where(x => x.Type.Contains(criteria.Type));
+            }
+
             return query;
         }
     }

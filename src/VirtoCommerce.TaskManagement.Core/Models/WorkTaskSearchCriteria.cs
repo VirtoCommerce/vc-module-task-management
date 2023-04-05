@@ -16,5 +16,7 @@ namespace VirtoCommerce.TaskManagement.Core.Models
         public string Priority { get; set; }
         public bool? IsActive { get; set; }
         public bool? Completed { get; set; }
+
+        public string Type { get; set; }
     }
 }

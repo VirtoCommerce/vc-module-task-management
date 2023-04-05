@@ -1806,6 +1806,7 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
     priority?: string | undefined;
     isActive?: boolean | undefined;
     completed?: boolean | undefined;
+    type?: string | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1844,6 +1845,7 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
             this.priority = _data["priority"];
             this.isActive = _data["isActive"];
             this.completed = _data["completed"];
+            this.type = _data["type"];
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
             if (Array.isArray(_data["objectTypes"])) {
@@ -1894,6 +1896,7 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
         data["priority"] = this.priority;
         data["isActive"] = this.isActive;
         data["completed"] = this.completed;
+        data["type"] = this.type;
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -1929,6 +1932,7 @@ export interface IWorkTaskSearchCriteria {
     priority?: string | undefined;
     isActive?: boolean | undefined;
     completed?: boolean | undefined;
+    type?: string | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;

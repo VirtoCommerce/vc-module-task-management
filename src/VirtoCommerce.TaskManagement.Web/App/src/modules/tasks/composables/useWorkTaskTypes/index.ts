@@ -12,11 +12,13 @@ interface IWorkTaskTypeResult {
 
 interface IUseWorkTaskTypes {
   readonly loading: Ref<boolean>;
+  readonly types: Ref<TaskType[]>;
   getTaskTypes(): Promise<IWorkTaskTypeResult>;
 }
 
 export default (): IUseWorkTaskTypes => {
   const loading = ref(false);
+  const types = ref<TaskType[]>([]);
 
   async function getApiClient(): Promise<TaskManagementClient> {
     const { getAccessToken } = useUser();
@@ -29,10 +31,12 @@ export default (): IUseWorkTaskTypes => {
     loading.value = true;
     const client = await getApiClient();
     try {
-      let types = await client.getTaskTypes();
+      let result = await client.getTaskTypes();
+      types.value = result;
+
       return {
-        totalCount: types.length,
-        results: types,
+        totalCount: result.length,
+        results: result,
       };
     } catch (e) {
       console.error(e);
@@ -44,6 +48,7 @@ export default (): IUseWorkTaskTypes => {
 
   return {
     loading: computed(() => loading.value),
+    types: computed(() => types.value),
     getTaskTypes,
   };
 };

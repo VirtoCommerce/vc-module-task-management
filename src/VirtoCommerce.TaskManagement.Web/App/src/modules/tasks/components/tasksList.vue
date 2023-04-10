@@ -46,7 +46,7 @@
               <div>
                 <VcCheckbox
                   class="tw-mb-2"
-                  v-for="taskType in taskTypes"
+                  v-for="taskType in types"
                   :key="taskType.name"
                   :modelValue="filter['type'] === taskType.name"
                   @update:modelValue="
@@ -291,10 +291,9 @@ const props = withDefaults(defineProps<Props>(), {
   param: undefined,
 });
 
-let taskTypes: TaskType[] = [];
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
-const { getTaskTypes } = useWorkTaskTypes();
+const { types, getTaskTypes } = useWorkTaskTypes();
 const { debounce } = useFunctions();
 const { t } = useI18n();
 const { user } = useUser();
@@ -316,8 +315,7 @@ const applyFiltersReset = computed(() => {
 });
 
 onMounted(async () => {
-  const types = await getTaskTypes();
-  taskTypes = types.results;
+  await getTaskTypes();
 
   selectedItemId.value = props.param;
   await loadWorkTasks(getCriteria());

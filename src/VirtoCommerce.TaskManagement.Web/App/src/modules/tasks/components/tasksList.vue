@@ -243,7 +243,6 @@ import {
 } from "@vc-shell/framework";
 import moment from "moment";
 import {
-TaskType,
   WorkTask,
   WorkTaskPriority,
   WorkTaskSearchCriteria,

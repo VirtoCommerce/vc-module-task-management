@@ -41,6 +41,7 @@
         },
         "FILTERS": {
           "TITLE": "Filters",
+          "TYPE": "Type filter",
           "PRIORITY": "Priority filter",
           "DUEDATE": "Due date",
           "STARTDATE": "Start date",

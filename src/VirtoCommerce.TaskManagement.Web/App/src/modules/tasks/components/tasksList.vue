@@ -41,6 +41,25 @@
               <div
                 class="tw-mb-4 tw-text-[#a1c0d4] tw-font-bold tw-text-[17px]"
               >
+                {{ $t("TASKS.PAGES.LIST.FILTERS.TYPE") }}
+              </div>
+              <div>
+                <VcCheckbox
+                  class="tw-mb-2"
+                  v-for="taskType in types"
+                  :key="taskType.name"
+                  :modelValue="filter['type'] === taskType.name"
+                  @update:modelValue="
+                    filter['type'] = $event ? taskType.name : undefined
+                  "
+                  >{{ taskType.name }}
+                </VcCheckbox>
+              </div>
+            </VcCol>
+            <VcCol class="tw-w-[180px] tw-p-2">
+              <div
+                class="tw-mb-4 tw-text-[#a1c0d4] tw-font-bold tw-text-[17px]"
+              >
                 {{ $t("TASKS.PAGES.LIST.FILTERS.PRIORITY") }}
               </div>
               <div>
@@ -238,7 +257,10 @@ import {
   ref,
   watch,
 } from "vue";
-import { useWorkTasks } from "../composables";
+import { 
+  useWorkTasks,
+  useWorkTaskTypes,
+} from "../composables";
 import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
 
@@ -270,6 +292,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
+const { types, getTaskTypes } = useWorkTaskTypes();
 const { debounce } = useFunctions();
 const { t } = useI18n();
 const { user } = useUser();
@@ -291,6 +314,8 @@ const applyFiltersReset = computed(() => {
 });
 
 onMounted(async () => {
+  await getTaskTypes();
+
   selectedItemId.value = props.param;
   await loadWorkTasks(getCriteria());
 });
@@ -466,6 +491,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.priority = filter["priority"];
   criteria.startDueDate = filter["startDate"];
   criteria.endDueDate = filter["endDate"];
+  criteria.type = filter['type'];
   criteria.keyword = searchValue.value;
   criteria.isActive = !props.onlyComplitedList;
   if (props.isCurrentUserList === true) {

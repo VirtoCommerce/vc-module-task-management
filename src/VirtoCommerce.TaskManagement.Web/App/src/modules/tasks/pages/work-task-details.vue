@@ -12,6 +12,70 @@
       <div class="tw-p-5">
         <VcForm>
           <VcCard class="tw-p-5 tw-mb-2">
+            <VcRow>
+              <VcCol>
+                <VcLabel class="tw-mb-2 tw-text-lg">
+                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.TYPE") }}
+                </VcLabel>
+                <Field
+                  v-if="workTask.isActive"
+                  name="type"
+                  rules="required|min:3"
+                  :modelValue="workTask.type"
+                  v-slot="{ field, errorMessage, handleChange, errors }"
+                >
+                  <VcSelect
+                    v-bind="field"
+                    class="tw-mb-4"
+                    v-model="workTask.type"
+                    :clearable="false"
+                    option-value="name"
+                    option-label="name"
+                    :placeholder="$t('TASKS.PAGES.DETAILS.PLACEHOLDER.TYPE')"
+                    :error="!!errors.length"
+                    :error-message="errorMessage"
+                    :options="getTaskTypes"
+                    @update:modelValue="handleChange"
+                  >
+                    <template v-slot:selected-item="item">
+                      <span class="tw-ml-1">{{ item.opt.name }}</span>
+                    </template>
+                    <template v-slot:option="item">
+                      <span class="tw-ml-1">{{ item.opt.name }}</span>
+                    </template>
+                  </VcSelect>
+                </Field>
+                <div class="tw-text-base" v-else>
+                  {{ workTask.type }}
+                </div>
+              </VcCol>
+            </VcRow>
+            <VcRow v-if="!$props.param">
+              <VcCol>
+                <VcLabel class="tw-mb-2 tw-text-lg">
+                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.NAME") }}
+                </VcLabel>
+                <Field
+                  name="name"
+                  rules="required|min:3"
+                  :modelValue="workTask.name"
+                  v-slot="{ field, errorMessage, handleChange, errors }"
+                >
+                  <VcInput
+                    v-bind="field"
+                    class="tw-mb-4"
+                    v-model="workTask.name"
+                    :clearable="true"
+                    required
+                    :placeholder="$t('TASKS.PAGES.DETAILS.PLACEHOLDER.NAME')"
+                    :error="!!errors.length"
+                    :error-message="errorMessage"
+                    @update:modelValue="handleChange"
+                  >
+                  </VcInput>
+                </Field>
+              </VcCol>
+            </VcRow>
             <VcRow class="tw-mb-[15px]">
               <VcCol>
                 <VcLabel class="tw-mb-2 tw-text-lg">
@@ -20,7 +84,6 @@
                 <Field
                   v-if="workTask.isActive == true"
                   name="description"
-                  rules="required|min:3"
                   :modelValue="workTask.description"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
@@ -30,10 +93,9 @@
                     v-model="workTask.description"
                     :clearable="true"
                     :placeholder="
-                      $t('TASKS.PAGES.NEW.FIELDS.DESCRIPTION.PLACEHOLDER')
+                      $t('TASKS.PAGES.DETAILS.PLACEHOLDER.DESCRIPTION')
                     "
-                    maxlength="1024"
-                    required
+                    maxlength="10000"
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     @update:modelValue="handleChange"
@@ -50,8 +112,6 @@
                 <VcLabel class="tw-mb-2 tw-text-lg">
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.PRIORITY") }}
                 </VcLabel>
-              </VcCol>
-              <VcCol>
                 <Field
                   v-if="workTask.isActive === true"
                   name="priority"
@@ -89,8 +149,6 @@
                 <VcLabel class="tw-mb-2 tw-text-lg">
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.DUEDATE") }}
                 </VcLabel>
-              </VcCol>
-              <VcCol>
                 <Field
                   v-if="workTask.isActive"
                   name="dueDate"
@@ -121,73 +179,8 @@
             <VcRow>
               <VcCol>
                 <VcLabel class="tw-mb-2 tw-text-lg">
-                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.TYPE") }}
+                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.ASSIGNEE") }}
                 </VcLabel>
-              </VcCol>
-              <VcCol>
-                <Field
-                  v-if="workTask.isActive"
-                  name="type"
-                  rules="required|min:3"
-                  :modelValue="workTask.type"
-                  v-slot="{ field, errorMessage, handleChange, errors }"
-                >
-                <VcSelect
-                v-bind="field"
-                class="tw-mb-4"
-                v-model="workTask.type"
-                :clearable="false"
-                option-value="name"
-                option-label="name"
-                :placeholder="$t('TASKS.PAGES.NEW.FIELDS.TYPE.PLACEHOLDER')"
-                :error="!!errors.length"
-                :error-message="errorMessage"
-                :options="getTaskTypes"
-                @update:modelValue="handleChange"
-              >
-                <template v-slot:selected-item="item">
-                  <span class="tw-ml-1">{{ item.opt.name }}</span>
-                </template>
-                <template v-slot:option="item">
-                  <span class="tw-ml-1">{{ item.opt.name }}</span>
-                </template>
-              </VcSelect>
-                </Field>
-                <div class="tw-text-base" v-else>
-                  {{ workTask.type }}
-                </div>
-              </VcCol>
-            </VcRow>
-            <VcRow>
-              <VcCol>
-                <VcLabel class="tw-mb-2 tw-text-lg">
-                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.STATUS") }}
-                </VcLabel>
-              </VcCol>
-              <VcCol class="tw-p-1">
-                <div>
-                  <TaskStatus
-                    :work-task-status="calculateStatus(workTask)"
-                  ></TaskStatus>
-                </div>
-              </VcCol>
-            </VcRow>
-          </VcCard>
-          <VcCard
-            :header="$t('TASKS.PAGES.DETAILS.TASK_INFO.CREDENTIALS_TITLE')"
-            is-collapsable
-            :is-collapsed="restoreCollapsed('credentials')"
-            @state:collapsed="handleCollapsed('credentials', $event)"
-          >
-            <VcRow class="tw-p-5">
-              <VcCol>
-                <div class="tw-p-3">
-                  <VcLabel class="tw-mb-2">
-                    {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.ASSIGNEE") }}
-                  </VcLabel>
-                </div>
-              </VcCol>
-              <VcCol class="tw-p-1">
                 <Field
                   v-if="workTask.isActive"
                   name="responsibleId"
@@ -199,6 +192,7 @@
                     name="responsibleId"
                     class="tw-mb-4"
                     required
+                    searchable
                     v-model="workTask.responsibleId"
                     option-value="id"
                     option-label="fullName"
@@ -230,7 +224,7 @@
                   <img
                     class="tw-w-5 tw-h-5 tw-rounded-full"
                     :src="getContactIcon(workTask.responsibleId)"
-                    @error="this.src = noCustomerIconImage"
+                    @error="(e) => imgPlaceholder(e)"
                   />
                   <span class="tw-ml-1 tw-pt-0.5">{{
                     workTask.responsibleName
@@ -238,17 +232,15 @@
                 </div>
               </VcCol>
             </VcRow>
-            <VcRow class="tw-p-5">
-              <VcCol class="tw-p-1">
-                <div class="tw-p-3">
-                  <VcLabel class="tw-mb-2">
-                    {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.REPORTER") }}
-                  </VcLabel>
-                </div>
-              </VcCol>
-              <VcCol class="tw-p-1">
-                <div class="tw-p-3">
-                  {{ workTask.createdBy }}
+            <VcRow>
+              <VcCol>
+                <VcLabel class="tw-mb-2 tw-text-lg">
+                  {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.STATUS") }}
+                </VcLabel>
+                <div>
+                  <TaskStatus
+                    :work-task-status="calculateStatus(workTask)"
+                  ></TaskStatus>
                 </div>
               </VcCol>
             </VcRow>
@@ -331,7 +323,9 @@ const {
   loading,
   modified,
   priorities,
+  initNewWorkTask,
   loadWorkTask,
+  createWorkTask,
   approveWorkTask,
   rejectWorkTask,
   updateWorktask,
@@ -347,10 +341,12 @@ useForm({ validateOnMount: false });
 const isValid = useIsFormValid();
 
 onMounted(async () => {
+  initNewWorkTask();
   if (props.param) {
     await loadWorkTask(props.param);
   }
 });
+
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
     title: computed(() => t("TASKS.PAGES.DETAILS.ACTIONS.ACCEPT_TASK")),
@@ -361,7 +357,9 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         emit("parent:call", { method: "reload" });
       }
     },
-    isVisible: computed(() => workTask.value.isActive === true),
+    isVisible: computed(
+      () => !!props.param && workTask.value.isActive === true
+    ),
   },
   {
     title: computed(() => t("TASKS.PAGES.DETAILS.ACTIONS.REJECT_TASK")),
@@ -372,7 +370,9 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         emit("parent:call", { method: "reload" });
       }
     },
-    isVisible: computed(() => workTask.value.isActive === true),
+    isVisible: computed(
+      () => !!props.param && workTask.value.isActive === true
+    ),
   },
   {
     title: computed(() => t("TASKS.PAGES.DETAILS.ACTIONS.RESET_TASK")),
@@ -381,7 +381,9 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       resetWorkTask();
     },
     disabled: computed(() => !modified.value),
-    isVisible: computed(() => workTask.value.isActive === true),
+    isVisible: computed(
+      () => !!props.param && workTask.value.isActive === true
+    ),
   },
   {
     title: computed(() => t("TASKS.PAGES.DETAILS.ACTIONS.SAVE_TASK")),
@@ -397,6 +399,17 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         workTask.value.responsibleName = member?.name;
         await updateWorktask();
         emit("parent:call", { method: "reload" });
+      } else {
+        const member = await getMember(workTask.value.responsibleId);
+        workTask.value.responsibleName = member?.name;
+        forEach(workTask.value.attachments, function (attachment) {
+          if (attachment.id.startsWith("Draft")) {
+            attachment.id = null;
+          }
+        });
+        await createWorkTask(workTask.value);
+        emit("parent:call", { method: "reload" });
+        emit("close:blade");
       }
     },
     disabled: computed(() => !modified.value || !isValid.value),
@@ -412,11 +425,16 @@ const bladeToolbar = ref<IBladeToolbar[]>([
         emit("close:blade");
       }
     },
-    isVisible: computed(() => workTask.value.createdBy === user.value.userName),
+    isVisible: computed(
+      () => !!props.param && workTask.value.createdBy === user.value.userName
+    ),
   },
 ]);
+
 const getTitle = () => {
-  return "# " + workTask.value.number + ": " + workTask.value.name;
+  return props.param
+    ? "# " + workTask.value.number + ": " + workTask.value.name
+    : t("TASKS.PAGES.DETAILS.NEW_TITLE");
 };
 
 const filesUpload = async (files: FileList) => {

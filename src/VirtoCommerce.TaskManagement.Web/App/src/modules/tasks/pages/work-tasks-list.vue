@@ -15,7 +15,7 @@
 <script lang="ts">
 import { IBladeEvent } from "@vc-shell/framework";
 import { defineComponent, ref, shallowRef } from "vue";
-import { WorkTaskCreate, WorkTaskDetails } from ".";
+import { WorkTaskDetails } from ".";
 import TasksList from "../components/tasksList.vue";
 
 export default defineComponent({
@@ -53,7 +53,7 @@ const onItemClick = (item: { id: string }) => {
 
 const newTaskClick = () => {
   emit("open:blade", {
-    component: shallowRef(WorkTaskCreate),
+    component: shallowRef(WorkTaskDetails),
   });
 };
 

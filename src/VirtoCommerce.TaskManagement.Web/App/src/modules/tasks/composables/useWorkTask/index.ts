@@ -12,6 +12,7 @@ interface IUseWorkTask {
   loading: Ref<boolean>;
   modified: Ref<boolean>;
   priorities: WorkTaskPriority[];
+  initNewWorkTask(): void;
   loadWorkTask(id: string): void;
   createWorkTask(workTask: WorkTask): void;
   approveWorkTask(id: string, result: any): void;
@@ -21,7 +22,11 @@ interface IUseWorkTask {
   deleteWorkTask(id: string): void;
 }
 
-const workTask: Ref<WorkTask> = ref({} as WorkTask);
+const workTask: Ref<WorkTask> = ref({
+  priority: WorkTaskPriority.Normal,
+  attachments: [],
+  isActive: true,
+} as WorkTask);
 
 export default (): IUseWorkTask => {
   const loading = ref(false);
@@ -46,6 +51,14 @@ export default (): IUseWorkTask => {
     return client;
   }
 
+  function initNewWorkTask() {
+    workTask.value = {
+      priority: WorkTaskPriority.Normal,
+      attachments: [],
+      isActive: true,
+    } as WorkTask;
+  }
+
   async function loadWorkTask(id: string): Promise<void> {
     loading.value = true;
     const client = await getApiClient();
@@ -61,13 +74,13 @@ export default (): IUseWorkTask => {
     }
   }
 
-  async function createWorkTask(newWorkTask: WorkTask): Promise<void> {
+  async function createWorkTask(): Promise<void> {
     loading.value = true;
     const client = await getApiClient();
     try {
       loading.value = true;
-      validateAttachments(newWorkTask);
-      workTask.value = await client.create(newWorkTask);
+      validateAttachments(workTask.value);
+      workTask.value = await client.create(workTask.value);
     } catch (e) {
       console.error(e);
       throw e;
@@ -149,6 +162,7 @@ export default (): IUseWorkTask => {
     loading: computed(() => loading.value),
     modified: computed(() => modified.value),
     priorities,
+    initNewWorkTask,
     loadWorkTask,
     createWorkTask,
     approveWorkTask,

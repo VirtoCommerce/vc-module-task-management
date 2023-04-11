@@ -1692,24 +1692,24 @@
     "@typescript-eslint/types" "5.48.2"
     eslint-visitor-keys "^3.3.0"
 
-"@vc-shell/api-client-generator@^1.0.57":
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.57.tgz#ede48585472d0a2b1eb242b4ced1d57e98ac2d45"
-  integrity sha512-BPZVDe5taIZrpxnU4NvkmR47sREy9v/ARE8NMOwV+dXmv3O55I5hlgiF8qJEYGw1pIBxtoIZoGmYUk+a7sinIA==
+"@vc-shell/api-client-generator@^1.0.60":
+  version "1.0.60"
+  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.60.tgz#b73ca12d68a88723c762ae57e20821f73c69633f"
+  integrity sha512-/xZDypV2VKFS/ZB7jQyIV3uLLJ4uOAghbS8hFCQL6uj/r4fy6t77MwuXWUcTWO7+Hk4+VAPVi42XX/Pd91YRuA==
   dependencies:
     chalk "^2.4.2"
     nswag "^13.16.1"
     vite "^4.1.4"
 
-"@vc-shell/config-generator@^1.0.57":
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.57.tgz#6074732a1fbf99c5659d741c606aa2124f32f12c"
-  integrity sha512-N9p5XBEJCAQQQiynR5C3Zf7Lm72DUvJJzxFcoe4vtFy8hJSCG+xpPz3IrwEKYaLY3+VfkKHEmf4hEsXdYv9HzA==
+"@vc-shell/config-generator@^1.0.60":
+  version "1.0.60"
+  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.60.tgz#3ff96110fc65c35e9c663ae87ca268057bfbb807"
+  integrity sha512-wwTH9+Mwpl/K3RftwCOR41uz3QbfF0nX6N9+t5CtpqN2KjCMrikouIaXyd7Wcsub06+ET/jyyfX7bOhHMmYIPA==
 
-"@vc-shell/framework@^1.0.56":
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.57.tgz#5e8f8b563f9d2afd294980c31609d6de7cad64c7"
-  integrity sha512-PIb7Ek4yOefu+ZEaIm7SQN3lLqiCRDpyCqrfyYt8dHkw00spfp/b32Wn4J8s182g/DsWmLSd1IMeCgX3FpoKTQ==
+"@vc-shell/framework@^1.0.60":
+  version "1.0.60"
+  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.60.tgz#8d488da47077a5d96e57f8351e207b56ba1bfc59"
+  integrity sha512-8xZ6qow01pCYXs67OcOJTXSgIEq+BFzcuUmQ4fhyVNDPWhwk1Kn7sCI+7lBnV7mxtsJ2a6VAcrhMDxrdsimOnQ==
   dependencies:
     "@floating-ui/vue" "^0.2.1"
     "@popperjs/core" "^2.11.0"
@@ -1731,7 +1731,6 @@
     vue-router "^4.1.6"
     vue3-ace-editor "^2.2.2"
     vue3-touch-events "^4.1.0"
-    vuedraggable "^4.1.0"
 
 "@vee-validate/i18n@^4.7.3":
   version "4.8.3"
@@ -5236,11 +5235,6 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-sortablejs@1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
-  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
-
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -5998,13 +5992,6 @@ vue@^3.0.0, vue@^3.2.26:
     "@vue/runtime-dom" "3.2.45"
     "@vue/server-renderer" "3.2.45"
     "@vue/shared" "3.2.45"
-
-vuedraggable@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-4.1.0.tgz#edece68adb8a4d9e06accff9dfc9040e66852270"
-  integrity sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==
-  dependencies:
-    sortablejs "1.14.0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

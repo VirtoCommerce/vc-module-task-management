@@ -155,6 +155,8 @@ onMounted(async () => {
   isReady.value = true;
   if (!isAuthorized.value) {
     router.push("/login");
+  } else if (route.path === "/") {
+    router.push("/my");
   }
 });
 

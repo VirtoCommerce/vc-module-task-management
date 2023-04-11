@@ -8,7 +8,6 @@ import {
 /**
  * Pages
  */
-import Dashboard from "../pages/Dashboard.vue";
 import Invite from "../pages/Invite.vue";
 import ResetPassword from "../pages/ResetPassword.vue";
 import Login from "./../pages/Login.vue";

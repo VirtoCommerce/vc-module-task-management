@@ -28,16 +28,15 @@
       @itemClick="onItemClick"
       @scroll:ptr="reload"
       @headerClick="onHeaderClick"
-      @selectionChanged="onSelectionChanged"
     >
       <!-- Filters -->
       <template v-slot:filters="{ closePanel }">
         <h2 v-if="$isMobile.value">
           {{ $t("TASKS.PAGES.LIST.FILTERS.TITLE") }}
         </h2>
-        <VcContainer no-padding>
+        <VcContainer>
           <VcRow>
-            <VcCol class="tw-w-[180px] tw-p-2">
+            <VcCol class="tw-w-[250px] tw-p-2">
               <div
                 class="tw-mb-4 tw-text-[#a1c0d4] tw-font-bold tw-text-[17px]"
               >
@@ -257,10 +256,7 @@ import {
   ref,
   watch,
 } from "vue";
-import { 
-  useWorkTasks,
-  useWorkTaskTypes,
-} from "../composables";
+import { useWorkTasks, useWorkTaskTypes } from "../composables";
 import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
 
@@ -300,7 +296,6 @@ const filter = reactive({});
 const appliedFilter = ref({});
 const searchValue = ref();
 const selectedItemId = ref();
-const selectedOrdersIds = ref([]);
 const sort = ref("createdDate:DESC");
 const applyFiltersDisable = computed(() => {
   const activeFilters = Object.values(filter).filter((x) => x !== undefined);
@@ -363,9 +358,9 @@ const tableColumns = ref<ITableColumns[]>([
     alwaysVisible: true,
   },
   {
-    id: "name",
-    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NAME")),
-    width: 150,
+    id: "type",
+    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.TYPE")),
+    width: 30,
     alwaysVisible: true,
   },
   {
@@ -373,11 +368,6 @@ const tableColumns = ref<ITableColumns[]>([
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE")),
     width: 150,
     class: "tw-flex tw-py-5",
-  },
-  {
-    id: "createdBy",
-    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.REPORTER")),
-    width: 80,
   },
   {
     id: "priority",
@@ -389,7 +379,6 @@ const tableColumns = ref<ITableColumns[]>([
     id: "status",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.STATUS")),
     width: 50,
-    alwaysVisible: true,
   },
   {
     id: "dueDate",
@@ -451,12 +440,6 @@ const onHeaderClick = (item: ITableColumns) => {
   }
 };
 
-const onSelectionChanged = (checkboxes: { [key: string]: boolean }) => {
-  selectedOrdersIds.value = Object.entries(checkboxes)
-    .filter(([id, isChecked]) => isChecked)
-    .map(([id, isChecked]) => id);
-};
-
 const columns = computed(() => {
   if (props.expanded) {
     return tableColumns.value;
@@ -491,7 +474,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.priority = filter["priority"];
   criteria.startDueDate = filter["startDate"];
   criteria.endDueDate = filter["endDate"];
-  criteria.type = filter['type'];
+  criteria.type = filter["type"];
   criteria.keyword = searchValue.value;
   criteria.isActive = !props.onlyComplitedList;
   if (props.isCurrentUserList === true) {

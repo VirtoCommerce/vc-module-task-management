@@ -86,6 +86,7 @@ namespace VirtoCommerce.TaskManagement.Web
             AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMeScope>();
 
             permissionsRegistrar.WithAvailabeScopesForPermissions(new[] {
+                ModuleConstants.Security.Permissions.Read,
                 ModuleConstants.Security.Permissions.Create,
                 ModuleConstants.Security.Permissions.Update,
             }, new TaskAssignToMyOrganizationScope(), new TaskAssignToMeScope());

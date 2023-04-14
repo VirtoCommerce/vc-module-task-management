@@ -8,6 +8,4 @@ module.exports = {
     prefix: 'tw-',
     content: ["../../node_modules/@vc-shell/**/*.{vue,js,ts,jsx,tsx}", "./src/**/*.{vue,js,ts,jsx,tsx}"],
     theme: theme,
-
-    plugins: [require("@tailwindcss/line-clamp")],
 };

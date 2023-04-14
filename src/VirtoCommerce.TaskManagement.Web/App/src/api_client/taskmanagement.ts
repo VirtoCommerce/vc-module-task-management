@@ -283,15 +283,20 @@ export class TaskManagementClient extends AuthApiBase {
 
     /**
      * @param id (optional) 
+     * @param successed (optional) 
      * @param body (optional) 
      * @return Success
      */
-    approve(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/approve?";
+    complete(id?: string | undefined, successed?: boolean | undefined, body?: any | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/complete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (successed === null)
+            throw new Error("The parameter 'successed' cannot be null.");
+        else if (successed !== undefined)
+            url_ += "successed=" + encodeURIComponent("" + successed) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -308,68 +313,11 @@ export class TaskManagementClient extends AuthApiBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processApprove(_response);
+            return this.processComplete(_response);
         });
     }
 
-    protected processApprove(response: Response): Promise<WorkTask> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = WorkTask.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<WorkTask>(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @param body (optional) 
-     * @return Success
-     */
-    decline(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/decline?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.processDecline(_response);
-        });
-    }
-
-    protected processDecline(response: Response): Promise<WorkTask> {
+    protected processComplete(response: Response): Promise<WorkTask> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -619,6 +567,7 @@ export class TaskManagementClient extends AuthApiBase {
 }
 
 export enum AddressType {
+    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",
@@ -1995,6 +1944,7 @@ export interface IWorkTaskSearchResult {
 }
 
 export enum CustomerAddressAddressType {
+    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",

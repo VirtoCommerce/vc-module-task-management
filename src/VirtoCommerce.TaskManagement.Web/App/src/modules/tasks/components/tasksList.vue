@@ -239,6 +239,7 @@ import {
   useFunctions,
   useI18n,
   useUser,
+  useBladeNavigation,
 } from "@vc-shell/framework";
 import moment from "moment";
 import {
@@ -256,9 +257,14 @@ import {
   ref,
   watch,
 } from "vue";
-import { useWorkTasks, useWorkTaskTypes } from "../composables";
+import {
+  useWorkTaskPermissions,
+  useWorkTasks,
+  useWorkTaskTypes,
+} from "../composables";
 import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
+import { TaskPermissions } from "../../../types";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -289,6 +295,8 @@ const props = withDefaults(defineProps<Props>(), {
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
 const { types, getTaskTypes } = useWorkTaskTypes();
+const { checkWorkTaskPermission } = useWorkTaskPermissions();
+const { closeBlade } = useBladeNavigation();
 const { debounce } = useFunctions();
 const { t } = useI18n();
 const { user } = useUser();
@@ -334,8 +342,10 @@ if (props.isCurrentUserList === false && props.onlyComplitedList === false) {
       title: t("TASKS.PAGES.LIST.TOOLBAR.CREATE"),
       icon: "fas fa-plus",
       async clickHandler() {
-        emit("newTaskClick");
+        closeBlade(0);
+        //emit("newTaskClick");
       },
+      isVisible: checkWorkTaskPermission(TaskPermissions.Create),
     },
   ];
 } else {
@@ -354,37 +364,37 @@ const tableColumns = ref<ITableColumns[]>([
   {
     id: "number",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NUMBER")),
-    width: 30,
+    width: "100px",
     alwaysVisible: true,
   },
   {
     id: "type",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.TYPE")),
-    width: 30,
+    width: "300px",
     alwaysVisible: true,
   },
   {
     id: "responsibleName",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE")),
-    width: 150,
+    width: "200px",
     class: "tw-flex tw-py-5",
   },
   {
     id: "priority",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.PRIORITY")),
-    width: 30,
+    width: "100px",
     alwaysVisible: true,
   },
   {
     id: "status",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.STATUS")),
-    width: 50,
+    width: "100px",
   },
   {
     id: "dueDate",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.DUEDATE")),
     sortable: true,
-    width: 50,
+    width: "100px",
     format: "DD MMM",
     type: "date",
     alwaysVisible: true,
@@ -542,3 +552,8 @@ defineExpose({
   reload,
 });
 </script>
+<style lang="scss">
+.vc-table-filter__panel {
+  max-height: 800px !important;
+}
+</style>

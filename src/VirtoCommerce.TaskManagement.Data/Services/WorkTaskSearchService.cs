@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
@@ -42,6 +43,13 @@ namespace VirtoCommerce.TaskManagement.Data.Services
                     : query.Where(x => criteria.ResponsibleIds.Contains(x.ResponsibleId));
             }
 
+            if (!criteria.OrganizationIds.IsNullOrEmpty())
+            {
+                query = criteria.OrganizationIds.Count == 1
+                    ? query.Where(x => x.OrganizationId == criteria.OrganizationIds.First())
+                    : query.Where(x => criteria.OrganizationIds.Contains(x.OrganizationId));
+            }
+
             if (criteria.Priority != null)
             {
                 query = query.Where(x => x.Priority == criteria.Priority);
@@ -78,6 +86,23 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             }
 
             return query;
+        }
+
+        protected override IList<SortInfo> BuildSortExpression(WorkTaskSearchCriteria criteria)
+        {
+            var sortInfos = criteria.SortInfos;
+            if (sortInfos.IsNullOrEmpty())
+            {
+                sortInfos = new[]
+                {
+                    new SortInfo
+                    {
+                        SortColumn = nameof(WorkTaskEntity.CreatedDate),
+                        SortDirection = SortDirection.Descending
+                    }
+                };
+            }
+            return sortInfos;
         }
     }
 }

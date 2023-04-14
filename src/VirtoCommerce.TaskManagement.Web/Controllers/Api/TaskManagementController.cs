@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Model.Search;
 using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
@@ -53,19 +54,49 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpGet("{id}")]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<WorkTask>> Get(string id, [FromQuery] string respGroup = null)
         {
-            var workTask = await _workTaskService.GetByIdAsync(id);
-            return workTask;
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Read, _jsonOptions.SerializerSettings);
+            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Read) && userPermission == null)
+            {
+                return Unauthorized();
+            }
+
+            var criteria = AbstractTypeFactory<WorkTaskSearchCriteria>.TryCreateInstance();
+            criteria.ObjectIds = new[] { id };
+            criteria.ResponseGroup = respGroup;
+
+            await FillCriteria(criteria, userPermission);
+
+            var searchResult = await _workTaskSearchService.SearchAsync(criteria);
+            return Ok(searchResult.Results.FirstOrDefault());
         }
 
         [HttpPost("search")]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<WorkTaskSearchResult>> SearchTasks([FromBody] WorkTaskSearchCriteria criteria)
         {
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Read, _jsonOptions.SerializerSettings);
+            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Read) && userPermission == null)
+            {
+                return Unauthorized();
+            }
+
+            await FillCriteria(criteria, userPermission);
             var result = await _workTaskSearchService.SearchAsync(criteria);
-            return result;
+            return Ok(result);
+        }
+
+        [HttpPost("search/currentUser")]
+        public async Task<ActionResult<WorkTaskSearchResult>> SearchCurrentUserTasks([FromBody] WorkTaskSearchCriteria criteria)
+        {
+            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Read, _jsonOptions.SerializerSettings);
+            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Read) && userPermission == null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _workTaskSearchService.SearchAsync(criteria);
+            return Ok(result);
         }
 
         [HttpPost("")]
@@ -77,6 +108,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
+            await FillResponsibleWorkTask(workTask);
             await _workTaskService.SaveChangesAsync(new[] { workTask });
             workTask = await _workTaskService.GetByIdAsync(workTask.Id);
             return workTask;
@@ -91,6 +123,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
+            await FillResponsibleWorkTask(workTask);
             await _workTaskService.SaveChangesAsync(new[] { workTask });
             return workTask;
         }
@@ -103,19 +136,11 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return NoContent();
         }
 
-        [HttpPost("approve")]
-        [Authorize(ModuleConstants.Security.Permissions.Approve)]
-        public async Task<ActionResult<WorkTask>> Approve(string id, [FromBody] JObject result)
+        [HttpPost("complete")]
+        [Authorize(ModuleConstants.Security.Permissions.Complete)]
+        public async Task<ActionResult<WorkTask>> Complete([FromQuery] string id, [FromQuery] bool successed, [FromBody] JObject result)
         {
-            var workTask = await _workTaskService.ApproveAsync(id, result);
-            return workTask;
-        }
-
-        [HttpPost("decline")]
-        [Authorize(ModuleConstants.Security.Permissions.Decline)]
-        public async Task<ActionResult<WorkTask>> Decline(string id, [FromBody] JObject result)
-        {
-            var workTask = await _workTaskService.DeclineAsync(id, result);
+            var workTask = await _workTaskService.CompleteAsync(id, successed, result);
             return workTask;
         }
 
@@ -165,23 +190,12 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
             else
             {
-
                 var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
                 var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
-                string organizationId = null;
-
-                if (!string.IsNullOrEmpty(memberId))
-                {
-                    var member = await _memberService.GetByIdAsync(memberId);
-                    organizationId = member?.MemberType switch
-                    {
-                        nameof(Contact) => (member as Contact)?.Organizations?.FirstOrDefault(),
-                        nameof(Employee) => (member as Employee)?.Organizations?.FirstOrDefault(),
-                        _ => null
-                    };
-                }
+                var member = await _memberService.GetByIdAsync(memberId);
+                var organizationId = GetMemberOrganizationId(member);
 
                 if (userPermission == null || !userPermission.AssignedScopes.Any())
                 {
@@ -216,6 +230,47 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             var result = setting.AllowedValues.Select(x => new TaskType { Name = x as string }).ToList();
 
             return Ok(result);
+        }
+
+        private async Task FillResponsibleWorkTask(WorkTask workTask)
+        {
+            if (!string.IsNullOrEmpty(workTask.ResponsibleId))
+            {
+                var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
+                var organizationId = GetMemberOrganizationId(member);
+
+                workTask.ResponsibleName = member?.Name;
+                workTask.OrganizationId = organizationId;
+            }
+        }
+
+        private async Task FillCriteria(WorkTaskSearchCriteria criteria, Permission permission)
+        {
+            var assignToMeScope = permission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
+            var assignToMyOrganizationScope = permission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
+
+            var memberId = User.FindFirstValue(MemberIdClaimType);
+            var member = await _memberService.GetByIdAsync(memberId);
+            var organizationId = GetMemberOrganizationId(member);
+
+            if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
+            {
+                criteria.OrganizationIds = new[] { organizationId };
+            }
+            else if ((assignToMeScope != null || assignToMyOrganizationScope != null) && !string.IsNullOrEmpty(memberId))
+            {
+                criteria.ResponsibleIds = new[] { memberId };
+            }
+        }
+
+        private static string GetMemberOrganizationId(Member member)
+        {
+            return member?.MemberType switch
+            {
+                nameof(Contact) => (member as Contact)?.Organizations?.FirstOrDefault(),
+                nameof(Employee) => (member as Employee)?.Organizations?.FirstOrDefault(),
+                _ => null
+            };
         }
     }
 }

@@ -18,7 +18,6 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.TYPE") }}
                 </VcLabel>
                 <Field
-                  v-if="workTask.isActive"
                   name="type"
                   rules="required|min:3"
                   :modelValue="workTask.type"
@@ -29,6 +28,7 @@
                     class="tw-mb-4"
                     v-model="workTask.type"
                     :clearable="false"
+                    :disabled="disabled"
                     option-value="name"
                     option-label="name"
                     :placeholder="$t('TASKS.PAGES.DETAILS.PLACEHOLDER.TYPE')"
@@ -45,9 +45,6 @@
                     </template>
                   </VcSelect>
                 </Field>
-                <div class="tw-text-base" v-else>
-                  {{ workTask.type }}
-                </div>
               </VcCol>
             </VcRow>
             <VcRow v-if="!$props.param">
@@ -82,16 +79,16 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.DESCRIPTION") }}
                 </VcLabel>
                 <Field
-                  v-if="workTask.isActive == true"
                   name="description"
                   :modelValue="workTask.description"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
-                  <VcTextarea
+                  <VcEditor
                     v-bind="field"
                     class="tw-mb-4"
                     v-model="workTask.description"
                     :clearable="true"
+                    :disabled="disabled"
                     :placeholder="
                       $t('TASKS.PAGES.DETAILS.PLACEHOLDER.DESCRIPTION')
                     "
@@ -99,12 +96,10 @@
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     @update:modelValue="handleChange"
+                    :assets-folder="workTask.id"
                   >
-                  </VcTextarea>
+                  </VcEditor>
                 </Field>
-                <div class="tw-text-base" v-else>
-                  {{ workTask.description }}
-                </div>
               </VcCol>
             </VcRow>
             <VcRow>
@@ -113,7 +108,6 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.PRIORITY") }}
                 </VcLabel>
                 <Field
-                  v-if="workTask.isActive === true"
                   name="priority"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >
@@ -124,6 +118,7 @@
                     option-value="typeName"
                     option-label="typeName"
                     :clearable="false"
+                    :disabled="disabled"
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="priorities"
@@ -137,11 +132,6 @@
                     </template>
                   </VcSelect>
                 </Field>
-                <div class="tw-text-base" v-else>
-                  <TaskPriority
-                    :workTaskPriority="workTask.priority"
-                  ></TaskPriority>
-                </div>
               </VcCol>
             </VcRow>
             <VcRow>
@@ -150,7 +140,6 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.DUEDATE") }}
                 </VcLabel>
                 <Field
-                  v-if="workTask.isActive"
                   name="dueDate"
                   :modelValue="workTask.dueDate"
                   v-slot="{ field, errorMessage, errors }"
@@ -161,9 +150,7 @@
                     name="dueDate"
                     class="tw-mb-4"
                     :clearable="false"
-                    :placeholder="
-                      $t('TASKS.PAGES.NEW.FIELDS.DUEDATE.PLACEHOLDER')
-                    "
+                    :disabled="disabled"
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :modelValue="getDueDate()"
@@ -171,9 +158,6 @@
                   >
                   </VcInput>
                 </Field>
-                <div class="tw-text-base" v-else>
-                  {{ moment(workTask.dueDate).format("MMM DD, YYYY") }}
-                </div>
               </VcCol>
             </VcRow>
             <VcRow>
@@ -182,7 +166,6 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.ASSIGNEE") }}
                 </VcLabel>
                 <Field
-                  v-if="workTask.isActive"
                   name="responsibleId"
                   :modelValue="workTask.responsibleId"
                   v-slot="{ field, errorMessage, handleChange, errors }"
@@ -197,6 +180,7 @@
                     option-value="id"
                     option-label="fullName"
                     :clearable="true"
+                    :disabled="disabled"
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="searchContacts"
@@ -220,16 +204,6 @@
                     </template>
                   </VcSelect>
                 </Field>
-                <div class="tw-p-3 tw-flex" v-else>
-                  <img
-                    class="tw-w-5 tw-h-5 tw-rounded-full"
-                    :src="getContactIcon(workTask.responsibleId)"
-                    @error="(e) => imgPlaceholder(e)"
-                  />
-                  <span class="tw-ml-1 tw-pt-0.5">{{
-                    workTask.responsibleName
-                  }}</span>
-                </div>
               </VcCol>
             </VcRow>
             <VcRow>
@@ -270,13 +244,13 @@ import {
   useContacts,
   useWorkTask,
   useWorkTaskAttachments,
+  useWorkTaskPermissions,
   useWorkTaskTypes,
 } from "../composables";
 import {
   useI18n,
   IBladeToolbar,
   IParentCallArgs,
-  useUser,
   VcBlade,
   VcCol,
   VcContainer,
@@ -285,7 +259,7 @@ import {
   VcForm,
   VcInput,
   VcSelect,
-  VcTextarea,
+  VcEditor,
   VcCard,
 } from "@vc-shell/framework";
 import { defineComponent, computed, onMounted, ref } from "vue";
@@ -296,6 +270,7 @@ import { forEach } from "lodash";
 import TaskAttachments from "../components/taskAttachments.vue";
 import { WorkTask } from "../../../api_client/taskmanagement";
 import noCustomerIconImage from "/assets/userpic.svg";
+import { TaskPermissions } from "../../../types";
 
 export default defineComponent({
   url: "task",
@@ -333,18 +308,22 @@ const {
   deleteWorkTask,
 } = useWorkTask();
 const { getMember, searchContacts } = useContacts();
-const { user } = useUser();
 const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
 const { getTaskTypes } = useWorkTaskTypes();
+const { checkWorkTaskPermission } = useWorkTaskPermissions();
 useForm({ validateOnMount: false });
 const isValid = useIsFormValid();
+
+const disabled = computed(() => !!props.param && !workTask.value.isActive);
 
 onMounted(async () => {
   initNewWorkTask();
   if (props.param) {
     await loadWorkTask(props.param);
   }
+  console.log(props.param);
+  console.log(workTask);
 });
 
 const bladeToolbar = ref<IBladeToolbar[]>([
@@ -358,7 +337,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       }
     },
     isVisible: computed(
-      () => !!props.param && workTask.value.isActive === true
+      () =>
+        !!props.param &&
+        workTask.value.isActive === true &&
+        checkWorkTaskPermission(TaskPermissions.Complete)
     ),
   },
   {
@@ -371,7 +353,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       }
     },
     isVisible: computed(
-      () => !!props.param && workTask.value.isActive === true
+      () =>
+        !!props.param &&
+        workTask.value.isActive === true &&
+        checkWorkTaskPermission(TaskPermissions.Complete)
     ),
   },
   {
@@ -382,7 +367,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     },
     disabled: computed(() => !modified.value),
     isVisible: computed(
-      () => !!props.param && workTask.value.isActive === true
+      () =>
+        !!props.param &&
+        workTask.value.isActive === true &&
+        checkWorkTaskPermission(TaskPermissions.Update)
     ),
   },
   {
@@ -413,7 +401,15 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       }
     },
     disabled: computed(() => !modified.value || !isValid.value),
-    isVisible: computed(() => workTask.value.isActive === true),
+    isVisible: computed(
+      () =>
+        (!!props.param &&
+          workTask.value.isActive === true &&
+          checkWorkTaskPermission(TaskPermissions.Update)) ||
+        (!props.param &&
+          workTask.value.isActive === true &&
+          checkWorkTaskPermission(TaskPermissions.Create))
+    ),
   },
   {
     title: computed(() => t("TASKS.PAGES.DETAILS.ACTIONS.DELETE_TASK")),
@@ -426,7 +422,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       }
     },
     isVisible: computed(
-      () => !!props.param && workTask.value.createdBy === user.value.userName
+      () => !!props.param && checkWorkTaskPermission(TaskPermissions.Delete)
     ),
   },
 ]);

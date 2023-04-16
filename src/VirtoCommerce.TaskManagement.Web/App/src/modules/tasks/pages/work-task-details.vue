@@ -273,7 +273,7 @@ import noCustomerIconImage from "/assets/userpic.svg";
 import { TaskPermissions } from "../../../types";
 
 export default defineComponent({
-  url: "task",
+  url: "/task",
 });
 </script>
 <script lang="ts" setup>
@@ -289,7 +289,7 @@ export interface Emits {
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: undefined,
+  param: null,
 });
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
@@ -318,12 +318,9 @@ const isValid = useIsFormValid();
 const disabled = computed(() => !!props.param && !workTask.value.isActive);
 
 onMounted(async () => {
-  initNewWorkTask();
   if (props.param) {
     await loadWorkTask(props.param);
   }
-  console.log(props.param);
-  console.log(workTask);
 });
 
 const bladeToolbar = ref<IBladeToolbar[]>([
@@ -493,6 +490,14 @@ const calculateStatus = (workTask: WorkTask) => {
 function imgPlaceholder(e: Event) {
   e.target["src"] = noCustomerIconImage;
 }
+
+async function onBeforeClose() {
+  initNewWorkTask();
+}
+
+defineExpose({
+  onBeforeClose,
+});
 </script>
 
 <style lang="scss">

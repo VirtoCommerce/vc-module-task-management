@@ -1746,24 +1746,24 @@
     "@typescript-eslint/types" "5.48.2"
     eslint-visitor-keys "^3.3.0"
 
-"@vc-shell/api-client-generator@^1.0.63":
-  version "1.0.63"
-  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.63.tgz#379e708d0a22387b594fdd2083433a6d966fdf05"
-  integrity sha512-j4asIBV1h3yuM5NqJ5Z6Vlnc0N0AA7i910YwKTwfFUHEc0AERHLlmliSgb1dZFJKLJUTd290uN4U0QC2/VZ7cA==
+"@vc-shell/api-client-generator@^1.0.64":
+  version "1.0.64"
+  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.64.tgz#1972f62a39a4df5acfc998f03382f54fbd69007d"
+  integrity sha512-e18WXv/Q6Vc9Rnlj9O9O0ZOLwieXbo33JcnE93nfpE/fZb1rMTf/Zj9nGMzfssgy6ecfyO4sgIcMyNpRgdsHXg==
   dependencies:
     chalk "^2.4.2"
     nswag "^13.16.1"
     vite "^4.1.4"
 
-"@vc-shell/config-generator@^1.0.63":
-  version "1.0.63"
-  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.63.tgz#10b5cc0bdcd51e055665dd65128b4ceab30a6bed"
-  integrity sha512-Ou7kQ8r2T3Pz/w7wr5ETlDJdi4oeIfTkta/3ljIWFSnUR/by4YlHa7621Hq/s0qb4Ok8tqaSjOVQZHbZJbJtLQ==
+"@vc-shell/config-generator@^1.0.64":
+  version "1.0.64"
+  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.64.tgz#8313aa78bfd8f037bec513edcdeaeb282c259977"
+  integrity sha512-cZbV67JB47luEwY29Hdnj2Akcnp8ew/J8mIIxLaLOkMig3v3E7AI+7YIib3BMpd7NAC6s//QXVQye3M2ZrzTVA==
 
-"@vc-shell/framework@^1.0.63":
-  version "1.0.63"
-  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.63.tgz#e61241e07e15303576086b22432060125552fa16"
-  integrity sha512-B246f+lvPd8FERwMiqyz15zzBfppGbhyEdBYaT3fnWDEhBoExi11YhAepkC4junEJJd5pqXKl+jcuvE8cWGvCg==
+"@vc-shell/framework@^1.0.64":
+  version "1.0.64"
+  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.64.tgz#4acfd17530cf6fd7c5cea9330bf9968151d484b3"
+  integrity sha512-kjL8z1vppLeKx8RW7WKkqwUB3zbZxkRQNu0YkbSTRmaXimoI/Qpxf93b9P06cuprX0l3e0GxcgadvEggastgtg==
   dependencies:
     "@floating-ui/vue" "^0.2.1"
     "@vee-validate/i18n" "^4.7.3"

@@ -1,11 +1,11 @@
 <template>
   <VcBlade
+    :closable="false"
     :title="props.title"
     :expanded="props.expanded"
-    :closable="props.closable"
     width="70%"
     :toolbarItems="bladeToolbar"
-    @close="$emit('page:close')"
+    @close="$emit('close:blade')"
   >
     <!-- Blade contents -->
     <VcTable
@@ -239,6 +239,7 @@ import {
   useFunctions,
   useI18n,
   useUser,
+  IBladeEvent,
   useBladeNavigation,
 } from "@vc-shell/framework";
 import moment from "moment";
@@ -255,6 +256,7 @@ import {
   onMounted,
   reactive,
   ref,
+  shallowRef,
   watch,
 } from "vue";
 import {
@@ -265,6 +267,7 @@ import {
 import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
 import { TaskPermissions } from "../../../types";
+import { WorkTaskDetails } from "../pages";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -281,7 +284,10 @@ export interface Props {
   param?: string;
 }
 
-const emit = defineEmits(["onItemClick", "newTaskClick"]);
+export interface Emits {
+  (event: "close:blade"): void;
+  (event: "open:blade", blade: IBladeEvent): void;
+}
 
 const props = withDefaults(defineProps<Props>(), {
   title: undefined,
@@ -292,11 +298,14 @@ const props = withDefaults(defineProps<Props>(), {
   param: undefined,
 });
 
+const emit = defineEmits<Emits>();
+
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
 const { types, getTaskTypes } = useWorkTaskTypes();
 const { checkWorkTaskPermission } = useWorkTaskPermissions();
 const { closeBlade } = useBladeNavigation();
+
 const { debounce } = useFunctions();
 const { t } = useI18n();
 const { user } = useUser();
@@ -342,8 +351,10 @@ if (props.isCurrentUserList === false && props.onlyComplitedList === false) {
       title: t("TASKS.PAGES.LIST.TOOLBAR.CREATE"),
       icon: "fas fa-plus",
       async clickHandler() {
-        closeBlade(0);
-        //emit("newTaskClick");
+        await closeBlade(1);
+        emit("open:blade", {
+          component: shallowRef(WorkTaskDetails),
+        });
       },
       isVisible: checkWorkTaskPermission(TaskPermissions.Create),
     },
@@ -378,6 +389,7 @@ const tableColumns = ref<ITableColumns[]>([
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE")),
     width: "200px",
     class: "tw-flex tw-py-5",
+    alwaysVisible: true,
   },
   {
     id: "priority",
@@ -389,6 +401,7 @@ const tableColumns = ref<ITableColumns[]>([
     id: "status",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.STATUS")),
     width: "100px",
+    alwaysVisible: true,
   },
   {
     id: "dueDate",
@@ -408,7 +421,10 @@ const empty = reactive({
 
 const onItemClick = (item: { id: string }) => {
   selectedItemId.value = item.id;
-  emit("onItemClick", item);
+  emit("open:blade", {
+    component: shallowRef(WorkTaskDetails),
+    param: item.id,
+  });
 };
 
 const onPaginationClick = async (page: number) => {

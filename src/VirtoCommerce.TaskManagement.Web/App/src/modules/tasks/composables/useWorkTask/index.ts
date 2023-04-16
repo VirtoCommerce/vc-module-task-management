@@ -33,6 +33,11 @@ export default (): IUseWorkTask => {
   const priorities = Object.values(WorkTaskPriority);
 
   let workTaskCopy: WorkTask;
+  const newWorkTask = ref({
+    priority: WorkTaskPriority.Normal,
+    attachments: [],
+    isActive: true,
+  } as WorkTask);
 
   const modified = ref(false);
 
@@ -51,12 +56,8 @@ export default (): IUseWorkTask => {
     return client;
   }
 
-  function initNewWorkTask() {
-    workTask.value = {
-      priority: WorkTaskPriority.Normal,
-      attachments: [],
-      isActive: true,
-    } as WorkTask;
+  async function initNewWorkTask(): Promise<void> {
+    workTask.value = newWorkTask.value;
   }
 
   async function loadWorkTask(id: string): Promise<void> {

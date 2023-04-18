@@ -22,12 +22,12 @@ namespace VirtoCommerce.TaskManagement.Data.Services
         {
         }
 
-        public virtual async Task<WorkTask> CompleteAsync(string id, bool successed, JObject result)
+        public virtual async Task<WorkTask> FinishAsync(string id, bool completed, JObject result)
         {
             var workTask = await GetByIdAsync(id);
             var originalWorkTask = (WorkTask)workTask.Clone();
 
-            workTask.Completed = successed;
+            workTask.Completed = completed;
             workTask.IsActive = false;
             workTask.Result = result;
 

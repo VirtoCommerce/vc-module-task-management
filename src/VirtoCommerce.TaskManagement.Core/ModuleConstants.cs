@@ -14,7 +14,7 @@ namespace VirtoCommerce.TaskManagement.Core
                 public const string Read = "task:read";
                 public const string Update = "task:update";
                 public const string Delete = "task:delete";
-                public const string Complete = "task:complete";
+                public const string Finish = "task:finish";
 
                 public static string[] AllPermissions { get; } =
                 {
@@ -23,7 +23,7 @@ namespace VirtoCommerce.TaskManagement.Core
                     Read,
                     Update,
                     Delete,
-                    Complete,
+                    Finish,
                 };
             }
         }

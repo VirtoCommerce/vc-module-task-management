@@ -1,5 +1,4 @@
 import { usePermissions, useUser } from "@vc-shell/framework";
-import { TaskPermissions } from "../../../../types";
 
 interface IUseWorkTaskTypes {
   checkWorkTaskPermission(permissions: string | string[]): boolean;

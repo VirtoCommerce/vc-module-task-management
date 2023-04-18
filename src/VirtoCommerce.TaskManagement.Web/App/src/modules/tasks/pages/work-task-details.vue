@@ -393,7 +393,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
             attachment.id = null;
           }
         });
-        await createWorkTask(workTask.value);
+        await createWorkTask();
         emit("parent:call", { method: "reload" });
         emit("close:blade");
       }

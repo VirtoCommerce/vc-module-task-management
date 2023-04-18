@@ -14,7 +14,7 @@ interface IUseWorkTask {
   priorities: WorkTaskPriority[];
   initNewWorkTask(): void;
   loadWorkTask(id: string): void;
-  createWorkTask(workTask: WorkTask): void;
+  createWorkTask(): void;
   approveWorkTask(id: string, result: any): void;
   rejectWorkTask(id: string, result: any): void;
   updateWorktask(): void;

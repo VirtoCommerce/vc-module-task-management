@@ -28,6 +28,7 @@ using VirtoCommerce.TaskManagement.Data.Services;
 using VirtoCommerce.TaskManagement.ExperienceApi;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;
 using VirtoCommerce.TaskManagement.Web.Authorization;
+using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.TaskManagement.Web
 {
@@ -78,7 +79,7 @@ namespace VirtoCommerce.TaskManagement.Web
 
             // Register permissions
             var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
-            permissionsRegistrar.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions
+            permissionsRegistrar.RegisterPermissions(TaskPermissions.AllPermissions
                 .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "TaskManagement", Name = x })
                 .ToArray());
 
@@ -86,9 +87,9 @@ namespace VirtoCommerce.TaskManagement.Web
             AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMeScope>();
 
             permissionsRegistrar.WithAvailabeScopesForPermissions(new[] {
-                ModuleConstants.Security.Permissions.Read,
-                ModuleConstants.Security.Permissions.Create,
-                ModuleConstants.Security.Permissions.Update,
+                TaskPermissions.Read,
+                TaskPermissions.Create,
+                TaskPermissions.Update,
             }, new TaskAssignToMyOrganizationScope(), new TaskAssignToMeScope());
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();

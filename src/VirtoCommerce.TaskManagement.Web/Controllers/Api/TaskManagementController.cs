@@ -18,6 +18,7 @@ using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
+using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
 {
@@ -30,7 +31,6 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         private readonly IWorkTaskSearchService _workTaskSearchService;
         private readonly IMemberService _memberService;
         private readonly IMemberSearchService _memberSearchService;
-        private readonly IAuthorizationService _authorizationService;
         private readonly ISettingsManager _settingsManager;
         private readonly MvcNewtonsoftJsonOptions _jsonOptions;
 
@@ -39,7 +39,6 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             IWorkTaskSearchService workTaskSearchService,
             IMemberService memberService,
             IMemberSearchService memberSearchService,
-            IAuthorizationService authorizationService,
             ISettingsManager settingsManager,
             IOptions<MvcNewtonsoftJsonOptions> jsonOptions
             )
@@ -48,7 +47,6 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             _workTaskSearchService = workTaskSearchService;
             _memberService = memberService;
             _memberSearchService = memberSearchService;
-            _authorizationService = authorizationService;
             _settingsManager = settingsManager;
             _jsonOptions = jsonOptions.Value;
         }
@@ -56,8 +54,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet("{id}")]
         public async Task<ActionResult<WorkTask>> Get(string id, [FromQuery] string respGroup = null)
         {
-            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Read, _jsonOptions.SerializerSettings);
-            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Read) && userPermission == null)
+            if (!HasPermission(User, TaskPermissions.Read, out var permission))
             {
                 return Unauthorized();
             }
@@ -66,7 +63,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             criteria.ObjectIds = new[] { id };
             criteria.ResponseGroup = respGroup;
 
-            await FillCriteriaResponsibleInformation(criteria, userPermission);
+            await FillCriteriaResponsibleInformation(criteria, permission);
 
             var searchResult = await _workTaskSearchService.SearchAsync(criteria);
             return Ok(searchResult.Results.FirstOrDefault());
@@ -75,12 +72,12 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPost("search")]
         public async Task<ActionResult<WorkTaskSearchResult>> SearchTasks([FromBody] WorkTaskSearchCriteria criteria)
         {
-            if (!HasPermission(User, ModuleConstants.Security.Permissions.Read, out var userPermission))
+            if (!HasPermission(User, TaskPermissions.Read, out var permission))
             {
                 return Unauthorized();
             }
 
-            await FillCriteriaResponsibleInformation(criteria, userPermission);
+            await FillCriteriaResponsibleInformation(criteria, permission);
             var result = await _workTaskSearchService.SearchAsync(criteria);
             return Ok(result);
         }
@@ -88,7 +85,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPost("")]
         public async Task<ActionResult<WorkTask>> Create([FromBody] WorkTask workTask)
         {
-            if (!HasPermission(User, ModuleConstants.Security.Permissions.Create, out var userPermission))
+            if (!HasPermission(User, TaskPermissions.Create, out _))
             {
                 return Unauthorized();
             }
@@ -102,7 +99,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPut("")]
         public async Task<ActionResult<WorkTask>> Update([FromBody] WorkTask workTask)
         {
-            if (!HasPermission(User, ModuleConstants.Security.Permissions.Update, out var userPermission))
+            if (!HasPermission(User, TaskPermissions.Update, out _))
             {
                 return Unauthorized();
             }
@@ -113,7 +110,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpDelete("")]
-        [Authorize(ModuleConstants.Security.Permissions.Delete)]
+        [Authorize(TaskPermissions.Delete)]
         public async Task<ActionResult> Delete([FromBody] string id)
         {
             await _workTaskService.DeleteAsync(new[] { id });
@@ -121,7 +118,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpPost("finish")]
-        [Authorize(ModuleConstants.Security.Permissions.Finish)]
+        [Authorize(TaskPermissions.Finish)]
         public async Task<ActionResult<WorkTask>> Finish([FromQuery] string id, [FromQuery] bool completed, [FromBody] JObject result)
         {
             var workTask = await _workTaskService.FinishAsync(id, completed, result);
@@ -129,7 +126,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpPost("timeout")]
-        [Authorize(ModuleConstants.Security.Permissions.Update)]
+        [Authorize(TaskPermissions.Update)]
         public async Task<ActionResult<WorkTask>> Timeout(string id)
         {
             var workTask = await _workTaskService.TimeoutAsync(id);
@@ -161,7 +158,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
-            if (!HasPermission(User, ModuleConstants.Security.Permissions.Create, out var userPermission))
+            if (!HasPermission(User, TaskPermissions.Create, out var permission))
             {
                 return Unauthorized();
             }
@@ -172,14 +169,14 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
             else
             {
-                var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
+                var assignToMeScope = permission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = permission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
                 var member = await _memberService.GetByIdAsync(memberId);
                 var organizationId = GetMemberOrganizationId(member);
 
-                if (userPermission == null || !userPermission.AssignedScopes.Any())
+                if (permission == null || !permission.AssignedScopes.Any())
                 {
                     result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
@@ -264,10 +261,10 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             };
         }
 
-        private bool HasPermission(ClaimsPrincipal user, string permission, out Permission userPermission)
+        private bool HasPermission(ClaimsPrincipal user, string permissionName, out Permission permission)
         {
-            userPermission = user.FindPermission(permission, _jsonOptions.SerializerSettings);
-            return !user.HasGlobalPermission(permission) && userPermission == null;
+            permission = user.FindPermission(permissionName, _jsonOptions.SerializerSettings);
+            return user.HasGlobalPermission(permissionName) || permission != null;
         }
     }
 }

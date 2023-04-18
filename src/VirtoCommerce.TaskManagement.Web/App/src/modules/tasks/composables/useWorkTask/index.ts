@@ -13,13 +13,13 @@ interface IUseWorkTask {
   modified: Ref<boolean>;
   priorities: WorkTaskPriority[];
   initNewWorkTask(): void;
-  loadWorkTask(id: string): void;
-  createWorkTask(): void;
-  approveWorkTask(id: string, result: any): void;
-  rejectWorkTask(id: string, result: any): void;
-  updateWorktask(): void;
+  loadWorkTask(id: string): Promise<void>;
+  createWorkTask(): Promise<void>;
+  approveWorkTask(id: string, result: any): Promise<void>;
+  rejectWorkTask(id: string, result: any): Promise<void>;
+  updateWorktask(): Promise<void>;
   resetWorkTask(): void;
-  deleteWorkTask(id: string): void;
+  deleteWorkTask(id: string): Promise<void>;
 }
 
 const workTask: Ref<WorkTask> = ref({
@@ -56,7 +56,7 @@ export default (): IUseWorkTask => {
     return client;
   }
 
-  async function initNewWorkTask(): Promise<void> {
+  function initNewWorkTask(): void {
     workTask.value = newWorkTask.value;
   }
 

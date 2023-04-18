@@ -504,7 +504,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.keyword = searchValue.value;
   criteria.isActive = !props.onlyComplitedList;
   if (props.isCurrentUserList === true) {
-    criteria.responsibleIds = [user.value.id];
+    criteria.onlyAssignedToMe = true;
   }
 
   return criteria;

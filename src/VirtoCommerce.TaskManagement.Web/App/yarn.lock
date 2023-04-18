@@ -1746,24 +1746,24 @@
     "@typescript-eslint/types" "5.48.2"
     eslint-visitor-keys "^3.3.0"
 
-"@vc-shell/api-client-generator@^1.0.64":
-  version "1.0.64"
-  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.64.tgz#1972f62a39a4df5acfc998f03382f54fbd69007d"
-  integrity sha512-e18WXv/Q6Vc9Rnlj9O9O0ZOLwieXbo33JcnE93nfpE/fZb1rMTf/Zj9nGMzfssgy6ecfyO4sgIcMyNpRgdsHXg==
+"@vc-shell/api-client-generator@^1.0.67":
+  version "1.0.67"
+  resolved "https://registry.yarnpkg.com/@vc-shell/api-client-generator/-/api-client-generator-1.0.67.tgz#f2070e37763eb3489266b90bb332bd7da9a35035"
+  integrity sha512-SofeiZVcHphM+fQ/ov1XBWjL6C2nNAnZE6tahLwr9qWZR/PwarWkYG84ejZa7KeCXmp24lQWdG/uTdmWV3Z0aw==
   dependencies:
     chalk "^2.4.2"
     nswag "^13.16.1"
     vite "^4.1.4"
 
-"@vc-shell/config-generator@^1.0.64":
-  version "1.0.64"
-  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.64.tgz#8313aa78bfd8f037bec513edcdeaeb282c259977"
-  integrity sha512-cZbV67JB47luEwY29Hdnj2Akcnp8ew/J8mIIxLaLOkMig3v3E7AI+7YIib3BMpd7NAC6s//QXVQye3M2ZrzTVA==
+"@vc-shell/config-generator@^1.0.67":
+  version "1.0.67"
+  resolved "https://registry.yarnpkg.com/@vc-shell/config-generator/-/config-generator-1.0.67.tgz#c1ec7a1651e001424b9a91352c2b69f7f8a05fc9"
+  integrity sha512-BXIjRJb23r/dmRmyNYnRezy9ljzbFmNAGDIZiUhTZguZthYoeYka8AjnnvablHqjJfsA7FP1Y9BIhp96iAM7lg==
 
-"@vc-shell/framework@^1.0.64":
-  version "1.0.64"
-  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.64.tgz#4acfd17530cf6fd7c5cea9330bf9968151d484b3"
-  integrity sha512-kjL8z1vppLeKx8RW7WKkqwUB3zbZxkRQNu0YkbSTRmaXimoI/Qpxf93b9P06cuprX0l3e0GxcgadvEggastgtg==
+"@vc-shell/framework@^1.0.67":
+  version "1.0.67"
+  resolved "https://registry.yarnpkg.com/@vc-shell/framework/-/framework-1.0.67.tgz#f9150b147bc6e11bf72a16d8735fc2519c62feca"
+  integrity sha512-Q4VqHYUhJBlq8KzEJMxRU8r0z8snBhQljcHDdRrZ3AJfkYnmXgj/2nsFZHB+L2iMF5EqDKTpzavE9DXAP+Yg1g==
   dependencies:
     "@floating-ui/vue" "^0.2.1"
     "@vee-validate/i18n" "^4.7.3"
@@ -1772,6 +1772,7 @@
     "@vueuse/components" "^9.9.0"
     "@vueuse/core" "^9.9.0"
     "@vueuse/integrations" "^9.9.0"
+    buffer-esm "^1.2.0"
     client-oauth2 "^4.3.3"
     moment "^2.29.1"
     normalize.css "^8.0.1"
@@ -2330,6 +2331,11 @@ browserslist@^4.21.3, browserslist@^4.21.4:
     electron-to-chromium "^1.4.251"
     node-releases "^2.0.6"
     update-browserslist-db "^1.0.9"
+
+buffer-esm@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/buffer-esm/-/buffer-esm-1.2.0.tgz#d6cd1cda051068c3f975af9552a5d5c88b19ac9c"
+  integrity sha512-VdoXyqlJpVWspgSdR795+2IIBwpUx0rHRaMEYMKgr/fXaDgrdyL2B9fcc2VqJy3+IJKktZFVtfOBMHadatWEsQ==
 
 buffer-from@^1.0.0:
   version "1.1.2"

@@ -19,7 +19,11 @@
   >
     <!-- App Switcher -->
     <template v-slot:appSwitcher v-if="appsList && appsList.length">
-      <VcAppSwitcher :appsList="appsList" @onClick="switchApp($event)" />
+      <VcAppSwitcher
+        :appsList="appsList"
+        @onClick="switchApp($event)"
+        :base="base"
+      />
     </template>
 
     <template v-slot:bladeNavigation v-if="isAuthorized">
@@ -104,6 +108,9 @@ import {
   WorkTasksList,
   useWorkTaskPermissions,
 } from "../modules/tasks";
+
+const base = import.meta.env.APP_PLATFORM_URL;
+
 const {
   t,
   locale: currentLocale,
@@ -331,7 +338,7 @@ const logoClick = () => {
 };
 
 async function customizationHandler() {
-  await getUiCustomizationSettings();
+  await getUiCustomizationSettings(base);
 
   if (!uiSettings.value.logo) {
     applySettings({ logo: logoImage });

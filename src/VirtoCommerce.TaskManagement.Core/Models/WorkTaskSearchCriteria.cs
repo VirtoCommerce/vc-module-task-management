@@ -15,9 +15,11 @@ namespace VirtoCommerce.TaskManagement.Core.Models
         public DateTime? EndDueDate { get; set; }
 
         public string Priority { get; set; }
+        public string Type { get; set; }
+
+        public bool? OnlyAssignedToMe { get; set; }
         public bool? IsActive { get; set; }
         public bool? Completed { get; set; }
 
-        public string Type { get; set; }
     }
 }

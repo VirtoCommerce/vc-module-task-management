@@ -66,7 +66,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             criteria.ObjectIds = new[] { id };
             criteria.ResponseGroup = respGroup;
 
-            await FillCriteria(criteria, userPermission);
+            await FillCriteriaResponsibleInformation(criteria, userPermission);
 
             var searchResult = await _workTaskSearchService.SearchAsync(criteria);
             return Ok(searchResult.Results.FirstOrDefault());
@@ -81,20 +81,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
-            await FillCriteria(criteria, userPermission);
-            var result = await _workTaskSearchService.SearchAsync(criteria);
-            return Ok(result);
-        }
-
-        [HttpPost("search/currentUser")]
-        public async Task<ActionResult<WorkTaskSearchResult>> SearchCurrentUserTasks([FromBody] WorkTaskSearchCriteria criteria)
-        {
-            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Read, _jsonOptions.SerializerSettings);
-            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Read) && userPermission == null)
-            {
-                return Unauthorized();
-            }
-
+            await FillCriteriaResponsibleInformation(criteria, userPermission);
             var result = await _workTaskSearchService.SearchAsync(criteria);
             return Ok(result);
         }
@@ -108,7 +95,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
-            await FillResponsibleWorkTask(workTask);
+            await FillWorkTaskResponsibleInformation(workTask);
             await _workTaskService.SaveChangesAsync(new[] { workTask });
             workTask = await _workTaskService.GetByIdAsync(workTask.Id);
             return workTask;
@@ -123,7 +110,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
-            await FillResponsibleWorkTask(workTask);
+            await FillWorkTaskResponsibleInformation(workTask);
             await _workTaskService.SaveChangesAsync(new[] { workTask });
             return workTask;
         }
@@ -232,7 +219,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             return Ok(result);
         }
 
-        private async Task FillResponsibleWorkTask(WorkTask workTask)
+        private async Task FillWorkTaskResponsibleInformation(WorkTask workTask)
         {
             if (!string.IsNullOrEmpty(workTask.ResponsibleId))
             {
@@ -244,22 +231,31 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             }
         }
 
-        private async Task FillCriteria(WorkTaskSearchCriteria criteria, Permission permission)
+        private async Task FillCriteriaResponsibleInformation(WorkTaskSearchCriteria criteria, Permission permission)
         {
-            var assignToMeScope = permission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
-            var assignToMyOrganizationScope = permission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
-
             var memberId = User.FindFirstValue(MemberIdClaimType);
-            var member = await _memberService.GetByIdAsync(memberId);
-            var organizationId = GetMemberOrganizationId(member);
-
-            if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
-            {
-                criteria.OrganizationIds = new[] { organizationId };
-            }
-            else if ((assignToMeScope != null || assignToMyOrganizationScope != null) && !string.IsNullOrEmpty(memberId))
+            if (criteria.OnlyAssignedToMe == true)
             {
                 criteria.ResponsibleIds = new[] { memberId };
+            }
+            else
+            {
+                var assignToMeScope = permission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = permission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>()
+                    .FirstOrDefault();
+
+                var member = await _memberService.GetByIdAsync(memberId);
+                var organizationId = GetMemberOrganizationId(member);
+
+                if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
+                {
+                    criteria.OrganizationIds = new[] { organizationId };
+                }
+                else if ((assignToMeScope != null || assignToMyOrganizationScope != null) &&
+                         !string.IsNullOrEmpty(memberId))
+                {
+                    criteria.ResponsibleIds = new[] { memberId };
+                }
             }
         }
 

@@ -167,6 +167,7 @@
                 </VcLabel>
                 <Field
                   name="responsibleId"
+                  rules="required"
                   :modelValue="workTask.responsibleId"
                   v-slot="{ field, errorMessage, handleChange, errors }"
                 >

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Security.Authorization;
@@ -19,17 +20,14 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
 
         private readonly MvcNewtonsoftJsonOptions _jsonOptions;
         private readonly IMemberService _memberService;
-        private readonly IMemberSearchService _memberSearchService;
 
         public TaskAuthorizationHandler(
             IOptions<MvcNewtonsoftJsonOptions> jsonOptions,
-            IMemberService memberService,
-            IMemberSearchService memberSearchService
+            IMemberService memberService
         )
         {
             _jsonOptions = jsonOptions.Value;
             _memberService = memberService;
-            _memberSearchService = memberSearchService;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, TaskAuthorizationRequirement requirement)
@@ -56,9 +54,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                             {
                                 var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
                                 var organizationId = member.GetMemberOrganizationId();
-
-                                workTask.ResponsibleName = member?.Name;
-                                workTask.OrganizationId = organizationId;
+                                SetResponsible(workTask, member, organizationId);
                                 context.Succeed(requirement);
                                 break;
                             }
@@ -71,8 +67,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
 
                                 if (currentMemberOrganizationId == organizationId)
                                 {
-                                    workTask.ResponsibleName = responsibleMember?.Name;
-                                    workTask.OrganizationId = organizationId;
+                                    SetResponsible(workTask, responsibleMember, organizationId);
                                     context.Succeed(requirement);
                                 }
 
@@ -93,8 +88,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                                 {
                                     criteria.OrganizationIds = new[] { organizationId };
                                 }
-                                else if ((taskToMeScope != null || taskToMyOrganizationScope != null) &&
-                                         !string.IsNullOrEmpty(memberId))
+                                else if ((taskToMeScope != null || taskToMyOrganizationScope != null) && !string.IsNullOrEmpty(memberId))
                                 {
                                     criteria.ResponsibleIds = new[] { memberId };
                                 }
@@ -112,9 +106,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                         {
                             var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
                             var organizationId = member.GetMemberOrganizationId();
-
-                            workTask.ResponsibleName = member?.Name;
-                            workTask.OrganizationId = organizationId;
+                            SetResponsible(workTask, member, organizationId);
                             context.Succeed(requirement);
                             break;
                         }
@@ -126,6 +118,12 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                         }
                 }
             }
+        }
+
+        private void SetResponsible(WorkTask workTask, Member member, string organizationId)
+        {
+            workTask.ResponsibleName = member?.Name;
+            workTask.OrganizationId = organizationId;
         }
     }
 }

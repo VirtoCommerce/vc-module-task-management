@@ -18,7 +18,7 @@ interface IUseWorkTaskAttachments {
 export default (): IUseWorkTaskAttachments => {
   const fileUploading = ref(false);
   const { getAccessToken } = useUser();
-  const defaultAttachmentsFolder = "Draft";
+  const defaultAttachmentsFolder = "draft";
 
   const uploadAttachments = async (
     files: FileList,
@@ -32,7 +32,7 @@ export default (): IUseWorkTaskAttachments => {
         formData.append("file", files[i]);
         const authToken = await getAccessToken();
         const result = await fetch(
-          `/api/assets?folderUrl=/workTaskAttachment/${
+          `/api/assets?folderUrl=/worktaskattachment/${
             workTask.value.id || defaultAttachmentsFolder
           }`,
           {

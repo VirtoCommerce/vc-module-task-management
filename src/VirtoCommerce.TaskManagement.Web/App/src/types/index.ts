@@ -7,7 +7,8 @@ enum TaskPermissions {
   Read = "task:read",
   Update = "task:update",
   Delete = "task:delete",
-  Complete = "task:complete",
+  Finish = "task:finish",
+  AttachmentManagement = "task:attachment:management",
 }
 
 interface IShippingInfo {

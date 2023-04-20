@@ -13,16 +13,16 @@ angular.module(moduleName, [])
     ])
     .run(['platformWebApp.permissionScopeResolver',
         function (scopeResolver) {
-            var taskAssignToAllScope = {
-                type: 'TaskAssignToMeScope',
-                title: 'Assign tasks only to me'
+            var taskToAllScope = {
+                type: 'TaskToMeScope',
+                title: 'Tasks only to me'
             };
-            scopeResolver.register(taskAssignToAllScope);
+            scopeResolver.register(taskToAllScope);
 
-            var taskAssignToMyOrganizationScope = {
-                type: 'TaskAssignToMyOrganizationScope',
-                title: 'Assign tasks to all in my organization'
+            var taskToMyOrganizationScope = {
+                type: 'TaskToMyOrganizationScope',
+                title: 'Tasks to all in my organization'
             };
-            scopeResolver.register(taskAssignToMyOrganizationScope);
+            scopeResolver.register(taskToMyOrganizationScope);
         }
     ]);

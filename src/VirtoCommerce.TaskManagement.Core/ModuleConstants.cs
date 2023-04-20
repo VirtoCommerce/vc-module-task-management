@@ -15,6 +15,7 @@ namespace VirtoCommerce.TaskManagement.Core
                 public const string Update = "task:update";
                 public const string Delete = "task:delete";
                 public const string Finish = "task:finish";
+                public const string AttachmentManagement = "task:attachment:management";
 
                 public static string[] AllPermissions { get; } =
                 {
@@ -24,6 +25,7 @@ namespace VirtoCommerce.TaskManagement.Core
                     Update,
                     Delete,
                     Finish,
+                    AttachmentManagement
                 };
             }
         }

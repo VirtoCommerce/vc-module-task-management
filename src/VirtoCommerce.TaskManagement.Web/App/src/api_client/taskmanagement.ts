@@ -249,14 +249,6 @@ export class TaskManagementClient extends AuthApiBase {
             return response.text().then((_responseText) => {
             return;
             });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -267,20 +259,20 @@ export class TaskManagementClient extends AuthApiBase {
 
     /**
      * @param id (optional) 
-     * @param successed (optional) 
+     * @param completed (optional) 
      * @param body (optional) 
      * @return Success
      */
-    complete(id?: string | undefined, successed?: boolean | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/complete?";
+    finish(id?: string | undefined, completed?: boolean | undefined, body?: any | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/finish?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
-        if (successed === null)
-            throw new Error("The parameter 'successed' cannot be null.");
-        else if (successed !== undefined)
-            url_ += "successed=" + encodeURIComponent("" + successed) + "&";
+        if (completed === null)
+            throw new Error("The parameter 'completed' cannot be null.");
+        else if (completed !== undefined)
+            url_ += "completed=" + encodeURIComponent("" + completed) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -297,11 +289,11 @@ export class TaskManagementClient extends AuthApiBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processComplete(_response);
+            return this.processFinish(_response);
         });
     }
 
-    protected processComplete(response: Response): Promise<WorkTask> {
+    protected processFinish(response: Response): Promise<WorkTask> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -310,14 +302,6 @@ export class TaskManagementClient extends AuthApiBase {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = WorkTask.fromJS(resultData200);
             return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {

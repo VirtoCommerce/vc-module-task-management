@@ -2,9 +2,9 @@ using VirtoCommerce.Platform.Core.Security;
 
 namespace VirtoCommerce.TaskManagement.Data.Authorization
 {
-    public sealed class TaskAssignToMeScope : PermissionScope
+    public sealed class TaskToMeScope : PermissionScope
     {
-        public TaskAssignToMeScope()
+        public TaskToMeScope()
         {
             Label = "me";
             Scope = "me";

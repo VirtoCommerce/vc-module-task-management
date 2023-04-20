@@ -94,7 +94,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.complete(id, true, result);
+      workTask.value = await client.finish(id, true, result);
     } catch (e) {
       console.error(e);
       throw e;
@@ -107,7 +107,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.complete(id, false, result);
+      workTask.value = await client.finish(id, false, result);
     } catch (e) {
       console.error(e);
       throw e;

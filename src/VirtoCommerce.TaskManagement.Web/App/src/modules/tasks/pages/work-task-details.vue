@@ -81,7 +81,7 @@
                 <Field
                   name="description"
                   :modelValue="workTask.description"
-                  v-slot="{ field, errorMessage, handleChange, errors }"
+                  v-slot="{ field, errorMessage, handleChange }"
                 >
                   <VcEditor
                     v-bind="field"
@@ -92,8 +92,7 @@
                     :placeholder="
                       $t('TASKS.PAGES.DETAILS.PLACEHOLDER.DESCRIPTION')
                     "
-                    maxlength="10000"
-                    :error="!!errors.length"
+                    name="description"
                     :error-message="errorMessage"
                     @update:modelValue="handleChange"
                     :assets-folder="workTask.id"
@@ -338,7 +337,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       () =>
         !!props.param &&
         workTask.value.isActive === true &&
-        checkWorkTaskPermission(TaskPermissions.Complete)
+        checkWorkTaskPermission(TaskPermissions.Finish)
     ),
   },
   {
@@ -354,7 +353,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       () =>
         !!props.param &&
         workTask.value.isActive === true &&
-        checkWorkTaskPermission(TaskPermissions.Complete)
+        checkWorkTaskPermission(TaskPermissions.Finish)
     ),
   },
   {

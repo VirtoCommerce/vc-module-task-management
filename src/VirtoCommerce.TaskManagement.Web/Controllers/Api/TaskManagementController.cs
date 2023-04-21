@@ -181,16 +181,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
-            if (permission == null || !permission.AssignedScopes.Any())
-            {
-                return await _memberSearchService.SearchMembersAsync(criteria);
-            }
-
-            if (criteria.ObjectIds?.Any() == true)
-            {
-                result = await _memberSearchService.SearchMembersAsync(criteria);
-            }
-            else
+            if (permission != null && permission.AssignedScopes.Any() && !criteria.ObjectIds.Any())
             {
                 var assignToMeScope = permission.AssignedScopes.OfType<TaskToMeScope>().FirstOrDefault();
                 var assignToMyOrganizationScope = permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
@@ -202,15 +193,14 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
                 {
                     criteria.MemberId = organizationId;
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
                 else if (assignToMeScope != null && !string.IsNullOrEmpty(memberId))
                 {
                     criteria.ObjectIds = new[] { memberId };
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
             }
 
+            result = await _memberSearchService.SearchMembersAsync(criteria);
             return Ok(result);
         }
 

@@ -120,7 +120,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
             }
         }
 
-        private void SetResponsible(WorkTask workTask, Member member, string organizationId)
+        private static void SetResponsible(WorkTask workTask, Member member, string organizationId)
         {
             workTask.ResponsibleName = member?.Name;
             workTask.OrganizationId = organizationId;

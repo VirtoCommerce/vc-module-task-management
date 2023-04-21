@@ -176,7 +176,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
-            if (!HasPermission(User, TaskPermissions.Create, out var permission))
+            if (!HasPermission(User, TaskPermissions.Create, out var permission) || criteria == null)
             {
                 return Unauthorized();
             }

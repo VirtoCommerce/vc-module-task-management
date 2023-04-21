@@ -238,7 +238,6 @@ import {
   ITableColumns,
   useFunctions,
   useI18n,
-  useUser,
   IBladeEvent,
   useBladeNavigation,
 } from "@vc-shell/framework";

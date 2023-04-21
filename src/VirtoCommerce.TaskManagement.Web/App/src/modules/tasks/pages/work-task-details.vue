@@ -224,7 +224,10 @@
             is-collapsable
             :is-collapsed="restoreCollapsed('files')"
             @state:collapsed="handleCollapsed('files', $event)"
-            v-if="workTask.isActive === true || workTask.attachments?.length"
+            v-if="
+              checkWorkTaskPermission(TaskPermissions.AttachmentManagement) &&
+              (workTask.isActive === true || workTask.attachments?.length)
+            "
           >
             <TaskAttachments
               :workTask="workTask"

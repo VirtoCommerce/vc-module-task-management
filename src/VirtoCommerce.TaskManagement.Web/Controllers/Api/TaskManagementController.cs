@@ -181,24 +181,25 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 return Unauthorized();
             }
 
-            if (criteria?.ObjectIds?.Any() == true)
+            if (permission == null || !permission.AssignedScopes.Any())
+            {
+                return await _memberSearchService.SearchMembersAsync(criteria);
+            }
+
+            if (criteria.ObjectIds?.Any() == true)
             {
                 result = await _memberSearchService.SearchMembersAsync(criteria);
             }
             else
             {
-                var assignToMeScope = permission?.AssignedScopes.OfType<TaskToMeScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = permission?.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
+                var assignToMeScope = permission.AssignedScopes.OfType<TaskToMeScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
                 var member = await _memberService.GetByIdAsync(memberId);
                 var organizationId = member.GetMemberOrganizationId();
 
-                if (permission == null || !permission.AssignedScopes.Any())
-                {
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
-                }
-                else if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
+                if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
                 {
                     criteria.MemberId = organizationId;
                     result = await _memberSearchService.SearchMembersAsync(criteria);

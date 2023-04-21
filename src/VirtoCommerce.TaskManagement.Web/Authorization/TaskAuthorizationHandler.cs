@@ -121,7 +121,5 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
             workTask.ResponsibleName = member?.Name;
             workTask.OrganizationId = organizationId;
         }
-
-
     }
 }

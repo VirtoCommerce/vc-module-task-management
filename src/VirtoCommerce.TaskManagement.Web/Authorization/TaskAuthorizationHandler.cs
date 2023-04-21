@@ -37,27 +37,24 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
             var memberId = context.User.FindFirstValue(MemberIdClaimType);
             var permission = context.User.FindPermission(requirement.Permission, _jsonOptions.SerializerSettings);
 
-            if (context.HasSucceeded)
+            if (context.HasSucceeded && !context.User.HasGlobalPermission(requirement.Permission))
             {
-                if (!context.User.HasGlobalPermission(requirement.Permission))
+                switch (context.Resource)
                 {
-                    switch (context.Resource)
-                    {
-                        case WorkTask workTask:
-                            {
-                                var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                                var organizationId = member.GetMemberOrganizationId();
-                                SetResponsible(workTask, member, organizationId);
-                                context.Succeed(requirement);
-                                break;
-                            }
-                        case WorkTaskSearchCriteria criteria when criteria.OnlyAssignedToMe == true:
-                            {
-                                criteria.ResponsibleIds = new[] { memberId };
-                                context.Succeed(requirement);
-                                break;
-                            }
-                    }
+                    case WorkTask workTask:
+                        {
+                            var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
+                            var organizationId = member.GetMemberOrganizationId();
+                            SetResponsible(workTask, member, organizationId);
+                            context.Succeed(requirement);
+                            break;
+                        }
+                    case WorkTaskSearchCriteria criteria when criteria.OnlyAssignedToMe == true:
+                        {
+                            criteria.ResponsibleIds = new[] { memberId };
+                            context.Succeed(requirement);
+                            break;
+                        }
                 }
             }
             else if (permission != null)

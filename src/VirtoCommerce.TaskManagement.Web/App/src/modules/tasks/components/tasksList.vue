@@ -308,7 +308,6 @@ const { closeBlade } = useBladeNavigation();
 
 const { debounce } = useFunctions();
 const { t } = useI18n();
-const { user } = useUser();
 const filter = reactive({});
 const appliedFilter = ref({});
 const searchValue = ref();

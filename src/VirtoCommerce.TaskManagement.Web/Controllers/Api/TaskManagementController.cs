@@ -11,12 +11,15 @@ using Newtonsoft.Json.Linq;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Model.Search;
 using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
+using VirtoCommerce.TaskManagement.Core.Extensions;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
+using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
 {
@@ -29,8 +32,8 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         private readonly IWorkTaskSearchService _workTaskSearchService;
         private readonly IMemberService _memberService;
         private readonly IMemberSearchService _memberSearchService;
-        private readonly IAuthorizationService _authorizationService;
         private readonly ISettingsManager _settingsManager;
+        private readonly IAuthorizationService _authorizationService;
         private readonly MvcNewtonsoftJsonOptions _jsonOptions;
 
         public TaskManagementController(
@@ -38,8 +41,8 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             IWorkTaskSearchService workTaskSearchService,
             IMemberService memberService,
             IMemberSearchService memberSearchService,
-            IAuthorizationService authorizationService,
             ISettingsManager settingsManager,
+            IAuthorizationService authorizationService,
             IOptions<MvcNewtonsoftJsonOptions> jsonOptions
             )
         {
@@ -47,31 +50,45 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             _workTaskSearchService = workTaskSearchService;
             _memberService = memberService;
             _memberSearchService = memberSearchService;
-            _authorizationService = authorizationService;
             _settingsManager = settingsManager;
+            _authorizationService = authorizationService;
             _jsonOptions = jsonOptions.Value;
         }
 
         [HttpGet("{id}")]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<WorkTask>> Get(string id, [FromQuery] string respGroup = null)
         {
-            var workTask = await _workTaskService.GetByIdAsync(id);
-            return workTask;
+            var criteria = AbstractTypeFactory<WorkTaskSearchCriteria>.TryCreateInstance();
+            criteria.ObjectIds = new[] { id };
+            criteria.ResponseGroup = respGroup;
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, criteria, new TaskAuthorizationRequirement(TaskPermissions.Read));
+            if (!authorizationResult.Succeeded)
+            {
+                return Unauthorized();
+            }
+
+            var searchResult = await _workTaskSearchService.SearchAsync(criteria);
+            return Ok(searchResult.Results.FirstOrDefault());
         }
 
         [HttpPost("search")]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<WorkTaskSearchResult>> SearchTasks([FromBody] WorkTaskSearchCriteria criteria)
         {
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, criteria, new TaskAuthorizationRequirement(TaskPermissions.Read));
+            if (!authorizationResult.Succeeded)
+            {
+                return Unauthorized();
+            }
+
             var result = await _workTaskSearchService.SearchAsync(criteria);
-            return result;
+            return Ok(result);
         }
 
         [HttpPost("")]
         public async Task<ActionResult<WorkTask>> Create([FromBody] WorkTask workTask)
         {
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Create));
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAuthorizationRequirement(TaskPermissions.Create));
             if (!authorizationResult.Succeeded)
             {
                 return Unauthorized();
@@ -85,7 +102,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPut("")]
         public async Task<ActionResult<WorkTask>> Update([FromBody] WorkTask workTask)
         {
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAssignAuthorizationRequirement(ModuleConstants.Security.Permissions.Update));
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAuthorizationRequirement(TaskPermissions.Update));
             if (!authorizationResult.Succeeded)
             {
                 return Unauthorized();
@@ -96,31 +113,38 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpDelete("")]
-        [Authorize(ModuleConstants.Security.Permissions.Delete)]
         public async Task<ActionResult> Delete([FromBody] string id)
         {
+            var workTask = await _workTaskService.GetByIdAsync(id);
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAuthorizationRequirement(TaskPermissions.Delete));
+            if (!authorizationResult.Succeeded)
+            {
+                return Unauthorized();
+            }
+
             await _workTaskService.DeleteAsync(new[] { id });
             return NoContent();
         }
 
-        [HttpPost("approve")]
-        [Authorize(ModuleConstants.Security.Permissions.Approve)]
-        public async Task<ActionResult<WorkTask>> Approve(string id, [FromBody] JObject result)
+        [HttpPost("finish")]
+        public async Task<ActionResult<WorkTask>> Finish([FromQuery] string id, [FromQuery] bool completed, [FromBody] JObject result)
         {
-            var workTask = await _workTaskService.ApproveAsync(id, result);
-            return workTask;
-        }
+            var workTask = await _workTaskService.GetByIdAsync(id);
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, workTask, new TaskAuthorizationRequirement(TaskPermissions.Finish));
+            if (!authorizationResult.Succeeded)
+            {
+                return Unauthorized();
+            }
 
-        [HttpPost("decline")]
-        [Authorize(ModuleConstants.Security.Permissions.Decline)]
-        public async Task<ActionResult<WorkTask>> Decline(string id, [FromBody] JObject result)
-        {
-            var workTask = await _workTaskService.DeclineAsync(id, result);
+            workTask.IsActive = false;
+            workTask.Completed = completed;
+            workTask.Result = result;
+            await _workTaskService.SaveChangesAsync(new[] { workTask });
             return workTask;
         }
 
         [HttpPost("timeout")]
-        [Authorize(ModuleConstants.Security.Permissions.Update)]
+        [Authorize(TaskPermissions.Update)]
         public async Task<ActionResult<WorkTask>> Timeout(string id)
         {
             var workTask = await _workTaskService.TimeoutAsync(id);
@@ -152,53 +176,31 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
             MemberSearchResult result = null;
-            var userPermission = User.FindPermission(ModuleConstants.Security.Permissions.Create, _jsonOptions.SerializerSettings);
-
-            if (!User.HasGlobalPermission(ModuleConstants.Security.Permissions.Create) && userPermission == null)
+            if (!HasPermission(User, TaskPermissions.Create, out var permission) || criteria == null)
             {
                 return Unauthorized();
             }
 
-            if (criteria?.ObjectIds?.Any() == true)
+            if (permission != null && permission.AssignedScopes.Any() && !criteria.ObjectIds.Any())
             {
-                result = await _memberSearchService.SearchMembersAsync(criteria);
-            }
-            else
-            {
-
-                var assignToMeScope = userPermission?.AssignedScopes.OfType<TaskAssignToMeScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = userPermission?.AssignedScopes.OfType<TaskAssignToMyOrganizationScope>().FirstOrDefault();
+                var assignToMeScope = permission.AssignedScopes.OfType<TaskToMeScope>().FirstOrDefault();
+                var assignToMyOrganizationScope = permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
-                string organizationId = null;
+                var member = await _memberService.GetByIdAsync(memberId);
+                var organizationId = member.GetMemberOrganizationId();
 
-                if (!string.IsNullOrEmpty(memberId))
-                {
-                    var member = await _memberService.GetByIdAsync(memberId);
-                    organizationId = member?.MemberType switch
-                    {
-                        nameof(Contact) => (member as Contact)?.Organizations?.FirstOrDefault(),
-                        nameof(Employee) => (member as Employee)?.Organizations?.FirstOrDefault(),
-                        _ => null
-                    };
-                }
-
-                if (userPermission == null || !userPermission.AssignedScopes.Any())
-                {
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
-                }
-                else if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
+                if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
                 {
                     criteria.MemberId = organizationId;
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
                 else if (assignToMeScope != null && !string.IsNullOrEmpty(memberId))
                 {
                     criteria.ObjectIds = new[] { memberId };
-                    result = await _memberSearchService.SearchMembersAsync(criteria);
                 }
             }
 
+            result = await _memberSearchService.SearchMembersAsync(criteria);
             return Ok(result);
         }
 
@@ -216,6 +218,12 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             var result = setting.AllowedValues.Select(x => new TaskType { Name = x as string }).ToList();
 
             return Ok(result);
+        }
+
+        private bool HasPermission(ClaimsPrincipal user, string permissionName, out Permission permission)
+        {
+            permission = user.FindPermission(permissionName, _jsonOptions.SerializerSettings);
+            return user.HasGlobalPermission(permissionName) || permission != null;
         }
     }
 }

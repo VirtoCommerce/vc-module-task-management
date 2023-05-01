@@ -22,12 +22,12 @@ namespace VirtoCommerce.TaskManagement.Data.Services
         {
         }
 
-        public virtual async Task<WorkTask> DeclineAsync(string id, JObject result)
+        public virtual async Task<WorkTask> FinishAsync(string id, bool completed, JObject result)
         {
             var workTask = await GetByIdAsync(id);
             var originalWorkTask = (WorkTask)workTask.Clone();
 
-            workTask.Completed = false;
+            workTask.Completed = completed;
             workTask.IsActive = false;
             workTask.Result = result;
 
@@ -39,27 +39,6 @@ namespace VirtoCommerce.TaskManagement.Data.Services
             });
 
             await _eventPublisher.Publish(workTaskCanceledEvent);
-
-            return workTask;
-        }
-
-        public virtual async Task<WorkTask> ApproveAsync(string id, JObject result)
-        {
-            var workTask = await GetByIdAsync(id);
-            var originalWorkTask = (WorkTask)workTask.Clone();
-
-            workTask.Completed = true;
-            workTask.IsActive = false;
-            workTask.Result = result;
-
-            await SaveChangesAsync(new[] { workTask });
-
-            var workTaskCompletedEvent = new WorkTaskCompletedEvent(new[]
-            {
-                new GenericChangedEntry<WorkTask>(workTask, originalWorkTask, EntryState.Modified)
-            });
-
-            await _eventPublisher.Publish(workTaskCompletedEvent);
 
             return workTask;
         }

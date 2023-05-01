@@ -77,14 +77,6 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = WorkTask.fromJS(resultData200);
             return result200;
             });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -128,14 +120,6 @@ export class TaskManagementClient extends AuthApiBase {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = WorkTaskSearchResult.fromJS(resultData200);
             return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -265,14 +249,6 @@ export class TaskManagementClient extends AuthApiBase {
             return response.text().then((_responseText) => {
             return;
             });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -283,15 +259,20 @@ export class TaskManagementClient extends AuthApiBase {
 
     /**
      * @param id (optional) 
+     * @param completed (optional) 
      * @param body (optional) 
      * @return Success
      */
-    approve(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/approve?";
+    finish(id?: string | undefined, completed?: boolean | undefined, body?: any | undefined): Promise<WorkTask> {
+        let url_ = this.baseUrl + "/api/task-management/finish?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (completed === null)
+            throw new Error("The parameter 'completed' cannot be null.");
+        else if (completed !== undefined)
+            url_ += "completed=" + encodeURIComponent("" + completed) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -308,11 +289,11 @@ export class TaskManagementClient extends AuthApiBase {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processApprove(_response);
+            return this.processFinish(_response);
         });
     }
 
-    protected processApprove(response: Response): Promise<WorkTask> {
+    protected processFinish(response: Response): Promise<WorkTask> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -321,71 +302,6 @@ export class TaskManagementClient extends AuthApiBase {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = WorkTask.fromJS(resultData200);
             return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<WorkTask>(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @param body (optional) 
-     * @return Success
-     */
-    decline(id?: string | undefined, body?: any | undefined): Promise<WorkTask> {
-        let url_ = this.baseUrl + "/api/task-management/decline?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.processDecline(_response);
-        });
-    }
-
-    protected processDecline(response: Response): Promise<WorkTask> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = WorkTask.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            return throwException("Unauthorized", status, _responseText, _headers);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -619,6 +535,7 @@ export class TaskManagementClient extends AuthApiBase {
 }
 
 export enum AddressType {
+    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",
@@ -1611,6 +1528,7 @@ export class WorkTask implements IWorkTask {
     priority?: WorkTaskPriority;
     responsibleId?: string | undefined;
     responsibleName?: string | undefined;
+    organizationId?: string | undefined;
     dueDate?: Date | undefined;
     status?: string | undefined;
     isActive?: boolean;
@@ -1647,6 +1565,7 @@ export class WorkTask implements IWorkTask {
             this.priority = _data["priority"];
             this.responsibleId = _data["responsibleId"];
             this.responsibleName = _data["responsibleName"];
+            this.organizationId = _data["organizationId"];
             this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : <any>undefined;
             this.status = _data["status"];
             this.isActive = _data["isActive"];
@@ -1687,6 +1606,7 @@ export class WorkTask implements IWorkTask {
         data["priority"] = this.priority;
         data["responsibleId"] = this.responsibleId;
         data["responsibleName"] = this.responsibleName;
+        data["organizationId"] = this.organizationId;
         data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
         data["status"] = this.status;
         data["isActive"] = this.isActive;
@@ -1720,6 +1640,7 @@ export interface IWorkTask {
     priority?: WorkTaskPriority;
     responsibleId?: string | undefined;
     responsibleName?: string | undefined;
+    organizationId?: string | undefined;
     dueDate?: Date | undefined;
     status?: string | undefined;
     isActive?: boolean;
@@ -1800,13 +1721,15 @@ export interface IWorkTaskAttachment {
 
 export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
     responsibleIds?: string[] | undefined;
+    organizationIds?: string[] | undefined;
     storeIds?: string[] | undefined;
     startDueDate?: Date | undefined;
     endDueDate?: Date | undefined;
     priority?: string | undefined;
+    type?: string | undefined;
+    onlyAssignedToMe?: boolean | undefined;
     isActive?: boolean | undefined;
     completed?: boolean | undefined;
-    type?: string | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1835,6 +1758,11 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
                 for (let item of _data["responsibleIds"])
                     this.responsibleIds!.push(item);
             }
+            if (Array.isArray(_data["organizationIds"])) {
+                this.organizationIds = [] as any;
+                for (let item of _data["organizationIds"])
+                    this.organizationIds!.push(item);
+            }
             if (Array.isArray(_data["storeIds"])) {
                 this.storeIds = [] as any;
                 for (let item of _data["storeIds"])
@@ -1843,9 +1771,10 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
             this.startDueDate = _data["startDueDate"] ? new Date(_data["startDueDate"].toString()) : <any>undefined;
             this.endDueDate = _data["endDueDate"] ? new Date(_data["endDueDate"].toString()) : <any>undefined;
             this.priority = _data["priority"];
+            this.type = _data["type"];
+            this.onlyAssignedToMe = _data["onlyAssignedToMe"];
             this.isActive = _data["isActive"];
             this.completed = _data["completed"];
-            this.type = _data["type"];
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
             if (Array.isArray(_data["objectTypes"])) {
@@ -1886,6 +1815,11 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
             for (let item of this.responsibleIds)
                 data["responsibleIds"].push(item);
         }
+        if (Array.isArray(this.organizationIds)) {
+            data["organizationIds"] = [];
+            for (let item of this.organizationIds)
+                data["organizationIds"].push(item);
+        }
         if (Array.isArray(this.storeIds)) {
             data["storeIds"] = [];
             for (let item of this.storeIds)
@@ -1894,9 +1828,10 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
         data["startDueDate"] = this.startDueDate ? this.startDueDate.toISOString() : <any>undefined;
         data["endDueDate"] = this.endDueDate ? this.endDueDate.toISOString() : <any>undefined;
         data["priority"] = this.priority;
+        data["type"] = this.type;
+        data["onlyAssignedToMe"] = this.onlyAssignedToMe;
         data["isActive"] = this.isActive;
         data["completed"] = this.completed;
-        data["type"] = this.type;
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -1926,13 +1861,15 @@ export class WorkTaskSearchCriteria implements IWorkTaskSearchCriteria {
 
 export interface IWorkTaskSearchCriteria {
     responsibleIds?: string[] | undefined;
+    organizationIds?: string[] | undefined;
     storeIds?: string[] | undefined;
     startDueDate?: Date | undefined;
     endDueDate?: Date | undefined;
     priority?: string | undefined;
+    type?: string | undefined;
+    onlyAssignedToMe?: boolean | undefined;
     isActive?: boolean | undefined;
     completed?: boolean | undefined;
-    type?: string | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1995,6 +1932,7 @@ export interface IWorkTaskSearchResult {
 }
 
 export enum CustomerAddressAddressType {
+    Undefined = "Undefined",
     Billing = "Billing",
     Shipping = "Shipping",
     BillingAndShipping = "BillingAndShipping",

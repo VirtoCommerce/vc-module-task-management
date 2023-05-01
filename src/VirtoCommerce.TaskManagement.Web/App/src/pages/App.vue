@@ -12,13 +12,18 @@
     :pages="pages"
     :bladesRefs="bladesRefs"
     @backlink:click="closeBlade($event)"
+    @logo:click="logoClick()"
     @open="onOpen"
     @close="closeBlade($event)"
     v-else
   >
     <!-- App Switcher -->
     <template v-slot:appSwitcher v-if="appsList && appsList.length">
-      <VcAppSwitcher :appsList="appsList" @onClick="switchApp($event)" />
+      <VcAppSwitcher
+        :appsList="appsList"
+        @onClick="switchApp($event)"
+        :base="base"
+      />
     </template>
 
     <template v-slot:bladeNavigation v-if="isAuthorized">
@@ -64,7 +69,6 @@ import {
   useFunctions,
   useI18n,
   useNotifications,
-  usePermissions,
   useSettings,
   useUser,
   VcAppSwitcher,
@@ -91,7 +95,7 @@ import ChangePassword from "../components/change-password.vue";
 import LanguageSelector from "../components/language-selector.vue";
 import NotificationDropdown from "../components/notification-dropdown/notification-dropdown.vue";
 import UserDropdownButton from "../components/user-dropdown-button.vue";
-import { UserPermissions } from "../types";
+import { TaskPermissions } from "../types";
 // eslint-disable-next-line import/no-unresolved
 import avatarImage from "/assets/avatar.jpg";
 // eslint-disable-next-line import/no-unresolved
@@ -102,7 +106,11 @@ import {
   MyArchiveTasksList,
   MyWorkTasksList,
   WorkTasksList,
+  useWorkTaskPermissions,
 } from "../modules/tasks";
+
+const base = import.meta.env.APP_PLATFORM_URL;
+
 const {
   t,
   locale: currentLocale,
@@ -117,7 +125,7 @@ const {
   dismiss,
   markAsRead,
 } = useNotifications();
-const { checkPermission } = usePermissions();
+const { checkWorkTaskPermission } = useWorkTaskPermissions();
 const { getUiCustomizationSettings, uiSettings, applySettings } = useSettings();
 const { delay } = useFunctions();
 const {
@@ -153,8 +161,12 @@ onMounted(async () => {
   await customizationHandler();
 
   isReady.value = true;
-  if (!isAuthorized.value) {
+  if (
+    !checkWorkTaskPermission([TaskPermissions.Access, TaskPermissions.Read])
+  ) {
     router.push("/login");
+  } else if (route.path === "/") {
+    router.push("/my");
   }
 });
 
@@ -318,8 +330,15 @@ function onOpen(args: IOpenBlade) {
   openBlade({ parentBlade: args.parentBlade }, args.id, args.navigationCb);
 }
 
+const logoClick = () => {
+  console.debug(`logoClick() called.`);
+  // Close all opened pages with onBeforeClose callback
+  closeBlade(0);
+  router.push("/my");
+};
+
 async function customizationHandler() {
-  await getUiCustomizationSettings();
+  await getUiCustomizationSettings(base);
 
   if (!uiSettings.value.logo) {
     applySettings({ logo: logoImage });

@@ -28,6 +28,7 @@ using VirtoCommerce.TaskManagement.Data.Services;
 using VirtoCommerce.TaskManagement.ExperienceApi;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;
 using VirtoCommerce.TaskManagement.Web.Authorization;
+using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.TaskManagement.Web
 {
@@ -56,7 +57,7 @@ namespace VirtoCommerce.TaskManagement.Web
             serviceCollection.AddTransient<Func<IWorkTaskSearchService>>(provider => provider.GetRequiredService<IWorkTaskSearchService>);
 
             serviceCollection.AddTransient<SendNotificationsWorkTaskChangedEventHandler>();
-            serviceCollection.AddTransient<IAuthorizationHandler, TaskAssignAuthorizationHandler>();
+            serviceCollection.AddTransient<IAuthorizationHandler, TaskAuthorizationHandler>();
 
             // GraphQL
             var assemblyMarker = typeof(AssemblyMarker);
@@ -78,17 +79,20 @@ namespace VirtoCommerce.TaskManagement.Web
 
             // Register permissions
             var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
-            permissionsRegistrar.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions
+            permissionsRegistrar.RegisterPermissions(TaskPermissions.AllPermissions
                 .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "TaskManagement", Name = x })
                 .ToArray());
 
-            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMyOrganizationScope>();
-            AbstractTypeFactory<PermissionScope>.RegisterType<TaskAssignToMeScope>();
+            AbstractTypeFactory<PermissionScope>.RegisterType<TaskToMyOrganizationScope>();
+            AbstractTypeFactory<PermissionScope>.RegisterType<TaskToMeScope>();
 
             permissionsRegistrar.WithAvailabeScopesForPermissions(new[] {
-                ModuleConstants.Security.Permissions.Create,
-                ModuleConstants.Security.Permissions.Update,
-            }, new TaskAssignToMyOrganizationScope(), new TaskAssignToMeScope());
+                TaskPermissions.Read,
+                TaskPermissions.Create,
+                TaskPermissions.Update,
+                TaskPermissions.Delete,
+                TaskPermissions.Finish,
+            }, new TaskToMyOrganizationScope(), new TaskToMeScope());
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<WorkTaskChangedEvent>((message, token) => appBuilder.ApplicationServices.GetService<SendNotificationsWorkTaskChangedEventHandler>().Handle(message));

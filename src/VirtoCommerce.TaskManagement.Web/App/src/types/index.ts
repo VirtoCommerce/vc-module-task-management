@@ -1,9 +1,14 @@
-import { Component, ComponentPublicInstance, ComputedRef } from "vue";
+import { ComputedRef } from "vue";
 import { PushNotification } from "@vc-shell/framework";
 
-enum UserPermissions {
-  SellerUsersManage = "seller:users:manage",
-  SellerDetailsEdit = "seller:details:edit",
+enum TaskPermissions {
+  Access = "task:access",
+  Create = "task:create",
+  Read = "task:read",
+  Update = "task:update",
+  Delete = "task:delete",
+  Finish = "task:finish",
+  AttachmentManagement = "task:attachment:management",
 }
 
 interface IShippingInfo {
@@ -41,4 +46,4 @@ export type {
   INewOrderPushNotification,
 };
 
-export { UserPermissions };
+export { TaskPermissions };

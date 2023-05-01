@@ -1,9 +1,10 @@
 import { computed, Ref, ref } from "vue";
 import { useUser } from "@vc-shell/framework";
 import {
-  TaskManagementClient, 
+  TaskManagementClient,
   TaskType,
 } from "../../../../api_client/taskmanagement";
+import { orderBy, sortBy } from "lodash-es";
 
 interface IWorkTaskTypeResult {
   totalCount?: number;
@@ -31,12 +32,14 @@ export default (): IUseWorkTaskTypes => {
     loading.value = true;
     const client = await getApiClient();
     try {
-      let result = await client.getTaskTypes();
-      types.value = result;
-
+      types.value = await client.getTaskTypes();
+      types.value = orderBy(types.value, ["name"], ["asc"]);
+      types.value = sortBy(types.value, (type) =>
+        type.name === "Other" || type.name === "Others" ? 1 : 0
+      );
       return {
-        totalCount: result.length,
-        results: result,
+        totalCount: types.value.length,
+        results: types.value,
       };
     } catch (e) {
       console.error(e);

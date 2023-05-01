@@ -12,22 +12,32 @@ interface IUseWorkTask {
   loading: Ref<boolean>;
   modified: Ref<boolean>;
   priorities: WorkTaskPriority[];
-  loadWorkTask(id: string): void;
-  createWorkTask(workTask: WorkTask): void;
-  approveWorkTask(id: string, result: any): void;
-  rejectWorkTask(id: string, result: any): void;
-  updateWorktask(): void;
+  initNewWorkTask(): void;
+  loadWorkTask(id: string): Promise<void>;
+  createWorkTask(): Promise<void>;
+  approveWorkTask(id: string, result: any): Promise<void>;
+  rejectWorkTask(id: string, result: any): Promise<void>;
+  updateWorktask(): Promise<void>;
   resetWorkTask(): void;
-  deleteWorkTask(id: string): void;
+  deleteWorkTask(id: string): Promise<void>;
 }
 
-const workTask: Ref<WorkTask> = ref({} as WorkTask);
+const workTask: Ref<WorkTask> = ref({
+  priority: WorkTaskPriority.Normal,
+  attachments: [],
+  isActive: true,
+} as WorkTask);
 
 export default (): IUseWorkTask => {
   const loading = ref(false);
   const priorities = Object.values(WorkTaskPriority);
 
   let workTaskCopy: WorkTask;
+  const newWorkTask = ref({
+    priority: WorkTaskPriority.Normal,
+    attachments: [],
+    isActive: true,
+  } as WorkTask);
 
   const modified = ref(false);
 
@@ -46,6 +56,10 @@ export default (): IUseWorkTask => {
     return client;
   }
 
+  function initNewWorkTask(): void {
+    workTask.value = newWorkTask.value;
+  }
+
   async function loadWorkTask(id: string): Promise<void> {
     loading.value = true;
     const client = await getApiClient();
@@ -61,13 +75,13 @@ export default (): IUseWorkTask => {
     }
   }
 
-  async function createWorkTask(newWorkTask: WorkTask): Promise<void> {
+  async function createWorkTask(): Promise<void> {
     loading.value = true;
     const client = await getApiClient();
     try {
       loading.value = true;
-      validateAttachments(newWorkTask);
-      workTask.value = await client.create(newWorkTask);
+      validateAttachments(workTask.value);
+      workTask.value = await client.create(workTask.value);
     } catch (e) {
       console.error(e);
       throw e;
@@ -80,7 +94,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.approve(id, result);
+      workTask.value = await client.finish(id, true, result);
     } catch (e) {
       console.error(e);
       throw e;
@@ -93,7 +107,7 @@ export default (): IUseWorkTask => {
     const client = await getApiClient();
     try {
       loading.value = true;
-      workTask.value = await client.decline(id, result);
+      workTask.value = await client.finish(id, false, result);
     } catch (e) {
       console.error(e);
       throw e;
@@ -149,6 +163,7 @@ export default (): IUseWorkTask => {
     loading: computed(() => loading.value),
     modified: computed(() => modified.value),
     priorities,
+    initNewWorkTask,
     loadWorkTask,
     createWorkTask,
     approveWorkTask,

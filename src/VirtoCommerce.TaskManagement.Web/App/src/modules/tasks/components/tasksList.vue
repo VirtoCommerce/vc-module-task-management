@@ -1,11 +1,11 @@
 <template>
   <VcBlade
+    :closable="false"
     :title="props.title"
     :expanded="props.expanded"
-    :closable="props.closable"
     width="70%"
     :toolbarItems="bladeToolbar"
-    @close="$emit('page:close')"
+    @close="$emit('close:blade')"
   >
     <!-- Blade contents -->
     <VcTable
@@ -28,16 +28,15 @@
       @itemClick="onItemClick"
       @scroll:ptr="reload"
       @headerClick="onHeaderClick"
-      @selectionChanged="onSelectionChanged"
     >
       <!-- Filters -->
       <template v-slot:filters="{ closePanel }">
         <h2 v-if="$isMobile.value">
           {{ $t("TASKS.PAGES.LIST.FILTERS.TITLE") }}
         </h2>
-        <VcContainer no-padding>
+        <VcContainer>
           <VcRow>
-            <VcCol class="tw-w-[180px] tw-p-2">
+            <VcCol class="tw-w-[250px] tw-p-2">
               <div
                 class="tw-mb-4 tw-text-[#a1c0d4] tw-font-bold tw-text-[17px]"
               >
@@ -239,7 +238,8 @@ import {
   ITableColumns,
   useFunctions,
   useI18n,
-  useUser,
+  IBladeEvent,
+  useBladeNavigation,
 } from "@vc-shell/framework";
 import moment from "moment";
 import {
@@ -255,14 +255,18 @@ import {
   onMounted,
   reactive,
   ref,
+  shallowRef,
   watch,
 } from "vue";
-import { 
+import {
+  useWorkTaskPermissions,
   useWorkTasks,
   useWorkTaskTypes,
 } from "../composables";
 import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
+import { TaskPermissions } from "../../../types";
+import { WorkTaskDetails } from "../pages";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -279,7 +283,10 @@ export interface Props {
   param?: string;
 }
 
-const emit = defineEmits(["onItemClick", "newTaskClick"]);
+export interface Emits {
+  (event: "close:blade"): void;
+  (event: "open:blade", blade: IBladeEvent): void;
+}
 
 const props = withDefaults(defineProps<Props>(), {
   title: undefined,
@@ -290,17 +297,20 @@ const props = withDefaults(defineProps<Props>(), {
   param: undefined,
 });
 
+const emit = defineEmits<Emits>();
+
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
 const { types, getTaskTypes } = useWorkTaskTypes();
+const { checkWorkTaskPermission } = useWorkTaskPermissions();
+const { closeBlade } = useBladeNavigation();
+
 const { debounce } = useFunctions();
 const { t } = useI18n();
-const { user } = useUser();
 const filter = reactive({});
 const appliedFilter = ref({});
 const searchValue = ref();
 const selectedItemId = ref();
-const selectedOrdersIds = ref([]);
 const sort = ref("createdDate:DESC");
 const applyFiltersDisable = computed(() => {
   const activeFilters = Object.values(filter).filter((x) => x !== undefined);
@@ -339,8 +349,12 @@ if (props.isCurrentUserList === false && props.onlyComplitedList === false) {
       title: t("TASKS.PAGES.LIST.TOOLBAR.CREATE"),
       icon: "fas fa-plus",
       async clickHandler() {
-        emit("newTaskClick");
+        await closeBlade(1);
+        emit("open:blade", {
+          component: shallowRef(WorkTaskDetails),
+        });
       },
+      isVisible: checkWorkTaskPermission(TaskPermissions.Create),
     },
   ];
 } else {
@@ -359,43 +373,39 @@ const tableColumns = ref<ITableColumns[]>([
   {
     id: "number",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NUMBER")),
-    width: 30,
+    width: "100px",
     alwaysVisible: true,
   },
   {
-    id: "name",
-    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NAME")),
-    width: 150,
+    id: "type",
+    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.TYPE")),
+    width: "300px",
     alwaysVisible: true,
   },
   {
     id: "responsibleName",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE")),
-    width: 150,
+    width: "200px",
     class: "tw-flex tw-py-5",
-  },
-  {
-    id: "createdBy",
-    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.REPORTER")),
-    width: 80,
+    alwaysVisible: true,
   },
   {
     id: "priority",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.PRIORITY")),
-    width: 30,
+    width: "100px",
     alwaysVisible: true,
   },
   {
     id: "status",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.STATUS")),
-    width: 50,
+    width: "100px",
     alwaysVisible: true,
   },
   {
     id: "dueDate",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.DUEDATE")),
     sortable: true,
-    width: 50,
+    width: "100px",
     format: "DD MMM",
     type: "date",
     alwaysVisible: true,
@@ -409,7 +419,10 @@ const empty = reactive({
 
 const onItemClick = (item: { id: string }) => {
   selectedItemId.value = item.id;
-  emit("onItemClick", item);
+  emit("open:blade", {
+    component: shallowRef(WorkTaskDetails),
+    param: item.id,
+  });
 };
 
 const onPaginationClick = async (page: number) => {
@@ -451,12 +464,6 @@ const onHeaderClick = (item: ITableColumns) => {
   }
 };
 
-const onSelectionChanged = (checkboxes: { [key: string]: boolean }) => {
-  selectedOrdersIds.value = Object.entries(checkboxes)
-    .filter(([id, isChecked]) => isChecked)
-    .map(([id, isChecked]) => id);
-};
-
 const columns = computed(() => {
   if (props.expanded) {
     return tableColumns.value;
@@ -491,11 +498,11 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.priority = filter["priority"];
   criteria.startDueDate = filter["startDate"];
   criteria.endDueDate = filter["endDate"];
-  criteria.type = filter['type'];
+  criteria.type = filter["type"];
   criteria.keyword = searchValue.value;
   criteria.isActive = !props.onlyComplitedList;
   if (props.isCurrentUserList === true) {
-    criteria.responsibleIds = [user.value.id];
+    criteria.onlyAssignedToMe = true;
   }
 
   return criteria;
@@ -559,3 +566,8 @@ defineExpose({
   reload,
 });
 </script>
+<style lang="scss">
+.vc-table-filter__panel {
+  max-height: 800px !important;
+}
+</style>

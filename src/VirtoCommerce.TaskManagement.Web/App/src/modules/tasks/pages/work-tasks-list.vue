@@ -1,21 +1,17 @@
 <template>
   <TasksList
-    :closable="props.closable"
     :expanded="props.expanded"
     :param="props.param"
     :title="$t('TASKS.PAGES.LIST.ALL_TASKS_TITLE')"
     :isCurrentUserList="false"
     :onlyComplitedList="false"
-    @onItemClick="onItemClick"
-    @newTaskClick="newTaskClick"
     ref="tasksList"
   ></TasksList>
 </template>
 
 <script lang="ts">
 import { IBladeEvent } from "@vc-shell/framework";
-import { defineComponent, ref, shallowRef } from "vue";
-import { WorkTaskCreate, WorkTaskDetails } from ".";
+import { defineComponent, ref } from "vue";
 import TasksList from "../components/tasksList.vue";
 
 export default defineComponent({
@@ -41,21 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
   param: undefined,
 });
 
-const emit = defineEmits<Emits>();
-
 const tasksList = ref(null);
-const onItemClick = (item: { id: string }) => {
-  emit("open:blade", {
-    component: shallowRef(WorkTaskDetails),
-    param: item.id,
-  });
-};
-
-const newTaskClick = () => {
-  emit("open:blade", {
-    component: shallowRef(WorkTaskCreate),
-  });
-};
 
 const reload = async () => {
   await tasksList.value.reload();
@@ -63,6 +45,5 @@ const reload = async () => {
 
 defineExpose({
   reload,
-  onItemClick,
 });
 </script>

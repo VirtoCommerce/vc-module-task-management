@@ -28,6 +28,8 @@ namespace VirtoCommerce.TaskManagement.Data.Models
         public string ResponsibleId { get; set; }
         [StringLength(256)]
         public string ResponsibleName { get; set; }
+        [StringLength(128)]
+        public string OrganizationId { get; set; }
 
         public DateTime? DueDate { get; set; }
 
@@ -72,6 +74,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
             ResponsibleId = model.ResponsibleId;
             ResponsibleName = model.ResponsibleName;
+            OrganizationId = model.OrganizationId;
 
             DueDate = model.DueDate;
 
@@ -114,6 +117,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
             model.ResponsibleId = ResponsibleId;
             model.ResponsibleName = ResponsibleName;
+            model.OrganizationId = OrganizationId;
 
             model.DueDate = DueDate;
 
@@ -145,6 +149,7 @@ namespace VirtoCommerce.TaskManagement.Data.Models
 
             target.ResponsibleId = ResponsibleId;
             target.ResponsibleName = ResponsibleName;
+            target.OrganizationId = OrganizationId;
 
             target.DueDate = DueDate;
 

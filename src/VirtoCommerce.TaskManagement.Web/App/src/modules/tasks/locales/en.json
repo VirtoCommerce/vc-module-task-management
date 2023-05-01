@@ -23,6 +23,7 @@
         "TABLE": {
           "TOTALS": "Total:",
           "HEADER": {
+            "TYPE": "Type",
             "NAME": "Summary",
             "NUMBER": "Key",
             "PRIORITY": "Priority",
@@ -64,6 +65,7 @@
         }
       },
       "DETAILS": {
+        "NEW_TITLE":"Create new task",
         "TASK_INFO":{
           "CREDENTIALS_TITLE": "Credentials",
           "ATTACHMENTS_TITLE": "Attachments",
@@ -75,50 +77,24 @@
           "CREATED": "Created",
           "MODIFIED": "Updated",
           "DUEDATE": "Due",
-          "STATUS": "Status"
+          "STATUS": "Status",
+          "NAME": "Summary"
+        },
+        "PLACEHOLDER": {
+          "TYPE": "Choose type...",
+          "NAME": "Enter summary...",
+          "DESCRIPTION": "Enter description...",
+          "ASSIGNEDTO": "Select responsible...",
+          "PRIORITY": "",
+          "DUEDATE": ""
         },
         "ACTIONS": {
-          "ACCEPT_TASK": "Accept",
+          "ACCEPT_TASK": "Complete",
           "REJECT_TASK": "Reject",
           "DELETE_TASK": "Delete",
           "SAVE_TASK": "Save",
-          "RESET_TASK": "Restore"
-        }
-      },
-      "NEW":{
-        "TITLE":"Create new task",
-        "TOOLBAR":{
-          "CREATE":"Create"
-        },
-        "FIELDS":{
-          "DESCRIPTION":{
-            "TITLE":"Description",
-            "PLACEHOLDER":"Enter description..."
-          },
-          "NAME": {
-            "TITLE":"Name",
-            "PLACEHOLDER":"Enter name..."
-          },
-          "DUEDATE": {
-            "TITLE": "Due date",
-            "PLACEHOLDER": "Enter due date"
-          },
-          "TYPE": {
-            "TITLE": "Type",
-            "PLACEHOLDER": "Enter type..."
-          },
-          "GROUP": {
-            "TITLE": "Group",
-            "PLACEHOLDER": "Enter group..."
-          },
-          "PRIORITY": {
-            "TITLE": "Priority",
-            "PLACEHOLDER": "Select priority"
-          },
-          "ASSIGNEDTO": {
-            "TITLE": "Assigned to",
-            "PLACEHOLDER": "Select user"
-          }
+          "RESET_TASK": "Restore",
+          "CREATE_TASK":"Create"
         }
       }
     },

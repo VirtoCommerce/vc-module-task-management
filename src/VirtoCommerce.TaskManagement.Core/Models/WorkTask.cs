@@ -18,6 +18,7 @@ namespace VirtoCommerce.TaskManagement.Core.Models
 
         public string ResponsibleId { get; set; }
         public string ResponsibleName { get; set; }
+        public string OrganizationId { get; set; }
 
         public DateTime? DueDate { get; set; }
 

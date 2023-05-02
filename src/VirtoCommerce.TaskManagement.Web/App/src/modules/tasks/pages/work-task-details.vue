@@ -300,6 +300,7 @@ const { t } = useI18n();
 const {
   workTask,
   loading,
+  taskAvailable,
   modified,
   priorities,
   initNewWorkTask,
@@ -325,7 +326,7 @@ const disabled = computed(() => !!props.param && !workTask.value.isActive);
 onMounted(async () => {
   if (props.param) {
     await loadWorkTask(props.param);
-    if (workTask.value?.id === undefined) {
+    if (taskAvailable.value === false) {
       router.push("/my");
     }
   }

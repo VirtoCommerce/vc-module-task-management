@@ -373,13 +373,19 @@ const tableColumns = ref<ITableColumns[]>([
   {
     id: "number",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NUMBER")),
-    width: "100px",
+    width: "80px",
     alwaysVisible: true,
   },
   {
     id: "type",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.TYPE")),
-    width: "300px",
+    width: "250px",
+    alwaysVisible: true,
+  },
+  {
+    id: "name",
+    title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.NAME")),
+    width: "250px",
     alwaysVisible: true,
   },
   {
@@ -398,14 +404,14 @@ const tableColumns = ref<ITableColumns[]>([
   {
     id: "status",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.STATUS")),
-    width: "100px",
+    width: "120px",
     alwaysVisible: true,
   },
   {
     id: "dueDate",
     title: computed(() => t("TASKS.PAGES.LIST.TABLE.HEADER.DUEDATE")),
     sortable: true,
-    width: "100px",
+    width: "80px",
     format: "DD MMM",
     type: "date",
     alwaysVisible: true,

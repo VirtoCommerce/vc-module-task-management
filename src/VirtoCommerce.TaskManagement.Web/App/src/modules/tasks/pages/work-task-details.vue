@@ -274,6 +274,7 @@ import TaskAttachments from "../components/taskAttachments.vue";
 import { WorkTask } from "../../../api_client/taskmanagement";
 import noCustomerIconImage from "/assets/userpic.svg";
 import { TaskPermissions } from "../../../types";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   url: "/task",
@@ -299,6 +300,7 @@ const { t } = useI18n();
 const {
   workTask,
   loading,
+  taskAvailable,
   modified,
   priorities,
   initNewWorkTask,
@@ -315,6 +317,7 @@ const { fileUploading, uploadAttachments, deleteAttachment } =
   useWorkTaskAttachments();
 const { getTaskTypes } = useWorkTaskTypes();
 const { checkWorkTaskPermission } = useWorkTaskPermissions();
+const router = useRouter();
 useForm({ validateOnMount: false });
 const isValid = useIsFormValid();
 
@@ -323,6 +326,9 @@ const disabled = computed(() => !!props.param && !workTask.value.isActive);
 onMounted(async () => {
   if (props.param) {
     await loadWorkTask(props.param);
+    if (taskAvailable.value === false) {
+      router.push("/my");
+    }
   }
 });
 

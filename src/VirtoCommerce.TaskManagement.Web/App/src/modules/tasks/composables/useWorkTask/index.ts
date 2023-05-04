@@ -10,6 +10,7 @@ import { cloneDeep, forEach, isEqual } from "lodash-es";
 interface IUseWorkTask {
   workTask: Ref<WorkTask>;
   loading: Ref<boolean>;
+  taskAvailable: Ref<boolean>;
   modified: Ref<boolean>;
   priorities: WorkTaskPriority[];
   initNewWorkTask(): void;
@@ -30,6 +31,7 @@ const workTask: Ref<WorkTask> = ref({
 
 export default (): IUseWorkTask => {
   const loading = ref(false);
+  const taskAvailable = ref(false);
   const priorities = Object.values(WorkTaskPriority);
 
   let workTaskCopy: WorkTask;
@@ -67,7 +69,9 @@ export default (): IUseWorkTask => {
       loading.value = true;
       workTask.value = await client.get(id, "WithAttachments");
       workTaskCopy = cloneDeep(workTask.value);
+      taskAvailable.value = workTask.value.id !== undefined;
     } catch (e) {
+      taskAvailable.value = false;
       console.error(e);
       throw e;
     } finally {
@@ -161,6 +165,7 @@ export default (): IUseWorkTask => {
   return {
     workTask: computed(() => workTask.value),
     loading: computed(() => loading.value),
+    taskAvailable: computed(() => taskAvailable.value),
     modified: computed(() => modified.value),
     priorities,
     initNewWorkTask,

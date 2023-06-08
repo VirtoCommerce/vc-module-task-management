@@ -102,16 +102,20 @@ router.beforeEach(async (to, from) => {
 
     if (!(token || azureAdCookie) && to.name !== "Login") {
       return { name: "Login" };
-    } else if (hasAccess && to.name !== "Login") {
-      if (to.path === "/") {
-        return "/me";
-      } else {
-        return resolvedBladeUrl ? resolvedBladeUrl : true;
+    } else if (hasAccess && !to.redirectedFrom) {
+      if (to.name === "App" && from.path !== "/my") {
+        return "/my";
       }
+      return resolvedBladeUrl ? resolvedBladeUrl : true;
     } else if (!hasAccess) {
+      if (to.path === "/my" && to.redirectedFrom) {
+        return { name: "App" };
+      }
+
       notification.error("Access restricted", {
         timeout: 3000,
       });
+
       return from.path;
     }
   } catch (e) {

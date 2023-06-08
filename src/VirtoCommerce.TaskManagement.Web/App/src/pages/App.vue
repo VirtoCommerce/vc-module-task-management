@@ -193,11 +193,7 @@ const toolbarItems = computed(() =>
       }),
     },
     {
-      isAccent: computed(() => {
-        return !!notifications.value.filter(
-          (notification) => notification.isNew
-        ).length;
-      }),
+      isAccent: notifications.value.some((item) => item.isNew),
       component: markRaw(VcNotificationDropdown),
       options: {
         title: t("SHELL.TOOLBAR.NOTIFICATIONS"),
@@ -246,7 +242,7 @@ const mobileMenuItems = computed(() =>
         name: user.value?.userName,
         role: user.value?.isAdministrator ? "Administrator" : "Seller account",
       },
-      isVisible: isMobile,
+      isVisible: isMobile.value,
     },
   ])
 );

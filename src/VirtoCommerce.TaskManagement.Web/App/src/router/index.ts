@@ -2,76 +2,35 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import {
   usePermissions,
   useUser,
-  ExtendedComponent,
+  Invite,
+  ResetPassword,
+  Login,
+  useBladeNavigation,
+  BladePageComponent,
+  notification,
 } from "@vc-shell/framework";
+import { useCookies } from "@vueuse/integrations/useCookies";
 
 /**
  * Pages
  */
-import Invite from "../pages/Invite.vue";
-import ResetPassword from "../pages/ResetPassword.vue";
-import Login from "./../pages/Login.vue";
 import App from "./../pages/App.vue";
-
-/**
- * Modules
- */
-import {
-  WorkTaskDetails,
-  WorkTasksList,
-  MyWorkTasksList,
-  ArchiveWorkTasksList,
-  MyArchiveTasksList,
-} from "../modules/tasks";
 
 // eslint-disable-next-line import/no-unresolved
 import whiteLogoImage from "/assets/logo-white.svg";
 // eslint-disable-next-line import/no-unresolved
 import bgImage from "/assets/background.jpg";
-
-const { checkPermission } = usePermissions();
+import { inject } from "vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     component: App,
     name: "App",
-    children: [
-      /**
-       * Modules routes
-       */
-      {
-        name: "Active tasks",
-        path: "/active",
-        props: true,
-        component: WorkTasksList,
-      },
-      {
-        name: "My tasks",
-        path: "/my",
-        props: true,
-        component: MyWorkTasksList,
-      },
-      {
-        name: "My arhive tasks list",
-        path: "/my-archive-tasks",
-        props: true,
-        component: MyArchiveTasksList,
-      },
-      {
-        name: "Archive",
-        path: "/archive",
-        props: true,
-        component: ArchiveWorkTasksList,
-      },
-      {
-        name: "Task",
-        path: "/task/:param",
-        props: true,
-        component: WorkTaskDetails,
-      },
-    ],
-    beforeEnter: [checkAuth],
+    meta: {
+      root: true,
+    },
+    children: [],
   },
   {
     path: "/login",
@@ -105,7 +64,12 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/:pathMatch(.*)*",
-    redirect: "/my",
+    component: App,
+    beforeEnter: (to) => {
+      const { resolveUnknownRoutes } = useBladeNavigation();
+
+      return resolveUnknownRoutes(to);
+    },
   },
 ];
 
@@ -114,49 +78,43 @@ export const router = createRouter({
   routes,
 });
 
-let programmatic = false;
-["push", "replace", "go", "back", "forward"].forEach((methodName) => {
-  const method = router[methodName];
-  router[methodName] = (...args) => {
-    programmatic = true;
-    method.apply(router, args);
-  };
-});
-
-router.beforeEach((to, from, next) => {
-  const ExtendedComponent = to.matched[to.matched.length - 1]?.components
-    ?.default as ExtendedComponent;
-
-  if (from.name === undefined || programmatic) {
-    if (ExtendedComponent && ExtendedComponent.permissions) {
-      if (checkPermission(ExtendedComponent.permissions)) {
-        next();
-      } else {
-        if (!from.matched.length) {
-          next({ name: "Dashboard" });
-        } else {
-          // TODO temporary access alert
-          alert("Access restricted");
-        }
-      }
-    } else {
-      next();
-    }
-  } else {
-    // do not route if user clicks back/forward button in browser
-    next(false);
-  }
-  programmatic = false;
-});
-
-async function checkAuth(to, from, next) {
+router.beforeEach(async (to, from) => {
+  const { fetchUserPermissions, checkPermission } = usePermissions();
+  const { resolveBlades } = useBladeNavigation();
   const { getAccessToken } = useUser();
 
-  const token = await getAccessToken();
+  const pages = inject<BladePageComponent[]>("pages");
 
-  if (!token && to.name !== "Login") {
-    next({ name: "Login" });
-  } else {
-    next();
+  const resolvedBladeUrl = resolveBlades(to);
+
+  try {
+    const token = await getAccessToken();
+    const azureAdCookie = useCookies([".AspNetCore.Identity.Application"]).get(
+      ".AspNetCore.Identity.Application"
+    );
+
+    // Fetching permissions if not any
+    if (token) await fetchUserPermissions();
+
+    const component = pages.find((blade) => blade?.url === to.path);
+
+    const hasAccess = checkPermission(component?.permissions);
+
+    if (!(token || azureAdCookie) && to.name !== "Login") {
+      return { name: "Login" };
+    } else if (hasAccess && to.name !== "Login") {
+      if (to.path === "/") {
+        return "/me";
+      } else {
+        return resolvedBladeUrl ? resolvedBladeUrl : true;
+      }
+    } else if (!hasAccess) {
+      notification.error("Access restricted", {
+        timeout: 3000,
+      });
+      return from.path;
+    }
+  } catch (e) {
+    throw new Error(e.message);
   }
-}
+});

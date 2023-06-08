@@ -1,84 +1,76 @@
 <template>
-  <VcLoading v-if="!isReady" active class="app__loader" />
+  <VcLoading
+    v-if="!isReady"
+    active
+    class="app__loader"
+  />
   <VcApp
-    :menuItems="menuItems"
-    :mobileMenuItems="mobileMenuItems"
-    :toolbarItems="toolbarItems"
-    :isReady="isReady"
-    :isAuthorized="isAuthorized"
+    v-else
+    :menu-items="menuItems"
+    :mobile-menu-items="mobileMenuItems"
+    :toolbar-items="toolbarItems"
+    :is-ready="isReady"
+    :is-authorized="isAuthorized"
     :logo="'/apps/tasks/img/logo.svg'"
     :title="$t('SHELL.APP.NAME')"
     :version="version"
     :pages="pages"
-    :bladesRefs="bladesRefs"
+    :blades-refs="bladesRefs"
     @backlink:click="closeBlade($event)"
     @logo:click="logoClick()"
-    @open="onOpen"
     @close="closeBlade($event)"
-    v-else
   >
     <!-- App Switcher -->
-    <template v-slot:appSwitcher v-if="appsList && appsList.length">
+    <template
+      v-if="appsList && appsList.length"
+      #appSwitcher
+    >
       <VcAppSwitcher
-        :appsList="appsList"
-        @onClick="switchApp($event)"
+        :apps-list="appsList"
         :base="base"
+        @on-click="switchApp($event)"
       />
     </template>
 
-    <template v-slot:bladeNavigation v-if="isAuthorized">
+    <template
+      v-if="isAuthorized"
+      #bladeNavigation
+    >
       <VcBladeNavigation
-        @onOpen="openBlade($event.blade, $event.id)"
-        @onClose="closeBlade($event)"
-        @onParentCall="(e) => onParentCall(e.id, e.args)"
-        :blades="blades"
-        :parentBladeOptions="parentBladeOptions"
-        :parentBladeParam="parentBladeParam"
         ref="bladeNavigationRefs"
+        :blades="blades"
+        :parent-blade-options="workspaceOptions"
+        :parent-blade-param="workspaceParam"
+        @on-close="closeBlade($event)"
+        @on-parent-call="(e) => onParentCall(e.id, e.args)"
+        @vue:mounted="resolveLastBlade(pages)"
       ></VcBladeNavigation>
     </template>
 
-    <template v-slot:notifications>
-      <VcNotification
-        v-for="item in popupNotifications"
-        :key="item.id"
-        :timeout="5000"
-        @dismiss="dismiss(item)"
-        @expired="markAsRead(item)"
-      >
-        {{ item.title }}
-      </VcNotification>
-    </template>
-
-    <template v-slot:passwordChange>
-      <change-password
-        v-if="isChangePasswordActive"
-        @close="isChangePasswordActive = false"
-      ></change-password>
+    <template #modals>
+      <VcPopupContainer />
     </template>
   </VcApp>
 </template>
 
 <script lang="ts" setup>
-import { HubConnection } from "@microsoft/signalr";
 import {
-  PushNotification,
-  IBladeToolbar,
-  IMenuItems,
   useAppSwitcher,
-  useFunctions,
-  useI18n,
   useNotifications,
   useSettings,
   useUser,
   VcAppSwitcher,
   useBladeNavigation,
   VcBladeNavigation,
-  IOpenBlade,
   VcApp,
   VcLoading,
-  VcNotification,
-  ExtendedComponent,
+  usePopup,
+  BladePageComponent,
+  useMenuComposer,
+  LanguageSelector,
+  ChangePassword,
+  VcNotificationDropdown,
+  UserDropdownButton,
 } from "@vc-shell/framework";
 import {
   computed,
@@ -87,15 +79,11 @@ import {
   reactive,
   ref,
   Ref,
-  shallowRef,
   watch,
+  markRaw,
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import ChangePassword from "../components/change-password.vue";
-import LanguageSelector from "../components/language-selector.vue";
-import NotificationDropdown from "../components/notification-dropdown/notification-dropdown.vue";
-import UserDropdownButton from "../components/user-dropdown-button.vue";
-import { TaskPermissions } from "../types";
+import { useI18n } from "vue-i18n";
 // eslint-disable-next-line import/no-unresolved
 import avatarImage from "/assets/avatar.jpg";
 // eslint-disable-next-line import/no-unresolved
@@ -106,67 +94,58 @@ import {
   MyArchiveTasksList,
   MyWorkTasksList,
   WorkTasksList,
-  useWorkTaskPermissions,
 } from "../modules/tasks";
 
 const base = import.meta.env.APP_PLATFORM_URL;
+
+const { open } = usePopup({
+  component: ChangePassword,
+});
 
 const {
   t,
   locale: currentLocale,
   availableLocales,
   getLocaleMessage,
-} = useI18n();
+} = useI18n({ useScope: "global" });
 const { user, loadUser, signOut } = useUser();
-const {
-  popupNotifications,
-  notifications,
-  addNotification,
-  dismiss,
-  markAsRead,
-} = useNotifications();
-const { checkWorkTaskPermission } = useWorkTaskPermissions();
+const { notifications, loadFromHistory, markAllAsRead } = useNotifications();
+const { navigationMenuComposer, toolbarComposer } = useMenuComposer();
 const { getUiCustomizationSettings, uiSettings, applySettings } = useSettings();
-const { delay } = useFunctions();
 const {
   blades,
   bladesRefs,
-  parentBladeOptions,
-  parentBladeParam,
-  openBlade,
+  workspaceOptions,
+  workspaceParam,
   closeBlade,
   onParentCall,
+  resolveLastBlade,
 } = useBladeNavigation();
 const { appsList, switchApp, getApps } = useAppSwitcher();
 const route = useRoute();
 const router = useRouter();
 const isAuthorized = ref(false);
 const isReady = ref(false);
-const isChangePasswordActive = ref(false);
-const pages = inject<ExtendedComponent[]>("pages");
-const signalR = inject<HubConnection>("connection");
+const pages = inject<BladePageComponent[]>("pages");
 const isDesktop = inject<Ref<boolean>>("isDesktop");
 const isMobile = inject<Ref<boolean>>("isMobile");
 const version = import.meta.env.PACKAGE_VERSION;
 const bladeNavigationRefs = ref();
 
-signalR.on("Send", (message: PushNotification) => {
-  delay(() => addNotification(message), 100);
-});
-
 onMounted(async () => {
-  await loadUser();
-  await getApps();
-  langInit();
-  await customizationHandler();
+  try {
+    await loadUser();
+    await getApps();
+    langInit();
+    await customizationHandler();
+    await loadFromHistory();
 
-  isReady.value = true;
-  if (
-    !checkWorkTaskPermission([TaskPermissions.Access, TaskPermissions.Read])
-  ) {
-    router.push("/login");
-  } else if (route.path === "/") {
-    router.push("/my");
+    isReady.value = true;
+  } catch (e) {
+    if (!isAuthorized.value) {
+      router.push("/login");
+    }
+    throw e;
   }
 });
 
@@ -188,14 +167,14 @@ watch(
 
 console.debug(`Initializing App`);
 
-const toolbarItems = ref<IBladeToolbar[]>([
-  {
-    component: shallowRef(LanguageSelector),
-    bladeOptions: {
-      value: computed(() => currentLocale.value),
-      title: computed(() => t("SHELL.TOOLBAR.LANGUAGE")),
-      languageItems: computed(() =>
-        availableLocales.map((locale: string) => ({
+const toolbarItems = computed(() =>
+  toolbarComposer([
+    {
+      component: markRaw(LanguageSelector),
+      options: {
+        value: currentLocale.value as string,
+        title: t("SHELL.TOOLBAR.LANGUAGE"),
+        languageItems: availableLocales.map((locale: string) => ({
           lang: locale,
           title: (getLocaleMessage(locale) as { language_name: string })
             .language_name,
@@ -203,118 +182,128 @@ const toolbarItems = ref<IBladeToolbar[]>([
             currentLocale.value = lang;
             localStorage.setItem("VC_LANGUAGE_SETTINGS", lang);
           },
-        }))
-      ),
+        })),
+      },
+      isVisible: computed(() => {
+        return isDesktop.value
+          ? isDesktop.value
+          : isMobile.value
+          ? route.path === "/"
+          : false;
+      }),
     },
-    isVisible: computed(() => {
-      return isDesktop.value
-        ? isDesktop.value
-        : isMobile.value
-        ? route.path === "/"
-        : false;
-    }),
-  },
-  {
-    isAccent: computed(() => {
-      return !!notifications.value.filter((notification) => notification.isNew)
-        .length;
-    }),
-    component: shallowRef(NotificationDropdown),
-    bladeOptions: {
-      title: computed(() => t("SHELL.TOOLBAR.NOTIFICATIONS")),
+    {
+      isAccent: computed(() => {
+        return !!notifications.value.filter(
+          (notification) => notification.isNew
+        ).length;
+      }),
+      component: markRaw(VcNotificationDropdown),
+      options: {
+        title: t("SHELL.TOOLBAR.NOTIFICATIONS"),
+        notifications: notifications.value,
+        onOpen() {
+          if (notifications.value.some((x) => x.isNew)) {
+            markAllAsRead();
+          }
+        },
+      },
     },
-  },
-  {
-    component: shallowRef(UserDropdownButton),
-    bladeOptions: {
-      avatar: avatarImage,
-      name: computed(() => user.value?.userName),
-      role: computed(() =>
-        user.value?.isAdministrator ? "Administrator" : "Seller account"
-      ),
-      menuItems: [
-        {
-          title: computed(() => t("SHELL.ACCOUNT.CHANGE_PASSWORD")),
-          clickHandler() {
-            isChangePasswordActive.value = true;
+    {
+      component: markRaw(UserDropdownButton),
+      options: {
+        avatar: avatarImage,
+        name: user.value?.userName,
+        role: user.value?.isAdministrator ? "Administrator" : "Seller account",
+        menuItems: [
+          {
+            title: t("SHELL.ACCOUNT.CHANGE_PASSWORD"),
+            clickHandler() {
+              open();
+            },
           },
+          {
+            title: t("SHELL.ACCOUNT.LOGOUT"),
+            clickHandler() {
+              closeBlade(0);
+              signOut();
+              router.push({ name: "Login" });
+            },
+          },
+        ],
+      },
+      isVisible: isDesktop,
+    },
+  ])
+);
+
+const mobileMenuItems = computed(() =>
+  toolbarComposer([
+    {
+      component: markRaw(UserDropdownButton),
+      options: {
+        avatar: avatarImage,
+        name: user.value?.userName,
+        role: user.value?.isAdministrator ? "Administrator" : "Seller account",
+      },
+      isVisible: isMobile,
+    },
+  ])
+);
+
+const menuItems = reactive(
+  navigationMenuComposer([
+    {
+      title: computed(() => t("TASKS.MENU.MY_TASKS_TITLE")),
+      icon: "fa-solid fa-thumbtack",
+      isVisible: true,
+      children: [
+        {
+          title: computed(() => t("TASKS.MENU.MY_ACTIVE_TASKS_TITLE")),
+          isVisible: true,
+          component: markRaw(MyWorkTasksList),
         },
         {
-          title: computed(() => t("SHELL.ACCOUNT.LOGOUT")),
-          clickHandler() {
-            closeBlade(0);
-            signOut();
-            router.push({ name: "Login" });
-          },
+          title: computed(() => t("TASKS.MENU.MY_ARCHIVE_TASKS_TITLE")),
+          isVisible: true,
+          component: markRaw(MyArchiveTasksList),
         },
       ],
     },
-    isVisible: isDesktop,
-  },
-]);
-
-const mobileMenuItems = ref<IBladeToolbar[]>([
-  {
-    component: shallowRef(UserDropdownButton),
-    bladeOptions: {
-      avatar: avatarImage,
-      name: computed(() => user.value?.userName),
-      role: computed(() =>
-        user.value?.isAdministrator ? "Administrator" : "Seller account"
-      ),
+    {
+      title: computed(() => t("TASKS.MENU.ACTIVE_TASKS_TITLE")),
+      icon: "fas fa-file-alt",
+      isVisible: true,
+      component: markRaw(WorkTasksList),
     },
-    isVisible: isMobile,
-  },
-]);
-
-const menuItems = reactive<IMenuItems[]>([
-  {
-    title: computed(() => t("TASKS.MENU.MY_TASKS_TITLE")),
-    icon: "fa-solid fa-thumbtack",
-    isVisible: true,
-    children: [
-      {
-        title: computed(() => t("TASKS.MENU.MY_ACTIVE_TASKS_TITLE")),
-        isVisible: true,
-        component: shallowRef(MyWorkTasksList),
+    {
+      title: computed(() => t("TASKS.MENU.ARCHIVE_TASKS_TITLE")),
+      icon: "fas fa-file-alt",
+      isVisible: true,
+      component: markRaw(ArchiveWorkTasksList),
+    },
+    {
+      title: computed(() => t("SHELL.ACCOUNT.CHANGE_PASSWORD")),
+      icon: "fas fa-key",
+      isVisible: isMobile,
+      clickHandler() {
+        open();
       },
-      {
-        title: computed(() => t("TASKS.MENU.MY_ARCHIVE_TASKS_TITLE")),
-        isVisible: true,
-        component: shallowRef(MyArchiveTasksList),
+    },
+    {
+      title: computed(() => t("SHELL.ACCOUNT.LOGOUT")),
+      icon: "fas fa-sign-out-alt",
+      isVisible: isMobile,
+      async clickHandler() {
+        const isPrevented = await closeBlade(0);
+        if (!isPrevented) {
+          signOut();
+          router.push({ name: "Login" });
+        }
       },
-    ],
-  },
-  {
-    title: computed(() => t("TASKS.MENU.ACTIVE_TASKS_TITLE")),
-    icon: "fas fa-file-alt",
-    isVisible: true,
-    component: shallowRef(WorkTasksList),
-  },
-  {
-    title: computed(() => t("TASKS.MENU.ARCHIVE_TASKS_TITLE")),
-    icon: "fas fa-file-alt",
-    isVisible: true,
-    component: shallowRef(ArchiveWorkTasksList),
-  },
-  {
-    title: computed(() => t("SHELL.ACCOUNT.CHANGE_PASSWORD")),
-    icon: "fas fa-key",
-    isVisible: isMobile,
-    clickHandler() {
-      isChangePasswordActive.value = true;
     },
-  },
-  {
-    title: computed(() => t("SHELL.ACCOUNT.LOGOUT")),
-    icon: "fas fa-sign-out-alt",
-    isVisible: isMobile,
-    clickHandler() {
-      signOut();
-      router.push("/login");
-    },
-  },
-]);
+  ])
+);
 
 function langInit() {
   const lang = localStorage.getItem("VC_LANGUAGE_SETTINGS");
@@ -326,15 +315,12 @@ function langInit() {
   }
 }
 
-function onOpen(args: IOpenBlade) {
-  openBlade({ parentBlade: args.parentBlade }, args.id, args.navigationCb);
-}
-
-const logoClick = () => {
+const logoClick = async () => {
   console.debug(`logoClick() called.`);
+
   // Close all opened pages with onBeforeClose callback
-  closeBlade(0);
-  router.push("/my");
+  const isPrevented = await closeBlade(0);
+  !isPrevented && router.push("/my");
 };
 
 async function customizationHandler() {

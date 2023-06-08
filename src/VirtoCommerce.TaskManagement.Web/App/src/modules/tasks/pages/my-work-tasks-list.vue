@@ -1,25 +1,19 @@
 <template>
   <TasksList
+    ref="tasksList"
     :expanded="props.expanded"
     :param="props.param"
     :title="$t('TASKS.PAGES.LIST.MY_ACTIVE_TASKS_TITLE')"
-    :isCurrentUserList="true"
-    :onlyComplitedList="false"
-    ref="tasksList"
+    :is-current-user-list="true"
+    :only-completed-list="false"
   ></TasksList>
 </template>
 
-<script lang="ts">
-import { IBladeEvent } from "@vc-shell/framework";
-import { defineComponent, ref } from "vue";
-import TasksList from "../components/tasksList.vue";
-
-export default defineComponent({
-  url: "/my",
-});
-</script>
-
 <script lang="ts" setup>
+import { ref } from "vue";
+import TasksList from "../components/tasksList.vue";
+import { TaskPermissions } from "../../../types";
+
 export interface Props {
   expanded?: boolean;
   closable?: boolean;
@@ -27,14 +21,19 @@ export interface Props {
 }
 
 export interface Emits {
+  (event: "collapse:blade"): void;
+  (event: "expand:blade"): void;
   (event: "close:blade"): void;
-  (event: "open:blade", blade: IBladeEvent): void;
 }
+
+defineOptions({
+  url: "/my",
+  permissions: [TaskPermissions.Access, TaskPermissions.Read],
+});
 
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: undefined,
 });
 
 const tasksList = ref(null);

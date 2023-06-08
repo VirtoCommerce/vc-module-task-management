@@ -1,0 +1,7 @@
+{
+  "i18n-ally.localesPaths": [
+    "src/VirtoCommerce.TaskManagement.Web/App/src/locales",
+    "src/VirtoCommerce.TaskManagement.Web/App/src/modules/tasks/locales"
+  ],
+  "typescript.tsdk": "src/VirtoCommerce.TaskManagement.Web/App/node_modules/typescript/lib"
+}

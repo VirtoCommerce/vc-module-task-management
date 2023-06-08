@@ -1,25 +1,18 @@
 <template>
   <TasksList
+    ref="tasksList"
     :expanded="props.expanded"
     :param="props.param"
     :title="$t('TASKS.PAGES.LIST.ARCHIVE_TASKS_TITLE')"
-    :isCurrentUserList="false"
-    :onlyComplitedList="true"
-    ref="tasksList"
+    :is-current-user-list="false"
+    :only-completed-list="true"
   ></TasksList>
 </template>
 
-<script lang="ts">
-import { IBladeEvent } from "@vc-shell/framework";
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import TasksList from "../components/tasksList.vue";
 
-export default defineComponent({
-  url: "/archive",
-});
-</script>
-
-<script lang="ts" setup>
 export interface Props {
   expanded?: boolean;
   closable?: boolean;
@@ -27,14 +20,18 @@ export interface Props {
 }
 
 export interface Emits {
+  (event: "collapse:blade"): void;
+  (event: "expand:blade"): void;
   (event: "close:blade"): void;
-  (event: "open:blade", blade: IBladeEvent): void;
 }
+
+defineOptions({
+  url: "/archive",
+});
 
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: undefined,
 });
 
 const tasksList = ref(null);

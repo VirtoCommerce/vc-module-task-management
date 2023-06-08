@@ -1,27 +1,23 @@
 <template>
-  <VcIcon icon="fas fa-circle" :class="getClass()"></VcIcon>
+  <VcIcon
+    icon="fas fa-circle"
+    :class="getClass()"
+  ></VcIcon>
   <span class="tw-ml-1">{{ props.workTaskPriority }}</span>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  inheritAttrs: false,
-});
-</script>
-
 <script lang="ts" setup>
-import { VcIcon } from "@vc-shell/framework";
 import { WorkTaskPriority } from "../../../api_client/taskmanagement";
 
 export interface Props {
   workTaskPriority: WorkTaskPriority;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  workTaskPriority: undefined,
+defineOptions({
+  inheritAttrs: false,
 });
+
+const props = defineProps<Props>();
 
 const getClass = () => {
   return {

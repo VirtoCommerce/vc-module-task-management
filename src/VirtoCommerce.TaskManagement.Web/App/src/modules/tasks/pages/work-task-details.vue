@@ -5,8 +5,10 @@
     :expanded="expanded"
     :closable="closable"
     width="40%"
-    :toolbarItems="bladeToolbar"
+    :toolbar-items="bladeToolbar"
     @close="$emit('close:blade')"
+    @expand="$emit('expand:blade')"
+    @collapse="$emit('collapse:blade')"
   >
     <VcContainer>
       <div class="tw-p-5">
@@ -18,15 +20,15 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.TYPE") }}
                 </VcLabel>
                 <Field
+                  v-slot="{ field, errorMessage, handleChange, errors }"
                   name="type"
                   rules="required|min:3"
-                  :modelValue="workTask.type"
-                  v-slot="{ field, errorMessage, handleChange, errors }"
+                  :model-value="workTask.type"
                 >
                   <VcSelect
                     v-bind="field"
-                    class="tw-mb-4"
                     v-model="workTask.type"
+                    class="tw-mb-4"
                     :clearable="false"
                     :disabled="disabled"
                     option-value="name"
@@ -35,12 +37,12 @@
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="getTaskTypes"
-                    @update:modelValue="handleChange"
+                    @update:model-value="handleChange"
                   >
-                    <template v-slot:selected-item="item">
+                    <template #selected-item="item">
                       <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
-                    <template v-slot:option="item">
+                    <template #option="item">
                       <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
                   </VcSelect>
@@ -53,21 +55,21 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.NAME") }}
                 </VcLabel>
                 <Field
+                  v-slot="{ field, errorMessage, handleChange, errors }"
                   name="name"
                   rules="required|min:3"
-                  :modelValue="workTask.name"
-                  v-slot="{ field, errorMessage, handleChange, errors }"
+                  :model-value="workTask.name"
                 >
                   <VcInput
                     v-bind="field"
-                    class="tw-mb-4"
                     v-model="workTask.name"
+                    class="tw-mb-4"
                     :clearable="true"
                     required
                     :placeholder="$t('TASKS.PAGES.DETAILS.PLACEHOLDER.NAME')"
                     :error="!!errors.length"
                     :error-message="errorMessage"
-                    @update:modelValue="handleChange"
+                    @update:model-value="handleChange"
                   >
                   </VcInput>
                 </Field>
@@ -79,14 +81,14 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.DESCRIPTION") }}
                 </VcLabel>
                 <Field
-                  name="description"
-                  :modelValue="workTask.description"
                   v-slot="{ field, errorMessage, handleChange }"
+                  name="description"
+                  :model-value="workTask.description"
                 >
                   <VcEditor
                     v-bind="field"
-                    class="tw-mb-4"
                     v-model="workTask.description"
+                    class="tw-mb-4"
                     :clearable="true"
                     :disabled="disabled"
                     :placeholder="
@@ -94,8 +96,8 @@
                     "
                     name="description"
                     :error-message="errorMessage"
-                    @update:modelValue="handleChange"
                     :assets-folder="workTask.id"
+                    @update:model-value="handleChange"
                   >
                   </VcEditor>
                 </Field>
@@ -107,13 +109,13 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.PRIORITY") }}
                 </VcLabel>
                 <Field
-                  name="priority"
                   v-slot="{ field, errorMessage, handleChange, errors }"
+                  name="priority"
                 >
                   <VcSelect
                     v-bind="field"
-                    class="tw-mb-4"
                     v-model="workTask.priority"
+                    class="tw-mb-4"
                     option-value="typeName"
                     option-label="typeName"
                     :clearable="false"
@@ -121,13 +123,17 @@
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="priorities"
-                    @update:modelValue="handleChange"
+                    @update:model-value="handleChange"
                   >
-                    <template v-slot:selected-item="item">
-                      <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
+                    <template #selected-item="item">
+                      <TaskPriority
+                        :work-task-priority="item.opt"
+                      ></TaskPriority>
                     </template>
-                    <template v-slot:option="item">
-                      <TaskPriority :workTaskPriority="item.opt"></TaskPriority>
+                    <template #option="item">
+                      <TaskPriority
+                        :work-task-priority="item.opt"
+                      ></TaskPriority>
                     </template>
                   </VcSelect>
                 </Field>
@@ -139,9 +145,9 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.DUEDATE") }}
                 </VcLabel>
                 <Field
-                  name="dueDate"
-                  :modelValue="workTask.dueDate"
                   v-slot="{ field, errorMessage, errors }"
+                  name="dueDate"
+                  :model-value="workTask.dueDate"
                 >
                   <VcInput
                     type="date"
@@ -152,8 +158,8 @@
                     :disabled="disabled"
                     :error="!!errors.length"
                     :error-message="errorMessage"
-                    :modelValue="getDueDate()"
-                    @update:modelValue="(e : string) => setDueDate(e)"
+                    :model-value="getDueDate()"
+                    @update:model-value="(e : string) => setDueDate(e)"
                   >
                   </VcInput>
                 </Field>
@@ -165,18 +171,18 @@
                   {{ $t("TASKS.PAGES.DETAILS.TASK_INFO.ASSIGNEE") }}
                 </VcLabel>
                 <Field
+                  v-slot="{ field, errorMessage, handleChange, errors }"
                   name="responsibleId"
                   rules="required"
-                  :modelValue="workTask.responsibleId"
-                  v-slot="{ field, errorMessage, handleChange, errors }"
+                  :model-value="workTask.responsibleId"
                 >
                   <VcSelect
                     v-bind="field"
+                    v-model="workTask.responsibleId"
                     name="responsibleId"
                     class="tw-mb-4"
                     required
                     searchable
-                    v-model="workTask.responsibleId"
                     option-value="id"
                     option-label="fullName"
                     :clearable="true"
@@ -184,9 +190,9 @@
                     :error="!!errors.length"
                     :error-message="errorMessage"
                     :options="searchContacts"
-                    @update:modelValue="handleChange"
+                    @update:model-value="handleChange"
                   >
-                    <template v-slot:selected-item="item">
+                    <template #selected-item="item">
                       <img
                         class="tw-w-5 tw-h-5 tw-rounded-full"
                         :src="getContactIcon(item.opt.id)"
@@ -194,7 +200,7 @@
                       />
                       <span class="tw-ml-1">{{ item.opt.name }}</span>
                     </template>
-                    <template v-slot:option="item">
+                    <template #option="item">
                       <img
                         class="tw-w-5 tw-h-5 tw-rounded-full"
                         :src="getContactIcon(item.opt.id)"
@@ -220,20 +226,20 @@
             </VcRow>
           </VcCard>
           <VcCard
-            :header="$t('TASKS.PAGES.DETAILS.TASK_INFO.ATTACHMENTS_TITLE')"
-            is-collapsable
-            :is-collapsed="restoreCollapsed('files')"
-            @state:collapsed="handleCollapsed('files', $event)"
             v-if="
               checkWorkTaskPermission(TaskPermissions.AttachmentManagement) &&
               (workTask.isActive === true || workTask.attachments?.length)
             "
+            :header="$t('TASKS.PAGES.DETAILS.TASK_INFO.ATTACHMENTS_TITLE')"
+            is-collapsable
+            :is-collapsed="restoreCollapsed('files')"
+            @state:collapsed="handleCollapsed('files', $event)"
           >
             <TaskAttachments
-              :workTask="workTask"
-              :fileUploading="fileUploading"
-              @addAttachments="filesUpload($event)"
-              @deleteAttachment="deleteWorkTaskAttachment($event)"
+              :work-task="workTask"
+              :file-uploading="fileUploading"
+              @add-attachments="filesUpload($event)"
+              @delete-attachment="deleteWorkTaskAttachment($event)"
             ></TaskAttachments>
           </VcCard>
         </VcForm>
@@ -241,7 +247,8 @@
     </VcContainer>
   </VcBlade>
 </template>
-<script lang="ts">
+
+<script lang="ts" setup>
 import moment from "moment";
 import {
   useContacts,
@@ -250,22 +257,8 @@ import {
   useWorkTaskPermissions,
   useWorkTaskTypes,
 } from "../composables";
-import {
-  useI18n,
-  IBladeToolbar,
-  IParentCallArgs,
-  VcBlade,
-  VcCol,
-  VcContainer,
-  VcLabel,
-  VcRow,
-  VcForm,
-  VcInput,
-  VcSelect,
-  VcEditor,
-  VcCard,
-} from "@vc-shell/framework";
-import { defineComponent, computed, onMounted, ref } from "vue";
+import { IBladeToolbar, IParentCallArgs } from "@vc-shell/framework";
+import { computed, onMounted, ref } from "vue";
 import TaskPriority from "../components/taskPriority.vue";
 import TaskStatus from "../components/taskStatus.vue";
 import { Field, useForm, useIsFormValid } from "vee-validate";
@@ -275,12 +268,8 @@ import { WorkTask } from "../../../api_client/taskmanagement";
 import noCustomerIconImage from "/assets/userpic.svg";
 import { TaskPermissions } from "../../../types";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-export default defineComponent({
-  url: "/task",
-});
-</script>
-<script lang="ts" setup>
 export interface Props {
   expanded?: boolean;
   closable?: boolean;
@@ -288,15 +277,21 @@ export interface Props {
 }
 export interface Emits {
   (event: "parent:call", args: IParentCallArgs): void;
+  (event: "collapse:blade"): void;
+  (event: "expand:blade"): void;
   (event: "close:blade"): void;
 }
+
+defineOptions({
+  url: "/task",
+});
+
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: null,
 });
 const emit = defineEmits<Emits>();
-const { t } = useI18n();
+const { t } = useI18n({ useScope: "global" });
 const {
   workTask,
   loading,

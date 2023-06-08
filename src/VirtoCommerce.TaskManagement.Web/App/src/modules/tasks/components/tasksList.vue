@@ -4,8 +4,10 @@
     :title="props.title"
     :expanded="props.expanded"
     width="70%"
-    :toolbarItems="bladeToolbar"
+    :toolbar-items="bladeToolbar"
     @close="$emit('close:blade')"
+    @expand="$emit('expand:blade')"
+    @collapse="$emit('collapse:blade')"
   >
     <!-- Blade contents -->
     <VcTable
@@ -16,21 +18,21 @@
       :loading="loading"
       :columns="columns"
       :items="workTasks"
-      :totalCount="totalCount"
+      :total-count="totalCount"
       :pages="pages"
       :sort="sort"
-      :searchValue="searchValue"
-      :activeFilterCount="activeFilterCount"
-      :selectedItemId="selectedItemId"
-      :currentPage="currentPage"
+      :search-value="searchValue"
+      :active-filter-count="activeFilterCount"
+      :selected-item-id="selectedItemId"
+      :current-page="currentPage"
       @search:change="onSearchList"
-      @paginationClick="onPaginationClick"
-      @itemClick="onItemClick"
+      @pagination-click="onPaginationClick"
+      @item-click="onItemClick"
       @scroll:ptr="reload"
-      @headerClick="onHeaderClick"
+      @header-click="onHeaderClick"
     >
       <!-- Filters -->
-      <template v-slot:filters="{ closePanel }">
+      <template #filters="{ closePanel }">
         <h2 v-if="$isMobile.value">
           {{ $t("TASKS.PAGES.LIST.FILTERS.TITLE") }}
         </h2>
@@ -44,11 +46,11 @@
               </div>
               <div>
                 <VcCheckbox
-                  class="tw-mb-2"
                   v-for="taskType in types"
                   :key="taskType.name"
-                  :modelValue="filter['type'] === taskType.name"
-                  @update:modelValue="
+                  class="tw-mb-2"
+                  :model-value="filter['type'] === taskType.name"
+                  @update:model-value="
                     filter['type'] = $event ? taskType.name : undefined
                   "
                   >{{ taskType.name }}
@@ -63,11 +65,11 @@
               </div>
               <div>
                 <VcCheckbox
-                  class="tw-mb-2"
                   v-for="priority in WorkTaskPriority"
                   :key="priority"
-                  :modelValue="filter['priority'] === priority"
-                  @update:modelValue="
+                  class="tw-mb-2"
+                  :model-value="filter['priority'] === priority"
+                  @update:model-value="
                     filter['priority'] = $event ? priority : undefined
                   "
                   >{{ priority }}
@@ -85,16 +87,16 @@
                   :label="$t('TASKS.PAGES.LIST.FILTERS.STARTDATE')"
                   type="date"
                   class="tw-mb-3"
-                  :modelValue="getFilterDate('startDate')"
-                  @update:modelValue="(e: string) => setFilterDate('startDate', e)"
+                  :model-value="getFilterDate('startDate')"
                   max="9999-12-31"
+                  @update:model-value="(e: string) => setFilterDate('startDate', e)"
                 ></VcInput>
                 <VcInput
                   :label="$t('TASKS.PAGES.LIST.FILTERS.ENDDATE')"
                   type="date"
-                  :modelValue="getFilterDate('endDate')"
-                  @update:modelValue="(e: string) => setFilterDate('endDate', e)"
+                  :model-value="getFilterDate('endDate')"
                   max="9999-12-31"
+                  @update:model-value="(e: string) => setFilterDate('endDate', e)"
                 ></VcInput>
               </div>
             </VcCol>
@@ -105,13 +107,13 @@
                 <vc-button
                   outline
                   class="tw-mr-4"
-                  @click="resetFilters(closePanel)"
                   :disabled="applyFiltersReset"
+                  @click="resetFilters(closePanel)"
                   >{{ $t("TASKS.PAGES.LIST.FILTERS.RESETFILTERS") }}</vc-button
                 >
                 <vc-button
-                  @click="applyFilters(closePanel)"
                   :disabled="applyFiltersDisable"
+                  @click="applyFilters(closePanel)"
                   >{{ $t("TASKS.PAGES.LIST.FILTERS.APPLY") }}</vc-button
                 >
               </div>
@@ -121,7 +123,7 @@
       </template>
 
       <!-- Not found template -->
-      <template v-slot:notfound>
+      <template #notfound>
         <div
           class="tw-w-full tw-h-full tw-box-border tw-flex tw-flex-col tw-items-center tw-justify-center"
         >
@@ -136,7 +138,7 @@
       </template>
 
       <!-- Empty template -->
-      <template v-slot:empty>
+      <template #empty>
         <div
           class="tw-w-full tw-h-full tw-box-border tw-flex tw-flex-col tw-items-center tw-justify-center"
         >
@@ -148,19 +150,21 @@
       </template>
 
       <!-- Override priority column template -->
-      <template v-slot:item_priority="itemData">
-        <TaskPriority :workTaskPriority="itemData.item.priority"></TaskPriority>
+      <template #item_priority="itemData">
+        <TaskPriority
+          :work-task-priority="itemData.item.priority"
+        ></TaskPriority>
       </template>
 
       <!-- Override status column template -->
-      <template v-slot:item_status="itemData">
+      <template #item_status="itemData">
         <TaskStatus
           :work-task-status="calculateStatus(itemData.item)"
         ></TaskStatus>
       </template>
 
       <!-- Override responsible column template -->
-      <template v-slot:item_responsibleName="itemData">
+      <template #item_responsibleName="itemData">
         <img
           class="tw-w-5 tw-h-5 tw-rounded-full"
           :src="getContactIcon(itemData.item.responsibleId)"
@@ -171,7 +175,7 @@
         }}</span>
       </template>
 
-      <template v-slot:mobile-item="itemData">
+      <template #mobile-item="itemData">
         <div class="tw-p-3">
           <div class="tw-w-full tw-flex tw-justify-evenly">
             <div class="tw-grow tw-basis-0">
@@ -182,8 +186,8 @@
             </div>
             <div>
               <TaskStatus
-                v-bind:active="itemData.item.isActive"
-                v-bind:completed="itemData.item.completed"
+                :active="itemData.item.isActive"
+                :completed="itemData.item.completed"
               ></TaskStatus>
             </div>
           </div>
@@ -199,7 +203,7 @@
                   class="tw-text-ellipsis tw-overflow-hidden tw-whitespace-nowrap tw-mt-1"
                 >
                   <TaskPriority
-                    :workTaskPriority="itemData.item.priority"
+                    :work-task-priority="itemData.item.priority"
                   ></TaskPriority>
                 </div>
               </div>
@@ -225,20 +229,9 @@
 
 <script lang="ts">
 import {
-  VcBlade,
-  VcTable,
-  VcContainer,
-  VcRow,
-  VcCol,
-  VcCheckbox,
-  VcInput,
-  VcButton,
-  VcHint,
   IBladeToolbar,
   ITableColumns,
   useFunctions,
-  useI18n,
-  IBladeEvent,
   useBladeNavigation,
 } from "@vc-shell/framework";
 import moment from "moment";
@@ -255,7 +248,7 @@ import {
   onMounted,
   reactive,
   ref,
-  shallowRef,
+  markRaw,
   watch,
 } from "vue";
 import {
@@ -267,6 +260,7 @@ import emptyImage from "/assets/empty.png";
 import noCustomerIconImage from "/assets/userpic.svg";
 import { TaskPermissions } from "../../../types";
 import { WorkTaskDetails } from "../pages";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -277,36 +271,33 @@ export default defineComponent({
 export interface Props {
   title: string;
   isCurrentUserList: boolean;
-  onlyComplitedList: boolean;
+  onlyCompletedList: boolean;
   expanded?: boolean;
   closable?: boolean;
   param?: string;
 }
 
 export interface Emits {
+  (event: "collapse:blade"): void;
+  (event: "expand:blade"): void;
   (event: "close:blade"): void;
-  (event: "open:blade", blade: IBladeEvent): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: undefined,
-  isCurrentUserList: false,
-  onlyComplitedList: false,
   expanded: true,
   closable: true,
-  param: undefined,
 });
 
-const emit = defineEmits<Emits>();
+defineEmits<Emits>();
 
 const { workTasks, totalCount, pages, loading, currentPage, loadWorkTasks } =
   useWorkTasks();
 const { types, getTaskTypes } = useWorkTaskTypes();
 const { checkWorkTaskPermission } = useWorkTaskPermissions();
-const { closeBlade } = useBladeNavigation();
+const { openBlade } = useBladeNavigation();
 
 const { debounce } = useFunctions();
-const { t } = useI18n();
+const { t } = useI18n({ useScope: "global" });
 const filter = reactive({});
 const appliedFilter = ref({});
 const searchValue = ref();
@@ -336,7 +327,7 @@ watch(sort, async (value) => {
 
 const bladeToolbar = ref<IBladeToolbar[]>([]);
 
-if (props.isCurrentUserList === false && props.onlyComplitedList === false) {
+if (props.isCurrentUserList === false && props.onlyCompletedList === false) {
   bladeToolbar.value = [
     {
       title: t("TASKS.PAGES.LIST.TOOLBAR.REFRESH"),
@@ -349,9 +340,8 @@ if (props.isCurrentUserList === false && props.onlyComplitedList === false) {
       title: t("TASKS.PAGES.LIST.TOOLBAR.CREATE"),
       icon: "fas fa-plus",
       async clickHandler() {
-        await closeBlade(1);
-        emit("open:blade", {
-          component: shallowRef(WorkTaskDetails),
+        openBlade({
+          blade: markRaw(WorkTaskDetails),
         });
       },
       isVisible: checkWorkTaskPermission(TaskPermissions.Create),
@@ -425,8 +415,8 @@ const empty = reactive({
 
 const onItemClick = (item: { id: string }) => {
   selectedItemId.value = item.id;
-  emit("open:blade", {
-    component: shallowRef(WorkTaskDetails),
+  openBlade({
+    blade: markRaw(WorkTaskDetails),
     param: item.id,
   });
 };
@@ -506,7 +496,7 @@ function getCriteria(skip?: number): WorkTaskSearchCriteria {
   criteria.endDueDate = filter["endDate"];
   criteria.type = filter["type"];
   criteria.keyword = searchValue.value;
-  criteria.isActive = !props.onlyComplitedList;
+  criteria.isActive = !props.onlyCompletedList;
   if (props.isCurrentUserList === true) {
     criteria.onlyAssignedToMe = true;
   }

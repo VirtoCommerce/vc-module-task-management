@@ -1,5 +1,5 @@
 import { ComputedRef } from "vue";
-import { PushNotification } from "@vc-shell/framework";
+import { PushNotification, VcButton } from "@vc-shell/framework";
 
 enum TaskPermissions {
   Access = "task:access",
@@ -19,11 +19,19 @@ interface IShippingInfo {
   email?: string;
 }
 
+interface IShippingInfo {
+  label: string;
+  name?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+}
+
 interface INotificationActions {
   name: string | ComputedRef<string>;
   clickHandler(): void;
   outline: boolean;
-  variant: string;
+  variant?: InstanceType<typeof VcButton>["$props"]["variant"];
   isVisible?: boolean | ComputedRef<boolean>;
   disabled?: boolean | ComputedRef<boolean>;
 }
@@ -39,11 +47,6 @@ interface INewOrderPushNotification extends PushNotification {
   orderId?: string;
 }
 
-export type {
-  IShippingInfo,
-  INotificationActions,
-  IProductPushNotification,
-  INewOrderPushNotification,
-};
+export type { IShippingInfo, INotificationActions, IProductPushNotification, INewOrderPushNotification };
 
 export { TaskPermissions };

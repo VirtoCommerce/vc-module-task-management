@@ -4,22 +4,18 @@
   </VcStatus>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  inheritAttrs: false,
-});
-</script>
-
 <script lang="ts" setup>
-import { useI18n, VcStatus } from "@vc-shell/framework";
+import { useI18n } from "vue-i18n";
 
 export interface Props {
   workTaskStatus: string;
 }
 
-const { t } = useI18n();
+defineOptions({
+  inheritAttrs: false,
+});
+
+const { t } = useI18n({ useScope: "global" });
 
 const props = withDefaults(defineProps<Props>(), {
   workTaskStatus: "ToDo",
@@ -35,7 +31,7 @@ const localizedStatus = () => {
     case "Canceled":
       result = t("TASKS.STATUS.CANCELED");
       break;
-    case 'Done':
+    case "Done":
       result = t("TASKS.STATUS.DONE");
       break;
   }
@@ -54,7 +50,6 @@ const statusStyles = {
   Done: {
     outline: false,
     variant: "success",
-  }
+  },
 };
-
 </script>

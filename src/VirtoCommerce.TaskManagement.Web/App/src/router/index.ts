@@ -36,11 +36,11 @@ const routes: RouteRecordRaw[] = [
     path: "/login",
     name: "Login",
     component: Login,
-    meta: {
+    props: () => ({
       logo: whiteLogoImage,
       background: bgImage,
       title: "Tasks Portal",
-    },
+    }),
   },
   {
     name: "invite",

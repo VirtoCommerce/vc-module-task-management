@@ -27,7 +27,6 @@
     >
       <VcAppSwitcher
         :apps-list="appsList"
-        :base="base"
         @on-click="switchApp($event)"
       />
     </template>
@@ -95,8 +94,6 @@ import {
   MyWorkTasksList,
   WorkTasksList,
 } from "../modules/tasks";
-
-const base = import.meta.env.APP_PLATFORM_URL;
 
 const { open } = usePopup({
   component: ChangePassword,
@@ -320,7 +317,7 @@ const logoClick = async () => {
 };
 
 async function customizationHandler() {
-  await getUiCustomizationSettings(base);
+  await getUiCustomizationSettings();
 
   if (!uiSettings.value.logo) {
     applySettings({ logo: logoImage });

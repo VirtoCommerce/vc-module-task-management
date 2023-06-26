@@ -40,9 +40,6 @@ export default getApplicationConfiguration({
     }),
   ],
   optimizeDeps: {
-    include:
-      mode === "development"
-        ? ["ace-builds", "client-oauth2", "quill-delta", "quill"]
-        : [],
+    include: mode === "development" ? ["ace-builds", "client-oauth2", "quill-delta", "quill", "url-pattern"] : [],
   },
 });

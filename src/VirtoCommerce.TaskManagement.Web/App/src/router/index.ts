@@ -87,38 +87,44 @@ router.beforeEach(async (to, from) => {
 
   const resolvedBladeUrl = resolveBlades(to);
 
-  try {
-    const token = await getAccessToken();
-    const azureAdCookie = useCookies([".AspNetCore.Identity.Application"]).get(
-      ".AspNetCore.Identity.Application"
-    );
+  if (
+    to.name !== "Login" &&
+    to.name !== "ResetPassword" &&
+    to.name !== "Invite"
+  ) {
+    try {
+      const token = await getAccessToken();
+      const azureAdCookie = useCookies([
+        ".AspNetCore.Identity.Application",
+      ]).get(".AspNetCore.Identity.Application");
 
-    // Fetching permissions if not any
-    if (token) await fetchUserPermissions();
+      // Fetching permissions if not any
+      if (token) await fetchUserPermissions();
 
-    const component = pages.find((blade) => blade?.url === to.path);
+      const component = pages.find((blade) => blade?.url === to.path);
 
-    const hasAccess = checkPermission(component?.permissions);
+      const hasAccess = checkPermission(component?.permissions);
 
-    if (!(token || azureAdCookie) && to.name !== "Login") {
+      if (!(token || azureAdCookie) && to.name !== "Login") {
+        return { name: "Login" };
+      } else if (hasAccess && !to.redirectedFrom) {
+        if (to.name === "App" && from.path !== "/my") {
+          return "/my";
+        }
+        return resolvedBladeUrl ? resolvedBladeUrl : true;
+      } else if (!hasAccess) {
+        if (to.path === "/my" && to.redirectedFrom) {
+          return { name: "App" };
+        }
+
+        notification.error("Access restricted", {
+          timeout: 3000,
+        });
+
+        return from.path;
+      }
+    } catch (e) {
       return { name: "Login" };
-    } else if (hasAccess && !to.redirectedFrom) {
-      if (to.name === "App" && from.path !== "/my") {
-        return "/my";
-      }
-      return resolvedBladeUrl ? resolvedBladeUrl : true;
-    } else if (!hasAccess) {
-      if (to.path === "/my" && to.redirectedFrom) {
-        return { name: "App" };
-      }
-
-      notification.error("Access restricted", {
-        timeout: 3000,
-      });
-
-      return from.path;
     }
-  } catch (e) {
-    throw new Error(e.message);
-  }
+  } else return true;
 });

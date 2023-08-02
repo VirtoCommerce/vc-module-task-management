@@ -36,7 +36,7 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
 
         public virtual Task Handle(WorkTaskChangedEvent message)
         {
-            if (_settingsManager.GetValueByDescriptor<bool>(ModuleConstants.Settings.General.TaskNotificationsEnabled))
+            if (_settingsManager.GetValue<bool>(ModuleConstants.Settings.General.TaskNotificationsEnabled))
             {
                 var tasks = message.ChangedEntries
                     .Where(changedEntry =>
@@ -66,9 +66,9 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
                     var notification = await _notificationSearchService.GetNotificationAsync<WorkTaskAssignedEmailNotification>();
                     notification.WorkTask = task;
                     notification.To = contact.Emails.FirstOrDefault();
-                    notification.From = _settingsManager.GetValueByDescriptor<string>(ModuleConstants.Settings.General.TaskNotificationNoReplyEmail);
+                    notification.From = _settingsManager.GetValue<string>(ModuleConstants.Settings.General.TaskNotificationNoReplyEmail);
 
-                    var baseUrl = _settingsManager.GetValueByDescriptor<string>(ModuleConstants.Settings.General.TaskAppBaseUrl);
+                    var baseUrl = _settingsManager.GetValue<string>(ModuleConstants.Settings.General.TaskAppBaseUrl);
                     notification.WorkTaskUrl = $"{baseUrl}/#task/{task.Id}";
 
                     await _notificationSender.ScheduleSendNotificationAsync(notification);

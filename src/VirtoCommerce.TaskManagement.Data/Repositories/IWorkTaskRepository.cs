@@ -11,6 +11,6 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
         IQueryable<WorkTaskEntity> WorkTasks { get; }
         IQueryable<WorkTaskAttachmentEntity> WorkTaskAttachments { get; }
 
-        Task<IEnumerable<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids, string responseGroup);
+        Task<IList<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids, string responseGroup = null);
     }
 }

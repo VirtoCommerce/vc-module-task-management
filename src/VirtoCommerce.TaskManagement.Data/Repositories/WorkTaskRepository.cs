@@ -20,7 +20,7 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
         public IQueryable<WorkTaskEntity> WorkTasks => DbContext.Set<WorkTaskEntity>();
         public IQueryable<WorkTaskAttachmentEntity> WorkTaskAttachments => DbContext.Set<WorkTaskAttachmentEntity>();
 
-        public async Task<IEnumerable<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids, string responseGroup = null)
+        public async Task<IList<WorkTaskEntity>> GetWorkTaskByIds(IList<string> ids, string responseGroup = null)
         {
             IList<WorkTaskEntity> result = null;
 

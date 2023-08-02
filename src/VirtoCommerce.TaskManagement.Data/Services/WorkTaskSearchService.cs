@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.GenericCrud;
 using VirtoCommerce.Platform.Data.GenericCrud;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
@@ -13,8 +15,8 @@ namespace VirtoCommerce.TaskManagement.Data.Services
 {
     public class WorkTaskSearchService : SearchService<WorkTaskSearchCriteria, WorkTaskSearchResult, WorkTask, WorkTaskEntity>, IWorkTaskSearchService
     {
-        public WorkTaskSearchService(Func<IWorkTaskRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IWorkTaskService crudService)
-            : base(repositoryFactory, platformMemoryCache, crudService)
+        public WorkTaskSearchService(Func<IWorkTaskRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IWorkTaskService crudService, IOptions<CrudOptions> crudOptions)
+            : base(repositoryFactory, platformMemoryCache, crudService, crudOptions)
         {
         }
 

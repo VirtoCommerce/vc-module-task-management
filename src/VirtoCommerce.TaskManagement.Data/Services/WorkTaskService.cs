@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using VirtoCommerce.Platform.Core.Caching;
@@ -17,14 +16,17 @@ namespace VirtoCommerce.TaskManagement.Data.Services
 {
     public class WorkTaskService : CrudService<WorkTask, WorkTaskEntity, WorkTaskChangingEvent, WorkTaskChangedEvent>, IWorkTaskService
     {
+        private readonly IEventPublisher _eventPublisher;
+
         public WorkTaskService(Func<IWorkTaskRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IEventPublisher eventPublisher)
             : base(repositoryFactory, platformMemoryCache, eventPublisher)
         {
+            _eventPublisher = eventPublisher;
         }
 
         public virtual async Task<WorkTask> FinishAsync(string id, bool completed, JObject result)
         {
-            var workTask = await GetByIdAsync(id);
+            var workTask = await this.GetByIdAsync(id);
             var originalWorkTask = (WorkTask)workTask.Clone();
 
             workTask.Completed = completed;
@@ -45,16 +47,16 @@ namespace VirtoCommerce.TaskManagement.Data.Services
 
         public async Task<WorkTask> TimeoutAsync(string id)
         {
-            var workTask = await GetByIdAsync(id);
+            var workTask = await this.GetByIdAsync(id);
             workTask.IsActive = false;
             await SaveChangesAsync(new[] { workTask });
 
             return workTask;
         }
 
-        protected override async Task<IEnumerable<WorkTaskEntity>> LoadEntities(IRepository repository, IEnumerable<string> ids, string responseGroup)
+        protected override Task<IList<WorkTaskEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
         {
-            return await ((IWorkTaskRepository)repository).GetWorkTaskByIds(ids.ToList(), responseGroup);
+            return ((IWorkTaskRepository)repository).GetWorkTaskByIds(ids, responseGroup);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GraphQL;
 using MediatR;
 using VirtoCommerce.ExperienceApiModule.Core.Helpers;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
 

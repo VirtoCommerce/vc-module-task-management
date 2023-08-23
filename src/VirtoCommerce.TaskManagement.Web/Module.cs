@@ -23,8 +23,11 @@ using VirtoCommerce.TaskManagement.Core.Notifications;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
 using VirtoCommerce.TaskManagement.Data.Handlers;
+using VirtoCommerce.TaskManagement.Data.MySql;
+using VirtoCommerce.TaskManagement.Data.PostgreSql;
 using VirtoCommerce.TaskManagement.Data.Repositories;
 using VirtoCommerce.TaskManagement.Data.Services;
+using VirtoCommerce.TaskManagement.Data.SqlServer;
 using VirtoCommerce.TaskManagement.ExperienceApi;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;
 using VirtoCommerce.TaskManagement.Web.Authorization;
@@ -40,10 +43,24 @@ namespace VirtoCommerce.TaskManagement.Web
         public void Initialize(IServiceCollection serviceCollection)
         {
             // Initialize database
-            var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ??
-                                   Configuration.GetConnectionString("VirtoCommerce");
+            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
+            serviceCollection.AddDbContext<TaskManagementDbContext>(options =>
+            {
+                var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ?? Configuration.GetConnectionString("VirtoCommerce");
 
-            serviceCollection.AddDbContext<TaskManagementDbContext>(options => options.UseSqlServer(connectionString));
+                switch (databaseProvider)
+                {
+                    case "MySql":
+                        options.UseMySqlDatabase(connectionString);
+                        break;
+                    case "PostgreSql":
+                        options.UsePostgreSqlDatabase(connectionString);
+                        break;
+                    default:
+                        options.UseSqlServerDatabase(connectionString);
+                        break;
+                }
+            });
 
             // Override models
             //AbstractTypeFactory<OriginalModel>.OverrideType<OriginalModel, ExtendedModel>().MapToType<ExtendedEntity>();

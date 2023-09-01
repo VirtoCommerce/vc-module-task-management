@@ -1,3 +1,4 @@
+using System.Reflection;
 using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.TaskManagement.Data.Models;
@@ -40,6 +41,22 @@ namespace VirtoCommerce.TaskManagement.Data.Repositories
             modelBuilder.Entity<WorkTaskAttachmentEntity>().Property(x => x.Id).HasMaxLength(_maxLength).ValueGeneratedOnAdd();
             modelBuilder.Entity<WorkTaskAttachmentEntity>().HasOne(x => x.WorkTask).WithMany(x => x.Attachments)
                 .HasForeignKey(x => x.WorkTaskId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
+            // Allows configuration for an entity type for different database types.
+            // Applies configuration from all <see cref="IEntityTypeConfiguration{TEntity}" in VirtoCommerce.TaskManagement.Data.XXX project. /> 
+            switch (this.Database.ProviderName)
+            {
+                case "Pomelo.EntityFrameworkCore.MySql":
+                    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("VirtoCommerce.TaskManagement.Data.MySql"));
+                    break;
+                case "Npgsql.EntityFrameworkCore.PostgreSQL":
+                    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("VirtoCommerce.TaskManagement.Data.PostgreSql"));
+                    break;
+                case "Microsoft.EntityFrameworkCore.SqlServer":
+                    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("VirtoCommerce.TaskManagement.Data.SqlServer"));
+                    break;
+            }
+
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VirtoCommerce.TaskManagement.Data.Migrations
+namespace VirtoCommerce.TaskManagement.Data.SqlServer.Migrations
 {
     public partial class AddAttachments : Migration
     {

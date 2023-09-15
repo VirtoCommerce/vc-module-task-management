@@ -1,11 +1,11 @@
 using System.Reflection;
-using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.TaskManagement.Data.Models;
 
 namespace VirtoCommerce.TaskManagement.Data.Repositories
 {
-    public class TaskManagementDbContext : DbContextWithTriggers
+    public class TaskManagementDbContext : DbContextBase
     {
         private const int _maxLength = 128;
 

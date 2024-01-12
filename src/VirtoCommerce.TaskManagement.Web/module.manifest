@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>VirtoCommerce.TaskManagement</id>
-  <version>3.403.0</version>
-  <version-tag></version-tag>
-  <platformVersion>3.413.0</platformVersion>
+  <version>3.800.0</version>
+  <version-tag />
+
+  <platformVersion>3.800.0</platformVersion>
   <dependencies>
-    <dependency id="VirtoCommerce.ExperienceApi" version="3.400.0" />
+    <dependency id="VirtoCommerce.ExperienceApi" version="3.800.0" />
   </dependencies>
+
   <apps>
     <app id="tasks">
       <title>Tasks</title>
@@ -30,7 +32,8 @@
   <assemblyFile>VirtoCommerce.TaskManagement.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.TaskManagement.Web.Module, VirtoCommerce.TaskManagement.Web</moduleType>
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2023 VirtoCommerce. All rights reserved</copyright>
-  <tags></tags>
+  <copyright>Copyright © 2011-2024 Virto Commerce. All rights reserved</copyright>
+  <tags>
+  </tags>
   <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>

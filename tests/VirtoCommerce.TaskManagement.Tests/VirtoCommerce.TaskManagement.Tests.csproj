@@ -1,30 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <PropertyGroup>
     <!-- Project is a test project -->
     <SonarQubeTestProject>true</SonarQubeTestProject>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Data\VirtoCommerce.TaskManagement.Data.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.ExperienceApi\VirtoCommerce.TaskManagement.ExperienceApi.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.TaskManagement.Web\VirtoCommerce.TaskManagement.Web.csproj" />
   </ItemGroup>
-
 </Project>

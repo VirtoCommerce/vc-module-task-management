@@ -106,23 +106,28 @@ export const workTaskDetails: DynamicDetailsSchema = {
             method: "statusText",
           },
         },
-        {
-          id: "attachments",
-          component: "vc-gallery",
-          variant: "file-upload",
-          multiple: true,
-          property: "attachments",
-          rules: {
-            mindimensions: [120, 120],
-            fileWeight: 1024,
-          },
-          actions: {
-            preview: true,
-            edit: false,
-            remove: true,
-          },
-        },
+        // {
+        //   id: "attachments",
+        //   component: "vc-gallery",
+        //   variant: "file-upload",
+        //   multiple: true,
+        //   property: "attachments",
+        //   rules: {
+        //     mindimensions: [120, 120],
+        //     fileWeight: 1024,
+        //   },
+        //   actions: {
+        //     preview: true,
+        //     edit: false,
+        //     remove: true,
+        //   },
+        // },
       ],
+    },
+    {
+      id: "assetsWidgets",
+      component: "vc-widgets",
+      children: ["AssetsWidget"],
     },
   ],
 };

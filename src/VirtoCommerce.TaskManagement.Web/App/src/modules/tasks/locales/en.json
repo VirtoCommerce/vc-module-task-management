@@ -88,10 +88,14 @@
             "TITLE": "Assignee"
           }
         },
+        "WIDGETS": {
+          "ASSETS": "Attachments"
+        },
         "NEW_TITLE": "Create new task"
       },
       "ALERTS": {
-        "CLOSE_CONFIRMATION": "You have unsaved changes\nClose anyway?"
+        "CLOSE_CONFIRMATION": "You have unsaved changes\nClose anyway?",
+        "DELETE_CONFIRMATION_ASSET": "Are you sure you want to delete {count} selected attachments?"
       }
     },
     "STATUS": {

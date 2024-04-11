@@ -1,11 +1,12 @@
 import { computed, reactive, Ref, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { TaskManagementClient, WorkTask, WorkTaskPriority } from "../../../../api_client/virtocommerce.taskmanagement";
 import {
   DetailsBaseBladeScope,
   DynamicBladeForm,
   IBladeToolbar,
   useApiClient,
-  useAssets,
+  // useAssets,
   useDetailsFactory,
   usePermissions,
 } from "@vc-shell/framework";
@@ -47,8 +48,9 @@ export default (args: {
   });
 
   const { load, saveChanges, remove: deleteWorkTask, loading, item, validationState } = factory();
-  const { upload: imageUpload, remove: imageRemove, edit: imageEdit, loading: imageLoading } = useAssets();
+  // const { upload: imageUpload, remove: imageRemove, edit: imageEdit, loading: imageLoading } = useAssets();
   const { hasAccess } = usePermissions();
+  const { t } = useI18n();
 
   const scope = ref<WorkTaskDetailScope>({
     toolbarOverrides: {
@@ -127,28 +129,28 @@ export default (args: {
       }
       return result;
     }),
-    assetsHandler: {
-      images: {
-        loading: imageLoading,
-        async upload(files, startingSortOrder) {
-          return (await imageUpload(files, `tasks/${item.value?.id}`, startingSortOrder)).map((x) => {
-            const result = new Image(x.size);
-            console.log(result);
-            return result;
-          });
-        },
-        remove(files) {
-          return imageRemove(files, item.value?.attachments ?? []);
-        },
-        edit(files) {
-          return imageEdit(files, item.value?.attachments ?? []).map((x) => new Image(x.size));
-        },
-      },
-    },
+    // assetsHandler: {
+    //   images: {
+    //     loading: imageLoading,
+    //     async upload(files, startingSortOrder) {
+    //       return (await imageUpload(files, `tasks/${item.value?.id}`, startingSortOrder)).map((x) => {
+    //         const result = new Image(x.size);
+    //         console.log(result);
+    //         return result;
+    //       });
+    //     },
+    //     remove(files) {
+    //       return imageRemove(files, item.value?.attachments ?? []);
+    //     },
+    //     edit(files) {
+    //       return imageEdit(files, item.value?.attachments ?? []).map((x) => new Image(x.size));
+    //     },
+    //   },
+    // },
   });
 
   const bladeTitle = computed(() => {
-    return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : "TASKS.PAGES.DETAILS.NEW_TITLE";
+    return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : t("TASKS.PAGES.DETAILS.NEW_TITLE");
   });
 
   watch(

@@ -1,6 +1,7 @@
-export { default as WorkTasksList } from "./work-tasks-list.vue";
-export { default as MyWorkTasksList } from "./my-work-tasks-list.vue";
-export { default as MyArchiveTasksList } from "./my-archive-tasks-list.vue";
+import { workTasksList } from "./list";
+import { workTaskDetails } from "./details";
+// import { myWorkTasksList } from "./my-work-tasks-list";
+// import { myArchiveTasksList } from "./my-archive-tasks-list";
+// import { archiveWorkTasksList } from "./___archive-work-tasks-list";
 
-export { default as WorkTaskDetails } from "./work-task-details.vue";
-export { default as ArchiveWorkTasksList } from "./archive-work-tasks-list.vue";
+export { workTasksList, workTaskDetails /*myWorkTasksList, myArchiveTasksList, archiveWorkTasksList*/ };

@@ -1,22 +1,16 @@
 {
-  "extends": "./tsconfig.build.json",
+  "extends": "@vc-shell/ts-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": ".",
-    "resolveJsonModule": true,
-    "strict": false,
-    "lib": [
-      "esnext",
-      "dom"
-    ]
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": [
+      "vite/client",
+      ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.json",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
+    "./src/**/*.ts",
+    "./src/**/*.vue",
+    "./src/**/*.json"
   ]
 }

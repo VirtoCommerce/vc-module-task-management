@@ -1,9 +1,9 @@
-import * as pages from "./pages";
+import * as schema from "./pages";
 import * as locales from "./locales";
-import { createAppModule } from "@vc-shell/framework";
+import * as composables from "./composables";
+import * as components from "./components";
+import { createDynamicAppModule } from "@vc-shell/framework";
 
-export default createAppModule(pages, locales);
+export default createDynamicAppModule({ schema, locales, composables, moduleComponents: components });
 
-export * from "./pages";
-export * from "./components";
-export * from "./composables";
+export { schema, composables, locales, components };

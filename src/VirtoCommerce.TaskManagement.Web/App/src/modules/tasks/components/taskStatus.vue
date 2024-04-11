@@ -1,48 +1,34 @@
 <template>
-  <VcStatus v-bind="statusStyles[workTaskStatus]">
-    {{ localizedStatus() }}
-  </VcStatus>
+  <div>
+    <VcStatus
+      v-bind="statusStyles[itemStatus]"
+      :class="$attrs.class"
+      >{{ $t(`TASKS.STATUS.${itemStatus.toUpperCase()}`) }}</VcStatus
+    >
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  inheritAttrs: false,
-});
-</script>
-
 <script lang="ts" setup>
-import { useI18n, VcStatus } from "@vc-shell/framework";
+import { computed, toRefs } from "vue";
+import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
 
 export interface Props {
-  workTaskStatus: string;
+  context: {
+    item: IWorkTask;
+  };
 }
 
-const { t } = useI18n();
-
 const props = withDefaults(defineProps<Props>(), {
-  workTaskStatus: "ToDo",
+  context: () => ({
+    item: {
+      status: "ToDo",
+    },
+  }),
 });
 
-const localizedStatus = () => {
-  let result = t("TASKS.STATUS.TODO");
-
-  switch (props.workTaskStatus) {
-    case "ToDo":
-      result = t("TASKS.STATUS.TODO");
-      break;
-    case "Canceled":
-      result = t("TASKS.STATUS.CANCELED");
-      break;
-    case 'Done':
-      result = t("TASKS.STATUS.DONE");
-      break;
-  }
-  return result;
-};
-
-const statusStyles = {
+const { context } = toRefs(props);
+const itemStatus = computed(() => context.value.item.status || "ToDo");
+const statusStyles: Omit<Record<string, Record<string, unknown>>, "ToDo"> = {
   ToDo: {
     outline: false,
     variant: "info",
@@ -54,7 +40,6 @@ const statusStyles = {
   Done: {
     outline: false,
     variant: "success",
-  }
+  },
 };
-
 </script>

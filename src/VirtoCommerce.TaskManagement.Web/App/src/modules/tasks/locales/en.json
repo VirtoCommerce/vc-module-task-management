@@ -1,101 +1,97 @@
 {
   "TASKS": {
     "MENU": {
-      "MY_TASKS_TITLE": "MY TASKS",
-      "ACTIVE_TASKS_TITLE": "ALL TASKS",
-      "ARCHIVE_TASKS_TITLE": "ARCHIVE",
-      "MY_ACTIVE_TASKS_TITLE": "Active",
-      "MY_ARCHIVE_TASKS_TITLE": "Completed"
+      "TITLE": "All tasks"
     },
     "PAGES": {
       "LIST": {
-        "ARCHIVE_TASKS_TITLE": "Tasks archive",
-        "ALL_TASKS_TITLE": "All tasks",
-        "MY_ACTIVE_TASKS_TITLE": "My active tasks",
-        "MY_ARCHIVE_TASKS_TITLE": "My completed tasks",
+        "TITLE": "All tasks",
         "TOOLBAR": {
           "REFRESH": "Refresh",
-          "CREATE":"Create"
+          "CREATE": "Create",
+          "ADD": "Add",
+          "DELETE": "Delete selected"
         },
         "SEARCH": {
           "PLACEHOLDER": "Search keywords"
         },
         "TABLE": {
-          "TOTALS": "Total:",
+          "TOTALS": "Count:",
           "HEADER": {
+            "NUMBER": "#",
             "TYPE": "Type",
-            "NAME": "Summary",
-            "NUMBER": "Key",
-            "PRIORITY": "Priority",
+            "NAME": "Name",
             "ASSIGNEE": "Assignee",
-            "REPORTER": "Reporter",
-            "DUEDATE": "Due",
-            "CREATED": "Created",
-            "MODIFIED": "Updated",
-            "STATUS": "Status"
+            "PRIORITY": "Priority",
+            "STATUS": "Status",
+            "DUE_DATE": "Due date"
+          },
+          "EMPTY": {
+            "TITLE": "There are no content yet",
+            "ACTION": "Add content"
+          },
+          "NOT_FOUND": {
+            "TITLE": "No content found.",
+            "ACTION": "Reset search"
           },
           "ACTIONS": {
-            "ACCEPT": "Accept",
-            "CANCEL": "Cancel",
-            "SHIP": "Ship"
+            "UNPUBLISH": "Unpublish",
+            "PUBLISH": "Publish",
+            "DELETE": "Delete"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Type filter"
+            },
+            "PRIORITY": {
+              "TITLE": "Priority filter"
+            },
+            "DUE_DATE": {
+              "TITLE": "Due date",
+              "START_DATE": "Start date",
+              "END_DATE": "End date"
+            }
           }
         },
-        "FILTERS": {
-          "TITLE": "Filters",
-          "TYPE": "Type filter",
-          "PRIORITY": "Priority filter",
-          "DUEDATE": "Due date",
-          "STARTDATE": "Start date",
-          "ENDDATE": "End date",
-          "RESETFILTERS": "Reset filters",
-          "APPLY": "Apply"
-        },
-        "NOTFOUND": {
-          "NOTASKS": "No tasks found.",
-          "RESET": "Reset search"
+        "MOBILE": {
+          "CREATED": "Created"
         },
         "EMPTY": {
-          "NOTASKS":"There are no tasks yet",
-          "NOMYTASKS": "There are no tasks for you",
-          "ADD": "Add new task"
-        },
-        "STATUS": {
-          "TOTAL": "Total",
-          "CREATED": "Created"
+          "NO_ITEMS": "There are no items yet"
         }
       },
       "DETAILS": {
-        "NEW_TITLE":"Create new task",
-        "TASK_INFO":{
-          "CREDENTIALS_TITLE": "Credentials",
-          "ATTACHMENTS_TITLE": "Attachments",
-          "DESCRIPTION": "Description",
-          "PRIORITY": "Priority",
-          "TYPE": "Type",
-          "ASSIGNEE": "Assignee",
-          "REPORTER": "Reporter",
-          "CREATED": "Created",
-          "MODIFIED": "Updated",
-          "DUEDATE": "Due",
-          "STATUS": "Status",
-          "NAME": "Summary"
+        "TOOLBAR": {
+          "COMPLETE": "Complete",
+          "REJECT": "Reject",
+          "RESET": "Reset",
+          "SAVE": "Save",
+          "DELETE": "Delete"
         },
-        "PLACEHOLDER": {
-          "TYPE": "Choose type...",
-          "NAME": "Enter summary...",
-          "DESCRIPTION": "Enter description...",
-          "ASSIGNEDTO": "Select responsible...",
-          "PRIORITY": "",
-          "DUEDATE": ""
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Type"
+          },
+          "SUMMARY": {
+            "TITLE": "Summary"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Description"
+          },
+          "PRIORITY": {
+            "TITLE": "Priority"
+          },
+          "DUE_DATE": {
+            "TITLE": "Due"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Assignee"
+          }
         },
-        "ACTIONS": {
-          "ACCEPT_TASK": "Complete",
-          "REJECT_TASK": "Reject",
-          "DELETE_TASK": "Delete",
-          "SAVE_TASK": "Save",
-          "RESET_TASK": "Restore",
-          "CREATE_TASK":"Create"
-        }
+        "NEW_TITLE": "Create new task"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "You have unsaved changes\nClose anyway?"
       }
     },
     "STATUS": {

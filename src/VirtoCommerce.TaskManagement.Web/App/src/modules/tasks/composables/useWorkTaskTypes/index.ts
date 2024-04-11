@@ -1,9 +1,5 @@
 import { computed, Ref, ref } from "vue";
-import { useUser } from "@vc-shell/framework";
-import {
-  TaskManagementClient,
-  TaskType,
-} from "../../../../api_client/taskmanagement";
+import { TaskManagementClient, TaskType } from "../../../../api_client/virtocommerce.taskmanagement";
 import { orderBy, sortBy } from "lodash-es";
 
 interface IWorkTaskTypeResult {
@@ -22,9 +18,7 @@ export default (): IUseWorkTaskTypes => {
   const types = ref<TaskType[]>([]);
 
   async function getApiClient(): Promise<TaskManagementClient> {
-    const { getAccessToken } = useUser();
     const client = new TaskManagementClient();
-    client.setAuthToken(await getAccessToken());
     return client;
   }
 
@@ -32,11 +26,10 @@ export default (): IUseWorkTaskTypes => {
     loading.value = true;
     const client = await getApiClient();
     try {
-      types.value = await client.getTaskTypes();
-      types.value = orderBy(types.value, ["name"], ["asc"]);
-      types.value = sortBy(types.value, (type) =>
-        type.name === "Other" || type.name === "Others" ? 1 : 0
-      );
+      const loadedTypes = await client.getTaskTypes();
+      const orderedTypes = orderBy(loadedTypes, ["name"], ["asc"]);
+      const result = sortBy(orderedTypes, (type) => (type.name === "Other" || type.name === "Others" ? 1 : 0));
+      types.value = result;
       return {
         totalCount: types.value.length,
         results: types.value,

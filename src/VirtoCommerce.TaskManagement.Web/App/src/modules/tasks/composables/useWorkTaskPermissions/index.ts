@@ -5,11 +5,11 @@ interface IUseWorkTaskTypes {
 }
 
 export default (): IUseWorkTaskTypes => {
-  const { checkPermission } = usePermissions();
+  const { hasAccess } = usePermissions();
   const { user } = useUser();
 
   function checkWorkTaskPermission(permissions: string | string[]): boolean {
-    return checkPermission(permissions) || user.value.isAdministrator;
+    return hasAccess(permissions) || user.value?.isAdministrator || false;
   }
 
   return {

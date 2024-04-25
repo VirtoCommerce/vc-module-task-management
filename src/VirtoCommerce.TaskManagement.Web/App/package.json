@@ -6,7 +6,7 @@
     "serve": "cross-env APP_ENV=development vite --force",
     "preview": "vite preview",
     "build": "yarn build:app && yarn build:types --watch",
-    "build:app": "cross-env APP_ENV=production vite build --watch",
+    "build:app": "cross-env APP_ENV=production vite build",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/types",
     "type-check": "vue-tsc --noEmit",
     "lint-staged": "lint-staged",
@@ -50,6 +50,7 @@
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-mkcert": "^1.17.1",
     "vite-plugin-pwa": "^0.18.1",
+    "vitest": "^1.5.2",
     "vue-eslint-parser": "^9.3.2",
     "vue-tsc": "^1.8.27"
   },

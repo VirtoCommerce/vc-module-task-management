@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
-import TaskPriority from "./TaskPriority.vue";
+import TaskPriority from "./taskPriority.vue";
 
 defineProps<{
   context: {

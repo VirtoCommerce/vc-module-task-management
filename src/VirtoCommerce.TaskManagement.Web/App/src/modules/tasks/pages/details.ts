@@ -13,7 +13,6 @@ export const workTaskDetails: DynamicDetailsSchema = {
         icon: "fas fa-check",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.COMPLETE",
         method: "completeWorkTask",
-        // visibility: "isAcceptVisible",
       },
       {
         id: "reject",
@@ -106,22 +105,6 @@ export const workTaskDetails: DynamicDetailsSchema = {
             method: "statusText",
           },
         },
-        // {
-        //   id: "attachments",
-        //   component: "vc-gallery",
-        //   variant: "file-upload",
-        //   multiple: true,
-        //   property: "attachments",
-        //   rules: {
-        //     mindimensions: [120, 120],
-        //     fileWeight: 1024,
-        //   },
-        //   actions: {
-        //     preview: true,
-        //     edit: false,
-        //     remove: true,
-        //   },
-        // },
       ],
     },
     {

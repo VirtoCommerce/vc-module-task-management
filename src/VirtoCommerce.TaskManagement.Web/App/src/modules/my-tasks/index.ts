@@ -19,16 +19,3 @@ export default createDynamicAppModule({
   },
   moduleComponents,
 });
-
-// export default createDynamicAppModule({
-//   schema,
-//   composables: {
-//     useProductDetails: composables.useProductDetails,
-//     useProductsList: useProductsListExtended,
-//   },
-//   overrides,
-//   locales: {
-//     ...locales,
-//     ...mpLocales,
-//   },
-// });

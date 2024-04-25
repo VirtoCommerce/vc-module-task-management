@@ -48,7 +48,6 @@ export default (args: {
   });
 
   const { load, saveChanges, remove: deleteWorkTask, loading, item, validationState } = factory();
-  // const { upload: imageUpload, remove: imageRemove, edit: imageEdit, loading: imageLoading } = useAssets();
   const { hasAccess } = usePermissions();
   const { t } = useI18n();
 
@@ -129,24 +128,6 @@ export default (args: {
       }
       return result;
     }),
-    // assetsHandler: {
-    //   images: {
-    //     loading: imageLoading,
-    //     async upload(files, startingSortOrder) {
-    //       return (await imageUpload(files, `tasks/${item.value?.id}`, startingSortOrder)).map((x) => {
-    //         const result = new Image(x.size);
-    //         console.log(result);
-    //         return result;
-    //       });
-    //     },
-    //     remove(files) {
-    //       return imageRemove(files, item.value?.attachments ?? []);
-    //     },
-    //     edit(files) {
-    //       return imageEdit(files, item.value?.attachments ?? []).map((x) => new Image(x.size));
-    //     },
-    //   },
-    // },
   });
 
   const bladeTitle = computed(() => {
@@ -179,144 +160,4 @@ export default (args: {
     bladeTitle,
     scope: computed(() => scope.value),
   };
-
-  // const taskAvailable = ref(false);
-  // const priorities = Object.values(WorkTaskPriority);
-
-  // let workTaskCopy: WorkTask;
-  // const newWorkTask = ref({
-  //   priority: WorkTaskPriority.Normal,
-  //   attachments: [],
-  //   isActive: true,
-  // } as unknown as WorkTask);
-
-  // const modified = ref(false);
-
-  // watch(
-  //   () => workTask,
-  //   (state) => {
-  //     modified.value = !isEqual(workTaskCopy, state.value);
-  //   },
-  //   { deep: true },
-  // );
-
-  // function initNewWorkTask(): void {
-  //   workTask.value = newWorkTask.value;
-  // }
-
-  // async function loadWorkTask(id: string): Promise<void> {
-  //   loading.value = true;
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     workTask.value = await client.get(id, "WithAttachments");
-  //     workTaskCopy = cloneDeep(workTask.value);
-  //     taskAvailable.value = workTask.value.id !== undefined;
-  //   } catch (e) {
-  //     taskAvailable.value = false;
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // async function createWorkTask(): Promise<void> {
-  //   loading.value = true;
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     validateAttachments(workTask.value);
-  //     workTask.value = await client.create(workTask.value);
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // async function approveWorkTask(id: string, result: unknown): Promise<void> {
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     workTask.value = await client.finish(id, true, result);
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // async function rejectWorkTask(id: string, result: unknown): Promise<void> {
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     workTask.value = await client.finish(id, false, result);
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // async function updateWorktask(): Promise<void> {
-  //   loading.value = true;
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     validateAttachments(workTask.value);
-  //     workTask.value = await client.update(workTask.value);
-  //     workTaskCopy = cloneDeep(workTask.value);
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // function resetWorkTask(): void {
-  //   workTask.value = cloneDeep(workTaskCopy);
-  // }
-
-  // async function deleteWorkTask(id: string): Promise<void> {
-  //   loading.value = true;
-  //   const client = await getApiClient();
-  //   try {
-  //     loading.value = true;
-  //     await client.delete(id);
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw e;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
-  // function validateAttachments(task: WorkTask) {
-  //   forEach(task.attachments, function (attachment) {
-  //     if (attachment.id && attachment.id.startsWith("Draft")) {
-  //       attachment.id = undefined;
-  //     }
-  //   });
-  // }
-
-  // return {
-  //   workTask: computed(() => workTask.value),
-  //   loading: computed(() => loading.value),
-  //   taskAvailable: computed(() => taskAvailable.value),
-  //   modified: computed(() => modified.value),
-  //   priorities,
-  //   initNewWorkTask,
-  //   loadWorkTask,
-  //   createWorkTask,
-  //   approveWorkTask,
-  //   rejectWorkTask,
-  //   updateWorktask,
-  //   resetWorkTask,
-  //   deleteWorkTask,
-  // };
 };

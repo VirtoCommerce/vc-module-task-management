@@ -13,7 +13,7 @@
 import { VcWidget, useBladeNavigation, usePopup, useAssets, useUser } from "@vc-shell/framework";
 import { UnwrapNestedRefs, computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import * as _ from "lodash-es";
+import { isEqual } from "lodash-es";
 
 import { useWorkTask } from "../../../composables";
 import { WorkTaskAttachment } from "../../../../../api_client/virtocommerce.taskmanagement";
@@ -31,7 +31,6 @@ const { openBlade, resolveBladeByName } = useBladeNavigation();
 const { showConfirmation } = usePopup();
 const { t } = useI18n({ useScope: "global" });
 const { edit, upload, remove, loading } = useAssets();
-const { user } = useUser();
 const modelValue = ref(props.modelValue);
 const widgetOpened = ref(false);
 const internalModel = ref();
@@ -40,7 +39,7 @@ const count = computed(() => modelValue.value?.item?.attachments?.length || 0);
 watch(
   () => props.modelValue,
   (newVal) => {
-    if (!_.isEqual(internalModel.value, newVal)) {
+    if (!isEqual(internalModel.value, newVal)) {
       internalModel.value = newVal;
     }
   },

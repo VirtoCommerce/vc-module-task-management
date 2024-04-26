@@ -36,14 +36,16 @@ export default (args: {
   mounted: Ref<boolean>;
 }) => {
   const factory = useDetailsFactory<WorkTask>({
-    load: async (item) => {
-      return await (await getApiClient()).get(item!.id, "WithAttachments");
+    load: async (loadItem) => {
+      const client = await getApiClient();
+      return await client.get(loadItem!.id, "WithAttachments");
     },
-    saveChanges: async (item) => {
-      return await (await getApiClient()).create(item);
+    saveChanges: async (saveItem) => {
+      const client = await getApiClient();
+      return await client.create(saveItem);
     },
-    remove: async (item) => {
-      (await getApiClient()).delete(item.id);
+    remove: async (removeItem) => {
+      (await getApiClient()).delete(removeItem.id);
     },
   });
 

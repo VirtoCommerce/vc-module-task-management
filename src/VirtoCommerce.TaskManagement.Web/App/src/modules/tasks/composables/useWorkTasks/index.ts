@@ -1,4 +1,4 @@
-import { computed, onMounted, Ref, ref, watch } from "vue";
+import { computed, Ref, ref, watch } from "vue";
 import {
   TaskManagementClient,
   TaskType,
@@ -25,12 +25,11 @@ export default (args: {
   emit: InstanceType<typeof DynamicBladeList>["$emit"];
   mounted: Ref<boolean>;
 }) => {
-  const { props, emit, mounted } = args;
+  const { mounted } = args;
   const factory = useListFactory<WorkTask[], WorkTaskSearchCriteria>({
     load: async (query) => {
-      return await (
-        await getApiClient()
-      ).searchTasks({
+      const client = await getApiClient();
+      return await client.searchTasks({
         take: 20,
         ...(query || {}),
       } as WorkTaskSearchCriteria);

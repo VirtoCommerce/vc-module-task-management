@@ -1,3 +1,4 @@
+import { useApiClient } from "@vc-shell/framework";
 import {
   Member,
   MemberSearchResult,
@@ -12,13 +13,10 @@ interface IUseContacts {
   searchContacts(keyword?: string, skip?: number, ids?: string[]): Promise<MemberSearchResult>;
 }
 
+const { getApiClient } = useApiClient(TaskManagementClient);
+
 export default (): IUseContacts => {
   const loading = ref(false);
-
-  async function getApiClient(): Promise<TaskManagementClient> {
-    const client = new TaskManagementClient();
-    return client;
-  }
 
   async function getMember(id: string): Promise<Member> {
     loading.value = true;

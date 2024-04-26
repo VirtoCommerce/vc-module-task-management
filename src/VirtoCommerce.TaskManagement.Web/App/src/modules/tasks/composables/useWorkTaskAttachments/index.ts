@@ -1,4 +1,3 @@
-import { useUser } from "@vc-shell/framework";
 import { filter, uniqueId } from "lodash-es";
 import { computed, ref, Ref } from "vue";
 import { WorkTask, WorkTaskAttachment } from "../../../../api_client/virtocommerce.taskmanagement";

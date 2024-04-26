@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { VcWidget, useBladeNavigation, usePopup, useAssets, useUser } from "@vc-shell/framework";
+import { VcWidget, useBladeNavigation, usePopup, useAssets } from "@vc-shell/framework";
 import { UnwrapNestedRefs, computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { isEqual } from "lodash-es";
@@ -19,7 +19,6 @@ import { useWorkTask } from "../../../composables";
 import { WorkTaskAttachment } from "../../../../../api_client/virtocommerce.taskmanagement";
 
 const props = defineProps<{
-  // TODO Add to documentation
   modelValue: UnwrapNestedRefs<ReturnType<typeof useWorkTask>>;
 }>();
 

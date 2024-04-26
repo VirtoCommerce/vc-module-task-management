@@ -1,6 +1,7 @@
 import { computed, Ref, ref } from "vue";
 import { TaskManagementClient, TaskType } from "../../../../api_client/virtocommerce.taskmanagement";
 import { orderBy, sortBy } from "lodash-es";
+import { useApiClient } from "@vc-shell/framework";
 
 interface IWorkTaskTypeResult {
   totalCount?: number;
@@ -13,14 +14,11 @@ interface IUseWorkTaskTypes {
   getTaskTypes(): Promise<IWorkTaskTypeResult>;
 }
 
+const { getApiClient } = useApiClient(TaskManagementClient);
+
 export default (): IUseWorkTaskTypes => {
   const loading = ref(false);
   const types = ref<TaskType[]>([]);
-
-  async function getApiClient(): Promise<TaskManagementClient> {
-    const client = new TaskManagementClient();
-    return client;
-  }
 
   async function getTaskTypes(): Promise<IWorkTaskTypeResult> {
     loading.value = true;

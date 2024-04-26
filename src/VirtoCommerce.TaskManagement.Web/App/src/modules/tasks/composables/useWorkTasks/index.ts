@@ -27,11 +27,11 @@ export default (args: {
 }) => {
   const { mounted } = args;
   const factory = useListFactory<WorkTask[], WorkTaskSearchCriteria>({
-    load: async (query) => {
+    load: async (searchQuery) => {
       const client = await getApiClient();
-      return await client.searchTasks({
+      return client.searchTasks({
         take: 20,
-        ...(query || {}),
+        ...(searchQuery || {}),
       } as WorkTaskSearchCriteria);
     },
   });

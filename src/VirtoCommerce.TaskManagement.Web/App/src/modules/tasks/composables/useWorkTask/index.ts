@@ -38,11 +38,11 @@ export default (args: {
   const factory = useDetailsFactory<WorkTask>({
     load: async (loadItem) => {
       const client = await getApiClient();
-      return await client.get(loadItem!.id, "WithAttachments");
+      return client.get(loadItem!.id, "WithAttachments");
     },
     saveChanges: async (saveItem) => {
       const client = await getApiClient();
-      return await client.create(saveItem);
+      return client.create(saveItem);
     },
     remove: async (removeItem) => {
       (await getApiClient()).delete(removeItem.id);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>VirtoCommerce.TaskManagement</id>
-  <version>3.801.0</version>
+  <version>3.802.0</version>
   <version-tag />
 
-  <platformVersion>3.800.0</platformVersion>
+  <platformVersion>3.825.0</platformVersion>
   <dependencies>
     <dependency id="VirtoCommerce.ExperienceApi" version="3.800.0" />
   </dependencies>

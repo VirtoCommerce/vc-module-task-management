@@ -109,7 +109,7 @@ export default (args: {
     summaryVisibility: computed(() => !args.props.param),
     priorities: Object.values(WorkTaskPriority),
     loadTaskTypes: async () => {
-      return await getTaskTypes();
+      return getTaskTypes();
     },
     searchContacts: searchContacts,
     statusText: computed(() => {

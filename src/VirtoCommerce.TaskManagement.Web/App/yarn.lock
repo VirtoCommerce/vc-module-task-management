@@ -2911,28 +2911,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:^1.0.191":
-  version: 1.0.191
-  resolution: "@vc-shell/config-generator@npm:1.0.191"
+"@vc-shell/config-generator@npm:^1.0.219":
+  version: 1.0.219
+  resolution: "@vc-shell/config-generator@npm:1.0.219"
   dependencies:
     "@vitejs/plugin-vue": "npm:^5.0.3"
     vite: "npm:^5.0.11"
     vite-plugin-checker: "npm:^0.6.2"
     vite-plugin-mkcert: "npm:^1.17.1"
     vue: "npm:^3.4.15"
-  checksum: 4c9b34faa333c0e145ac14ea6e4cfe48e96b0d2aff5744db29849b6fd728be2ede06630d74a2a46cc1133917f3d136ad1307fbd8bda28eb1b8f83a2f4441dcff
+  checksum: d0669c75e5196277e771652abb27f9cd59aff7a27e7ba67885bf1191fc377bf102958c5cd291ade07d1df7fa878991417585dd42f2ceb6843e2877ea9ccdb9f2
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:^1.0.191":
-  version: 1.0.191
-  resolution: "@vc-shell/framework@npm:1.0.191"
+"@vc-shell/framework@npm:^1.0.219":
+  version: 1.0.219
+  resolution: "@vc-shell/framework@npm:1.0.219"
   dependencies:
     "@floating-ui/vue": "npm:^1.0.6"
     "@headlessui/vue": "npm:^1.7.19"
     "@microsoft/signalr": "npm:^8.0.0"
     "@vee-validate/i18n": "npm:^4.12.4"
     "@vee-validate/rules": "npm:^4.12.4"
+    "@vuepic/vue-datepicker": "npm:^8.6.0"
     "@vueup/vue-quill": "npm:^1.2.0"
     "@vueuse/components": "npm:^10.7.1"
     "@vueuse/core": "npm:^10.7.1"
@@ -2953,7 +2954,7 @@ __metadata:
     vue-router: "npm:^4.2.5"
     vue3-touch-events: "npm:^4.1.8"
     whatwg-fetch: "npm:^3.6.19"
-  checksum: 5292e1ad4e84719e8da973ff670b936dcd56f65a8eed86cf4b5972e4a75ef19293c95090ebd1369cdce7cbccad45296cbf5387eeeae393dc6426f04ad00513af
+  checksum: b529d9f88dcf240fe57222f3f23c8fd399ce28dd208a5b130046c501ef13a02c9a8b9f61475f028b3e9aaca3d494ca296b80dfd6cf50cae084d24a6d2f0882b2
   languageName: node
   linkType: hard
 
@@ -3187,6 +3188,17 @@ __metadata:
   version: 3.4.21
   resolution: "@vue/shared@npm:3.4.21"
   checksum: 38e8cca37437841717f92e562bf7ae1b07865d33f24b65b63e1a0107c75ab5a4584f0847317275bfeb03b3a7a06b7d9e68009d0588aab8c432715ac50f07f77a
+  languageName: node
+  linkType: hard
+
+"@vuepic/vue-datepicker@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "@vuepic/vue-datepicker@npm:8.6.0"
+  dependencies:
+    date-fns: "npm:^3.6.0"
+  peerDependencies:
+    vue: ">=3.2.0"
+  checksum: 7c171e4a6439718d4d2888c81637fc6663b2907af922088b9d92bdb4aefa280765565a204e9d6ee3b89476136c2d58811f08d2792aaaabefeab7e10b17e2c83d
   languageName: node
   linkType: hard
 
@@ -4399,6 +4411,13 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-data-view: "npm:^1.0.1"
   checksum: 96f34f151bf02affb7b9f98762fb7aca1dd5f4553cb57b80bce750ca609c15d33ca659568ef1d422f7e35680736cbccb893a3d4b012760c758c1446bbdc4c6db
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
   languageName: node
   linkType: hard
 
@@ -9162,8 +9181,8 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
     "@vc-shell/api-client-generator": "npm:^1.0.191"
-    "@vc-shell/config-generator": "npm:^1.0.191"
-    "@vc-shell/framework": "npm:^1.0.191"
+    "@vc-shell/config-generator": "npm:^1.0.219"
+    "@vc-shell/framework": "npm:^1.0.219"
     "@vc-shell/release-config": "npm:^1.0.191"
     "@vc-shell/ts-config": "npm:^1.0.191"
     "@vitejs/plugin-vue": "npm:^5.0.3"

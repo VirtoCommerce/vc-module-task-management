@@ -16,7 +16,7 @@ import useContacts from "../useContacts";
 import { TaskPermissions } from "../../../../types";
 
 const { getTaskTypes } = useWorkTaskTypes();
-const { searchContacts } = useContacts();
+const { searchContacts, getMember } = useContacts();
 
 export interface WorkTaskDetailScope extends DetailsBaseBladeScope {
   toolbarOverrides: {
@@ -42,6 +42,12 @@ export default (args: {
     },
     saveChanges: async (saveItem) => {
       const client = await getApiClient();
+      if (saveItem.responsibleId) {
+        const contact = await getMember(saveItem.responsibleId);
+        if (contact) {
+          saveItem.responsibleName = contact.name;
+        }
+      }
       return client.create(saveItem);
     },
     remove: async (removeItem) => {
@@ -67,6 +73,7 @@ export default (args: {
         clickHandler: async () => {
           if (item.value?.id) {
             item.value = await (await getApiClient()).finish(item.value.id, true, item.value.parameters);
+            validationState.value.resetModified(item.value, true);
           }
         },
         isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),
@@ -75,6 +82,7 @@ export default (args: {
         clickHandler: async () => {
           if (item.value?.id) {
             item.value = await (await getApiClient()).finish(item.value.id, false, item.value.parameters);
+            validationState.value.resetModified(item.value, true);
           }
         },
         isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),

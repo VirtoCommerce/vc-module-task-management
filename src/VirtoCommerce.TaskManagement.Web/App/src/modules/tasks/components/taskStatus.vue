@@ -27,7 +27,20 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { context } = toRefs(props);
-const itemStatus = computed(() => context.value.item.status || "ToDo");
+const itemStatus = computed(() => getStatus(context.value.item) || "ToDo");
+
+function getStatus(task: IWorkTask) {
+  if (task.isActive) {
+    return "ToDo";
+  }
+
+  if (task.completed) {
+    return "Done";
+  }
+
+  return "Canceled";
+}
+
 const statusStyles: Omit<Record<string, Record<string, unknown>>, "ToDo"> = {
   ToDo: {
     outline: false,

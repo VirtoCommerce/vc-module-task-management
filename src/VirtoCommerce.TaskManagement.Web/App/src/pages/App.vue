@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { useSettings, useUser } from "@vc-shell/framework";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 // eslint-disable-next-line import/no-unresolved
 import logoImage from "/assets/logo.svg";
 

@@ -62,6 +62,14 @@ export default (args: {
         label: value,
       })),
     ),
+    toolbarOverrides: {
+      openCreateTaskBlade: {
+        clickHandler: async () => {
+          await openDetailsBlade();
+        },
+        isVisible: computed(() => true),
+      },
+    },
   });
 
   return {

@@ -39,16 +39,17 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
 
             if (context.HasSucceeded)
             {
-                switch (context.Resource && !context.User.HasGlobalPermission(requirement.Permission))
+                switch (context.Resource)
                 {
                     case WorkTask workTask:
+                        if (!context.User.HasGlobalPermission(requirement.Permission))
                         {
                             var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
                             var organizationId = member.GetMemberOrganizationId();
                             SetResponsible(workTask, member, organizationId);
                             context.Succeed(requirement);
-                            break;
                         }
+                        break;
                     case WorkTaskSearchCriteria criteria when criteria.OnlyAssignedToMe == true:
                         {
                             criteria.ResponsibleIds = new[] { memberId };

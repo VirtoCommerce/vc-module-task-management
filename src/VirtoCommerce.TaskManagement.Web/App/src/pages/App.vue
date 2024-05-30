@@ -12,7 +12,7 @@
 import { useUser } from "@vc-shell/framework";
 import { onMounted, ref } from "vue";
 // eslint-disable-next-line import/no-unresolved
-import logoImage from "/apps/tasks/img/tasks-logo.png";
+import logoImage from "/apps/tasks/img/logo.svg";
 
 const isReady = ref(false);
 const version = import.meta.env.PACKAGE_VERSION;

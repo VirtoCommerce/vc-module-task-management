@@ -1,12 +1,11 @@
-import { computed, reactive, Ref, ref, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { TaskManagementClient, WorkTask, WorkTaskPriority } from "../../../../api_client/virtocommerce.taskmanagement";
 import {
   DetailsBaseBladeScope,
-  DynamicBladeForm,
+  DetailsComposableArgs,
   IBladeToolbar,
   useApiClient,
-  // useAssets,
   useDetailsFactory,
   usePermissions,
 } from "@vc-shell/framework";
@@ -30,11 +29,7 @@ export interface WorkTaskDetailScope extends DetailsBaseBladeScope {
 
 const { getApiClient } = useApiClient(TaskManagementClient);
 
-export default (args: {
-  props: InstanceType<typeof DynamicBladeForm>["$props"];
-  emit: InstanceType<typeof DynamicBladeForm>["$emit"];
-  mounted: Ref<boolean>;
-}) => {
+export default (args: DetailsComposableArgs) => {
   const factory = useDetailsFactory<WorkTask>({
     load: async (loadItem) => {
       const client = await getApiClient();
@@ -59,7 +54,7 @@ export default (args: {
   const { hasAccess } = usePermissions();
   const { t } = useI18n();
 
-  const scope = ref<WorkTaskDetailScope>({
+  const scope: WorkTaskDetailScope = {
     toolbarOverrides: {
       saveChanges: {
         isVisible: computed(
@@ -138,7 +133,7 @@ export default (args: {
       }
       return result;
     }),
-  });
+  };
 
   const bladeTitle = computed(() => {
     return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : t("TASKS.PAGES.DETAILS.NEW_TITLE");
@@ -168,6 +163,6 @@ export default (args: {
     item,
     validationState,
     bladeTitle,
-    scope: computed(() => scope.value),
+    scope,
   };
 };

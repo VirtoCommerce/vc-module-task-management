@@ -1,4 +1,4 @@
-import { computed, Ref, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import {
   TaskManagementClient,
   TaskType,
@@ -7,8 +7,8 @@ import {
   WorkTaskSearchCriteria,
 } from "../../../../api_client/virtocommerce.taskmanagement";
 import {
-  DynamicBladeList,
   ListBaseBladeScope,
+  ListComposableArgs,
   useApiClient,
   useBladeNavigation,
   useListFactory,
@@ -20,11 +20,7 @@ export interface DynamicItemsScope extends ListBaseBladeScope {}
 const { getApiClient } = useApiClient(TaskManagementClient);
 const { getTaskTypes } = useWorkTaskTypes();
 
-export default (args: {
-  props: InstanceType<typeof DynamicBladeList>["$props"];
-  emit: InstanceType<typeof DynamicBladeList>["$emit"];
-  mounted: Ref<boolean>;
-}) => {
+export default (args: ListComposableArgs) => {
   const { mounted } = args;
   const factory = useListFactory<WorkTask[], WorkTaskSearchCriteria>({
     load: async (searchQuery) => {
@@ -53,7 +49,7 @@ export default (args: {
     });
   }
 
-  const scope = ref<DynamicItemsScope>({
+  const scope: DynamicItemsScope = {
     openDetailsBlade,
     taskTypes,
     priorities: computed(() =>
@@ -70,7 +66,7 @@ export default (args: {
         isVisible: computed(() => true),
       },
     },
-  });
+  };
 
   return {
     items,
@@ -78,6 +74,6 @@ export default (args: {
     loading,
     pagination,
     query,
-    scope: computed(() => scope.value),
+    scope,
   };
 };

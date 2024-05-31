@@ -53,6 +53,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           optionValue: "name",
           optionLabel: "name",
           optionsMethod: "loadTaskTypes",
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "name",
@@ -62,6 +63,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           visibility: {
             method: "summaryVisibility",
           },
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "description",
@@ -69,6 +71,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           label: "TASKS.PAGES.DETAILS.FIELDS.DESCRIPTION.TITLE",
           property: "description",
           assetsFolder: "/assets",
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "priority",
@@ -79,6 +82,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           optionLabel: "name",
           optionsMethod: "priorities",
           customTemplate: { component: "SelectPriority" },
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "dueDate",
@@ -86,6 +90,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           variant: "date",
           label: "TASKS.PAGES.DETAILS.FIELDS.DUE_DATE.TITLE",
           property: "dueDate",
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "responsibleId",
@@ -97,6 +102,7 @@ export const workTaskDetails: DynamicDetailsSchema = {
           optionLabel: "name",
           optionsMethod: "searchContacts",
           rules: { required: true },
+          disabled: { method: "isReadOnly" },
         },
         {
           id: "status",

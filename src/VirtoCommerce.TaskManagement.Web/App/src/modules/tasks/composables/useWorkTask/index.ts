@@ -101,6 +101,7 @@ export default (args: DetailsComposableArgs) => {
         isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)),
       },
     },
+    isReadOnly: () => !isEditable(),
     summaryVisibility: computed(() => !args.props.param),
     priorities: Object.values(WorkTaskPriority),
     loadTaskTypes: async () => {
@@ -138,6 +139,10 @@ export default (args: DetailsComposableArgs) => {
   const bladeTitle = computed(() => {
     return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : t("TASKS.PAGES.DETAILS.NEW_TITLE");
   });
+
+  function isEditable(): boolean {
+    return !args.props.param || (item.value != null && !!item.value.isActive);
+  }
 
   watch(
     () => args?.mounted.value,

@@ -109,7 +109,7 @@ export default (args: DetailsComposableArgs) => {
     },
     searchContacts: searchContacts,
     statusText: computed(() => {
-      let result = "ToDo";
+      let result = "To Do";
       const workTask = item.value;
       if (workTask == null) {
         return result;

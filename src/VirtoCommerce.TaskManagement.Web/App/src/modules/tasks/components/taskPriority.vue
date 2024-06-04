@@ -1,38 +1,21 @@
 <template>
-  <VcIcon icon="fas fa-circle" :class="getClass()"></VcIcon>
-  <span class="tw-ml-1">{{ props.workTaskPriority }}</span>
+  <VcIcon
+    icon="fas fa-circle"
+    :class="{
+      'tw-text-[10px]': true,
+      'tw-text-[#80b4e3]': [WorkTaskPriority.Low, WorkTaskPriority.Lowest].indexOf(taskPriority!) > -1,
+      'tw-text-[#87b563]': taskPriority === WorkTaskPriority.Normal,
+      'tw-text-[#eb4f4d]': [WorkTaskPriority.High, WorkTaskPriority.Highest].indexOf(taskPriority!) > -1,
+    }"
+  ></VcIcon>
+  <span class="tw-ml-1">{{ taskPriority }}</span>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { WorkTaskPriority } from "../../../api_client/virtocommerce.taskmanagement";
 
-export default defineComponent({
-  inheritAttrs: false,
-});
-</script>
-
-<script lang="ts" setup>
-import { VcIcon } from "@vc-shell/framework";
-import { WorkTaskPriority } from "../../../api_client/taskmanagement";
-
-export interface Props {
-  workTaskPriority: WorkTaskPriority;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  workTaskPriority: undefined,
-});
-
-const getClass = () => {
-  return {
-    "tw-text-[10px]": true,
-    "tw-text-[#80b4e3]":
-      props.workTaskPriority === WorkTaskPriority.Low ||
-      props.workTaskPriority === WorkTaskPriority.Lowest,
-    "tw-text-[#87b563]": props.workTaskPriority === WorkTaskPriority.Normal,
-    "tw-text-[#eb4f4d]":
-      props.workTaskPriority === WorkTaskPriority.High ||
-      props.workTaskPriority === WorkTaskPriority.Highest,
-  };
-};
+defineProps<{
+  taskPriority: WorkTaskPriority;
+  slotName?: string;
+}>();
 </script>

@@ -25,9 +25,7 @@
       "RESET_EMAIL_TEXT": "We will send you an email with instructions on how to reset your password.",
       "RESET_EMAIL_SENT": "Email with instructions has been sent to you."
     },
-    "MENU": {
-      "DASHBOARD": "Home"
-    },
+    "MENU": {},
     "TOOLBAR": {
       "LOGIN": "Log In",
       "SETTINGS": "Settings",
@@ -135,42 +133,6 @@
           "UPDATE": "status update",
           "MORE_DETAILS": "Click the notification to see details"
         }
-      }
-    },
-    "DASHBOARD": {
-      "TITLE": "Dashboard",
-      "ORDERS": {
-        "TITLE": "Orders",
-        "ALL": "All orders",
-        "EMPTY": "There are no orders yet"
-      },
-      "PRODUCTS": {
-        "TITLE": "Products",
-        "ALL": "All products",
-        "EMPTY": "There are no products yet",
-        "ADD": "Add product"
-      },
-      "OFFERS": {
-        "TITLE": "Offers",
-        "ADD": "Add offer",
-        "ALL": "All offers",
-        "EMPTY": "There are no offers yet",
-        "ENDING": "Offers ending soon",
-        "LOW_STOCK": "Low stock",
-        "OUT_STOCK": "Out of stock"
-      },
-      "COUNTERS": {
-        "REVENUE": "Revenue, USD",
-        "DAY": "Day",
-        "WEEK": "Week",
-        "MONTH": "Month",
-        "YEAR": "Year",
-        "PURCHASED": "Items purchased",
-        "AVERAGE_ORDER": "Average order, USD"
-      },
-      "REVIEWS": {
-        "TITLE": "Latest review",
-        "MORE": "More reviews"
       }
     },
     "APP":{

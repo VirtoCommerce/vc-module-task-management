@@ -1,4 +1,6 @@
-export { default as TaskAttachments } from "./taskAttachments.vue";
-export { default as TaskPriority } from "./taskPriority.vue";
-export { default as TasksList } from "./tasksList.vue";
-export { default as TaskStatus } from "./taskStatus.vue";
+import TaskStatus from "./taskStatus.vue";
+import CellTaskPriority from "./cellTaskPriority.vue";
+import SelectPriority from "./selectPriority.vue";
+
+export * from "./widgets";
+export { TaskStatus, CellTaskPriority, SelectPriority };

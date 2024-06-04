@@ -1,180 +1,173 @@
-import { computed, Ref, ref, watch } from "vue";
-import { useUser } from "@vc-shell/framework";
+import { computed, reactive, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { TaskManagementClient, WorkTask, WorkTaskPriority } from "../../../../api_client/virtocommerce.taskmanagement";
 import {
-  TaskManagementClient,
-  WorkTask,
-  WorkTaskPriority,
-} from "../../../../api_client/taskmanagement";
-import { cloneDeep, forEach, isEqual } from "lodash-es";
+  DetailsBaseBladeScope,
+  DetailsComposableArgs,
+  IBladeToolbar,
+  useApiClient,
+  useDetailsFactory,
+  usePermissions,
+} from "@vc-shell/framework";
 
-interface IUseWorkTask {
-  workTask: Ref<WorkTask>;
-  loading: Ref<boolean>;
-  taskAvailable: Ref<boolean>;
-  modified: Ref<boolean>;
-  priorities: WorkTaskPriority[];
-  initNewWorkTask(): void;
-  loadWorkTask(id: string): Promise<void>;
-  createWorkTask(): Promise<void>;
-  approveWorkTask(id: string, result: any): Promise<void>;
-  rejectWorkTask(id: string, result: any): Promise<void>;
-  updateWorktask(): Promise<void>;
-  resetWorkTask(): void;
-  deleteWorkTask(id: string): Promise<void>;
+import useWorkTaskTypes from "../useWorkTaskTypes";
+import useContacts from "../useContacts";
+import { TaskPermissions } from "../../../../types";
+
+const { getTaskTypes } = useWorkTaskTypes();
+const { searchContacts, getMember } = useContacts();
+
+export interface WorkTaskDetailScope extends DetailsBaseBladeScope {
+  toolbarOverrides: {
+    saveChanges: IBladeToolbar;
+    completeWorkTask: IBladeToolbar;
+    rejectWorkTask: IBladeToolbar;
+    removeWorkTask: IBladeToolbar;
+    resetWorkTask: IBladeToolbar;
+  };
 }
 
-const workTask: Ref<WorkTask> = ref({
-  priority: WorkTaskPriority.Normal,
-  attachments: [],
-  isActive: true,
-} as WorkTask);
+const { getApiClient } = useApiClient(TaskManagementClient);
 
-export default (): IUseWorkTask => {
-  const loading = ref(false);
-  const taskAvailable = ref(false);
-  const priorities = Object.values(WorkTaskPriority);
+export default (args: DetailsComposableArgs) => {
+  const factory = useDetailsFactory<WorkTask>({
+    load: async (loadItem) => {
+      const client = await getApiClient();
+      return client.get(loadItem!.id, "WithAttachments");
+    },
+    saveChanges: async (saveItem) => {
+      const client = await getApiClient();
+      if (saveItem.responsibleId) {
+        const contact = await getMember(saveItem.responsibleId);
+        if (contact) {
+          saveItem.responsibleName = contact.name;
+        }
+      }
+      return client.create(saveItem);
+    },
+    remove: async (removeItem) => {
+      (await getApiClient()).delete(removeItem.id);
+    },
+  });
 
-  let workTaskCopy: WorkTask;
-  const newWorkTask = ref({
-    priority: WorkTaskPriority.Normal,
-    attachments: [],
-    isActive: true,
-  } as WorkTask);
+  const { load, saveChanges, remove: deleteWorkTask, loading, item, validationState } = factory();
+  const { hasAccess } = usePermissions();
+  const { t } = useI18n();
 
-  const modified = ref(false);
+  const scope: WorkTaskDetailScope = {
+    toolbarOverrides: {
+      saveChanges: {
+        isVisible: computed(
+          () =>
+            (!!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)) ||
+            (!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Create)),
+        ),
+        disabled: computed(() => !validationState.value.modified || !validationState.value.valid),
+      },
+      completeWorkTask: {
+        clickHandler: async () => {
+          if (item.value?.id) {
+            item.value = await (await getApiClient()).finish(item.value.id, true, item.value.parameters);
+            validationState.value.resetModified(item.value, true);
+          }
+        },
+        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),
+      },
+      rejectWorkTask: {
+        clickHandler: async () => {
+          if (item.value?.id) {
+            item.value = await (await getApiClient()).finish(item.value.id, false, item.value.parameters);
+            validationState.value.resetModified(item.value, true);
+          }
+        },
+        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),
+      },
+      removeWorkTask: {
+        async clickHandler() {
+          if (item.value?.id) {
+            const itemId = { id: item.value.id };
+            await deleteWorkTask!(itemId);
+            args.emit("parent:call", { method: "reload" });
+            args.emit("close:blade");
+          }
+        },
+        isVisible: computed(() => !!args.props.param && hasAccess(TaskPermissions.Delete)),
+      },
+      resetWorkTask: {
+        clickHandler: () => {
+          validationState.value.resetModified(item, true);
+        },
+        disabled: computed(() => !validationState.value.modified),
+        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)),
+      },
+    },
+    isReadOnly: () => !isEditable(),
+    summaryVisibility: computed(() => !args.props.param),
+    priorities: Object.values(WorkTaskPriority),
+    loadTaskTypes: async () => {
+      return getTaskTypes();
+    },
+    searchContacts: searchContacts,
+    statusText: computed(() => {
+      let result = "To Do";
+      const workTask = item.value;
+      if (workTask == null) {
+        return result;
+      }
+      if (workTask.isActive === true) {
+        switch (workTask.completed) {
+          case false:
+          case true:
+            result = "Canceled";
+            break;
+        }
+      } else {
+        switch (workTask.completed) {
+          case null:
+          case false:
+            result = "Canceled";
+            break;
+          case true:
+            result = "Done";
+            break;
+        }
+      }
+      return result;
+    }),
+  };
+
+  const bladeTitle = computed(() => {
+    return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : t("TASKS.PAGES.DETAILS.NEW_TITLE");
+  });
+
+  function isEditable(): boolean {
+    return !args.props.param || (item.value != null && !!item.value.isActive);
+  }
 
   watch(
-    () => workTask,
-    (state) => {
-      modified.value = !isEqual(workTaskCopy, state.value);
+    () => args?.mounted.value,
+    async () => {
+      if (!args.props.param) {
+        item.value = reactive(
+          new WorkTask({
+            priority: WorkTaskPriority.Normal,
+            attachments: [],
+            isActive: true,
+          }),
+        );
+        validationState.value.resetModified(item.value, true);
+      }
     },
-    { deep: true }
   );
 
-  async function getApiClient(): Promise<TaskManagementClient> {
-    const { getAccessToken } = useUser();
-    const client = new TaskManagementClient();
-    client.setAuthToken(await getAccessToken());
-    return client;
-  }
-
-  function initNewWorkTask(): void {
-    workTask.value = newWorkTask.value;
-  }
-
-  async function loadWorkTask(id: string): Promise<void> {
-    loading.value = true;
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      workTask.value = await client.get(id, "WithAttachments");
-      workTaskCopy = cloneDeep(workTask.value);
-      taskAvailable.value = workTask.value.id !== undefined;
-    } catch (e) {
-      taskAvailable.value = false;
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function createWorkTask(): Promise<void> {
-    loading.value = true;
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      validateAttachments(workTask.value);
-      workTask.value = await client.create(workTask.value);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function approveWorkTask(id: string, result: any): Promise<void> {
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      workTask.value = await client.finish(id, true, result);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function rejectWorkTask(id: string, result: any): Promise<void> {
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      workTask.value = await client.finish(id, false, result);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function updateWorktask(): Promise<void> {
-    loading.value = true;
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      validateAttachments(workTask.value);
-      workTask.value = await client.update(workTask.value);
-      workTaskCopy = cloneDeep(workTask.value);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  function resetWorkTask(): void {
-    workTask.value = cloneDeep(workTaskCopy);
-  }
-
-  async function deleteWorkTask(id: string): Promise<void> {
-    loading.value = true;
-    const client = await getApiClient();
-    try {
-      loading.value = true;
-      await client.delete(id);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  function validateAttachments(task: WorkTask) {
-    forEach(task.attachments, function (attachment) {
-      if (attachment.id && attachment.id.startsWith("Draft")) {
-        attachment.id = null;
-      }
-    });
-  }
-
   return {
-    workTask: computed(() => workTask.value),
-    loading: computed(() => loading.value),
-    taskAvailable: computed(() => taskAvailable.value),
-    modified: computed(() => modified.value),
-    priorities,
-    initNewWorkTask,
-    loadWorkTask,
-    createWorkTask,
-    approveWorkTask,
-    rejectWorkTask,
-    updateWorktask,
-    resetWorkTask,
+    load,
+    saveChanges,
     deleteWorkTask,
+    loading,
+    item,
+    validationState,
+    bladeTitle,
+    scope,
   };
 };

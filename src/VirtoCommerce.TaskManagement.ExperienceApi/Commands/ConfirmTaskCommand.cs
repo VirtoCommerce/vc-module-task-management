@@ -1,6 +1,6 @@
 using GraphQL.Types;
-using VirtoCommerce.ExperienceApiModule.Core.Infrastructure;
 using VirtoCommerce.TaskManagement.Core.Models;
+using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.TaskManagement.ExperienceApi.Commands;
 

@@ -3,7 +3,7 @@ using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using VirtoCommerce.ExperienceApiModule.Core.BaseQueries;
+using VirtoCommerce.Xapi.Core.BaseQueries;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using VirtoCommerce.CustomerModule.Core.Extensions;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Model.Search;
 using VirtoCommerce.CustomerModule.Core.Services;
@@ -15,7 +16,6 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
-using VirtoCommerce.TaskManagement.Core.Extensions;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
@@ -175,7 +175,6 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpPost("members/search")]
         public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
-            MemberSearchResult result = null;
             if (!HasPermission(User, TaskPermissions.Create, out var permission) || criteria == null)
             {
                 return Unauthorized();
@@ -187,8 +186,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 var assignToMyOrganizationScope = permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
 
                 var memberId = User.FindFirstValue(MemberIdClaimType);
-                var member = await _memberService.GetByIdAsync(memberId);
-                var organizationId = member.GetMemberOrganizationId();
+                var organizationId = User.GetCurrentOrganizationId();
 
                 if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
                 {
@@ -200,7 +198,7 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
                 }
             }
 
-            result = await _memberSearchService.SearchMembersAsync(criteria);
+            var result = await _memberSearchService.SearchMembersAsync(criteria);
             return Ok(result);
         }
 

@@ -6,6 +6,7 @@
   <PropertyGroup>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
+    <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />

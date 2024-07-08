@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using VirtoCommerce.CustomerModule.Core.Extensions;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.Platform.Core.Security;
@@ -34,7 +35,8 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
         {
             await base.HandleRequirementAsync(context, requirement);
 
-            var memberId = context.User.FindFirstValue(MemberIdClaimType);
+            var currentMemberId = context.User.FindFirstValue(MemberIdClaimType);
+            var currentMemberOrganizationId = context.User.GetCurrentOrganizationId();
             var permission = context.User.FindPermission(requirement.Permission, _jsonOptions.SerializerSettings);
 
             if (context.HasSucceeded)
@@ -44,15 +46,16 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                     case WorkTask workTask:
                         if (!context.User.HasGlobalPermission(requirement.Permission))
                         {
-                            var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                            var organizationId = member.GetMemberOrganizationId();
-                            SetResponsible(workTask, member, organizationId);
+                            var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
+                            // todo: get organization id from another member
+                            var organizationId = responsibleMember.GetMemberOrganizationId();
+                            SetResponsible(workTask, responsibleMember, organizationId);
                             context.Succeed(requirement);
                         }
                         break;
                     case WorkTaskSearchCriteria criteria when criteria.OnlyAssignedToMe == true:
                         {
-                            criteria.ResponsibleIds = new[] { memberId };
+                            criteria.ResponsibleIds = new[] { currentMemberId };
                             context.Succeed(requirement);
                             break;
                         }
@@ -67,9 +70,8 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                 {
                     case WorkTask workTask when taskToMyOrganizationScope != null:
                         {
-                            var currentMember = await _memberService.GetByIdAsync(memberId);
-                            var currentMemberOrganizationId = currentMember.GetMemberOrganizationId();
                             var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
+                            // todo: get organization id from another member
                             var organizationId = responsibleMember.GetMemberOrganizationId();
 
                             if (currentMemberOrganizationId == organizationId)
@@ -80,18 +82,19 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
 
                             break;
                         }
-                    case WorkTask workTask when taskToMeScope != null && workTask.ResponsibleId == memberId:
+                    case WorkTask workTask when taskToMeScope != null && workTask.ResponsibleId == currentMemberId:
                         {
-                            var member = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                            var organizationId = member.GetMemberOrganizationId();
-                            SetResponsible(workTask, member, organizationId);
+                            var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
+                            // todo: get organization id from another member
+                            var organizationId = responsibleMember.GetMemberOrganizationId();
+                            SetResponsible(workTask, responsibleMember, organizationId);
                             context.Succeed(requirement);
                             break;
                         }
                     case WorkTaskSearchCriteria criteria:
                         {
                             var isSearchOrganizationTasks = taskToMyOrganizationScope != null;
-                            await SetCriteria(criteria, isSearchOrganizationTasks, memberId);
+                            SetCriteria(criteria, isSearchOrganizationTasks, currentMemberId, currentMemberOrganizationId);
                             context.Succeed(requirement);
                             break;
                         }
@@ -99,11 +102,8 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
             }
         }
 
-        private async Task SetCriteria(WorkTaskSearchCriteria criteria, bool isSearchOrganizationTasks, string memberId)
+        private static void SetCriteria(WorkTaskSearchCriteria criteria, bool isSearchOrganizationTasks, string memberId, string organizationId)
         {
-            var member = await _memberService.GetByIdAsync(memberId);
-            var organizationId = member.GetMemberOrganizationId();
-
             if (!string.IsNullOrEmpty(organizationId) && isSearchOrganizationTasks && !(criteria.OnlyAssignedToMe ?? false))
             {
                 criteria.OrganizationIds = new[] { organizationId };

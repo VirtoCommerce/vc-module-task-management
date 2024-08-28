@@ -47,7 +47,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                         if (!context.User.HasGlobalPermission(requirement.Permission))
                         {
                             var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                            var organizationId = responsibleMember.GetMemberDefaultOrganizationId();
+                            var organizationId = responsibleMember.GetMemberOrganizationId();
                             SetResponsible(workTask, responsibleMember, organizationId);
 
                             context.Succeed(requirement);
@@ -71,7 +71,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                     case WorkTask workTask when taskToMyOrganizationScope != null:
                         {
                             var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                            var organizationId = responsibleMember.GetMemberDefaultOrganizationId();
+                            var organizationId = responsibleMember.GetMemberOrganizationId();
 
                             if (currentMemberOrganizationId == organizationId)
                             {
@@ -84,7 +84,7 @@ namespace VirtoCommerce.TaskManagement.Web.Authorization
                     case WorkTask workTask when taskToMeScope != null && workTask.ResponsibleId == currentMemberId:
                         {
                             var responsibleMember = await _memberService.GetByIdAsync(workTask.ResponsibleId);
-                            var organizationId = responsibleMember.GetMemberDefaultOrganizationId();
+                            var organizationId = responsibleMember.GetMemberOrganizationId();
                             SetResponsible(workTask, responsibleMember, organizationId);
 
                             context.Succeed(requirement);

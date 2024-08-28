@@ -7,11 +7,11 @@ namespace VirtoCommerce.TaskManagement.Core.Extensions
     {
         public static string GetMemberOrganizationId(this Member member)
         {
-            return member?.MemberType switch
+            return member switch
             {
-                nameof(Contact) => (member as Contact)?.DefaultOrganizationId ?? (member as Contact)?.Organizations?.FirstOrDefault(),
-                nameof(Employee) => (member as Employee)?.DefaultOrganizationId ?? (member as Employee)?.Organizations?.FirstOrDefault(),
-                _ => null
+                Contact contact => contact.DefaultOrganizationId ?? contact.Organizations?.FirstOrDefault(),
+                Employee employee => employee.DefaultOrganizationId ?? employee.Organizations?.FirstOrDefault(),
+                _ => null,
             };
         }
     }

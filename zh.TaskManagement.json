@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade '你好世界'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "打开任务管理菜单",
+    "TaskManagement:create": "创建任务管理相关数据",
+    "TaskManagement:read": "查看任务管理相关数据",
+    "TaskManagement:update": "更新任务管理相关数据",
+    "TaskManagement:delete": "删除任务管理相关数据"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "任务通知",
+        "description": "（需要重启）启用/禁用任务分配通知"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "通知无需回复邮箱",
+        "description": "用作发件人邮箱"
+      },
+      "TaskAppUrl": {
+        "title": "任务门户基础URL",
+        "description": "任务门户的URL，默认使用platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "任务类型",
+        "description": "员工创建新任务时可以选择的任务类型列表"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "工作任务分配通知",
+      "description": "当新的工作任务被分配时，管理员将收到电子邮件通知"
+    }
+  }
+}

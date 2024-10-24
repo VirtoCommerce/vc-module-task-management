@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'Bonjour le monde'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Ouvrir le menu de gestion des tâches",
+    "TaskManagement:create": "Créer des données liées à la gestion des tâches",
+    "TaskManagement:read": "Afficher les données liées à la gestion des tâches",
+    "TaskManagement:update": "Mettre à jour les données liées à la gestion des tâches",
+    "TaskManagement:delete": "Supprimer les données liées à la gestion des tâches"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Notification de tâche",
+        "description": "(Redémarrage requis) Activer/désactiver la notification d'attribution de tâche"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "E-mail de notification sans réponse",
+        "description": "Utilisé comme e-mail d'expéditeur"
+      },
+      "TaskAppUrl": {
+        "title": "URL de base du portail des tâches",
+        "description": "URL du portail des tâches, par défaut utilise platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Types de tâches",
+        "description": "Liste des types de tâches que les employés peuvent sélectionner lors de la création d'une nouvelle tâche"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Notification de tâche de travail assignée",
+      "description": "Le gestionnaire recevra une notification par e-mail lorsqu'une nouvelle tâche de travail est assignée"
+    }
+  }
+}

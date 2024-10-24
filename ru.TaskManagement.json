@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Блейд 'Привет, мир'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Открывать меню управления задачами",
+    "TaskManagement:create": "Создавать данные, связанные с управлением задачами",
+    "TaskManagement:read": "Просматривать данные, связанные с управлением задачами",
+    "TaskManagement:update": "Обновлять данные, связанные с управлением задачами",
+    "TaskManagement:delete": "Удалять данные, связанные с управлением задачами"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Уведомление о задаче",
+        "description": "(Требуется перезапуск) Включить/отключить уведомление о назначении задачи"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Email для уведомлений без ответа",
+        "description": "Используется как email отправителя"
+      },
+      "TaskAppUrl": {
+        "title": "Основной  URL портала задач",
+        "description": "URL портала задач, по умолчанию используется platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Типы задач",
+        "description": "Список типов задач, которые сотрудники могут выбрать при создании новой задачи"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Уведомление о назначенной рабочей задаче",
+      "description": "Менеджер получит email-уведомление при назначении новой рабочей задачи"
+    }
+  }
+}

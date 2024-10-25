@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'Olá Mundo'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Abrir menu de gerenciamento de tarefas",
+    "TaskManagement:create": "Criar dados relacionados ao gerenciamento de tarefas",
+    "TaskManagement:read": "Visualizar dados relacionados ao gerenciamento de tarefas",
+    "TaskManagement:update": "Atualizar dados relacionados ao gerenciamento de tarefas",
+    "TaskManagement:delete": "Excluir dados relacionados ao gerenciamento de tarefas"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Notificação de tarefa",
+        "description": "(Reinicialização necessária) Ativar/Desativar notificação de atribuição de tarefa"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "E-mail de notificação sem resposta",
+        "description": "Usado como e-mail do remetente"
+      },
+      "TaskAppUrl": {
+        "title": "URL base do portal de tarefas",
+        "description": "URL do portal de tarefas, por padrão usa platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Tipos de tarefas",
+        "description": "Lista de tipos de tarefas que os funcionários podem selecionar ao criar uma nova tarefa"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Notificação de tarefa de trabalho atribuída",
+      "description": "O gerente receberá uma notificação por e-mail quando uma nova tarefa de trabalho for atribuída"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'ハローワールド'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "タスク管理メニューを開く",
+    "TaskManagement:create": "タスク管理関連データを作成する",
+    "TaskManagement:read": "タスク管理関連データを表示する",
+    "TaskManagement:update": "タスク管理関連データを更新する",
+    "TaskManagement:delete": "タスク管理関連データを削除する"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "タスク通知",
+        "description": "（再起動が必要）タスク割り当て通知の有効化/無効化"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "通知用返信不要メールアドレス",
+        "description": "送信者のメールアドレスとして使用されます"
+      },
+      "TaskAppUrl": {
+        "title": "タスクポータルのベースURL",
+        "description": "タスクポータルのURL、デフォルトではplatformUrl/apps/tasksを使用"
+      },
+      "TaskTypes": {
+        "title": "タスクタイプ",
+        "description": "従業員が新しいタスクを作成する際に選択できるタスクタイプのリスト"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "割り当てられた作業タスクの通知",
+      "description": "新しい作業タスクが割り当てられた際に、マネージャーにメール通知が送信されます"
+    }
+  }
+}

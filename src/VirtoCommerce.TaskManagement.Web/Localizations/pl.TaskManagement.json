@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'Witaj świecie'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Otwórz menu zarządzania zadaniami",
+    "TaskManagement:create": "Twórz dane związane z zarządzaniem zadaniami",
+    "TaskManagement:read": "Przeglądaj dane związane z zarządzaniem zadaniami",
+    "TaskManagement:update": "Aktualizuj dane związane z zarządzaniem zadaniami",
+    "TaskManagement:delete": "Usuń dane związane z zarządzaniem zadaniami"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Powiadomienie o zadaniu",
+        "description": "(Wymagane ponowne uruchomienie) Włącz/Wyłącz powiadomienie o przypisaniu zadania"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "E-mail powiadomień bez odpowiedzi",
+        "description": "Używany jako e-mail nadawcy"
+      },
+      "TaskAppUrl": {
+        "title": "Podstawowy URL portalu zadań",
+        "description": "URL portalu zadań, domyślnie używa platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Typy zadań",
+        "description": "Lista typów zadań, które pracownicy mogą wybrać podczas tworzenia nowego zadania"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Powiadomienie o przypisanym zadaniu roboczym",
+      "description": "Menedżer otrzyma powiadomienie e-mail, gdy zostanie przypisane nowe zadanie robocze"
+    }
+  }
+}

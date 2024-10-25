@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'Ciao mondo'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Apri menu gestione attività",
+    "TaskManagement:create": "Crea dati relativi alla gestione delle attività",
+    "TaskManagement:read": "Visualizza dati relativi alla gestione delle attività",
+    "TaskManagement:update": "Aggiorna dati relativi alla gestione delle attività",
+    "TaskManagement:delete": "Elimina dati relativi alla gestione delle attività"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Notifica attività",
+        "description": "(Riavvio richiesto) Abilita/Disabilita notifica di assegnazione attività"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Email di notifica senza risposta",
+        "description": "Utilizzata come email del mittente"
+      },
+      "TaskAppUrl": {
+        "title": "URL base del portale attività",
+        "description": "URL del portale attività, per impostazione predefinita usa platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Tipi di attività",
+        "description": "Elenco dei tipi di attività che i dipendenti possono selezionare durante la creazione di una nuova attività"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Notifica di attività di lavoro assegnata",
+      "description": "Il manager riceverà una notifica via email quando viene assegnata una nuova attività di lavoro"
+    }
+  }
+}

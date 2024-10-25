@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Blade 'Hola mundo'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Abrir menú de gestión de tareas",
+    "TaskManagement:create": "Crear datos relacionados con la gestión de tareas",
+    "TaskManagement:read": "Ver datos relacionados con la gestión de tareas",
+    "TaskManagement:update": "Actualizar datos relacionados con la gestión de tareas",
+    "TaskManagement:delete": "Eliminar datos relacionados con la gestión de tareas"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Notificación de tarea",
+        "description": "(Requiere reinicio) Activar/Desactivar notificación de asignación de tarea"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Correo electrónico de notificación sin respuesta",
+        "description": "Se utiliza como correo electrónico del remitente"
+      },
+      "TaskAppUrl": {
+        "title": "URL base del portal de tareas",
+        "description": "URL del portal de tareas, por defecto usa platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Tipos de tareas",
+        "description": "Lista de tipos de tareas que los empleados pueden seleccionar al crear una nueva tarea"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Notificación de tarea de trabajo asignada",
+      "description": "El gerente recibirá una notificación por correo electrónico cuando se asigne una nueva tarea de trabajo"
+    }
+  }
+}

@@ -24,7 +24,7 @@
         "description": "Used as sender email"
       },
       "TaskAppUrl": {
-        "title": "Tasks portal base url",
+        "title": "Tasks portal base URL",
         "description": "URL of tasks portal, by default use - platformUrl/apps/tasks"
       },
       "TaskTypes": {

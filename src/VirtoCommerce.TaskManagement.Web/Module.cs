@@ -1,15 +1,14 @@
 using System;
 using System.IO;
 using System.Linq;
-using GraphQL.Server;
+using GraphQL;
+using GraphQL.MicrosoftDI;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VirtoCommerce.Xapi.Core.Extensions;
-using VirtoCommerce.Xapi.Core.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem;
 using VirtoCommerce.Platform.Core.Common;
@@ -31,6 +30,7 @@ using VirtoCommerce.TaskManagement.Data.SqlServer;
 using VirtoCommerce.TaskManagement.ExperienceApi;
 using VirtoCommerce.TaskManagement.ExperienceApi.Authorization;
 using VirtoCommerce.TaskManagement.Web.Authorization;
+using VirtoCommerce.Xapi.Core.Extensions;
 using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.TaskManagement.Web
@@ -77,12 +77,15 @@ namespace VirtoCommerce.TaskManagement.Web
             serviceCollection.AddTransient<IAuthorizationHandler, TaskAuthorizationHandler>();
 
             // GraphQL
-            var assemblyMarker = typeof(AssemblyMarker);
-            var graphQlBuilder = new CustomGraphQLBuilder(serviceCollection);
-            graphQlBuilder.AddGraphTypes(assemblyMarker);
-            serviceCollection.AddMediatR(assemblyMarker);
-            serviceCollection.AddAutoMapper(assemblyMarker);
-            serviceCollection.AddSchemaBuilders(assemblyMarker);
+            _ = new GraphQLBuilder(serviceCollection, builder =>
+            {
+                var assemblyMarker = typeof(AssemblyMarker);
+                builder.AddGraphTypes(assemblyMarker.Assembly);
+                serviceCollection.AddMediatR(assemblyMarker);
+                serviceCollection.AddAutoMapper(assemblyMarker);
+                serviceCollection.AddSchemaBuilders(assemblyMarker);
+            });
+
             serviceCollection.AddSingleton<IAuthorizationHandler, WorkTaskAuthorizationHandler>();
         }
 

@@ -8,7 +8,7 @@ The Virto Commerce Task (or Task Management) module is designed for both manager
 
 ## Documentation
 
-* [Task Management module user documentation](https://docs.virtocommerce.org/platform/user-guide/inventory/overview/)
+* [Task Management module user documentation](https://docs.virtocommerce.org/platform/user-guide/tasks/overview/)
 * [REST API](https://virtostart-demo-admin.govirto.com/docs/index.html?urls.primaryName=VirtoCommerce.TaskManagement)
 * [View on GitHub](https://github.com/VirtoCommerce/vc-module-task-management)
 

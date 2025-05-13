@@ -10,31 +10,31 @@ export const workTaskDetails: DynamicDetailsSchema = {
     toolbar: [
       {
         id: "complete",
-        icon: "fas fa-check",
+        icon: "material-check",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.COMPLETE",
         method: "completeWorkTask",
       },
       {
         id: "reject",
-        icon: "fas fa-ban",
+        icon: "material-block",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.REJECT",
         method: "rejectWorkTask",
       },
       {
         id: "reset",
-        icon: "fas fa-undo",
+        icon: "material-undo",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.RESET",
         method: "resetWorkTask",
       },
       {
         id: "save",
-        icon: "fas fa-save",
+        icon: "material-save",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.SAVE",
         method: "saveChanges",
       },
       {
         id: "delete",
-        icon: "fas fa-trash",
+        icon: "material-delete",
         title: "TASKS.PAGES.DETAILS.TOOLBAR.DELETE",
         method: "removeWorkTask",
       },

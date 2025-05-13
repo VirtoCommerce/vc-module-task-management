@@ -12,20 +12,20 @@ export const workTasksList: DynamicGridSchema = {
     toolbar: [
       {
         id: "refresh",
-        icon: "fas fa-sync-alt",
+        icon: "material-refresh",
         title: "TASKS.PAGES.LIST.TOOLBAR.REFRESH",
         method: "refresh",
       },
       {
         id: "create",
-        icon: "fas fa-plus",
+        icon: "material-add",
         title: "TASKS.PAGES.LIST.TOOLBAR.CREATE",
         method: "openAddBlade",
       },
     ],
     menuItem: {
       title: "TASKS.MENU.TITLE",
-      icon: "fas fa-file-alt",
+      icon: "material-description",
       priority: 1,
     },
   },

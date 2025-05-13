@@ -1,6 +1,6 @@
 <template>
   <VcIcon
-    icon="fas fa-circle"
+    icon="material-circle"
     :class="{
       'tw-text-[10px]': true,
       'tw-text-[#80b4e3]': [WorkTaskPriority.Low, WorkTaskPriority.Lowest].indexOf(taskPriority!) > -1,

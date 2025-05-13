@@ -1,0 +1,24 @@
+# v2.0.0
+name: Build Push Messages App
+
+inputs:
+  githubToken:
+    description: "GitHub Token"
+    required: true
+  npmToken:
+    description: "NPM Token"
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Install dependencies for Push Messages App
+      shell: bash
+      working-directory: src/VirtoCommerce.TaskManagement.Web/App/task
+      run: yarn
+
+    - name: Build Client App
+      shell: bash
+      working-directory: src/VirtoCommerce.TaskManagement.Web/App/task
+      run: yarn build

@@ -23,7 +23,13 @@
     <NotificationTemplates Include="NotificationTemplates\**" />
     <Folder Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <TaskApp Include="App\task\dist\**" />
+    <TaskAppNew Include="App\task-new\dist\**" />
+  </ItemGroup>
   <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
     <Copy SourceFiles="@(NotificationTemplates)" DestinationFiles="$(PublishDir)\..\%(Identity)" />
+    <Copy SourceFiles="@(TaskApp)" DestinationFiles="$(PublishDir)\..\%(Identity)" />
+    <Copy SourceFiles="@(TaskAppNew)" DestinationFiles="$(PublishDir)\..\%(Identity)" />
   </Target>
 </Project>

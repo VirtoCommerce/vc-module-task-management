@@ -3,7 +3,7 @@
     v-bind="props"
     :value="count"
     :title="$t('TASKS.PAGES.DETAILS.WIDGETS.ASSETS')"
-    icon="far fa-file"
+    icon="lucide-file"
     @click="clickHandler"
   >
   </VcWidget>

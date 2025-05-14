@@ -32,8 +32,17 @@ const { getApiClient } = useApiClient(TaskManagementClient);
 export default (args: DetailsComposableArgs) => {
   const factory = useDetailsFactory<WorkTask>({
     load: async (loadItem) => {
+      if (!loadItem || !loadItem.id) {
+        return reactive(
+          new WorkTask({
+            priority: WorkTaskPriority.Normal,
+            attachments: [],
+            isActive: true,
+          }),
+        );
+      }
       const client = await getApiClient();
-      return client.get(loadItem!.id, "WithAttachments");
+      return client.get(loadItem.id, "WithAttachments");
     },
     saveChanges: async (saveItem) => {
       const client = await getApiClient();

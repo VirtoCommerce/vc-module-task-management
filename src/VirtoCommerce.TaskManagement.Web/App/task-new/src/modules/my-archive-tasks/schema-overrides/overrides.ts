@@ -22,6 +22,11 @@ export const overrides: OverridesSchema = {
       path: "settings.menuItem.title",
       value: "TASKS.MENU.MY_ARCHIVE_TITLE",
     },
+    {
+      id: "ActiveTasks",
+      path: "settings.composable",
+      value: "useMyArchiveWorkTasks",
+    },
   ],
   remove: [
     {

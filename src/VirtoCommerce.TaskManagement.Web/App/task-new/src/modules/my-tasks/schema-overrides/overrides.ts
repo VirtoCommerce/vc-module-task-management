@@ -22,5 +22,10 @@ export const overrides: OverridesSchema = {
       path: "settings.menuItem.title",
       value: "MY_TASKS.MENU.TITLE",
     },
+    {
+      id: "ActiveTasks",
+      path: "settings.composable",
+      value: "useMyWorkTasks",
+    },
   ],
 };

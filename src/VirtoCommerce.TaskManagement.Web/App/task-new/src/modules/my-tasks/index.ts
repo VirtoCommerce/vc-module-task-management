@@ -15,7 +15,7 @@ export default createDynamicAppModule({
   },
   overrides,
   composables: {
-    useWorkTasks: composables.useMyWorkTasks,
+    useMyWorkTasks: composables.useMyWorkTasks,
   },
   moduleComponents,
 });

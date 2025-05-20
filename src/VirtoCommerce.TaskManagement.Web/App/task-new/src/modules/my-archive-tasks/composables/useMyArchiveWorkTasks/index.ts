@@ -10,12 +10,11 @@ export const useMyArchiveWorkTasks = (args: {
 }) => {
   const { items, load, loading, query, pagination, scope } = useWorkTasks({
     ...args,
-    isWidgetView: false // <-- Add this line. Set to `true` if appropriate!
+    isWidgetView: false,
   });
 
   const loadWrap = async (loadQuery?: WorkTaskSearchCriteria) => {
     query.value = Object.assign(query.value, loadQuery, { isActive: false, onlyAssignedToMe: true });
-
     await load(query.value);
   };
 

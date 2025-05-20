@@ -12,7 +12,7 @@ export const useArchiveWorkTasks = (args: {
     props: args.props,
     emit: args.emit,
     mounted: args.mounted,
-    isWidgetView: false
+    isWidgetView: false,
   });
 
   const loadWrap = async (loadQuery?: WorkTaskSearchCriteria) => {

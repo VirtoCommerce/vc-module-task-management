@@ -15,7 +15,7 @@ export default createDynamicAppModule({
   },
   overrides,
   composables: {
-    useWorkTasks: composables.useMyArchiveWorkTasks,
+    useMyArchiveWorkTasks: composables.useMyArchiveWorkTasks,
   },
   moduleComponents,
 });

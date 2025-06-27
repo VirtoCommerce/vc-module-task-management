@@ -1,1 +1,0 @@
-export { AssetsWidget } from "./assets";

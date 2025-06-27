@@ -2,7 +2,7 @@
   <VcBlade
     v-loading="loading"
     :title="bladeTitle"
-    :width="bladeWidth"
+    width="50%"
     :expanded="expanded"
     :closable="closable"
     :toolbar-items="toolbarItems"
@@ -39,7 +39,7 @@
         />
 
         <!-- Priority -->
-         <!-- @vue-generic {WorkTaskPriority} -->
+        <!-- @vue-generic {IPriority} -->
         <VcSelect
           v-model="item.priority"
           :label="$t('TASKS.PAGES.DETAILS.FIELDS.PRIORITY.TITLE')"
@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onBeforeUnmount, inject } from "vue";
+import { computed, onMounted, onBeforeUnmount, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
 import {
@@ -108,11 +108,11 @@ import {
   useWidgets,
 } from "@vc-shell/framework";
 
-import { useWorkTaskDetails } from "../composables/useWorkTask";
+import { useWorkTaskDetails, type IPriority } from "../composables/useWorkTask";
 import { TaskPermissions } from "../../../types";
 import SelectPriority from "../components/selectPriority.vue";
 import AssetsWidget from "../components/widgets/assets/assets-widget.vue";
-import { WorkTask, WorkTaskPriority } from "../../../api_client/virtocommerce.taskmanagement";
+import { WorkTask } from "../../../api_client/virtocommerce.taskmanagement";
 
 export interface Props {
   expanded?: boolean;
@@ -164,9 +164,6 @@ const {
   id: props.param,
   isNew: !props.param,
 });
-
-// Local state
-const bladeWidth = ref(550);
 
 // Blade title
 const bladeTitle = computed(() => {

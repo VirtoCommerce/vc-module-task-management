@@ -1,16 +1,19 @@
-import { computed, reactive, ref, Ref, ComputedRef, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
+import { computed, reactive, ref, Ref, ComputedRef } from "vue";
 import {
   MemberSearchResult,
   TaskManagementClient,
   WorkTask,
   WorkTaskPriority,
 } from "../../../../api_client/virtocommerce.taskmanagement";
-import { useApiClient, useAsync, useLoading, useModificationTracker, usePermissions } from "@vc-shell/framework";
+import { useApiClient, useAsync, useLoading, useModificationTracker } from "@vc-shell/framework";
 
 import useWorkTaskTypes, { IWorkTaskTypeResult } from "../useWorkTaskTypes";
 import useContacts from "../useContacts";
-import { TaskPermissions } from "../../../../types";
+
+export interface IPriority {
+  name: string;
+  value: WorkTaskPriority;
+}
 
 export interface IUseWorkTaskDetails {
   item: Ref<WorkTask>;
@@ -23,7 +26,7 @@ export interface IUseWorkTaskDetails {
   deleteWorkTask: () => Promise<void>;
   resetWorkTask: () => void;
   isReadOnly: ComputedRef<boolean>;
-  priorities: ComputedRef<{ name: string; value: WorkTaskPriority }[]>;
+  priorities: ComputedRef<IPriority[]>;
   loadTaskTypes: () => Promise<IWorkTaskTypeResult>;
   searchContacts: (keyword?: string, skip?: number, ids?: string[]) => Promise<MemberSearchResult>;
   statusText: ComputedRef<string>;

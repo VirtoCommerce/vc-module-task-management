@@ -22,7 +22,7 @@ async function startApp() {
       fallbackLocale: import.meta.env.APP_I18N_FALLBACK_LOCALE,
     },
   });
-  
+
   Object.values(modules.default).forEach((module) => {
     app.use(module.default, { router });
   });

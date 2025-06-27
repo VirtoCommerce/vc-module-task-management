@@ -13,8 +13,7 @@ import { computed } from "vue";
 import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
 
 export interface Props {
-
-    item: IWorkTask;
+  item: IWorkTask;
 }
 
 const props = withDefaults(defineProps<Props>(), {

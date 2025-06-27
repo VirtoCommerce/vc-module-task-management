@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, toRefs, useTemplateRef } from "vue";
+import { computed, onMounted, useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { IParentCallArgs } from "@vc-shell/framework";
 import { useWorkTasksList } from "../composables/useWorkTasks";
@@ -86,4 +86,4 @@ defineExpose({
   reload,
   onItemClick,
 });
-</script> 
+</script>

@@ -14,7 +14,6 @@
       <title>Tasks</title>
       <description>Tasks</description>
       <iconUrl>/apps/tasks/img/icons/logo.svg</iconUrl>
-      <contentPath>App/task/dist</contentPath>
       <permission>task:access</permission>
     </app>
   </apps>

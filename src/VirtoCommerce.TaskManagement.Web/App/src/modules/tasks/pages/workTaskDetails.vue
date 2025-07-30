@@ -59,7 +59,7 @@
         <!-- Due Date -->
         <VcInput
           v-model="item.dueDate"
-          type="date"
+          type="datetime-local"
           :label="$t('TASKS.PAGES.DETAILS.FIELDS.DUE_DATE.TITLE')"
           :disabled="isReadOnly"
         />

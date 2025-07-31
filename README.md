@@ -1,10 +1,30 @@
-# Virto Commerce Task Module  
+# Task Management Module  
 
 The Virto Commerce Task (or Task Management) module is designed for both managers and workers, providing a productivity-enhancing feature. Headquarters teams and business processes can use it to create task lists for stores and track their status by store or worker.
 
-## Database Model
+The Task Management module provides scenarious for managing tasks within the Virto Commerce platform. It supports the creation, assignment, tracking, and completion of various task types, enabling streamlined workflows and improved collaboration across business processes.
 
-![DB model](./docs/media/diagram-db-model.png)
+The module is designed to be extensible and configurable, supporting both general and specialized task management scenarios.
+
+## Key features
+* Role-Based Security & Permissions
+* Configurable Task Types - predefined task types such as Registration Review, Order Review, Order Processing, Product Catalog Management, Pricing and Promotions, Content Management, Customer Support, and more.
+* Notification Settings:
+    * Enable or disable task notifications.
+    * Configure a no-reply email address for notifications.
+    * Set the base URL for task-related application links in notifications.
+* Embedded Task Management UI - provides a user-friendly interface for managing tasks directly within the Virto Commerce platform.
+
+
+## Screenshots
+
+### Tasks Lists
+
+### New Task
+
+### Notification Settings
+
+### Configurable Task Types
 
 ## Documentation
 

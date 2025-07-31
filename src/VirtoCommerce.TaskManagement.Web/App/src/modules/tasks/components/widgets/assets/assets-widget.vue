@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { VcWidget, useBladeNavigation, usePopup, useAssets } from "@vc-shell/framework";
-import { computed, ref, watch, unref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { isEqual } from "lodash-es";
 import { WorkTask, WorkTaskAttachment } from "../../../../../api_client/virtocommerce.taskmanagement";
@@ -52,7 +52,7 @@ function clickHandler() {
         assetsEditHandler: assetsHandler?.edit,
         assetsUploadHandler: assetsHandler?.upload,
         assetsRemoveHandler: assetsHandler?.remove,
-        disabled: !unref(props.item)?.isActive,
+        disabled: !props.item?.isActive,
       },
       onOpen() {
         widgetOpened.value = true;

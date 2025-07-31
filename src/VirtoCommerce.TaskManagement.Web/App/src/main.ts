@@ -7,9 +7,6 @@ import * as modules from "./modules";
 import { bootstrap } from "./bootstrap";
 
 // Load required CSS
-import "./styles/index.scss";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@vc-shell/framework/dist/index.css";
 
 async function startApp() {
@@ -20,16 +17,16 @@ async function startApp() {
 
   const app = createApp(RouterView).use(VirtoShellFramework, {
     router,
-    platformUrl: "",
     i18n: {
       locale: import.meta.env.APP_I18N_LOCALE,
       fallbackLocale: import.meta.env.APP_I18N_FALLBACK_LOCALE,
     },
   });
+
   Object.values(modules.default).forEach((module) => {
     app.use(module.default, { router });
   });
-  // Dynamic module based on page schemas
+
   app.use(router);
 
   bootstrap(app);

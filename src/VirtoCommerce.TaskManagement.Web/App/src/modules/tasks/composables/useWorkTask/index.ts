@@ -1,173 +1,186 @@
-import { computed, reactive, watch } from "vue";
-import { useI18n } from "vue-i18n";
-import { TaskManagementClient, WorkTask, WorkTaskPriority } from "../../../../api_client/virtocommerce.taskmanagement";
+import { computed, reactive, ref, Ref, ComputedRef } from "vue";
 import {
-  DetailsBaseBladeScope,
-  DetailsComposableArgs,
-  IBladeToolbar,
-  useApiClient,
-  useDetailsFactory,
-  usePermissions,
-} from "@vc-shell/framework";
+  MemberSearchResult,
+  TaskManagementClient,
+  WorkTask,
+  WorkTaskPriority,
+} from "../../../../api_client/virtocommerce.taskmanagement";
+import { useApiClient, useAsync, useLoading, useModificationTracker } from "@vc-shell/framework";
 
-import useWorkTaskTypes from "../useWorkTaskTypes";
+import useWorkTaskTypes, { IWorkTaskTypeResult } from "../useWorkTaskTypes";
 import useContacts from "../useContacts";
-import { TaskPermissions } from "../../../../types";
 
-const { getTaskTypes } = useWorkTaskTypes();
-const { searchContacts, getMember } = useContacts();
-
-export interface WorkTaskDetailScope extends DetailsBaseBladeScope {
-  toolbarOverrides: {
-    saveChanges: IBladeToolbar;
-    completeWorkTask: IBladeToolbar;
-    rejectWorkTask: IBladeToolbar;
-    removeWorkTask: IBladeToolbar;
-    resetWorkTask: IBladeToolbar;
-  };
+export interface IPriority {
+  name: string;
+  value: WorkTaskPriority;
 }
 
-const { getApiClient } = useApiClient(TaskManagementClient);
+export interface IUseWorkTaskDetails {
+  item: Ref<WorkTask>;
+  isModified: Readonly<Ref<boolean>>;
+  loading: ComputedRef<boolean>;
+  loadWorkTask: () => Promise<void>;
+  saveWorkTask: (status?: string) => Promise<WorkTask>;
+  completeWorkTask: () => Promise<WorkTask>;
+  rejectWorkTask: () => Promise<WorkTask>;
+  deleteWorkTask: () => Promise<void>;
+  resetWorkTask: () => void;
+  isReadOnly: ComputedRef<boolean>;
+  priorities: ComputedRef<IPriority[]>;
+  loadTaskTypes: () => Promise<IWorkTaskTypeResult>;
+  searchContacts: (keyword?: string, skip?: number, ids?: string[]) => Promise<MemberSearchResult>;
+  statusText: ComputedRef<string>;
+}
 
-export default (args: DetailsComposableArgs) => {
-  const factory = useDetailsFactory<WorkTask>({
-    load: async (loadItem) => {
-      const client = await getApiClient();
-      return client.get(loadItem!.id, "WithAttachments");
-    },
-    saveChanges: async (saveItem) => {
-      const client = await getApiClient();
-      if (saveItem.responsibleId) {
-        const contact = await getMember(saveItem.responsibleId);
-        if (contact) {
-          saveItem.responsibleName = contact.name;
-        }
-      }
-      return client.create(saveItem);
-    },
-    remove: async (removeItem) => {
-      (await getApiClient()).delete(removeItem.id);
-    },
-  });
+export interface UseWorkTaskDetailsOptions {
+  id?: string;
+  isNew?: boolean;
+}
 
-  const { load, saveChanges, remove: deleteWorkTask, loading, item, validationState } = factory();
-  const { hasAccess } = usePermissions();
-  const { t } = useI18n();
+export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWorkTaskDetails {
+  const { getTaskTypes } = useWorkTaskTypes();
+  const { searchContacts, getMember } = useContacts();
+  const apiClient = useApiClient(TaskManagementClient);
 
-  const scope: WorkTaskDetailScope = {
-    toolbarOverrides: {
-      saveChanges: {
-        isVisible: computed(
-          () =>
-            (!!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)) ||
-            (!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Create)),
-        ),
-        disabled: computed(() => !validationState.value.modified || !validationState.value.valid),
-      },
-      completeWorkTask: {
-        clickHandler: async () => {
-          if (item.value?.id) {
-            item.value = await (await getApiClient()).finish(item.value.id, true, item.value.parameters);
-            validationState.value.resetModified(item.value, true);
-          }
-        },
-        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),
-      },
-      rejectWorkTask: {
-        clickHandler: async () => {
-          if (item.value?.id) {
-            item.value = await (await getApiClient()).finish(item.value.id, false, item.value.parameters);
-            validationState.value.resetModified(item.value, true);
-          }
-        },
-        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish)),
-      },
-      removeWorkTask: {
-        async clickHandler() {
-          if (item.value?.id) {
-            const itemId = { id: item.value.id };
-            await deleteWorkTask!(itemId);
-            args.emit("parent:call", { method: "reload" });
-            args.emit("close:blade");
-          }
-        },
-        isVisible: computed(() => !!args.props.param && hasAccess(TaskPermissions.Delete)),
-      },
-      resetWorkTask: {
-        clickHandler: () => {
-          validationState.value.resetModified(item, true);
-        },
-        disabled: computed(() => !validationState.value.modified),
-        isVisible: computed(() => !!args.props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)),
-      },
-    },
-    isReadOnly: () => !isEditable(),
-    summaryVisibility: computed(() => !args.props.param),
-    priorities: Object.values(WorkTaskPriority),
-    loadTaskTypes: async () => {
-      return getTaskTypes();
-    },
-    searchContacts: searchContacts,
-    statusText: computed(() => {
-      let result = "To Do";
-      const workTask = item.value;
-      if (workTask == null) {
-        return result;
-      }
-      if (workTask.isActive === true) {
-        switch (workTask.completed) {
-          case false:
-          case true:
-            result = "Canceled";
-            break;
-        }
-      } else {
-        switch (workTask.completed) {
-          case null:
-          case false:
-            result = "Canceled";
-            break;
-          case true:
-            result = "Done";
-            break;
-        }
-      }
-      return result;
-    }),
-  };
-
-  const bladeTitle = computed(() => {
-    return args.props.param ? "# " + item.value?.number + ": " + item.value?.name : t("TASKS.PAGES.DETAILS.NEW_TITLE");
-  });
-
-  function isEditable(): boolean {
-    return !args.props.param || (item.value != null && !!item.value.isActive);
-  }
-
-  watch(
-    () => args?.mounted.value,
-    async () => {
-      if (!args.props.param) {
-        item.value = reactive(
-          new WorkTask({
-            priority: WorkTaskPriority.Normal,
-            attachments: [],
-            isActive: true,
-          }),
-        );
-        validationState.value.resetModified(item.value, true);
-      }
-    },
+  const item = ref<WorkTask>(
+    reactive(
+      new WorkTask({
+        priority: WorkTaskPriority.Normal,
+        attachments: [],
+        isActive: true,
+      }),
+    ),
   );
 
-  return {
-    load,
-    saveChanges,
-    deleteWorkTask,
-    loading,
-    item,
-    validationState,
-    bladeTitle,
-    scope,
+  const { currentValue, isModified, resetModificationState } = useModificationTracker(item);
+
+  const { action: loadWorkTask, loading: loadingWorkTask } = useAsync(async () => {
+    if (options?.id && !options?.isNew) {
+      const client = await apiClient.getApiClient();
+      const result = await client.get(options.id, "WithAttachments");
+      currentValue.value = reactive(result);
+      resetModificationState();
+    } else if (options?.isNew || !options?.id) {
+      currentValue.value = reactive(
+        new WorkTask({
+          priority: WorkTaskPriority.Normal,
+          attachments: [],
+          isActive: true,
+        }),
+      );
+      resetModificationState();
+    }
+  });
+
+  const { action: saveWorkTask, loading: savingWorkTask } = useAsync(async (status?: string) => {
+    const client = await apiClient.getApiClient();
+
+    if (status) {
+      currentValue.value.status = status;
+    }
+
+    if (currentValue.value.responsibleId) {
+      const contact = await getMember(currentValue.value.responsibleId);
+      if (contact) {
+        currentValue.value.responsibleName = contact.name;
+      }
+    }
+
+    const result = await client.create(currentValue.value);
+    currentValue.value = reactive(result);
+    resetModificationState();
+    return result;
+  });
+
+  const { action: completeWorkTask, loading: completingWorkTask } = useAsync(async () => {
+    if (currentValue.value?.id) {
+      const client = await apiClient.getApiClient();
+      const result = await client.finish(currentValue.value.id, true, currentValue.value.parameters);
+      currentValue.value = reactive(result);
+      resetModificationState();
+      return result;
+    }
+    throw new Error("Task ID is required");
+  });
+
+  const { action: rejectWorkTask, loading: rejectingWorkTask } = useAsync(async () => {
+    if (currentValue.value?.id) {
+      const client = await apiClient.getApiClient();
+      const result = await client.finish(currentValue.value.id, false, currentValue.value.parameters);
+      currentValue.value = reactive(result);
+      resetModificationState();
+      return result;
+    }
+    throw new Error("Task ID is required");
+  });
+
+  const { action: deleteWorkTask, loading: deletingWorkTask } = useAsync(async () => {
+    if (currentValue.value?.id) {
+      const client = await apiClient.getApiClient();
+      await client.delete(currentValue.value.id);
+    }
+  });
+
+  const resetWorkTask = () => {
+    resetModificationState();
   };
-};
+
+  const isReadOnly = computed(() => {
+    return (currentValue.value != null && !currentValue.value.isActive) || false;
+  });
+
+  const priorities = computed(() =>
+    Object.values(WorkTaskPriority).map((priority) => ({
+      name: priority,
+      value: priority,
+    })),
+  );
+
+  const loadTaskTypes = async () => {
+    return getTaskTypes();
+  };
+
+  const statusText = computed(() => {
+    let result = "To Do";
+    const workTask = currentValue.value;
+    if (workTask == null) {
+      return result;
+    }
+    if (workTask.isActive === true) {
+      switch (workTask.completed) {
+        case false:
+        case true:
+          result = "Canceled";
+          break;
+      }
+    } else {
+      switch (workTask.completed) {
+        case null:
+        case false:
+          result = "Canceled";
+          break;
+        case true:
+          result = "Done";
+          break;
+      }
+    }
+    return result;
+  });
+
+  return {
+    item: currentValue,
+    isModified,
+    loading: useLoading(loadingWorkTask, savingWorkTask, completingWorkTask, rejectingWorkTask, deletingWorkTask),
+    loadWorkTask,
+    saveWorkTask,
+    completeWorkTask,
+    rejectWorkTask,
+    deleteWorkTask,
+    resetWorkTask,
+    isReadOnly,
+    priorities,
+    loadTaskTypes,
+    searchContacts,
+    statusText,
+  };
+}

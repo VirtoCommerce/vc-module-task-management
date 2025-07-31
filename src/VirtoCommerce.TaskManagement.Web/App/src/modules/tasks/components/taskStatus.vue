@@ -9,25 +9,20 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, toRefs } from "vue";
+import { computed } from "vue";
 import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
 
 export interface Props {
-  context: {
-    item: IWorkTask;
-  };
+  item: IWorkTask;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  context: () => ({
-    item: {
-      status: "ToDo",
-    },
+  item: () => ({
+    status: "ToDo",
   }),
 });
 
-const { context } = toRefs(props);
-const itemStatus = computed(() => getStatus(context.value.item) || "ToDo");
+const itemStatus = computed(() => getStatus(props.item) || "ToDo");
 
 function getStatus(task: IWorkTask) {
   if (task.isActive) {

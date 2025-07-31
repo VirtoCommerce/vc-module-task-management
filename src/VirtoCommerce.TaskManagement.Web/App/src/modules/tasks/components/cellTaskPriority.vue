@@ -1,14 +1,12 @@
 <template>
-  <TaskPriority :task-priority="context.item?.priority!"></TaskPriority>
+  <TaskPriority :task-priority="priority" />
 </template>
 
 <script setup lang="ts">
-import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
+import { WorkTaskPriority } from "../../../api_client/virtocommerce.taskmanagement";
 import TaskPriority from "./taskPriority.vue";
 
 defineProps<{
-  context: {
-    item: IWorkTask;
-  };
+  priority?: WorkTaskPriority;
 }>();
 </script>

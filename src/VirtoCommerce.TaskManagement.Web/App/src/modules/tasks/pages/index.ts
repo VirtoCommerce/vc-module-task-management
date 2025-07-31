@@ -1,4 +1,2 @@
-import { workTasksList } from "./list";
-import { workTaskDetails } from "./details";
-
-export { workTasksList, workTaskDetails };
+export { default as workTasksList } from "./workTasksList.vue";
+export { default as workTaskDetails } from "./workTaskDetails.vue";

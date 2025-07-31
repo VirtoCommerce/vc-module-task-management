@@ -3,7 +3,7 @@ import { TaskManagementClient, TaskType } from "../../../../api_client/virtocomm
 import { orderBy, sortBy } from "lodash-es";
 import { useApiClient } from "@vc-shell/framework";
 
-interface IWorkTaskTypeResult {
+export interface IWorkTaskTypeResult {
   totalCount?: number;
   results?: TaskType[];
 }

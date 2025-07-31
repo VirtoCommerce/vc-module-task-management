@@ -15,10 +15,11 @@
       <description>Tasks</description>
       <iconUrl>/apps/tasks/img/icons/logo.svg</iconUrl>
       <permission>task:access</permission>
+      <supportEmbeddedMode>true</supportEmbeddedMode>
     </app>
   </apps>
   <title>Task Management</title>
-  <description>Virto Commerce Task Management module</description>
+  <description>Headquarters personas can use task management to create task lists for retail stores, and to track status by store or worker.</description>
   <authors>
     <author>Artem Dudarev</author>
     <author>Oleg Zhuk</author>
@@ -27,7 +28,7 @@
   <owners>
     <owner>VirtoCommerce</owner>
   </owners>
-  <projectUrl>https://github.com/VirtoCommerce/vc-module-TaskManagement</projectUrl>
+  <projectUrl>https://github.com/VirtoCommerce/vc-module-task-management</projectUrl>
   <iconUrl>Modules/$(VirtoCommerce.TaskManagement)/Content/logo.png</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <assemblyFile>VirtoCommerce.TaskManagement.Web.dll</assemblyFile>

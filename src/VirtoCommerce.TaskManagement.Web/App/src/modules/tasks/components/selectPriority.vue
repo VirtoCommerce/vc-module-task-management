@@ -1,5 +1,5 @@
 <template>
-  <TaskPriority :task-priority="context.opt"></TaskPriority>
+  <TaskPriority :task-priority="item" />
 </template>
 
 <script setup lang="ts">
@@ -7,8 +7,6 @@ import { WorkTaskPriority } from "../../../api_client/virtocommerce.taskmanageme
 import TaskPriority from "./taskPriority.vue";
 
 defineProps<{
-  context: {
-    opt: WorkTaskPriority;
-  };
+  item: WorkTaskPriority;
 }>();
 </script>

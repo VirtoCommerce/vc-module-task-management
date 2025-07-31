@@ -1,79 +1,82 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, onMounted, Ref, ComputedRef } from "vue";
 import {
+  IWorkTaskSearchCriteria,
   TaskManagementClient,
   TaskType,
   WorkTask,
   WorkTaskPriority,
   WorkTaskSearchCriteria,
+  WorkTaskSearchResult,
 } from "../../../../api_client/virtocommerce.taskmanagement";
-import {
-  ListBaseBladeScope,
-  ListComposableArgs,
-  useApiClient,
-  useBladeNavigation,
-  useListFactory,
-} from "@vc-shell/framework";
+import { useApiClient, useAsync, useLoading } from "@vc-shell/framework";
 import useWorkTaskTypes from "../useWorkTaskTypes";
 
-export interface DynamicItemsScope extends ListBaseBladeScope {}
+export interface UseBaseWorkTasksListOptions {
+  pageSize?: number;
+  sort?: string;
+  defaultFilters?: Partial<IWorkTaskSearchCriteria>;
+}
 
-const { getApiClient } = useApiClient(TaskManagementClient);
-const { getTaskTypes } = useWorkTaskTypes();
+export interface IUseBaseWorkTasksList {
+  items: ComputedRef<WorkTask[]>;
+  totalCount: ComputedRef<number>;
+  pages: ComputedRef<number>;
+  currentPage: ComputedRef<number>;
+  searchQuery: ComputedRef<IWorkTaskSearchCriteria>;
+  loadWorkTasks: (query?: IWorkTaskSearchCriteria) => Promise<void>;
+  loading: ComputedRef<boolean>;
+  taskTypes: Ref<TaskType[]>;
+  priorities: ComputedRef<{ value: WorkTaskPriority; label: string }[]>;
+}
 
-export default (args: ListComposableArgs) => {
-  const { mounted } = args;
-  const factory = useListFactory<WorkTask[], WorkTaskSearchCriteria>({
-    load: async (searchQuery) => {
-      const client = await getApiClient();
-      return client.searchTasks({
-        take: 20,
-        ...(searchQuery || {}),
-      } as WorkTaskSearchCriteria);
-    },
-  });
+export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBaseWorkTasksList {
+  const { getApiClient } = useApiClient(TaskManagementClient);
+  const { getTaskTypes } = useWorkTaskTypes();
 
-  const taskTypes = ref(<TaskType[]>[]);
+  const pageSize = options?.pageSize || 20;
+  const searchQuery = ref<WorkTaskSearchCriteria>(
+    new WorkTaskSearchCriteria({
+      take: pageSize,
+      sort: options?.sort || "modifiedDate:desc",
+      skip: 0,
+      ...options?.defaultFilters,
+    }),
+  );
 
-  watch(mounted, async () => {
-    const result = await getTaskTypes();
-    taskTypes.value = result.results || [];
-  });
+  const searchResult = ref<WorkTaskSearchResult>();
+  const taskTypes = ref<TaskType[]>([]);
 
-  const { load, items, pagination, loading, query } = factory();
-  const { openBlade, resolveBladeByName } = useBladeNavigation();
-
-  async function openDetailsBlade(data?: Omit<Parameters<typeof openBlade>["0"], "blade">) {
-    await openBlade({
-      blade: resolveBladeByName("WorkTaskDetails"),
-      ...data,
+  const { action: loadWorkTasks, loading: loadingWorkTasks } = useAsync<IWorkTaskSearchCriteria>(async (_query) => {
+    // Merge with existing query and apply filters
+    searchQuery.value = new WorkTaskSearchCriteria({
+      ...searchQuery.value,
+      ...(_query || {}),
+      ...options?.defaultFilters, // Always apply default filters
     });
-  }
 
-  const scope: DynamicItemsScope = {
-    openDetailsBlade,
+    const client = await getApiClient();
+    searchResult.value = await client.searchTasks(searchQuery.value);
+  });
+
+  onMounted(async () => {
+    const typesResult = await getTaskTypes();
+    taskTypes.value = typesResult.results || [];
+  });
+
+  return {
+    items: computed(() => searchResult.value?.results || []),
+    totalCount: computed(() => searchResult.value?.totalCount || 0),
+    pages: computed(() => Math.ceil((searchResult.value?.totalCount || 1) / pageSize)),
+    currentPage: computed(() => Math.ceil((searchQuery.value?.skip || 0) / Math.max(1, pageSize) + 1)),
+    searchQuery: computed(() => searchQuery.value),
+    loadWorkTasks,
+    loading: useLoading(loadingWorkTasks),
     taskTypes,
     priorities: computed(() =>
       Object.values(WorkTaskPriority).map((value) => ({
         value,
-        label: value,
+        label: value as string,
       })),
     ),
-    toolbarOverrides: {
-      openCreateTaskBlade: {
-        clickHandler: async () => {
-          await openDetailsBlade();
-        },
-        isVisible: computed(() => true),
-      },
-    },
   };
-
-  return {
-    items,
-    load,
-    loading,
-    pagination,
-    query,
-    scope,
-  };
-};
+}

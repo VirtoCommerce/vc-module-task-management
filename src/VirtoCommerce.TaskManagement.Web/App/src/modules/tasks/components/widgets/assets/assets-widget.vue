@@ -3,7 +3,7 @@
     v-bind="props"
     :value="count"
     :title="$t('TASKS.PAGES.DETAILS.WIDGETS.ASSETS')"
-    icon="far fa-file"
+    icon="lucide-file"
     @click="clickHandler"
   >
   </VcWidget>
@@ -11,32 +11,29 @@
 
 <script setup lang="ts">
 import { VcWidget, useBladeNavigation, usePopup, useAssets } from "@vc-shell/framework";
-import { UnwrapNestedRefs, computed, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { isEqual } from "lodash-es";
-
-import { useWorkTask } from "../../../composables";
-import { WorkTaskAttachment } from "../../../../../api_client/virtocommerce.taskmanagement";
+import { WorkTask, WorkTaskAttachment } from "../../../../../api_client/virtocommerce.taskmanagement";
 
 const props = defineProps<{
-  modelValue: UnwrapNestedRefs<ReturnType<typeof useWorkTask>>;
+  item: WorkTask;
 }>();
 
 const emit = defineEmits<{
-  (event: "update:modelValue", context: UnwrapNestedRefs<ReturnType<typeof useWorkTask>>): void;
+  (event: "update:item", item: WorkTask): void;
 }>();
 
 const { openBlade, resolveBladeByName } = useBladeNavigation();
 const { showConfirmation } = usePopup();
 const { t } = useI18n({ useScope: "global" });
 const { edit, upload, remove, loading } = useAssets();
-const modelValue = ref(props.modelValue);
 const widgetOpened = ref(false);
 const internalModel = ref();
-const count = computed(() => modelValue.value?.item?.attachments?.length || 0);
+const count = computed(() => internalModel.value?.attachments?.length || 0);
 
 watch(
-  () => props.modelValue,
+  () => props.item,
   (newVal) => {
     if (!isEqual(internalModel.value, newVal)) {
       internalModel.value = newVal;
@@ -50,12 +47,12 @@ function clickHandler() {
     openBlade({
       blade: resolveBladeByName("AssetsManager"),
       options: {
-        assets: modelValue.value?.item?.attachments,
+        assets: internalModel.value?.attachments,
         loading: assetsHandler?.loading,
         assetsEditHandler: assetsHandler?.edit,
         assetsUploadHandler: assetsHandler?.upload,
         assetsRemoveHandler: assetsHandler?.remove,
-        disabled: !props.modelValue.item?.isActive,
+        disabled: !props.item?.isActive,
       },
       onOpen() {
         widgetOpened.value = true;
@@ -70,44 +67,42 @@ function clickHandler() {
 const assetsHandler = {
   loading: computed(() => loading.value),
   edit: (files: WorkTaskAttachment[]) => {
-    internalModel.value.item.attachments = edit(files, internalModel.value.item.attachments);
+    internalModel.value.attachments = edit(files, internalModel.value.attachments);
     emitAssets();
-    return internalModel.value.item.attachments;
+    return internalModel.value.attachments;
   },
   async upload(files: FileList | null, lastSortOrder?: number) {
     if (files) {
-      const uploaded = (await upload(files, `tasks/${internalModel.value.item.id}`, lastSortOrder)).map(
+      const uploaded = (await upload(files, `tasks/${internalModel.value.id}`, lastSortOrder)).map(
         (x) => new WorkTaskAttachment(x),
       );
 
-      if (!internalModel.value.item.attachments) {
-        internalModel.value.item.attachments = [];
+      if (!internalModel.value.attachments) {
+        internalModel.value.attachments = [];
       }
 
-      internalModel.value.item.attachments = internalModel.value.item.attachments.concat(uploaded);
+      internalModel.value.attachments = internalModel.value.attachments.concat(uploaded);
 
       files = null;
 
       emitAssets();
-      return internalModel.value.item.attachments;
+      return internalModel.value.attachments;
     }
   },
   async remove(files: WorkTaskAttachment[]) {
     if (
-      await showConfirmation(
-        computed(() => t("TASKS.PAGES.DETAILS.ALERTS.DELETE_CONFIRMATION_ASSET", { count: files.length })),
-      )
+      await showConfirmation(computed(() => t("TASKS.PAGES.ALERTS.DELETE_CONFIRMATION_ASSET", { count: files.length })))
     ) {
-      internalModel.value.item.attachments = (await remove(files, internalModel.value.item.attachments)).map(
+      internalModel.value.attachments = (await remove(files, internalModel.value.attachments)).map(
         (x) => new WorkTaskAttachment(x),
       );
     }
     emitAssets();
-    return internalModel.value.item.attachments;
+    return internalModel.value.attachments;
   },
 };
 
 function emitAssets() {
-  emit("update:modelValue", internalModel.value);
+  emit("update:item", internalModel.value);
 }
 </script>

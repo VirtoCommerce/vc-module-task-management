@@ -19,7 +19,7 @@
     </app>
   </apps>
   <title>Task Management</title>
-  <description>Virto Commerce Task Management module</description>
+  <description>Headquarters personas can use task management to create task lists for retail stores, and to track status by store or worker.</description>
   <authors>
     <author>Artem Dudarev</author>
     <author>Oleg Zhuk</author>

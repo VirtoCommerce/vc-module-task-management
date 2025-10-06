@@ -17,14 +17,11 @@
         <VcSelect
           v-model="item.type"
           :label="$t('TASKS.PAGES.DETAILS.FIELDS.TYPE.TITLE')"
-          :options="taskTypes"
+          :options="loadTaskTypes"
           option-value="name"
           option-label="name"
           :disabled="isReadOnly"
         />
-        <div>
-          {{ taskTypes }}
-        </div>
 
         <!-- Task Name (only for new) -->
         <VcInput
@@ -159,7 +156,7 @@ const {
   resetWorkTask,
   isReadOnly,
   priorities,
-  taskTypes,
+  loadTaskTypes,
   searchContacts,
   statusText,
   loadWorkTask,

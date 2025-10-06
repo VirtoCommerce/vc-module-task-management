@@ -1,13 +1,14 @@
-import { computed, reactive, ref, Ref, ComputedRef } from "vue";
+import { computed, reactive, onMounted, ref, Ref, ComputedRef } from "vue";
 import {
   MemberSearchResult,
   TaskManagementClient,
+  TaskType,
   WorkTask,
   WorkTaskPriority,
 } from "../../../../api_client/virtocommerce.taskmanagement";
 import { useApiClient, useAsync, useLoading, useModificationTracker } from "@vc-shell/framework";
 
-import useWorkTaskTypes, { IWorkTaskTypeResult } from "../useWorkTaskTypes";
+import useWorkTaskTypes from "../useWorkTaskTypes";
 import useContacts from "../useContacts";
 
 export interface IPriority {
@@ -27,7 +28,7 @@ export interface IUseWorkTaskDetails {
   resetWorkTask: () => void;
   isReadOnly: ComputedRef<boolean>;
   priorities: ComputedRef<IPriority[]>;
-  loadTaskTypes: () => Promise<IWorkTaskTypeResult>;
+  taskTypes: Ref<TaskType[]>;
   searchContacts: (keyword?: string, skip?: number, ids?: string[]) => Promise<MemberSearchResult>;
   statusText: ComputedRef<string>;
 }
@@ -51,6 +52,13 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
       }),
     ),
   );
+
+  const taskTypes = ref<TaskType[]>([]);
+
+  onMounted(async () => {
+    const typesResult = await getTaskTypes();
+    taskTypes.value = typesResult.results || [];
+  });
 
   const { currentValue, isModified, resetModificationState } = useModificationTracker(item);
 
@@ -179,7 +187,7 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
     resetWorkTask,
     isReadOnly,
     priorities,
-    loadTaskTypes,
+    taskTypes,
     searchContacts,
     statusText,
   };

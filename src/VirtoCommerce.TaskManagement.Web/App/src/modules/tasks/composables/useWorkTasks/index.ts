@@ -59,8 +59,10 @@ export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBas
   });
 
   onMounted(async () => {
+    console.warn("useWorkTasks (list) mounted - begin");
     const typesResult = await getTaskTypes();
     taskTypes.value = typesResult.results || [];
+    console.warn("useWorkTasks (list) mounted - end", taskTypes.value);
   });
 
   return {

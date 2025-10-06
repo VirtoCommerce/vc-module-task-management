@@ -22,6 +22,9 @@
           option-label="name"
           :disabled="isReadOnly"
         />
+        <div>
+          {{ taskTypes }}
+        </div>
 
         <!-- Task Name (only for new) -->
         <VcInput

@@ -56,8 +56,10 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
   const taskTypes = ref<TaskType[]>([]);
 
   onMounted(async () => {
+    console.warn("useWorkTask (details) mounted - begin");
     const typesResult = await getTaskTypes();
     taskTypes.value = typesResult.results || [];
+    console.warn("useWorkTask (details) mounted - end", taskTypes.value);
   });
 
   const { currentValue, isModified, resetModificationState } = useModificationTracker(item);

@@ -21,22 +21,27 @@ export default (): IUseWorkTaskTypes => {
   const types = ref<TaskType[]>([]);
 
   async function getTaskTypes(): Promise<IWorkTaskTypeResult> {
+    console.warn("getTaskTypes - begin");
     loading.value = true;
     const client = await getApiClient();
     try {
+      console.warn("getTaskTypes - api client", client);
       const loadedTypes = await client.getTaskTypes();
       const orderedTypes = orderBy(loadedTypes, ["name"], ["asc"]);
       const result = sortBy(orderedTypes, (type) => (type.name === "Other" || type.name === "Others" ? 1 : 0));
       types.value = result;
+      console.warn("getTaskTypes - api result", result);
       return {
         totalCount: types.value.length,
         results: types.value,
       };
     } catch (e) {
+      console.warn("getTaskTypes - error", e);
       console.error(e);
       throw e;
     } finally {
       loading.value = false;
+      console.warn("getTaskTypes - end");
     }
   }
 

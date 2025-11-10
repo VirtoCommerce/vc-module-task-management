@@ -8,7 +8,7 @@
   },
   "permissions": {
     "TaskManagement:access": "Open Task Management menu",
-    "TaskManagement:create": "Create Tas kManagement related data",
+    "TaskManagement:create": "Create Task Management related data",
     "TaskManagement:read": "View Task Management related data",
     "TaskManagement:update": "Update Task Management related data",
     "TaskManagement:delete": "Delete Task Management related data"

@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Hej världen-panel"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Öppna Uppgiftshantering-menyn",
+    "TaskManagement:create": "Skapa Uppgiftshantering-relaterad data",
+    "TaskManagement:read": "Visa Uppgiftshantering-relaterad data",
+    "TaskManagement:update": "Uppdatera Uppgiftshantering-relaterad data",
+    "TaskManagement:delete": "Ta bort Uppgiftshantering-relaterad data"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Uppgiftsavisering",
+        "description": "(Omstart krävs) Aktivera/inaktivera avisering vid uppgiftstilldelning"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Aviserings-e-post utan svar",
+        "description": "Används som avsändar-e-post"
+      },
+      "TaskAppUrl": {
+        "title": "Bas-URL för uppgiftsportal",
+        "description": "URL till uppgiftsportalen, standard är - platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Uppgiftstyper",
+        "description": "Lista över uppgiftstyper som anställda kan välja när de skapar en ny uppgift"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Avisering vid tilldelad arbetsuppgift",
+      "description": "Chefen får ett e-postmeddelande när en ny arbetsuppgift tilldelas"
+    }
+  }
+}

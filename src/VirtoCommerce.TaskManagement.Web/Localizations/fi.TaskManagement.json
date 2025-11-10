@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Hei maailma -paneeli"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Avaa Tehtävien hallinta -valikko",
+    "TaskManagement:create": "Luo Tehtävien hallintaan liittyviä tietoja",
+    "TaskManagement:read": "Näytä Tehtävien hallintaan liittyviä tietoja",
+    "TaskManagement:update": "Päivitä Tehtävien hallintaan liittyviä tietoja",
+    "TaskManagement:delete": "Poista Tehtävien hallintaan liittyviä tietoja"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Tehtäväilmoitus",
+        "description": "(Uudelleenkäynnistys vaaditaan) Ota käyttöön tai poista käytöstä tehtävän määritysilmoitus"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Ilmoituksen vastausvapaa sähköposti",
+        "description": "Käytetään lähettäjän sähköpostina"
+      },
+      "TaskAppUrl": {
+        "title": "Tehtäväportaalien perus-URL",
+        "description": "Tehtäväportaalin URL, oletusarvo - platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Tehtävätyypit",
+        "description": "Luettelo tehtävätyypeistä, joita työntekijät voivat valita luodessaan uuden tehtävän"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Ilmoitus määrätyistä työtehtävistä",
+      "description": "Esihenkilö saa sähköposti-ilmoituksen, kun uusi työtehtävä määritetään"
+    }
+  }
+}

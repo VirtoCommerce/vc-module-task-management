@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "Hei verden-panel"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "Åpne Oppgaveadministrasjon-menyen",
+    "TaskManagement:create": "Opprette Oppgaveadministrasjon-relaterte data",
+    "TaskManagement:read": "Vise Oppgaveadministrasjon-relaterte data",
+    "TaskManagement:update": "Oppdatere Oppgaveadministrasjon-relaterte data",
+    "TaskManagement:delete": "Slette Oppgaveadministrasjon-relaterte data"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "Oppgavevarsling",
+        "description": "(Omstart kreves) Aktiver/deaktiver varsel ved oppgavetildeling"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "Varslings-e-post uten svar",
+        "description": "Brukes som avsender-e-post"
+      },
+      "TaskAppUrl": {
+        "title": "Grunn-URL for oppgaveportal",
+        "description": "URL til oppgaveportalen, standard er - platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "Oppgavetyper",
+        "description": "Liste over oppgavetyper som ansatte kan velge når de oppretter ny oppgave"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "Varsel ved tildelt arbeidsoppgave",
+      "description": "Lederen får e-postvarsel når en ny arbeidsoppgave tildeles"
+    }
+  }
+}

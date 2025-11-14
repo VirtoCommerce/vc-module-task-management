@@ -7,17 +7,17 @@
     }
   },
   "permissions": {
-    "TaskManagement:access": "Open TaskManagement menu",
-    "TaskManagement:create": "Create TaskManagement related data",
-    "TaskManagement:read": "View TaskManagement related data",
-    "TaskManagement:update": "Update TaskManagement related data",
-    "TaskManagement:delete": "Delete TaskManagement related data"
+    "TaskManagement:access": "Open Task Management menu",
+    "TaskManagement:create": "Create Task Management related data",
+    "TaskManagement:read": "View Task Management related data",
+    "TaskManagement:update": "Update Task Management related data",
+    "TaskManagement:delete": "Delete Task Management related data"
   },
   "settings": {
     "TaskManagement": {
       "TaskNotificationsEnabled": {
         "title": "Task notification",
-        "description": "(Restart required) Enable/Disable task assignment notification"
+        "description": "(Restart required) Enable/disable task assignment notification"
       },
       "TaskNotificationNoReplyEmail": {
         "title": "Notification no-reply email",

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.TaskManagement.Data.Repositories;
@@ -11,15 +12,18 @@ using VirtoCommerce.TaskManagement.Data.Repositories;
 namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
 {
     [DbContext(typeof(TaskManagementDbContext))]
-    [Migration("20230823100734_Initial")]
+    [Migration("20260511082306_Initial")]
     partial class Initial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "10.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("VirtoCommerce.TaskManagement.Data.Models.WorkTaskAttachmentEntity", b =>
                 {
@@ -106,6 +110,8 @@ namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Number"));
+
                     b.Property<string>("ObjectId")
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
@@ -153,6 +159,8 @@ namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Number");
 
                     b.HasIndex("Completed");
 

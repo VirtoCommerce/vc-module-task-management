@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
 {
+    /// <inheritdoc />
     public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
@@ -64,6 +66,7 @@ namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkTask", x => x.Id);
+                    table.UniqueConstraint("AK_WorkTask_Number", x => x.Number);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -154,6 +157,7 @@ namespace VirtoCommerce.TaskManagement.Data.MySql.Migrations
                 column: "WorkTaskId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -10,13 +10,8 @@
     <ProjectReference Include="..\VirtoCommerce.TaskManagement.Core\VirtoCommerce.TaskManagement.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    
-    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.1002.0" />
-    <PackageReference Include="VirtoCommerce.Platform.Hangfire" Version="3.1002.0" />
-    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.1002.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.1023.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Hangfire" Version="3.1023.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.1023.0" />
   </ItemGroup>
 </Project>

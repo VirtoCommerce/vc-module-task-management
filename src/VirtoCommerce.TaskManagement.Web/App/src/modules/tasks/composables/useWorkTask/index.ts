@@ -3,7 +3,7 @@ import {
   MemberSearchResult,
   TaskManagementClient,
   WorkTask,
-  WorkTaskPriority,
+  TaskPriority,
 } from "../../../../api_client/virtocommerce.taskmanagement";
 import { useApiClient, useAsync, useLoading, useModificationTracker } from "@vc-shell/framework";
 
@@ -12,7 +12,7 @@ import useContacts from "../useContacts";
 
 export interface IPriority {
   name: string;
-  value: WorkTaskPriority;
+  value: TaskPriority;
 }
 
 export interface IUseWorkTaskDetails {
@@ -43,13 +43,11 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
   const apiClient = useApiClient(TaskManagementClient);
 
   const item = ref<WorkTask>(
-    reactive(
-      new WorkTask({
-        priority: WorkTaskPriority.Normal,
-        attachments: [],
-        isActive: true,
-      }),
-    ),
+    reactive({
+      priority: TaskPriority.Normal,
+      attachments: [],
+      isActive: true,
+    } as WorkTask),
   );
 
   const { currentValue, isModified, resetModificationState } = useModificationTracker(item);
@@ -61,13 +59,11 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
       currentValue.value = reactive(result);
       resetModificationState();
     } else if (options?.isNew || !options?.id) {
-      currentValue.value = reactive(
-        new WorkTask({
-          priority: WorkTaskPriority.Normal,
-          attachments: [],
-          isActive: true,
-        }),
-      );
+      currentValue.value = reactive({
+        priority: TaskPriority.Normal,
+        attachments: [],
+        isActive: true,
+      } as WorkTask);
       resetModificationState();
     }
   });
@@ -130,7 +126,7 @@ export function useWorkTaskDetails(options?: UseWorkTaskDetailsOptions): IUseWor
   });
 
   const priorities = computed(() =>
-    Object.values(WorkTaskPriority).map((priority) => ({
+    Object.values(TaskPriority).map((priority) => ({
       name: priority,
       value: priority,
     })),

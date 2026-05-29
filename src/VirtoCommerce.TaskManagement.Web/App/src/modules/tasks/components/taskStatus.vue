@@ -10,10 +10,12 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { IWorkTask } from "../../../api_client/virtocommerce.taskmanagement";
+import { WorkTask } from "../../../api_client/virtocommerce.taskmanagement";
+
+import { VcStatus } from "@vc-shell/framework/ui";
 
 export interface Props {
-  item: IWorkTask;
+  item: WorkTask;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const itemStatus = computed(() => getStatus(props.item) || "ToDo");
 
-function getStatus(task: IWorkTask) {
+function getStatus(task: WorkTask) {
   if (task.isActive) {
     return "ToDo";
   }

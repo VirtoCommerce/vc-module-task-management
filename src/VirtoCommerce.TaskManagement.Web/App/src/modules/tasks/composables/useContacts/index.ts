@@ -35,14 +35,15 @@ export default (): IUseContacts => {
     loading.value = true;
     const client = await getApiClient();
     try {
-      const criteria = new MembersSearchCriteria();
-      criteria.keyword = keyword;
-      criteria.take = 20;
-      criteria.skip = skip;
-      criteria.objectIds = ids ?? [];
-      criteria.memberType = undefined;
-      criteria.memberTypes = ["Contact", "Employee"];
-      criteria.deepSearch = true;
+      const criteria = {
+        keyword,
+        take: 20,
+        skip,
+        objectIds: ids ?? [],
+        memberType: undefined,
+        memberTypes: ["Contact", "Employee"],
+        deepSearch: true,
+      } as MembersSearchCriteria;
       return await client.searchAssignMembers(criteria);
     } catch (e) {
       console.error(e);

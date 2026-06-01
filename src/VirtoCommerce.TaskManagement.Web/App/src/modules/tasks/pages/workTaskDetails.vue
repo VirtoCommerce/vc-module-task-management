@@ -117,7 +117,6 @@ const {
   completeWorkTask,
   rejectWorkTask,
   deleteWorkTask,
-  resetWorkTask,
   isReadOnly,
   priorities,
   loadTaskTypes,
@@ -155,6 +154,7 @@ const toolbarItems = computed((): IBladeToolbar[] => [
     clickHandler: async () => {
       try {
         await completeWorkTask();
+        form.setBaseline();
         callParent("reload");
       } catch (error) {
         console.error("Failed to complete task:", error);
@@ -169,6 +169,7 @@ const toolbarItems = computed((): IBladeToolbar[] => [
     clickHandler: async () => {
       try {
         await rejectWorkTask();
+        form.setBaseline();
         callParent("reload");
       } catch (error) {
         console.error("Failed to reject task:", error);
@@ -182,7 +183,7 @@ const toolbarItems = computed((): IBladeToolbar[] => [
     disabled: !form.isModified.value,
     isVisible: !!param.value && item.value?.isActive && hasAccess(TaskPermissions.Update),
     clickHandler: () => {
-      resetWorkTask();
+      form.revert();
     },
   },
   {
@@ -196,6 +197,7 @@ const toolbarItems = computed((): IBladeToolbar[] => [
     clickHandler: async () => {
       try {
         await saveWorkTask();
+        form.setBaseline();
         callParent("reload");
         callParent("onItemClick", item.value);
       } catch (error) {
@@ -224,5 +226,6 @@ const toolbarItems = computed((): IBladeToolbar[] => [
 
 onMounted(async () => {
   await loadWorkTask();
+  form.setBaseline();
 });
 </script>

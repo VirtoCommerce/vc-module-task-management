@@ -56,7 +56,7 @@ export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBas
     pageSize,
     totalCount: computed(() => searchResult.value?.totalCount || 0),
     onPageChange: ({ skip }) => {
-      void loadWorkTasks({ ...searchQuery.value, skip } as WorkTaskSearchCriteria);
+      loadWorkTasks({ ...searchQuery.value, skip } as WorkTaskSearchCriteria);
     },
   });
 

@@ -1,32 +1,29 @@
 import { computed, ref, onMounted, Ref, ComputedRef } from "vue";
 import {
-  IWorkTaskSearchCriteria,
   TaskManagementClient,
+  TaskPriority,
   TaskType,
   WorkTask,
-  WorkTaskPriority,
   WorkTaskSearchCriteria,
   WorkTaskSearchResult,
 } from "../../../../api_client/virtocommerce.taskmanagement";
-import { useApiClient, useAsync, useLoading } from "@vc-shell/framework";
+import { useApiClient, useAsync, useDataTablePagination, useLoading } from "@vc-shell/framework";
 import useWorkTaskTypes from "../useWorkTaskTypes";
 
 export interface UseBaseWorkTasksListOptions {
   pageSize?: number;
   sort?: string;
-  defaultFilters?: Partial<IWorkTaskSearchCriteria>;
+  defaultFilters?: Partial<WorkTaskSearchCriteria>;
 }
 
 export interface IUseBaseWorkTasksList {
   items: ComputedRef<WorkTask[]>;
-  totalCount: ComputedRef<number>;
-  pages: ComputedRef<number>;
-  currentPage: ComputedRef<number>;
-  searchQuery: ComputedRef<IWorkTaskSearchCriteria>;
-  loadWorkTasks: (query?: IWorkTaskSearchCriteria) => Promise<void>;
+  pagination: ReturnType<typeof useDataTablePagination>;
+  searchQuery: ComputedRef<WorkTaskSearchCriteria>;
+  loadWorkTasks: (query?: WorkTaskSearchCriteria) => Promise<void>;
   loading: ComputedRef<boolean>;
   taskTypes: Ref<TaskType[]>;
-  priorities: ComputedRef<{ value: WorkTaskPriority; label: string }[]>;
+  priorities: ComputedRef<{ value: TaskPriority; label: string }[]>;
 }
 
 export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBaseWorkTasksList {
@@ -34,28 +31,33 @@ export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBas
   const { getTaskTypes } = useWorkTaskTypes();
 
   const pageSize = options?.pageSize || 20;
-  const searchQuery = ref<WorkTaskSearchCriteria>(
-    new WorkTaskSearchCriteria({
-      take: pageSize,
-      sort: options?.sort || "modifiedDate:desc",
-      skip: 0,
-      ...options?.defaultFilters,
-    }),
-  );
+  const searchQuery = ref<WorkTaskSearchCriteria>({
+    take: pageSize,
+    sort: options?.sort || "modifiedDate:desc",
+    skip: 0,
+    ...options?.defaultFilters,
+  } as WorkTaskSearchCriteria);
 
   const searchResult = ref<WorkTaskSearchResult>();
   const taskTypes = ref<TaskType[]>([]);
 
-  const { action: loadWorkTasks, loading: loadingWorkTasks } = useAsync<IWorkTaskSearchCriteria>(async (_query) => {
-    // Merge with existing query and apply filters
-    searchQuery.value = new WorkTaskSearchCriteria({
+  const { action: loadWorkTasks, loading: loadingWorkTasks } = useAsync<WorkTaskSearchCriteria>(async (_query) => {
+    searchQuery.value = {
       ...searchQuery.value,
       ...(_query || {}),
-      ...options?.defaultFilters, // Always apply default filters
-    });
+      ...options?.defaultFilters,
+    } as WorkTaskSearchCriteria;
 
     const client = await getApiClient();
     searchResult.value = await client.searchTasks(searchQuery.value);
+  });
+
+  const pagination = useDataTablePagination({
+    pageSize,
+    totalCount: computed(() => searchResult.value?.totalCount || 0),
+    onPageChange: ({ skip }) => {
+      loadWorkTasks({ ...searchQuery.value, skip } as WorkTaskSearchCriteria);
+    },
   });
 
   onMounted(async () => {
@@ -65,15 +67,13 @@ export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBas
 
   return {
     items: computed(() => searchResult.value?.results || []),
-    totalCount: computed(() => searchResult.value?.totalCount || 0),
-    pages: computed(() => Math.ceil((searchResult.value?.totalCount || 1) / pageSize)),
-    currentPage: computed(() => Math.ceil((searchQuery.value?.skip || 0) / Math.max(1, pageSize) + 1)),
+    pagination,
     searchQuery: computed(() => searchQuery.value),
     loadWorkTasks,
     loading: useLoading(loadingWorkTasks),
     taskTypes,
     priorities: computed(() =>
-      Object.values(WorkTaskPriority).map((value) => ({
+      Object.values(TaskPriority).map((value) => ({
         value,
         label: value as string,
       })),

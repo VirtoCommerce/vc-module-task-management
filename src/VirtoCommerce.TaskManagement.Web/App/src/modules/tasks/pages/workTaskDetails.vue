@@ -1,15 +1,9 @@
 <template>
   <VcBlade
-    v-loading="loading"
+    :loading="loading"
     :title="bladeTitle"
     width="50%"
-    :expanded="expanded"
-    :closable="closable"
     :toolbar-items="toolbarItems"
-    :modified="isModified"
-    @close="$emit('close:blade')"
-    @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
   >
     <VcContainer>
       <VcForm class="tw-flex tw-flex-col tw-gap-4">
@@ -39,7 +33,6 @@
         />
 
         <!-- Priority -->
-        <!-- @vue-generic {IPriority} -->
         <VcSelect
           v-model="item.priority"
           :label="$t('TASKS.PAGES.DETAILS.FIELDS.PRIORITY.TITLE')"
@@ -49,10 +42,10 @@
           :disabled="isReadOnly"
         >
           <template #selected-item="{ opt }">
-            <SelectPriority :item="opt.value" />
+            <SelectPriority :item="(opt as IPriority).value" />
           </template>
           <template #option="{ opt }">
-            <SelectPriority :item="opt.value" />
+            <SelectPriority :item="(opt as IPriority).value" />
           </template>
         </VcSelect>
 
@@ -95,65 +88,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onBeforeUnmount, inject } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Field, useForm } from "vee-validate";
-import {
-  BladeInstance,
-  IBladeToolbar,
-  IParentCallArgs,
-  useBladeNavigation,
-  usePermissions,
-  usePopup,
-  useWidgets,
-} from "@vc-shell/framework";
+import { Field } from "vee-validate";
+import { IBladeToolbar, useBlade, useBladeForm, usePermissions, usePopup } from "@vc-shell/framework";
 
 import { useWorkTaskDetails, type IPriority } from "../composables/useWorkTask";
+import { useTasksWidgets } from "../widgets/useTasksWidgets";
 import { TaskPermissions } from "../../../types";
 import SelectPriority from "../components/selectPriority.vue";
-import AssetsWidget from "../components/widgets/assets/assets-widget.vue";
-import { WorkTask } from "../../../api_client/virtocommerce.taskmanagement";
 
-export interface Props {
-  expanded?: boolean;
-  closable?: boolean;
-  param?: string;
-  options?: unknown;
-}
+import { VcBlade, VcContainer, VcEditor, VcForm, VcInput, VcSelect, VcStatus } from "@vc-shell/framework/ui";
 
-export interface Emits {
-  (event: "parent:call", args: IParentCallArgs): void;
-  (event: "close:blade"): void;
-  (event: "expand:blade"): void;
-  (event: "collapse:blade"): void;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-defineOptions({
+defineBlade({
   name: "WorkTaskDetails",
   url: "/work-task-details",
 });
 
-const { meta } = useForm({ validateOnMount: false });
 const { hasAccess } = usePermissions();
-const { registerWidget, unregisterWidget } = useWidgets();
-const { onBeforeClose } = useBladeNavigation();
+const { param, callParent, closeSelf } = useBlade();
 const { showConfirmation } = usePopup();
-
-const blade = inject(BladeInstance);
 const { t } = useI18n({ useScope: "global" });
 
 const {
   item,
-  isModified,
   loading,
   saveWorkTask,
   completeWorkTask,
   rejectWorkTask,
   deleteWorkTask,
-  resetWorkTask,
   isReadOnly,
   priorities,
   loadTaskTypes,
@@ -161,26 +124,38 @@ const {
   statusText,
   loadWorkTask,
 } = useWorkTaskDetails({
-  id: props.param,
-  isNew: !props.param,
+  id: param.value,
+  isNew: !param.value,
+});
+
+const form = useBladeForm({
+  data: item,
+  closeConfirmMessage: computed(() => t("TASKS.PAGES.ALERTS.CLOSE_CONFIRMATION")),
+});
+
+// Register widgets
+useTasksWidgets({
+  item,
+  isVisible: computed(() => !!param.value),
 });
 
 // Blade title
 const bladeTitle = computed(() => {
-  return props.param ? `# ${item.value?.number}: ${item.value?.name}` : t("TASKS.PAGES.DETAILS.NEW_TITLE");
+  return param.value ? `# ${item.value?.number}: ${item.value?.name}` : t("TASKS.PAGES.DETAILS.NEW_TITLE");
 });
 
 // Reactive toolbar
 const toolbarItems = computed((): IBladeToolbar[] => [
   {
     id: "complete",
-    icon: "material-check",
+    icon: "lucide-check",
     title: t("TASKS.PAGES.DETAILS.TOOLBAR.COMPLETE"),
-    isVisible: !!props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish),
+    isVisible: !!param.value && item.value?.isActive && hasAccess(TaskPermissions.Finish),
     clickHandler: async () => {
       try {
         await completeWorkTask();
-        emit("parent:call", { method: "reload" });
+        form.setBaseline();
+        callParent("reload");
       } catch (error) {
         console.error("Failed to complete task:", error);
       }
@@ -188,13 +163,14 @@ const toolbarItems = computed((): IBladeToolbar[] => [
   },
   {
     id: "reject",
-    icon: "material-block",
+    icon: "lucide-ban",
     title: t("TASKS.PAGES.DETAILS.TOOLBAR.REJECT"),
-    isVisible: !!props.param && item.value?.isActive && hasAccess(TaskPermissions.Finish),
+    isVisible: !!param.value && item.value?.isActive && hasAccess(TaskPermissions.Finish),
     clickHandler: async () => {
       try {
         await rejectWorkTask();
-        emit("parent:call", { method: "reload" });
+        form.setBaseline();
+        callParent("reload");
       } catch (error) {
         console.error("Failed to reject task:", error);
       }
@@ -202,27 +178,28 @@ const toolbarItems = computed((): IBladeToolbar[] => [
   },
   {
     id: "reset",
-    icon: "material-undo",
+    icon: "lucide-undo",
     title: t("TASKS.PAGES.DETAILS.TOOLBAR.RESET"),
-    disabled: !isModified.value,
-    isVisible: !!props.param && item.value?.isActive && hasAccess(TaskPermissions.Update),
+    disabled: !form.isModified.value,
+    isVisible: !!param.value && item.value?.isActive && hasAccess(TaskPermissions.Update),
     clickHandler: () => {
-      resetWorkTask();
+      form.revert();
     },
   },
   {
     id: "save",
-    icon: "material-save",
+    icon: "lucide-save",
     title: t("TASKS.PAGES.DETAILS.TOOLBAR.SAVE"),
-    disabled: !isModified.value || !meta.value.valid,
+    disabled: !form.canSave.value,
     isVisible:
-      (props.param && item.value?.isActive && hasAccess(TaskPermissions.Update)) ||
-      (!props.param && item.value?.isActive && hasAccess(TaskPermissions.Create)),
+      (param.value && item.value?.isActive && hasAccess(TaskPermissions.Update)) ||
+      (!param.value && item.value?.isActive && hasAccess(TaskPermissions.Create)),
     clickHandler: async () => {
       try {
         await saveWorkTask();
-        emit("parent:call", { method: "reload" });
-        emit("parent:call", { method: "onItemClick", args: item.value });
+        form.setBaseline();
+        callParent("reload");
+        callParent("onItemClick", item.value);
       } catch (error) {
         console.error("Failed to save task:", error);
       }
@@ -230,15 +207,15 @@ const toolbarItems = computed((): IBladeToolbar[] => [
   },
   {
     id: "delete",
-    icon: "material-delete",
+    icon: "lucide-trash-2",
     title: t("TASKS.PAGES.DETAILS.TOOLBAR.DELETE"),
-    isVisible: !!props.param && hasAccess(TaskPermissions.Delete),
+    isVisible: !!param.value && hasAccess(TaskPermissions.Delete),
     clickHandler: async () => {
       if (await showConfirmation(t("TASKS.PAGES.ALERTS.DELETE_CONFIRMATION"))) {
         try {
           await deleteWorkTask();
-          emit("parent:call", { method: "reload" });
-          emit("close:blade");
+          callParent("reload");
+          closeSelf();
         } catch (error) {
           console.error("Failed to delete task:", error);
         }
@@ -247,39 +224,8 @@ const toolbarItems = computed((): IBladeToolbar[] => [
   },
 ]);
 
-// Lifecycle hooks
 onMounted(async () => {
   await loadWorkTask();
-});
-
-onBeforeUnmount(() => {
-  unregisterWidget("AssetsWidget", blade?.value.id ?? "");
-});
-
-onBeforeClose(async () => {
-  if (isModified.value) {
-    return await showConfirmation(t("TASKS.PAGES.ALERTS.CLOSE_CONFIRMATION"));
-  }
-  return true;
-});
-
-registerWidget(
-  {
-    id: "AssetsWidget",
-    component: AssetsWidget,
-    props: {
-      item,
-    },
-    events: {
-      "update:item": (_item: WorkTask) => {
-        item.value = _item;
-      },
-    },
-  },
-  blade?.value.id ?? "",
-);
-
-defineExpose({
-  title: bladeTitle,
+  form.setBaseline();
 });
 </script>

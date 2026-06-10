@@ -1,12 +1,8 @@
 <template>
   <div class="tw-flex tw-flex-row tw-items-center">
-    <VcIcon
-      icon="material-circle"
-      :class="{
-        'tw-text-[10px]': true,
-        'tw-text-[#80b4e3]': [WorkTaskPriority.Low, WorkTaskPriority.Lowest].indexOf(taskPriority!) > -1,
-        'tw-text-[#87b563]': taskPriority === WorkTaskPriority.Normal,
-        'tw-text-[#eb4f4d]': [WorkTaskPriority.High, WorkTaskPriority.Highest].indexOf(taskPriority!) > -1,
+    <VcIcon icon="lucide-circle" :class="{ 'tw-text-[10px]': true, 'tw-text-[#80b4e3]': [TaskPriorityEnum.Low, TaskPriorityEnum.Lowest].indexOf(taskPriority!) > -1,
+        'tw-text-[#87b563]': taskPriority === TaskPriorityEnum.Normal,
+        'tw-text-[#eb4f4d]': [TaskPriorityEnum.High, TaskPriorityEnum.Highest].indexOf(taskPriority!) > -1,
       }"
     ></VcIcon>
     <span class="tw-ml-1">{{ taskPriority }}</span>
@@ -14,9 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { WorkTaskPriority } from "../../../api_client/virtocommerce.taskmanagement";
+import { TaskPriority as TaskPriorityEnum } from "../../../api_client/virtocommerce.taskmanagement";
+
+import { VcIcon } from "@vc-shell/framework/ui";
 
 defineProps<{
-  taskPriority?: WorkTaskPriority;
+  taskPriority?: TaskPriorityEnum;
 }>();
 </script>

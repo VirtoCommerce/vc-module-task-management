@@ -28,9 +28,11 @@ export default (): IUseWorkTaskAttachments => {
         );
         const response = await result.json();
         if (response?.length) {
-          const attachment = new WorkTaskAttachment(response[0]);
-          attachment.id = uniqueId("Draft");
-          attachment.createdDate = new Date();
+          const attachment = {
+            ...response[0],
+            id: uniqueId("Draft"),
+            createdDate: new Date(),
+          } as WorkTaskAttachment;
           workTask.value.attachments = workTask.value.attachments || [];
           workTask.value.attachments.push(attachment);
         }

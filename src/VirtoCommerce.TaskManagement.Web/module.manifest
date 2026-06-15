@@ -31,7 +31,7 @@
     <owner>VirtoCommerce</owner>
   </owners>
   <projectUrl>https://github.com/VirtoCommerce/vc-module-task-management</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.TaskManagement)/Content/logo.png</iconUrl>
+  <iconUrl>Modules/$(VirtoCommerce.TaskManagement)/Content/logo.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <assemblyFile>VirtoCommerce.TaskManagement.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.TaskManagement.Web.Module, VirtoCommerce.TaskManagement.Web</moduleType>

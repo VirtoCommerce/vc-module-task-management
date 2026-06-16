@@ -121,8 +121,8 @@ export interface Props {
 interface CurrentFilters {
   type?: string;
   priority?: string;
-  startDate?: string;
-  endDate?: string;
+  startDueDate?: Date;
+  endDueDate?: Date;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -151,7 +151,9 @@ const currentFilters = ref<CurrentFilters>({});
 // Global filter panel config — rebuilt when props.taskTypes / props.priorities change.
 // Shape: { id, label, filter: { options?, range? } } per GlobalFilterConfig.
 // - `type` / `priority` → single-select (no `multiple: true`, preserving old UX).
-// - `dueDate` → date-range; VcDataTable emits values as two separate keys (startDate, endDate).
+// - `dueDate` → date-range; the `range` tuple names the keys VcDataTable emits in @filter
+//   and they MUST match WorkTaskSearchCriteria's API fields (startDueDate / endDueDate),
+//   otherwise the server silently ignores them and the grid stays unfiltered.
 const globalFiltersConfig = computed<GlobalFilterConfig[]>(() => [
   {
     id: "type",
@@ -173,17 +175,20 @@ const globalFiltersConfig = computed<GlobalFilterConfig[]>(() => [
     id: "dueDate",
     label: t("TASKS.PAGES.LIST.TABLE.FILTER.DUE_DATE.TITLE"),
     filter: {
-      range: ["startDate", "endDate"] as [string, string],
+      range: ["startDueDate", "endDueDate"] as [string, string],
     },
   },
 ]);
 
 async function onFilter(event: { filters: Record<string, unknown> }) {
+  // Date-range filter emits ISO date strings; convert to Date for the API criteria.
+  const startDueDate = event.filters.startDueDate as string | undefined;
+  const endDueDate = event.filters.endDueDate as string | undefined;
   currentFilters.value = {
     type: event.filters.type as string | undefined,
     priority: event.filters.priority as string | undefined,
-    startDate: event.filters.startDate as string | undefined,
-    endDate: event.filters.endDate as string | undefined,
+    startDueDate: startDueDate ? new Date(startDueDate) : undefined,
+    endDueDate: endDueDate ? new Date(endDueDate) : undefined,
   };
   await reload();
 }

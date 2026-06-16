@@ -10643,13 +10643,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"roboto-fontface@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "roboto-fontface@npm:0.10.0"
-  checksum: 10/e29faa2c424ff58c7953cdf6b0a03695e3d723a4977fa955f807d7859b82065543c871cce2a2ebcb6a0e2c1a81ad0fe59d748ffc84d58661b17a42d87c0c9b8d
-  languageName: node
-  linkType: hard
-
 "robust-predicates@npm:^3.0.2":
   version: 3.0.3
   resolution: "robust-predicates@npm:3.0.3"
@@ -11572,7 +11565,6 @@ __metadata:
     moment: "npm:^2.30.1"
     postcss: "npm:^8.4.32"
     prettier: "npm:^3.1.1"
-    roboto-fontface: "npm:^0.10.0"
     sass: "npm:^1.87.0"
     tailwindcss: "npm:^3.4.0"
     tsx: "npm:^4.7.1"

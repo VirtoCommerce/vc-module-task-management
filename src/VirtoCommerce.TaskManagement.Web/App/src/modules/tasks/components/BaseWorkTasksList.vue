@@ -7,7 +7,7 @@
     <VcDataTable
       v-model:active-item-id="selectedItemId"
       v-model:sort-field="sortField"
-      v-model:sort-order="sortOrderNumeric"
+      v-model:sort-order="sortOrder"
       :items="items"
       :loading="loading"
       :total-count="pagination.totalCount"
@@ -24,26 +24,31 @@
         id="number"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.NUMBER')"
         width="80px"
+        sortable
       />
       <VcColumn
         id="type"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.TYPE')"
         width="250px"
+        sortable
       />
       <VcColumn
         id="name"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.NAME')"
         width="250px"
+        sortable
       />
       <VcColumn
         id="responsibleName"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.ASSIGNEE')"
         width="200px"
+        sortable
       />
       <VcColumn
         id="priority"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.PRIORITY')"
         width="100px"
+        sortable
       >
         <template #cell="{ item }">
           <CellTaskPriority :priority="(item as WorkTask).priority" />
@@ -53,6 +58,7 @@
         id="status"
         :title="t('TASKS.PAGES.LIST.TABLE.HEADER.STATUS')"
         width="120px"
+        sortable
       >
         <template #cell="{ item }">
           <TaskStatus :item="item as WorkTask" />
@@ -74,7 +80,13 @@
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { debounce } from "lodash-es";
-import { IBladeToolbar, useBlade, UseDataTablePaginationReturn, GlobalFilterConfig } from "@vc-shell/framework";
+import {
+  IBladeToolbar,
+  useBlade,
+  useDataTableSort,
+  UseDataTablePaginationReturn,
+  GlobalFilterConfig,
+} from "@vc-shell/framework";
 import {
   TaskPriority,
   TaskType,
@@ -125,10 +137,13 @@ const { openBlade } = useBlade();
 
 const selectedItemId = ref<string>();
 
-// Sorting: initial values from searchQuery
-const sortField = ref<string>(props.searchQuery.sort?.split(":")[0] || "modifiedDate");
-const sortOrderNumeric = ref<0 | 1 | -1>(props.searchQuery.sort?.includes("desc") ? -1 : 1);
-const sortExpression = computed(() => `${sortField.value}:${sortOrderNumeric.value === -1 ? "DESC" : "ASC"}`);
+// Sorting — initial values derived from searchQuery.sort ("field:DIRECTION"),
+// defaulting to createdDate DESC so newly created tasks always stay on top.
+const [initialSortField, initialSortDirection] = (props.searchQuery.sort ?? "createdDate:DESC").split(":");
+const { sortField, sortOrder, sortExpression } = useDataTableSort({
+  initialField: initialSortField || "createdDate",
+  initialDirection: initialSortDirection?.toUpperCase() === "ASC" ? "ASC" : "DESC",
+});
 
 // Filters — bound to VcDataTable's :global-filters / @filter
 const currentFilters = ref<CurrentFilters>({});

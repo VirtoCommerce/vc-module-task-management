@@ -42,7 +42,7 @@ const baseWorkTasksListRef = useTemplateRef("baseWorkTasksListRef");
 
 const { items, pagination, searchQuery, loadWorkTasks, loading, taskTypes, priorities } = useArchiveWorkTasks({
   pageSize: 20,
-  sort: "name:desc",
+  sort: "createdDate:DESC",
 });
 
 const title = computed(() => t("TASKS.PAGES.LIST.ARCHIVE_TITLE"));

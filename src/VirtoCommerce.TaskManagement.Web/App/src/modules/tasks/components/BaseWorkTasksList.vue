@@ -180,15 +180,26 @@ const globalFiltersConfig = computed<GlobalFilterConfig[]>(() => [
   },
 ]);
 
+function toLocalDueDateBound(value: string | undefined, endOfDay = false): Date | undefined {
+  if (!value) return undefined;
+  const d = new Date(value);
+  return new Date(
+    d.getUTCFullYear(),
+    d.getUTCMonth(),
+    d.getUTCDate(),
+    endOfDay ? 23 : 0,
+    endOfDay ? 59 : 0,
+    endOfDay ? 59 : 0,
+    endOfDay ? 999 : 0,
+  );
+}
+
 async function onFilter(event: { filters: Record<string, unknown> }) {
-  // Date-range filter emits ISO date strings; convert to Date for the API criteria.
-  const startDueDate = event.filters.startDueDate as string | undefined;
-  const endDueDate = event.filters.endDueDate as string | undefined;
   currentFilters.value = {
     type: event.filters.type as string | undefined,
     priority: event.filters.priority as string | undefined,
-    startDueDate: startDueDate ? new Date(startDueDate) : undefined,
-    endDueDate: endDueDate ? new Date(endDueDate) : undefined,
+    startDueDate: toLocalDueDateBound(event.filters.startDueDate as string | undefined),
+    endDueDate: toLocalDueDateBound(event.filters.endDueDate as string | undefined, true),
   };
   await reload();
 }

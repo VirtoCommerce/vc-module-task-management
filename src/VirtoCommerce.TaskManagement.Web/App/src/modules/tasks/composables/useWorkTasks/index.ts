@@ -33,7 +33,7 @@ export function useWorkTasksList(options?: UseBaseWorkTasksListOptions): IUseBas
   const pageSize = options?.pageSize || 20;
   const searchQuery = ref<WorkTaskSearchCriteria>({
     take: pageSize,
-    sort: options?.sort || "modifiedDate:desc",
+    sort: options?.sort || "createdDate:DESC",
     skip: 0,
     ...options?.defaultFilters,
   } as WorkTaskSearchCriteria);

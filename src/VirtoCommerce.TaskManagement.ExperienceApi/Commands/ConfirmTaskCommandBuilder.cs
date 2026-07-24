@@ -12,8 +12,8 @@ public class ConfirmTaskCommandBuilder : WorkTaskCommandBuilder<ConfirmTaskComma
 {
     protected override string Name => "confirmTask";
 
-    public ConfirmTaskCommandBuilder(IMediator mediator, IAuthorizationService authorizationService, IWorkTaskService workTaskService)
-        : base(mediator, authorizationService, workTaskService)
+    public ConfirmTaskCommandBuilder(IAuthorizationService authorizationService, IWorkTaskService workTaskService)
+        : base(authorizationService, workTaskService)
     {
     }
 

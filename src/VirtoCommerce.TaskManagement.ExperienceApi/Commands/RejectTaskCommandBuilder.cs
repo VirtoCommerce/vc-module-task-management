@@ -12,8 +12,8 @@ public class RejectTaskCommandBuilder : WorkTaskCommandBuilder<RejectTaskCommand
 {
     protected override string Name => "rejectTask";
 
-    public RejectTaskCommandBuilder(IMediator mediator, IAuthorizationService authorizationService, IWorkTaskService workTaskService)
-        : base(mediator, authorizationService, workTaskService)
+    public RejectTaskCommandBuilder(IAuthorizationService authorizationService, IWorkTaskService workTaskService)
+        : base(authorizationService, workTaskService)
     {
     }
 

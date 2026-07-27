@@ -19,10 +19,9 @@ public abstract class WorkTaskCommandBuilder<TCommand, TResult, TCommandGraphTyp
     private readonly IWorkTaskService _workTaskService;
 
     protected WorkTaskCommandBuilder(
-        IMediator mediator,
         IAuthorizationService authorizationService,
         IWorkTaskService workTaskService)
-        : base(mediator, authorizationService)
+        : base(authorizationService)
     {
         _workTaskService = workTaskService;
     }

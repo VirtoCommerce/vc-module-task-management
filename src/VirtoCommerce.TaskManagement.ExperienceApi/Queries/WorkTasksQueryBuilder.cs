@@ -13,8 +13,8 @@ public class WorkTasksQueryBuilder : SearchQueryBuilder<WorkTasksQuery, WorkTask
 {
     protected override string Name => "tasks";
 
-    public WorkTasksQueryBuilder(IMediator mediator, IAuthorizationService authorizationService)
-        : base(mediator, authorizationService)
+    public WorkTasksQueryBuilder(IAuthorizationService authorizationService)
+        : base(authorizationService)
     {
     }
 

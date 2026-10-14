@@ -2,11 +2,6 @@
   "MY_TASKS": {
     "MENU": {
       "TITLE": "My Tasks"
-    },
-    "PAGES": {
-      "LIST": {
-        "TITLE": "My Tasks"
-      }
     }
   }
 }

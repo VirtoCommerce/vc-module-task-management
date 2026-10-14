@@ -6,7 +6,6 @@
     },
     "PAGES": {
       "LIST": {
-        "TITLE": "All Tasks",
         "TOOLBAR": {
           "REFRESH": "Refresh",
           "CREATE": "Create",

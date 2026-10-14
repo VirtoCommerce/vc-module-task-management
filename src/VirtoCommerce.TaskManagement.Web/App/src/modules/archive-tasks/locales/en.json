@@ -1,11 +1,11 @@
 {
   "TASKS": {
     "MENU": {
-      "ARCHIVE_TITLE": "Archive tasks"
+      "ARCHIVE_TITLE": "Archive Tasks"
     },
     "PAGES": {
       "LIST": {
-        "ARCHIVE_TITLE": "Archive tasks"
+        "ARCHIVE_TITLE": "Archive Tasks"
       }
     }
   }

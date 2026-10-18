@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Gestione attività",
+    "MENU": {
+      "TITLE": "Tutte le attività"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Aggiorna",
+          "CREATE": "Crea",
+          "ADD": "Aggiungi",
+          "DELETE": "Elimina selezionati"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Cerca parole chiave"
+        },
+        "TABLE": {
+          "TOTALS": "Totale:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Tipo",
+            "NAME": "Nome",
+            "ASSIGNEE": "Assegnatario",
+            "PRIORITY": "Priorità",
+            "STATUS": "Stato",
+            "DUE_DATE": "Data di scadenza"
+          },
+          "EMPTY": {
+            "TITLE": "Non ci sono ancora contenuti",
+            "ACTION": "Aggiungi contenuto"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Nessun contenuto trovato.",
+            "ACTION": "Reimposta ricerca"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Annulla pubblicazione",
+            "PUBLISH": "Pubblica",
+            "DELETE": "Elimina"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Filtro per tipo"
+            },
+            "PRIORITY": {
+              "TITLE": "Filtro per priorità"
+            },
+            "DUE_DATE": {
+              "TITLE": "Data di scadenza",
+              "START_DATE": "Data di inizio",
+              "END_DATE": "Data di fine"
+            },
+            "APPLY": {
+              "TITLE": "Applica"
+            },
+            "RESET": {
+              "TITLE": "Reimposta"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Creato"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Non ci sono ancora elementi"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Completa",
+          "REJECT": "Rifiuta",
+          "RESET": "Reimposta",
+          "SAVE": "Salva",
+          "DELETE": "Elimina"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Tipo"
+          },
+          "SUMMARY": {
+            "TITLE": "Riepilogo"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Descrizione"
+          },
+          "PRIORITY": {
+            "TITLE": "Priorità"
+          },
+          "DUE_DATE": {
+            "TITLE": "Scadenza"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Assegnatario"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Allegati"
+        },
+        "NEW_TITLE": "Crea nuova attività"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Ci sono modifiche non salvate\nChiudere comunque?",
+        "DELETE_CONFIRMATION_ASSET": "Eliminare i {count} allegati selezionati?",
+        "DELETE_CONFIRMATION": "Eliminare questa attività?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Da fare",
+      "CANCELED": "Annullata",
+      "DONE": "Completata"
+    }
+  }
+}

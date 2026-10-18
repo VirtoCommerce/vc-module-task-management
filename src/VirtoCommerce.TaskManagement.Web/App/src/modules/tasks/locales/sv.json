@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Uppgiftshantering",
+    "MENU": {
+      "TITLE": "Alla uppgifter"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Uppdatera",
+          "CREATE": "Skapa",
+          "ADD": "Lägg till",
+          "DELETE": "Ta bort markerade"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Sök nyckelord"
+        },
+        "TABLE": {
+          "TOTALS": "Antal:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Typ",
+            "NAME": "Namn",
+            "ASSIGNEE": "Ansvarig",
+            "PRIORITY": "Prioritet",
+            "STATUS": "Status",
+            "DUE_DATE": "Förfallodatum"
+          },
+          "EMPTY": {
+            "TITLE": "Det finns inget innehåll ännu",
+            "ACTION": "Lägg till innehåll"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Inget innehåll hittades.",
+            "ACTION": "Återställ sökningen"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Avpublicera",
+            "PUBLISH": "Publicera",
+            "DELETE": "Ta bort"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Typfilter"
+            },
+            "PRIORITY": {
+              "TITLE": "Prioritetsfilter"
+            },
+            "DUE_DATE": {
+              "TITLE": "Förfallodatum",
+              "START_DATE": "Startdatum",
+              "END_DATE": "Slutdatum"
+            },
+            "APPLY": {
+              "TITLE": "Tillämpa"
+            },
+            "RESET": {
+              "TITLE": "Återställ"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Skapad"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Det finns inga objekt ännu"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Slutför",
+          "REJECT": "Avvisa",
+          "RESET": "Återställ",
+          "SAVE": "Spara",
+          "DELETE": "Ta bort"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Typ"
+          },
+          "SUMMARY": {
+            "TITLE": "Sammanfattning"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Beskrivning"
+          },
+          "PRIORITY": {
+            "TITLE": "Prioritet"
+          },
+          "DUE_DATE": {
+            "TITLE": "Förfallodatum"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Ansvarig"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Bilagor"
+        },
+        "NEW_TITLE": "Skapa ny uppgift"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Du har osparade ändringar\nVill du stänga ändå?",
+        "DELETE_CONFIRMATION_ASSET": "Är du säker på att du vill ta bort {count} markerade bilagor?",
+        "DELETE_CONFIRMATION": "Är du säker på att du vill ta bort den här uppgiften?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Att göra",
+      "CANCELED": "Avbruten",
+      "DONE": "Klar"
+    }
+  }
+}

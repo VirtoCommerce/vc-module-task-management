@@ -1,0 +1,142 @@
+{
+  "language_name": "Español",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Nombre de usuario",
+          "PLACEHOLDER": "Introduzca su usuario de vendedor"
+        },
+        "PASSWORD": {
+          "LABEL": "Contraseña",
+          "PLACEHOLDER": "Introduzca su contraseña"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Contraseña olvidada",
+          "LABEL": "Correo electrónico",
+          "PLACEHOLDER": "Introduzca su correo electrónico"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "¿Ha olvidado su contraseña?",
+      "BUTTON": "Iniciar sesión",
+      "FORGOT_BUTTON": "Enviar",
+      "BACK_BUTTON": "Atrás",
+      "BUTTON_OK": "Aceptar",
+      "RESET_EMAIL_TEXT": "Le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.",
+      "RESET_EMAIL_SENT": "Le hemos enviado un correo electrónico con instrucciones."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Iniciar sesión",
+      "SETTINGS": "Configuración",
+      "HELP": "Ayuda",
+      "NOTIFICATIONS": "Notificaciones",
+      "LANGUAGE": "Selector de idioma"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Cambiar contraseña",
+      "PROFILE": "Perfil",
+      "LOGOUT": "Cerrar sesión"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Contraseña actual",
+        "PLACEHOLDER": "Introduzca la contraseña"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nueva contraseña",
+        "PLACEHOLDER": "Introduzca la contraseña"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Confirmar contraseña",
+        "PLACEHOLDER": "Confirme la contraseña"
+      },
+      "CANCEL": "Cancelar",
+      "SAVE": "Actualizar",
+      "ERRORS": {
+        "Repeat-password": "Las contraseñas no coinciden",
+        "Equal-passwords": "La nueva contraseña no puede ser igual a la anterior",
+        "Invalid-token": "El token no es válido o ha caducado",
+        "Password-too-weak": "La nueva contraseña no cumple una o varias directivas de seguridad de contraseñas:",
+        "PasswordTooShort": "Contraseña demasiado corta",
+        "PasswordRequiresUniqueChars": "La contraseña debe contener caracteres diferentes",
+        "PasswordRequiresLower": "La contraseña debe contener al menos una minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "La contraseña debe contener al menos una mayúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "La contraseña debe contener al menos un dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La contraseña debe contener al menos un carácter no alfanumérico",
+        "Incorrect password.": "La contraseña introducida es incorrecta",
+        "You have used this password in the past. Choose another one.": "Ya ha utilizado esta contraseña anteriormente. Elija otra."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Activación de nuevo usuario",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Correo electrónico"
+        },
+        "PASSWORD": {
+          "LABEL": "Nueva contraseña",
+          "PLACEHOLDER": "Introduzca la contraseña"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmar contraseña",
+          "PLACEHOLDER": "Confirme la contraseña"
+        }
+      },
+      "ACCEPT_INVITATION": "Activar",
+      "ERRORS": {
+        "Repeat-password": "Las contraseñas no coinciden",
+        "Invalid-token": "El token no es válido o ha caducado",
+        "Password-too-weak": "La nueva contraseña no cumple una o varias directivas de seguridad de contraseñas:",
+        "PasswordTooShort": "Contraseña demasiado corta",
+        "PasswordRequiresUniqueChars": "La contraseña debe contener caracteres diferentes",
+        "PasswordRequiresLower": "La contraseña debe contener al menos una minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "La contraseña debe contener al menos una mayúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "La contraseña debe contener al menos un dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La contraseña debe contener al menos un carácter no alfanumérico",
+        "recentPasswordUsed": "Ya ha utilizado esta contraseña anteriormente. Elija otra."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Restablecimiento de contraseña",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nueva contraseña",
+          "PLACEHOLDER": "Introduzca la contraseña"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmar contraseña",
+          "PLACEHOLDER": "Confirme la contraseña"
+        }
+      },
+      "SAVE_PASSWORD": "Guardar",
+      "ERRORS": {
+        "Repeat-password": "Las contraseñas no coinciden",
+        "Invalid-token": "El token no es válido o ha caducado",
+        "Password-too-weak": "La nueva contraseña no cumple una o varias directivas de seguridad de contraseñas:",
+        "PasswordTooShort": "Contraseña demasiado corta",
+        "PasswordRequiresUniqueChars": "La contraseña debe contener caracteres diferentes",
+        "PasswordRequiresLower": "La contraseña debe contener al menos una minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "La contraseña debe contener al menos una mayúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "La contraseña debe contener al menos un dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La contraseña debe contener al menos un carácter no alfanumérico",
+        "recentPasswordUsed": "Ya ha utilizado esta contraseña anteriormente. Elija otra."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Aún no hay notificaciones",
+      "ERRORS": "Errores",
+      "PROFILE": "Perfil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Producto",
+          "UPDATE": "actualización de estado",
+          "MORE_DETAILS": "Haga clic en la notificación para ver los detalles"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "TAREAS"
+    }
+  }
+}

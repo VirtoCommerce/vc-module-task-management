@@ -1,0 +1,142 @@
+{
+  "language_name": "Suomi",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Käyttäjätunnus",
+          "PLACEHOLDER": "Anna myyjän käyttäjätunnus"
+        },
+        "PASSWORD": {
+          "LABEL": "Salasana",
+          "PLACEHOLDER": "Anna salasanasi"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Unohtunut salasana",
+          "LABEL": "Sähköposti",
+          "PLACEHOLDER": "Anna sähköpostiosoitteesi"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Unohditko salasanan?",
+      "BUTTON": "Kirjaudu sisään",
+      "FORGOT_BUTTON": "Lähetä",
+      "BACK_BUTTON": "Takaisin",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Lähetämme sinulle sähköpostiviestin, jossa on ohjeet salasanan palauttamiseen.",
+      "RESET_EMAIL_SENT": "Ohjeet sisältävä sähköpostiviesti on lähetetty sinulle."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Kirjaudu sisään",
+      "SETTINGS": "Asetukset",
+      "HELP": "Ohje",
+      "NOTIFICATIONS": "Ilmoitukset",
+      "LANGUAGE": "Kielen valinta"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Vaihda salasana",
+      "PROFILE": "Profiili",
+      "LOGOUT": "Kirjaudu ulos"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Nykyinen salasana",
+        "PLACEHOLDER": "Anna salasana"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Uusi salasana",
+        "PLACEHOLDER": "Anna salasana"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Vahvista salasana",
+        "PLACEHOLDER": "Vahvista salasana"
+      },
+      "CANCEL": "Peruuta",
+      "SAVE": "Päivitä",
+      "ERRORS": {
+        "Repeat-password": "Salasanat eivät täsmää",
+        "Equal-passwords": "Uusi salasana ei saa olla sama kuin vanha",
+        "Invalid-token": "Tunnus on virheellinen tai vanhentunut",
+        "Password-too-weak": "Uusi salasana ei täytä yhtä tai useampaa salasanan suojauskäytäntöä:",
+        "PasswordTooShort": "Salasana on liian lyhyt",
+        "PasswordRequiresUniqueChars": "Salasanassa on käytettävä eri merkkejä",
+        "PasswordRequiresLower": "Salasanassa on oltava vähintään yksi pieni kirjain ('a'-'z')",
+        "PasswordRequiresUpper": "Salasanassa on oltava vähintään yksi iso kirjain ('A'-'Z')",
+        "PasswordRequiresDigit": "Salasanassa on oltava vähintään yksi numero ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Salasanassa on oltava vähintään yksi erikoismerkki",
+        "Incorrect password.": "Annoit väärän salasanan",
+        "You have used this password in the past. Choose another one.": "Olet käyttänyt tätä salasanaa aiemmin. Valitse toinen."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Uuden käyttäjän aktivointi",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Sähköposti"
+        },
+        "PASSWORD": {
+          "LABEL": "Uusi salasana",
+          "PLACEHOLDER": "Anna salasana"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Vahvista salasana",
+          "PLACEHOLDER": "Vahvista salasana"
+        }
+      },
+      "ACCEPT_INVITATION": "Aktivoi",
+      "ERRORS": {
+        "Repeat-password": "Salasanat eivät täsmää",
+        "Invalid-token": "Tunnus on virheellinen tai vanhentunut",
+        "Password-too-weak": "Uusi salasana ei täytä yhtä tai useampaa salasanan suojauskäytäntöä:",
+        "PasswordTooShort": "Salasana on liian lyhyt",
+        "PasswordRequiresUniqueChars": "Salasanassa on käytettävä eri merkkejä",
+        "PasswordRequiresLower": "Salasanassa on oltava vähintään yksi pieni kirjain ('a'-'z')",
+        "PasswordRequiresUpper": "Salasanassa on oltava vähintään yksi iso kirjain ('A'-'Z')",
+        "PasswordRequiresDigit": "Salasanassa on oltava vähintään yksi numero ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Salasanassa on oltava vähintään yksi erikoismerkki",
+        "recentPasswordUsed": "Olet käyttänyt tätä salasanaa aiemmin. Valitse toinen."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Salasanan palautus",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Uusi salasana",
+          "PLACEHOLDER": "Anna salasana"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Vahvista salasana",
+          "PLACEHOLDER": "Vahvista salasana"
+        }
+      },
+      "SAVE_PASSWORD": "Tallenna",
+      "ERRORS": {
+        "Repeat-password": "Salasanat eivät täsmää",
+        "Invalid-token": "Tunnus on virheellinen tai vanhentunut",
+        "Password-too-weak": "Uusi salasana ei täytä yhtä tai useampaa salasanan suojauskäytäntöä:",
+        "PasswordTooShort": "Salasana on liian lyhyt",
+        "PasswordRequiresUniqueChars": "Salasanassa on käytettävä eri merkkejä",
+        "PasswordRequiresLower": "Salasanassa on oltava vähintään yksi pieni kirjain ('a'-'z')",
+        "PasswordRequiresUpper": "Salasanassa on oltava vähintään yksi iso kirjain ('A'-'Z')",
+        "PasswordRequiresDigit": "Salasanassa on oltava vähintään yksi numero ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Salasanassa on oltava vähintään yksi erikoismerkki",
+        "recentPasswordUsed": "Olet käyttänyt tätä salasanaa aiemmin. Valitse toinen."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Ei vielä ilmoituksia",
+      "ERRORS": "Virheet",
+      "PROFILE": "Profiili:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Tuote",
+          "UPDATE": "tilan päivitys",
+          "MORE_DETAILS": "Näytä tiedot napsauttamalla ilmoitusta"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "TEHTÄVÄT"
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "language_name": "Português",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Nome de usuário",
+          "PLACEHOLDER": "Insira o seu login de vendedor"
+        },
+        "PASSWORD": {
+          "LABEL": "Senha",
+          "PLACEHOLDER": "Insira a sua senha"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Recuperar senha",
+          "LABEL": "E-mail",
+          "PLACEHOLDER": "Insira o seu e-mail"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Esqueceu a senha?",
+      "BUTTON": "Entrar",
+      "FORGOT_BUTTON": "Enviar",
+      "BACK_BUTTON": "Voltar",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Enviaremos um e-mail com instruções para redefinir a sua senha.",
+      "RESET_EMAIL_SENT": "Foi enviado um e-mail com instruções."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Entrar",
+      "SETTINGS": "Configurações",
+      "HELP": "Ajuda",
+      "NOTIFICATIONS": "Notificações",
+      "LANGUAGE": "Seletor de idioma"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Alterar senha",
+      "PROFILE": "Perfil",
+      "LOGOUT": "Sair"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Senha atual",
+        "PLACEHOLDER": "Insira a senha"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nova senha",
+        "PLACEHOLDER": "Insira a senha"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Confirmar senha",
+        "PLACEHOLDER": "Confirme a senha"
+      },
+      "CANCEL": "Cancelar",
+      "SAVE": "Atualizar",
+      "ERRORS": {
+        "Repeat-password": "As senhas não coincidem",
+        "Equal-passwords": "A nova senha não pode ser igual à anterior",
+        "Invalid-token": "O token é inválido ou expirou",
+        "Password-too-weak": "A nova senha não cumpre uma ou mais políticas de segurança de senha:",
+        "PasswordTooShort": "Senha muito curta",
+        "PasswordRequiresUniqueChars": "A senha deve conter caracteres diferentes",
+        "PasswordRequiresLower": "A senha deve conter pelo menos uma letra minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "A senha deve conter pelo menos uma letra maiúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "A senha deve conter pelo menos um dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "A senha deve conter pelo menos um caractere não alfanumérico",
+        "Incorrect password.": "A senha inserida está incorreta",
+        "You have used this password in the past. Choose another one.": "Esta senha já foi usada anteriormente. Escolha outra."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Ativação de novo usuário",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "E-mail"
+        },
+        "PASSWORD": {
+          "LABEL": "Nova senha",
+          "PLACEHOLDER": "Insira a senha"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmar senha",
+          "PLACEHOLDER": "Confirme a senha"
+        }
+      },
+      "ACCEPT_INVITATION": "Ativar",
+      "ERRORS": {
+        "Repeat-password": "As senhas não coincidem",
+        "Invalid-token": "O token é inválido ou expirou",
+        "Password-too-weak": "A nova senha não cumpre uma ou mais políticas de segurança de senha:",
+        "PasswordTooShort": "Senha muito curta",
+        "PasswordRequiresUniqueChars": "A senha deve conter caracteres diferentes",
+        "PasswordRequiresLower": "A senha deve conter pelo menos uma letra minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "A senha deve conter pelo menos uma letra maiúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "A senha deve conter pelo menos um dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "A senha deve conter pelo menos um caractere não alfanumérico",
+        "recentPasswordUsed": "Esta senha já foi usada anteriormente. Escolha outra."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Redefinição de senha",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nova senha",
+          "PLACEHOLDER": "Insira a senha"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmar senha",
+          "PLACEHOLDER": "Confirme a senha"
+        }
+      },
+      "SAVE_PASSWORD": "Salvar",
+      "ERRORS": {
+        "Repeat-password": "As senhas não coincidem",
+        "Invalid-token": "O token é inválido ou expirou",
+        "Password-too-weak": "A nova senha não cumpre uma ou mais políticas de segurança de senha:",
+        "PasswordTooShort": "Senha muito curta",
+        "PasswordRequiresUniqueChars": "A senha deve conter caracteres diferentes",
+        "PasswordRequiresLower": "A senha deve conter pelo menos uma letra minúscula ('a'-'z')",
+        "PasswordRequiresUpper": "A senha deve conter pelo menos uma letra maiúscula ('A'-'Z')",
+        "PasswordRequiresDigit": "A senha deve conter pelo menos um dígito ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "A senha deve conter pelo menos um caractere não alfanumérico",
+        "recentPasswordUsed": "Esta senha já foi usada anteriormente. Escolha outra."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Ainda não há notificações",
+      "ERRORS": "Erros",
+      "PROFILE": "Perfil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produto",
+          "UPDATE": "atualização de status",
+          "MORE_DETAILS": "Clique na notificação para ver os detalhes"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "TAREFAS"
+    }
+  }
+}

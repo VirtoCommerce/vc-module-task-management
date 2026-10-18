@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "ניהול משימות",
+    "MENU": {
+      "TITLE": "כל המשימות"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "רענון",
+          "CREATE": "יצירה",
+          "ADD": "הוספה",
+          "DELETE": "מחיקת הפריטים שנבחרו"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "חיפוש לפי מילות מפתח"
+        },
+        "TABLE": {
+          "TOTALS": "כמות:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "סוג",
+            "NAME": "שם",
+            "ASSIGNEE": "גורם אחראי",
+            "PRIORITY": "עדיפות",
+            "STATUS": "סטטוס",
+            "DUE_DATE": "תאריך יעד"
+          },
+          "EMPTY": {
+            "TITLE": "אין תוכן עדיין",
+            "ACTION": "הוספת תוכן"
+          },
+          "NOT_FOUND": {
+            "TITLE": "לא נמצא תוכן.",
+            "ACTION": "איפוס החיפוש"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "ביטול פרסום",
+            "PUBLISH": "פרסום",
+            "DELETE": "מחיקה"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "סינון לפי סוג"
+            },
+            "PRIORITY": {
+              "TITLE": "סינון לפי עדיפות"
+            },
+            "DUE_DATE": {
+              "TITLE": "תאריך יעד",
+              "START_DATE": "תאריך התחלה",
+              "END_DATE": "תאריך סיום"
+            },
+            "APPLY": {
+              "TITLE": "החלה"
+            },
+            "RESET": {
+              "TITLE": "איפוס"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "נוצר"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "אין פריטים עדיין"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "השלמה",
+          "REJECT": "דחייה",
+          "RESET": "איפוס",
+          "SAVE": "שמירה",
+          "DELETE": "מחיקה"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "סוג"
+          },
+          "SUMMARY": {
+            "TITLE": "תקציר"
+          },
+          "DESCRIPTION": {
+            "TITLE": "תיאור"
+          },
+          "PRIORITY": {
+            "TITLE": "עדיפות"
+          },
+          "DUE_DATE": {
+            "TITLE": "מועד יעד"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "גורם אחראי"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "קבצים מצורפים"
+        },
+        "NEW_TITLE": "יצירת משימה חדשה"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "יש שינויים שלא נשמרו\nהאם לסגור בכל זאת?",
+        "DELETE_CONFIRMATION_ASSET": "האם למחוק את הקבצים המצורפים שנבחרו ({count})?",
+        "DELETE_CONFIRMATION": "האם למחוק את המשימה הזו?"
+      }
+    },
+    "STATUS": {
+      "TODO": "לביצוע",
+      "CANCELED": "בוטלה",
+      "DONE": "הושלמה"
+    }
+  }
+}

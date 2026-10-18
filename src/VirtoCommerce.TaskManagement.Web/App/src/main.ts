@@ -1,5 +1,5 @@
 import VirtoShellFramework, { notification, useUser, useLanguages } from "@vc-shell/framework";
-import { createApp } from "vue";
+import { createApp, watch } from "vue";
 import { router } from "./router";
 import * as locales from "./locales";
 import * as frameworkLocales from "./locales/framework";
@@ -15,8 +15,6 @@ import "@vc-shell/framework/dist/index.css";
 async function startApp() {
   const { loadUser } = useUser();
   await loadUser();
-
-  const { currentLocale, setLocale } = useLanguages();
 
   const app = createApp(RouterView).use(VirtoShellFramework, {
     router,
@@ -43,7 +41,12 @@ async function startApp() {
 
   translateFrameworkDefaults(app);
 
+  // after the app's languages are merged: before, the saved language (shared with the Admin Shell) isn't one of the
+  // known ones yet, so the app would fall back to English and save that over it
+  const { currentLocale, setLocale } = useLanguages();
   setLocale(currentLocale.value);
+  // embedded in the Admin Shell: a language picked there reaches this frame through the shared saved setting
+  watch(currentLocale, (locale) => setLocale(locale));
   syncDocumentDirection(currentLocale);
 
   app.config.errorHandler = (err) => {

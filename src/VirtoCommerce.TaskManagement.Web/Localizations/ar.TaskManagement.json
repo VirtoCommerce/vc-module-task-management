@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "لوحة «مرحبًا بالعالم»"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "فتح قائمة إدارة المهام",
+    "TaskManagement:create": "إنشاء البيانات المتعلقة بإدارة المهام",
+    "TaskManagement:read": "عرض البيانات المتعلقة بإدارة المهام",
+    "TaskManagement:update": "تحديث البيانات المتعلقة بإدارة المهام",
+    "TaskManagement:delete": "حذف البيانات المتعلقة بإدارة المهام"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "إشعار المهام",
+        "description": "(تتطلب إعادة التشغيل) تفعيل/تعطيل الإشعار بإسناد المهام"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "البريد الإلكتروني للإشعارات (no-reply)",
+        "description": "يُستخدم كبريد إلكتروني للمرسل"
+      },
+      "TaskAppUrl": {
+        "title": "عنوان URL الأساسي لبوابة المهام",
+        "description": "عنوان URL لبوابة المهام، القيمة الافتراضية: platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "أنواع المهام",
+        "description": "قائمة أنواع المهام التي يمكن للموظفين اختيارها عند إنشاء مهمة جديدة"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "إشعار بإسناد مهمة عمل",
+      "description": "سيتلقى المدير إشعارًا عبر البريد الإلكتروني عند إسناد مهمة عمل جديدة"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Gestion des tâches",
+    "MENU": {
+      "TITLE": "Toutes les tâches"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Actualiser",
+          "CREATE": "Créer",
+          "ADD": "Ajouter",
+          "DELETE": "Supprimer la sélection"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Rechercher par mots-clés"
+        },
+        "TABLE": {
+          "TOTALS": "Nombre :",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Type",
+            "NAME": "Nom",
+            "ASSIGNEE": "Responsable",
+            "PRIORITY": "Priorité",
+            "STATUS": "Statut",
+            "DUE_DATE": "Date d'échéance"
+          },
+          "EMPTY": {
+            "TITLE": "Aucun contenu pour le moment",
+            "ACTION": "Ajouter du contenu"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Aucun contenu trouvé.",
+            "ACTION": "Réinitialiser la recherche"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Dépublier",
+            "PUBLISH": "Publier",
+            "DELETE": "Supprimer"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Filtre par type"
+            },
+            "PRIORITY": {
+              "TITLE": "Filtre par priorité"
+            },
+            "DUE_DATE": {
+              "TITLE": "Date d'échéance",
+              "START_DATE": "Date de début",
+              "END_DATE": "Date de fin"
+            },
+            "APPLY": {
+              "TITLE": "Appliquer"
+            },
+            "RESET": {
+              "TITLE": "Réinitialiser"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Créé le"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Aucun élément pour le moment"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Terminer",
+          "REJECT": "Rejeter",
+          "RESET": "Réinitialiser",
+          "SAVE": "Enregistrer",
+          "DELETE": "Supprimer"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Type"
+          },
+          "SUMMARY": {
+            "TITLE": "Résumé"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Description"
+          },
+          "PRIORITY": {
+            "TITLE": "Priorité"
+          },
+          "DUE_DATE": {
+            "TITLE": "Échéance"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Responsable"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Pièces jointes"
+        },
+        "NEW_TITLE": "Créer une tâche"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Des modifications ne sont pas enregistrées\nFermer quand même ?",
+        "DELETE_CONFIRMATION_ASSET": "Voulez-vous vraiment supprimer les {count} pièces jointes sélectionnées ?",
+        "DELETE_CONFIRMATION": "Voulez-vous vraiment supprimer cette tâche ?"
+      }
+    },
+    "STATUS": {
+      "TODO": "À faire",
+      "CANCELED": "Annulée",
+      "DONE": "Terminée"
+    }
+  }
+}

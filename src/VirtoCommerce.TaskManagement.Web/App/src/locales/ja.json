@@ -1,0 +1,174 @@
+{
+  "language_name": "日本語",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "ユーザー名",
+          "PLACEHOLDER": "販売者のログイン名を入力してください"
+        },
+        "PASSWORD": {
+          "LABEL": "パスワード",
+          "PLACEHOLDER": "パスワードを入力"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "パスワードをお忘れの場合",
+          "LABEL": "メールアドレス",
+          "PLACEHOLDER": "メールアドレスを入力してください"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "パスワードをお忘れですか？",
+      "BUTTON": "ログイン",
+      "FORGOT_BUTTON": "送信",
+      "BACK_BUTTON": "戻る",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "パスワードのリセット手順を記載したメールをお送りします。",
+      "RESET_EMAIL_SENT": "手順を記載したメールを送信しました。"
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "ログイン",
+      "SETTINGS": "設定",
+      "HELP": "ヘルプ",
+      "NOTIFICATIONS": "通知",
+      "LANGUAGE": "言語の選択"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "パスワード変更",
+      "PROFILE": "プロフィール",
+      "LOGOUT": "ログアウト"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "現在のパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "新しいパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "パスワードの確認",
+        "PLACEHOLDER": "パスワードを再入力"
+      },
+      "CANCEL": "キャンセル",
+      "SAVE": "更新",
+      "ERRORS": {
+        "Repeat-password": "パスワードが一致しません",
+        "Equal-passwords": "新しいパスワードは古いパスワードと異なるものにしてください",
+        "Invalid-token": "トークンが無効か、有効期限が切れています",
+        "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+        "PasswordTooShort": "パスワードが短すぎます",
+        "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+        "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+        "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+        "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+        "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+        "Incorrect password.": "パスワードが正しくありません",
+        "You have used this password in the past. Choose another one.": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+      }
+    },
+    "INVITATION": {
+      "TITLE": "新規ユーザーの有効化",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "メールアドレス"
+        },
+        "PASSWORD": {
+          "LABEL": "新しいパスワード",
+          "PLACEHOLDER": "パスワードを入力"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "パスワードの確認",
+          "PLACEHOLDER": "パスワードを再入力"
+        }
+      },
+      "ACCEPT_INVITATION": "有効化",
+      "ERRORS": {
+        "Repeat-password": "パスワードが一致しません",
+        "Invalid-token": "トークンが無効か、有効期限が切れています",
+        "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+        "PasswordTooShort": "パスワードが短すぎます",
+        "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+        "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+        "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+        "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+        "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+        "recentPasswordUsed": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "パスワードのリセット",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "新しいパスワード",
+          "PLACEHOLDER": "パスワードを入力"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "パスワードの確認",
+          "PLACEHOLDER": "パスワードを再入力"
+        }
+      },
+      "SAVE_PASSWORD": "保存",
+      "ERRORS": {
+        "Repeat-password": "パスワードが一致しません",
+        "Invalid-token": "トークンが無効か、有効期限が切れています",
+        "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+        "PasswordTooShort": "パスワードが短すぎます",
+        "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+        "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+        "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+        "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+        "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+        "recentPasswordUsed": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "通知はまだありません",
+      "ERRORS": "エラー",
+      "PROFILE": "プロフィール:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "商品",
+          "UPDATE": "ステータス更新",
+          "MORE_DETAILS": "通知をクリックすると詳細が表示されます"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "タスク"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "進行状況",
+      "CLOSE_SIDEBAR": "サイドバーを閉じる",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "選択画面の表示を切り替え",
+        "MENU": "日付選択メニュー",
+        "INPUT": "日付の入力",
+        "OPEN_TIME_PICKER": "時刻選択を開く",
+        "CLOSE_TIME_PICKER": "時刻選択を閉じる",
+        "INCREMENT": "{unit}を増やす",
+        "DECREMENT": "{unit}を減らす",
+        "OPEN_TIME_OVERLAY": "{unit}を選択",
+        "AM_PM": "午前/午後を切り替え",
+        "OPEN_YEARS": "年を選択",
+        "OPEN_MONTHS": "月を選択",
+        "NEXT_MONTH": "次の月",
+        "PREV_MONTH": "前の月",
+        "NEXT_YEAR": "次の年",
+        "PREV_YEAR": "前の年",
+        "CLEAR": "値をクリア",
+        "CALENDAR_ICON": "カレンダーを開く",
+        "TIME_PICKER": "時刻選択",
+        "MONTH_PICKER": "月の選択",
+        "YEAR_PICKER": "年の選択",
+        "TIME_OVERLAY": "{unit}の選択",
+        "UNITS": {
+          "hours": "時",
+          "minutes": "分",
+          "seconds": "秒"
+        }
+      }
+    }
+  }
+}

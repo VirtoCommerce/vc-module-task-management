@@ -1,0 +1,174 @@
+{
+  "language_name": "Deutsch",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Benutzername",
+          "PLACEHOLDER": "Geben Sie Ihr Verkäufer-Login ein"
+        },
+        "PASSWORD": {
+          "LABEL": "Passwort",
+          "PLACEHOLDER": "Geben Sie Ihr Passwort ein"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Passwort vergessen",
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte geben Sie Ihre E-Mail-Adresse ein"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Passwort vergessen?",
+      "BUTTON": "Anmelden",
+      "FORGOT_BUTTON": "Absenden",
+      "BACK_BUTTON": "Zurück",
+      "BUTTON_OK": "Ok",
+      "RESET_EMAIL_TEXT": "Wir senden Ihnen eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts.",
+      "RESET_EMAIL_SENT": "Eine E-Mail mit Anweisungen wurde an Sie gesendet."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Anmelden",
+      "SETTINGS": "Einstellungen",
+      "HELP": "Hilfe",
+      "NOTIFICATIONS": "Benachrichtigungen",
+      "LANGUAGE": "Sprachauswahl"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Passwort ändern",
+      "PROFILE": "Profil",
+      "LOGOUT": "Abmelden"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Aktuelles Passwort",
+        "PLACEHOLDER": "Passwort eingeben"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Neues Passwort",
+        "PLACEHOLDER": "Passwort eingeben"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Passwort bestätigen",
+        "PLACEHOLDER": "Passwort bestätigen"
+      },
+      "CANCEL": "Abbrechen",
+      "SAVE": "Aktualisieren",
+      "ERRORS": {
+        "Repeat-password": "Passwörter stimmen nicht überein",
+        "Equal-passwords": "Das neue Passwort darf nicht mit dem alten übereinstimmen",
+        "Invalid-token": "Token ist ungültig oder abgelaufen",
+        "Password-too-weak": "Neues Passwort erfüllt eine oder mehrere Passwort-Sicherheitsrichtlinien nicht:",
+        "PasswordTooShort": "Passwort zu kurz",
+        "PasswordRequiresUniqueChars": "Passwörter müssen unterschiedliche Zeichen verwenden",
+        "PasswordRequiresLower": "Passwörter müssen mindestens einen Kleinbuchstaben enthalten ('a'-'z')",
+        "PasswordRequiresUpper": "Passwörter müssen mindestens einen Großbuchstaben enthalten ('A'-'Z')",
+        "PasswordRequiresDigit": "Passwörter müssen mindestens eine Ziffer enthalten ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passwörter müssen mindestens ein nicht-alphanumerisches Zeichen enthalten",
+        "Incorrect password.": "Sie haben ein falsches Passwort eingegeben",
+        "You have used this password in the past. Choose another one.": "Sie haben dieses Passwort in der Vergangenheit verwendet. Wählen Sie ein anderes."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Aktivierung eines neuen Benutzers",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "E-Mail"
+        },
+        "PASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Passwort eingeben"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Passwort bestätigen",
+          "PLACEHOLDER": "Passwort bestätigen"
+        }
+      },
+      "ACCEPT_INVITATION": "Aktivieren",
+      "ERRORS": {
+        "Repeat-password": "Passwörter stimmen nicht überein",
+        "Invalid-token": "Token ist ungültig oder abgelaufen",
+        "Password-too-weak": "Neues Passwort erfüllt eine oder mehrere Passwort-Sicherheitsrichtlinien nicht:",
+        "PasswordTooShort": "Passwort zu kurz",
+        "PasswordRequiresUniqueChars": "Passwörter müssen unterschiedliche Zeichen verwenden",
+        "PasswordRequiresLower": "Passwörter müssen mindestens einen Kleinbuchstaben enthalten ('a'-'z')",
+        "PasswordRequiresUpper": "Passwörter müssen mindestens einen Großbuchstaben enthalten ('A'-'Z')",
+        "PasswordRequiresDigit": "Passwörter müssen mindestens eine Ziffer enthalten ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passwörter müssen mindestens ein nicht-alphanumerisches Zeichen enthalten",
+        "recentPasswordUsed": "Sie haben dieses Passwort in der Vergangenheit verwendet. Wählen Sie ein anderes."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Passwort zurücksetzen",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Passwort eingeben"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Passwort bestätigen",
+          "PLACEHOLDER": "Passwort bestätigen"
+        }
+      },
+      "SAVE_PASSWORD": "Speichern",
+      "ERRORS": {
+        "Repeat-password": "Passwörter stimmen nicht überein",
+        "Invalid-token": "Token ist ungültig oder abgelaufen",
+        "Password-too-weak": "Neues Passwort erfüllt eine oder mehrere Passwort-Sicherheitsrichtlinien nicht:",
+        "PasswordTooShort": "Passwort zu kurz",
+        "PasswordRequiresUniqueChars": "Passwörter müssen unterschiedliche Zeichen verwenden",
+        "PasswordRequiresLower": "Passwörter müssen mindestens einen Kleinbuchstaben enthalten ('a'-'z')",
+        "PasswordRequiresUpper": "Passwörter müssen mindestens einen Großbuchstaben enthalten ('A'-'Z')",
+        "PasswordRequiresDigit": "Passwörter müssen mindestens eine Ziffer enthalten ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passwörter müssen mindestens ein nicht-alphanumerisches Zeichen enthalten",
+        "recentPasswordUsed": "Sie haben dieses Passwort in der Vergangenheit verwendet. Wählen Sie ein anderes."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Noch keine Benachrichtigungen",
+      "ERRORS": "Fehler",
+      "PROFILE": "Profil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produkt",
+          "UPDATE": "Statusaktualisierung",
+          "MORE_DETAILS": "Klicken Sie auf die Benachrichtigung, um Details anzuzeigen"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "AUFGABEN"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Fortschritt",
+      "CLOSE_SIDEBAR": "Seitenleiste schließen",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Auswahl ein- oder ausblenden",
+        "MENU": "Menü der Datumsauswahl",
+        "INPUT": "Datumseingabe",
+        "OPEN_TIME_PICKER": "Zeitauswahl öffnen",
+        "CLOSE_TIME_PICKER": "Zeitauswahl schließen",
+        "INCREMENT": "{unit} erhöhen",
+        "DECREMENT": "{unit} verringern",
+        "OPEN_TIME_OVERLAY": "{unit} wählen",
+        "AM_PM": "AM/PM umschalten",
+        "OPEN_YEARS": "Jahr wählen",
+        "OPEN_MONTHS": "Monat wählen",
+        "NEXT_MONTH": "Nächster Monat",
+        "PREV_MONTH": "Vorheriger Monat",
+        "NEXT_YEAR": "Nächstes Jahr",
+        "PREV_YEAR": "Vorheriges Jahr",
+        "CLEAR": "Wert löschen",
+        "CALENDAR_ICON": "Kalender öffnen",
+        "TIME_PICKER": "Zeitauswahl",
+        "MONTH_PICKER": "Monatsauswahl",
+        "YEAR_PICKER": "Jahresauswahl",
+        "TIME_OVERLAY": "Auswahl: {unit}",
+        "UNITS": {
+          "hours": "Stunden",
+          "minutes": "Minuten",
+          "seconds": "Sekunden"
+        }
+      }
+    }
+  }
+}

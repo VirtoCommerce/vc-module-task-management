@@ -1,0 +1,174 @@
+{
+  "language_name": "Français",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Nom d'utilisateur",
+          "PLACEHOLDER": "Saisissez votre identifiant vendeur"
+        },
+        "PASSWORD": {
+          "LABEL": "Mot de passe",
+          "PLACEHOLDER": "Saisissez votre mot de passe"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Mot de passe oublié",
+          "LABEL": "Email",
+          "PLACEHOLDER": "Veuillez saisir votre email"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Mot de passe oublié ?",
+      "BUTTON": "Se connecter",
+      "FORGOT_BUTTON": "Envoyer",
+      "BACK_BUTTON": "Retour",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Nous vous enverrons un email contenant les instructions pour réinitialiser votre mot de passe.",
+      "RESET_EMAIL_SENT": "Un email contenant les instructions vous a été envoyé."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Se connecter",
+      "SETTINGS": "Paramètres",
+      "HELP": "Aide",
+      "NOTIFICATIONS": "Notifications",
+      "LANGUAGE": "Sélecteur de langue"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Changer le mot de passe",
+      "PROFILE": "Profil",
+      "LOGOUT": "Se déconnecter"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Mot de passe actuel",
+        "PLACEHOLDER": "Saisissez le mot de passe"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nouveau mot de passe",
+        "PLACEHOLDER": "Saisissez le mot de passe"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Confirmer le mot de passe",
+        "PLACEHOLDER": "Confirmez le mot de passe"
+      },
+      "CANCEL": "Annuler",
+      "SAVE": "Mettre à jour",
+      "ERRORS": {
+        "Repeat-password": "Les mots de passe ne correspondent pas",
+        "Equal-passwords": "Le nouveau mot de passe doit être différent de l'ancien",
+        "Invalid-token": "Le jeton est invalide ou a expiré",
+        "Password-too-weak": "Le nouveau mot de passe ne respecte pas une ou plusieurs règles de sécurité des mots de passe :",
+        "PasswordTooShort": "Mot de passe trop court",
+        "PasswordRequiresUniqueChars": "Le mot de passe doit contenir des caractères différents",
+        "PasswordRequiresLower": "Le mot de passe doit contenir au moins une minuscule ('a'-'z')",
+        "PasswordRequiresUpper": "Le mot de passe doit contenir au moins une majuscule ('A'-'Z')",
+        "PasswordRequiresDigit": "Le mot de passe doit contenir au moins un chiffre ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Le mot de passe doit contenir au moins un caractère non alphanumérique",
+        "Incorrect password.": "Le mot de passe saisi est incorrect",
+        "You have used this password in the past. Choose another one.": "Vous avez déjà utilisé ce mot de passe. Choisissez-en un autre."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Activation d'un nouvel utilisateur",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Email"
+        },
+        "PASSWORD": {
+          "LABEL": "Nouveau mot de passe",
+          "PLACEHOLDER": "Saisissez le mot de passe"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmer le mot de passe",
+          "PLACEHOLDER": "Confirmez le mot de passe"
+        }
+      },
+      "ACCEPT_INVITATION": "Activer",
+      "ERRORS": {
+        "Repeat-password": "Les mots de passe ne correspondent pas",
+        "Invalid-token": "Le jeton est invalide ou a expiré",
+        "Password-too-weak": "Le nouveau mot de passe ne respecte pas une ou plusieurs règles de sécurité des mots de passe :",
+        "PasswordTooShort": "Mot de passe trop court",
+        "PasswordRequiresUniqueChars": "Le mot de passe doit contenir des caractères différents",
+        "PasswordRequiresLower": "Le mot de passe doit contenir au moins une minuscule ('a'-'z')",
+        "PasswordRequiresUpper": "Le mot de passe doit contenir au moins une majuscule ('A'-'Z')",
+        "PasswordRequiresDigit": "Le mot de passe doit contenir au moins un chiffre ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Le mot de passe doit contenir au moins un caractère non alphanumérique",
+        "recentPasswordUsed": "Vous avez déjà utilisé ce mot de passe. Choisissez-en un autre."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Réinitialisation du mot de passe",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nouveau mot de passe",
+          "PLACEHOLDER": "Saisissez le mot de passe"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmer le mot de passe",
+          "PLACEHOLDER": "Confirmez le mot de passe"
+        }
+      },
+      "SAVE_PASSWORD": "Enregistrer",
+      "ERRORS": {
+        "Repeat-password": "Les mots de passe ne correspondent pas",
+        "Invalid-token": "Le jeton est invalide ou a expiré",
+        "Password-too-weak": "Le nouveau mot de passe ne respecte pas une ou plusieurs règles de sécurité des mots de passe :",
+        "PasswordTooShort": "Mot de passe trop court",
+        "PasswordRequiresUniqueChars": "Le mot de passe doit contenir des caractères différents",
+        "PasswordRequiresLower": "Le mot de passe doit contenir au moins une minuscule ('a'-'z')",
+        "PasswordRequiresUpper": "Le mot de passe doit contenir au moins une majuscule ('A'-'Z')",
+        "PasswordRequiresDigit": "Le mot de passe doit contenir au moins un chiffre ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Le mot de passe doit contenir au moins un caractère non alphanumérique",
+        "recentPasswordUsed": "Vous avez déjà utilisé ce mot de passe. Choisissez-en un autre."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Aucune notification pour le moment",
+      "ERRORS": "Erreurs",
+      "PROFILE": "Profil :",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produit",
+          "UPDATE": "mise à jour du statut",
+          "MORE_DETAILS": "Cliquez sur la notification pour voir les détails"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "TÂCHES"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Progression",
+      "CLOSE_SIDEBAR": "Fermer la barre latérale",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Afficher ou masquer le sélecteur",
+        "MENU": "Menu du sélecteur de date",
+        "INPUT": "Champ de date",
+        "OPEN_TIME_PICKER": "Ouvrir le sélecteur d'heure",
+        "CLOSE_TIME_PICKER": "Fermer le sélecteur d'heure",
+        "INCREMENT": "Augmenter : {unit}",
+        "DECREMENT": "Diminuer : {unit}",
+        "OPEN_TIME_OVERLAY": "Choisir : {unit}",
+        "AM_PM": "Basculer AM/PM",
+        "OPEN_YEARS": "Choisir l'année",
+        "OPEN_MONTHS": "Choisir le mois",
+        "NEXT_MONTH": "Mois suivant",
+        "PREV_MONTH": "Mois précédent",
+        "NEXT_YEAR": "Année suivante",
+        "PREV_YEAR": "Année précédente",
+        "CLEAR": "Effacer la valeur",
+        "CALENDAR_ICON": "Ouvrir le calendrier",
+        "TIME_PICKER": "Sélecteur d'heure",
+        "MONTH_PICKER": "Sélecteur de mois",
+        "YEAR_PICKER": "Sélecteur d'année",
+        "TIME_OVERLAY": "Sélecteur : {unit}",
+        "UNITS": {
+          "hours": "heures",
+          "minutes": "minutes",
+          "seconds": "secondes"
+        }
+      }
+    }
+  }
+}

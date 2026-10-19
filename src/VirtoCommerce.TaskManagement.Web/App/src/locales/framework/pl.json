@@ -1,0 +1,438 @@
+{
+  "CORE": {
+    "THEMES": {
+      "LIGHT": "Jasny",
+      "DARK": "Ciemny"
+    }
+  },
+  "SHELL": {
+    "USER": {
+      "ROLE": {
+        "ADMINISTRATOR": "Administrator"
+      }
+    },
+    "ACCOUNT": {
+      "SETTINGS": "Ustawienia",
+      "CHANGE_PASSWORD": "Zmień hasło",
+      "PROFILE": "Profil",
+      "LOGOUT": "Wyloguj"
+    }
+  },
+  "COMPONENTS": {
+    "ATOMS": {
+      "VC_BANNER": {
+        "SHOW_MORE": "Pokaż więcej",
+        "SHOW_LESS": "Pokaż mniej"
+      }
+    },
+    "MOLECULES": {
+      "VC_SELECT": {
+        "CLICK_TO_SELECT": "Kliknij, aby wybrać...",
+        "LOADING": "Ładowanie...",
+        "LOADING_MORE": "Ładowanie kolejnych...",
+        "NO_OPTIONS": "Brak opcji"
+      },
+      "VC_FILE_UPLOAD": {
+        "DRAG_HERE": "Przeciągnij i upuść plik tutaj lub",
+        "BROWSE": "przeglądaj pliki",
+        "TAP_TO_UPLOAD": "Dotknij, aby wybrać pliki",
+        "UPLOADING": "Przesyłanie..."
+      },
+      "VC_INPUT": {
+        "DATE_PLACEHOLDER": "Wybierz datę",
+        "DATE_TIME_PLACEHOLDER": "Wybierz datę i godzinę"
+      },
+      "VC_PAGINATION": {
+        "JUMP": "Przejdź do strony:"
+      },
+      "VC_MULTIVALUE": {
+        "ADD": "Dodaj"
+      }
+    },
+    "ORGANISMS": {
+      "VC_DYNAMIC_PROPERTY": {
+        "ADD": "Dodaj wartość",
+        "VALUE_TYPE": {
+          "COLOR": {
+            "PLACEHOLDER": "Kod koloru",
+            "NAME": "Nazwa koloru"
+          }
+        }
+      },
+      "VC_GALLERY": {
+        "INTERNAL": {
+          "VC_GALLERY_ITEM": {
+            "FULLSCREEN": "Pełny ekran",
+            "EDIT": "Edytuj",
+            "DELETE": "Usuń"
+          },
+          "VC_GALLERY_PREVIEW": {
+            "COPY_IMAGE_LINK": "kopiuj link do obrazu"
+          }
+        },
+        "GALLERY_IS_EMPTY": "Galeria jest pusta",
+        "DROP_TO_UPLOAD": "Upuść, aby przesłać",
+        "DRAG_IMAGES_HERE": "Przeciągnij obrazy tutaj lub",
+        "BROWSE_IMAGES": "przeglądaj pliki",
+        "UPLOAD": "Prześlij",
+        "OR_DROP_HERE": "lub upuść tutaj",
+        "SHOW_ALL": "Rozwiń ({count})",
+        "COLLAPSE": "Zwiń"
+      },
+      "VC_APP": {
+        "INTERNAL": {
+          "VC_APP_BAR": {
+            "BACK": "Wstecz"
+          },
+          "MOBILE_LAYOUT": {
+            "TAB_MENU": "Menu",
+            "TAB_HUB": "Hub"
+          },
+          "APP_HUB": {
+            "SEARCH_PLACEHOLDER": "Wyszukaj aplikacje i widżety",
+            "APPLICATIONS": "Aplikacje",
+            "WIDGETS": "Widżety",
+            "NO_APPLICATIONS": "Nie znaleziono aplikacji",
+            "NO_WIDGETS": "Nie znaleziono widżetów",
+            "LIST_VIEW": "Widok listy",
+            "TILE_VIEW": "Widok kafelków"
+          }
+        }
+      },
+      "BLADE_NAVIGATION": {
+        "ARIA_LABEL": "Nawigacja między panelami"
+      },
+      "VC_BLADE": {
+        "SEE_DETAILS": "Zobacz szczegóły",
+        "UNSAVED_CHANGES": "Niezapisane zmiany",
+        "ERROR_POPUP": {
+          "TITLE": "Szczegóły błędu",
+          "COPY_ERROR": "kopiuj zawartość",
+          "CLOSE": "zamknij"
+        },
+        "MORE": "Więcej",
+        "TOOLBAR": "Akcje paska narzędzi",
+        "CLOSE_MENU": "Zamknij menu",
+        "PANEL": "Panel"
+      },
+      "VC_BLADE_HEADER": {
+        "UNSAVED_CHANGES": "Niezapisane zmiany",
+        "NO_CHANGES": "Brak niezapisanych zmian"
+      },
+      "VC_TABLE": {
+        "CURRENT_PAGE_SELECTED": "Zaznaczono wszystkie elementy na tej stronie.",
+        "SELECT_ALL": "Zaznacz wszystkie elementy",
+        "ALL_SELECTED": "Zaznaczono wszystkie elementy.",
+        "ALL_SELECTED_COUNT": "Zaznaczono wszystkie elementy: {count}",
+        "SELECT_ALL_COUNT": "Zaznacz wszystkie elementy: {count}",
+        "CANCEL": "Wyczyść zaznaczenie",
+        "ALL_ACTIONS": "Wszystkie akcje",
+        "MORE": "Więcej",
+        "ALL_FILTERS": "Filtry",
+        "SEARCH": "Szukaj...",
+        "EMPTY": "Lista jest pusta.",
+        "EMPTY_TITLE": "Brak danych",
+        "EMPTY_DESCRIPTION": "Brak elementów do wyświetlenia",
+        "NOT_FOUND": "Nic nie znaleziono.",
+        "NOT_FOUND_TITLE": "Nie znaleziono wyników",
+        "NOT_FOUND_DESCRIPTION": "Spróbuj zmienić kryteria wyszukiwania lub filtry",
+        "TOTALS": "Sumy:",
+        "ACTIONS": "Akcje",
+        "NOT_SET": "Nie ustawiono",
+        "SELECTED": "Zaznaczone",
+        "SELECT_ALL_TRUNCATED": "Zaznacz wszystko",
+        "PULL_TO_REFRESH": "Pociągnij, aby odświeżyć",
+        "RELEASE_TO_REFRESH": "Puść, aby odświeżyć",
+        "REFRESHING": "Odświeżanie...",
+        "ADD_ROW": "Dodaj wiersz",
+        "LOADING": "Ładowanie...",
+        "PAGE_INFO": "Strona {current} z {total}",
+        "COLUMN_FILTER": {
+          "APPLY": "Zastosuj",
+          "CLEAR": "Wyczyść",
+          "FROM": "Od",
+          "TO": "Do"
+        },
+        "GLOBAL_FILTERS": {
+          "BUTTON": "Filtry",
+          "TITLE": "Filtry"
+        },
+        "COLUMN_SWITCHER": {
+          "BUTTON": "Kolumny",
+          "TITLE": "Pokaż/ukryj kolumny",
+          "SHOW_ALL": "Pokaż wszystkie",
+          "RESET": "Resetuj"
+        },
+        "OF": "z",
+        "PAGE": "Strona"
+      },
+      "VC_POPUP": {
+        "OK": "OK",
+        "CONFIRM": "Potwierdź",
+        "CANCEL": "Anuluj",
+        "CLOSE": "Zamknij",
+        "TITLE": {
+          "CONFIRMATION": "Potwierdzenie",
+          "ERROR": "Błąd",
+          "INFO": "Informacja"
+        }
+      }
+    },
+    "THEME_SELECTOR": {
+      "THEME_CHANGED": " motyw",
+      "THEME_SELECTOR": "Motyw"
+    },
+    "CHANGE_PASSWORD": {
+      "TITLE": "Zmień hasło",
+      "TITLE_FORCED": "Hasło wygasło",
+      "SUBTITLE_FORCED": "Ustaw nowe hasło",
+      "FORCED": {
+        "LABEL": "Hasło wygasło. Aby dalej korzystać z aplikacji, należy zmienić hasło."
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Obecne hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nowe hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Potwierdź hasło",
+        "PLACEHOLDER": "Potwierdź hasło"
+      },
+      "CANCEL": "Anuluj",
+      "SAVE": "Zaktualizuj",
+      "ERRORS": {
+        "Repeat-password": "Hasła nie są identyczne",
+        "Equal-passwords": "Nowe hasło musi się różnić od poprzedniego",
+        "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+        "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+        "PasswordTooShort": "Hasło jest za krótkie",
+        "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+        "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+        "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+        "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+        "Incorrect password.": "Wprowadzono nieprawidłowe hasło",
+        "You have used this password in the past. Choose another one.": "To hasło było już używane. Wybierz inne."
+      }
+    },
+    "APP_HUB": {
+      "TITLE": "Aplikacje"
+    },
+    "NOTIFICATION_DROPDOWN": {
+      "TITLE": "Powiadomienia",
+      "EMPTY": "Brak powiadomień"
+    },
+    "LANGUAGE_SELECTOR": {
+      "TITLE": "Język"
+    },
+    "FILTERS": {
+      "APPLY": "Zastosuj filtry",
+      "RESET": "Resetuj"
+    }
+  },
+  "INVITATION": {
+    "TITLE": "Otrzymano zaproszenie!",
+    "SUBTITLE": "Ustaw hasło do swojego konta",
+    "FIELDS": {
+      "EMAIL": {
+        "LABEL": "Email"
+      },
+      "PASSWORD": {
+        "LABEL": "Nowe hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Potwierdź hasło",
+        "PLACEHOLDER": "Potwierdź hasło"
+      }
+    },
+    "ACCEPT_INVITATION": "Aktywuj",
+    "ERRORS": {
+      "Repeat-password": "Hasła nie są identyczne",
+      "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+      "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+      "PasswordTooShort": "Hasło jest za krótkie",
+      "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+      "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+      "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+      "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+      "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+      "recentPasswordUsed": "To hasło było już używane. Wybierz inne."
+    }
+  },
+  "LOGIN": {
+    "TITLE": "Witamy ponownie",
+    "SUBTITLE": "Zaloguj się na swoje konto, aby kontynuować",
+    "FIELDS": {
+      "LOGIN": {
+        "LABEL": "Email",
+        "PLACEHOLDER": "Wprowadź adres email"
+      },
+      "PASSWORD": {
+        "LABEL": "Hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "FORGOT_PASSWORD": {
+        "TITLE": "Zapomniane hasło",
+        "LABEL": "Email",
+        "PLACEHOLDER": "Wprowadź adres email"
+      }
+    },
+    "FORGOT_PASSWORD_BUTTON": "Nie pamiętasz hasła?",
+    "BUTTON": "Zaloguj się",
+    "OR": "lub",
+    "FORGOT_BUTTON": "Wyślij",
+    "BACK_BUTTON": "Wstecz",
+    "BUTTON_OK": "OK",
+    "RESET_EMAIL_TEXT": "Wyślemy wiadomość email z instrukcjami resetowania hasła.",
+    "RESET_EMAIL_SENT": "Wiadomość email z instrukcjami została wysłana.",
+    "SSO_NO_PROVIDERS_ERROR": "Uwierzytelnianie SSO nie jest skonfigurowane. Skontaktuj się z administratorem."
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Zresetuj hasło",
+    "SUBTITLE": "Wprowadź adres email, a wyślemy link do zresetowania hasła",
+    "FIELDS": {
+      "EMAIL": {
+        "LABEL": "Email",
+        "PLACEHOLDER": "Wprowadź adres email"
+      }
+    },
+    "SEND_BUTTON": "Wyślij link",
+    "BACK_TO_LOGIN": "Powrót do logowania",
+    "SUCCESS_TITLE": "Sprawdź skrzynkę pocztową",
+    "SUCCESS_TEXT": "Link do zresetowania hasła został wysłany na adres {email}"
+  },
+  "PASSWORDRESET": {
+    "TITLE": "Ustaw nowe hasło",
+    "SUBTITLE": "Wprowadź poniżej nowe hasło",
+    "FIELDS": {
+      "PASSWORD": {
+        "LABEL": "Nowe hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Potwierdź hasło",
+        "PLACEHOLDER": "Potwierdź hasło"
+      }
+    },
+    "SAVE_PASSWORD": "Zapisz",
+    "ERRORS": {
+      "Repeat-password": "Hasła nie są identyczne",
+      "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+      "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+      "PasswordTooShort": "Hasło jest za krótkie",
+      "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+      "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+      "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+      "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+      "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+      "recentPasswordUsed": "To hasło było już używane. Wybierz inne."
+    }
+  },
+  "ASSETS_MANAGER": {
+    "TITLE": "Zasoby",
+    "TOOLBAR": {
+      "SAVE": "Zapisz",
+      "REFRESH": "Odśwież",
+      "ADD": "Dodaj",
+      "DELETE": "Usuń zaznaczone"
+    },
+    "EMPTY": {
+      "NO_ASSETS": "Brak zasobów",
+      "UPLOAD_ASSETS": "Przeciągnij i upuść zasoby tutaj lub kliknij przycisk 'Prześlij'",
+      "UPLOAD": "Prześlij"
+    },
+    "TABLE": {
+      "HEADER": {
+        "IMAGE": "Obraz",
+        "NAME": "Nazwa",
+        "SIZE": "Rozmiar",
+        "SORT_ORDER": "Kolejność sortowania",
+        "CREATED_DATE": "Data utworzenia"
+      },
+      "ACTIONS": {
+        "DELETE": "Usuń",
+        "EDIT": "Edytuj"
+      }
+    }
+  },
+  "ASSETS": {
+    "PAGES": {
+      "DETAILS": {
+        "SUBTITLE": "Edycja zasobu",
+        "TOOLBAR": {
+          "SAVE": "Zapisz",
+          "DELETE": "Usuń"
+        },
+        "FIELDS": {
+          "SIZE": "Rozmiar",
+          "CREATED_DATE": "Data utworzenia",
+          "URL": "URL",
+          "COPY": "Kopiuj link",
+          "NAME": {
+            "TITLE": "Nazwa zasobu",
+            "PLACEHOLDER": "Wprowadź nazwę zasobu"
+          },
+          "ALT": {
+            "TITLE": "Tekst alternatywny obrazu",
+            "PLACEHOLDER": "Wprowadź tekst alternatywny obrazu",
+            "TOOLTIP": "Ten tekst zostanie wyświetlony, gdy obraz na stronie jest wyłączony lub się nie załadował"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Metaopis",
+            "PLACEHOLDER": "Wprowadź metaopis"
+          }
+        }
+      }
+    }
+  },
+  "messages": {
+    "_default": "Pole {field} jest nieprawidłowe",
+    "alpha": "Pole {field} może zawierać tylko litery",
+    "alpha_num": "Pole {field} może zawierać tylko znaki alfanumeryczne",
+    "alpha_dash": "Pole {field} może zawierać tylko znaki alfanumeryczne, myślniki i podkreślenia",
+    "alpha_spaces": "Pole {field} może zawierać tylko litery i spacje",
+    "between": "Wartość pola {field} musi mieścić się w zakresie od 0:{min} do 1:{max}",
+    "confirmed": "Potwierdzenie pola {field} nie jest zgodne",
+    "digits": "Pole {field} musi być liczbą i zawierać dokładnie 0:{length} cyfr",
+    "dimensions": "Pole {field} musi mieć wymiary 0:{width} na 1:{height} pikseli",
+    "email": "Pole {field} musi zawierać prawidłowy adres email",
+    "not_one_of": "Pole {field} ma nieprawidłową wartość",
+    "ext": "Pole {field} nie jest prawidłowym plikiem",
+    "image": "Pole {field} musi być obrazem",
+    "integer": "Pole {field} musi być liczbą całkowitą",
+    "length": "Pole {field} musi mieć długość 0:{length}",
+    "max_value": "Wartość pola {field} nie może być większa niż 0:{max}",
+    "max": "Pole {field} nie może zawierać więcej niż 0:{length} znaków",
+    "mimes": "Pole {field} musi mieć prawidłowy typ pliku",
+    "min_value": "Wartość pola {field} nie może być mniejsza niż 0:{min}",
+    "min": "Pole {field} musi zawierać co najmniej 0:{length} znaków",
+    "numeric": "Pole {field} może zawierać tylko cyfry",
+    "one_of": "Pole {field} ma nieprawidłową wartość",
+    "regex": "Format pola {field} jest nieprawidłowy",
+    "required_if": "Pole {field} jest wymagane",
+    "required": "Pole {field} jest wymagane",
+    "size": "Rozmiar pola {field} musi być mniejszy niż 0:{size} KB",
+    "url": "Pole {field} nie jest prawidłowym adresem URL",
+    "min_dimensions": {
+      "error": "Wymiary obrazu muszą być większe niż {height}*{width}",
+      "not_image_error": "To nie jest plik obrazu"
+    },
+    "file_weight": "Rozmiar pliku nie może przekraczać {size} KB",
+    "before": "Data zakończenia musi być wcześniejsza niż data rozpoczęcia",
+    "after": "Data zakończenia musi być późniejsza niż data rozpoczęcia",
+    "bigint": "Nieobsługiwana liczba"
+  },
+  "PERMISSION_MESSAGES": {
+    "ACCESS_RESTRICTED": "Dostęp ograniczony"
+  },
+  "AI_AGENT": {
+    "LOADING": "Ładowanie Virto OZ..."
+  },
+  "common": {
+    "no_options": "Brak opcji"
+  }
+}

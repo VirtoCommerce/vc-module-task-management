@@ -1,0 +1,174 @@
+{
+  "language_name": "Svenska",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Användarnamn",
+          "PLACEHOLDER": "Ange ditt inloggningsnamn som säljare"
+        },
+        "PASSWORD": {
+          "LABEL": "Lösenord",
+          "PLACEHOLDER": "Ange ditt lösenord"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Glömt lösenord",
+          "LABEL": "E-post",
+          "PLACEHOLDER": "Ange din e-postadress"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Glömt lösenordet?",
+      "BUTTON": "Logga in",
+      "FORGOT_BUTTON": "Skicka",
+      "BACK_BUTTON": "Tillbaka",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Vi skickar ett e-postmeddelande med instruktioner för hur du återställer ditt lösenord.",
+      "RESET_EMAIL_SENT": "Ett e-postmeddelande med instruktioner har skickats till dig."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Logga in",
+      "SETTINGS": "Inställningar",
+      "HELP": "Hjälp",
+      "NOTIFICATIONS": "Notiser",
+      "LANGUAGE": "Språkväljare"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Ändra lösenord",
+      "PROFILE": "Profil",
+      "LOGOUT": "Logga ut"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Nuvarande lösenord",
+        "PLACEHOLDER": "Ange lösenord"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nytt lösenord",
+        "PLACEHOLDER": "Ange lösenord"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Bekräfta lösenord",
+        "PLACEHOLDER": "Bekräfta lösenord"
+      },
+      "CANCEL": "Avbryt",
+      "SAVE": "Uppdatera",
+      "ERRORS": {
+        "Repeat-password": "Lösenorden matchar inte",
+        "Equal-passwords": "Det nya lösenordet får inte vara samma som det gamla",
+        "Invalid-token": "Token är ogiltig eller har gått ut",
+        "Password-too-weak": "Det nya lösenordet uppfyller inte en eller flera lösenordsprinciper:",
+        "PasswordTooShort": "Lösenordet är för kort",
+        "PasswordRequiresUniqueChars": "Lösenordet måste innehålla olika tecken",
+        "PasswordRequiresLower": "Lösenordet måste innehålla minst en gemen ('a'-'z')",
+        "PasswordRequiresUpper": "Lösenordet måste innehålla minst en versal ('A'-'Z')",
+        "PasswordRequiresDigit": "Lösenordet måste innehålla minst en siffra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Lösenordet måste innehålla minst ett tecken som inte är en bokstav eller siffra",
+        "Incorrect password.": "Du angav ett felaktigt lösenord",
+        "You have used this password in the past. Choose another one.": "Du har använt det här lösenordet tidigare. Välj ett annat."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Aktivering av ny användare",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "E-post"
+        },
+        "PASSWORD": {
+          "LABEL": "Nytt lösenord",
+          "PLACEHOLDER": "Ange lösenord"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Bekräfta lösenord",
+          "PLACEHOLDER": "Bekräfta lösenord"
+        }
+      },
+      "ACCEPT_INVITATION": "Aktivera",
+      "ERRORS": {
+        "Repeat-password": "Lösenorden matchar inte",
+        "Invalid-token": "Token är ogiltig eller har gått ut",
+        "Password-too-weak": "Det nya lösenordet uppfyller inte en eller flera lösenordsprinciper:",
+        "PasswordTooShort": "Lösenordet är för kort",
+        "PasswordRequiresUniqueChars": "Lösenordet måste innehålla olika tecken",
+        "PasswordRequiresLower": "Lösenordet måste innehålla minst en gemen ('a'-'z')",
+        "PasswordRequiresUpper": "Lösenordet måste innehålla minst en versal ('A'-'Z')",
+        "PasswordRequiresDigit": "Lösenordet måste innehålla minst en siffra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Lösenordet måste innehålla minst ett tecken som inte är en bokstav eller siffra",
+        "recentPasswordUsed": "Du har använt det här lösenordet tidigare. Välj ett annat."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Återställning av lösenord",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nytt lösenord",
+          "PLACEHOLDER": "Ange lösenord"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Bekräfta lösenord",
+          "PLACEHOLDER": "Bekräfta lösenord"
+        }
+      },
+      "SAVE_PASSWORD": "Spara",
+      "ERRORS": {
+        "Repeat-password": "Lösenorden matchar inte",
+        "Invalid-token": "Token är ogiltig eller har gått ut",
+        "Password-too-weak": "Det nya lösenordet uppfyller inte en eller flera lösenordsprinciper:",
+        "PasswordTooShort": "Lösenordet är för kort",
+        "PasswordRequiresUniqueChars": "Lösenordet måste innehålla olika tecken",
+        "PasswordRequiresLower": "Lösenordet måste innehålla minst en gemen ('a'-'z')",
+        "PasswordRequiresUpper": "Lösenordet måste innehålla minst en versal ('A'-'Z')",
+        "PasswordRequiresDigit": "Lösenordet måste innehålla minst en siffra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Lösenordet måste innehålla minst ett tecken som inte är en bokstav eller siffra",
+        "recentPasswordUsed": "Du har använt det här lösenordet tidigare. Välj ett annat."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Inga notiser ännu",
+      "ERRORS": "Fel",
+      "PROFILE": "Profil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produkt",
+          "UPDATE": "statusuppdatering",
+          "MORE_DETAILS": "Klicka på notisen för att se detaljer"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "UPPGIFTER"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Förlopp",
+      "CLOSE_SIDEBAR": "Stäng sidofältet",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Visa eller dölj väljaren",
+        "MENU": "Datumväljarens meny",
+        "INPUT": "Datumfält",
+        "OPEN_TIME_PICKER": "Öppna tidsväljaren",
+        "CLOSE_TIME_PICKER": "Stäng tidsväljaren",
+        "INCREMENT": "Öka {unit}",
+        "DECREMENT": "Minska {unit}",
+        "OPEN_TIME_OVERLAY": "Välj {unit}",
+        "AM_PM": "Växla FM/EM",
+        "OPEN_YEARS": "Välj år",
+        "OPEN_MONTHS": "Välj månad",
+        "NEXT_MONTH": "Nästa månad",
+        "PREV_MONTH": "Föregående månad",
+        "NEXT_YEAR": "Nästa år",
+        "PREV_YEAR": "Föregående år",
+        "CLEAR": "Rensa värdet",
+        "CALENDAR_ICON": "Öppna kalendern",
+        "TIME_PICKER": "Tidsväljare",
+        "MONTH_PICKER": "Månadsväljare",
+        "YEAR_PICKER": "Årsväljare",
+        "TIME_OVERLAY": "Väljare: {unit}",
+        "UNITS": {
+          "hours": "timmar",
+          "minutes": "minuter",
+          "seconds": "sekunder"
+        }
+      }
+    }
+  }
+}

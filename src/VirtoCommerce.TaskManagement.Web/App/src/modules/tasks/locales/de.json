@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Aufgabenverwaltung",
+    "MENU": {
+      "TITLE": "Alle Aufgaben"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Aktualisieren",
+          "CREATE": "Erstellen",
+          "ADD": "Hinzufügen",
+          "DELETE": "Ausgewählte löschen"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Suchbegriffe"
+        },
+        "TABLE": {
+          "TOTALS": "Anzahl:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Typ",
+            "NAME": "Name",
+            "ASSIGNEE": "Zugewiesen an",
+            "PRIORITY": "Priorität",
+            "STATUS": "Status",
+            "DUE_DATE": "Fälligkeitsdatum"
+          },
+          "EMPTY": {
+            "TITLE": "Es sind noch keine Inhalte vorhanden",
+            "ACTION": "Inhalt hinzufügen"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Keine Inhalte gefunden.",
+            "ACTION": "Suche zurücksetzen"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Veröffentlichung aufheben",
+            "PUBLISH": "Veröffentlichen",
+            "DELETE": "Löschen"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Typfilter"
+            },
+            "PRIORITY": {
+              "TITLE": "Prioritätsfilter"
+            },
+            "DUE_DATE": {
+              "TITLE": "Fälligkeitsdatum",
+              "START_DATE": "Startdatum",
+              "END_DATE": "Enddatum"
+            },
+            "APPLY": {
+              "TITLE": "Anwenden"
+            },
+            "RESET": {
+              "TITLE": "Zurücksetzen"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Erstellt"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Es sind noch keine Elemente vorhanden"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Abschließen",
+          "REJECT": "Ablehnen",
+          "RESET": "Zurücksetzen",
+          "SAVE": "Speichern",
+          "DELETE": "Löschen"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Typ"
+          },
+          "SUMMARY": {
+            "TITLE": "Zusammenfassung"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Beschreibung"
+          },
+          "PRIORITY": {
+            "TITLE": "Priorität"
+          },
+          "DUE_DATE": {
+            "TITLE": "Fällig am"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Zugewiesen an"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Anhänge"
+        },
+        "NEW_TITLE": "Neue Aufgabe erstellen"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Es gibt nicht gespeicherte Änderungen\nTrotzdem schließen?",
+        "DELETE_CONFIRMATION_ASSET": "Möchten Sie die {count} ausgewählten Anhänge wirklich löschen?",
+        "DELETE_CONFIRMATION": "Möchten Sie diese Aufgabe wirklich löschen?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Zu erledigen",
+      "CANCELED": "Abgebrochen",
+      "DONE": "Erledigt"
+    }
+  }
+}

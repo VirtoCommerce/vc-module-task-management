@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "任务管理",
+    "MENU": {
+      "TITLE": "所有任务"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "刷新",
+          "CREATE": "创建",
+          "ADD": "添加",
+          "DELETE": "删除所选项"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "搜索关键字"
+        },
+        "TABLE": {
+          "TOTALS": "数量：",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "类型",
+            "NAME": "名称",
+            "ASSIGNEE": "负责人",
+            "PRIORITY": "优先级",
+            "STATUS": "状态",
+            "DUE_DATE": "截止日期"
+          },
+          "EMPTY": {
+            "TITLE": "暂无内容",
+            "ACTION": "添加内容"
+          },
+          "NOT_FOUND": {
+            "TITLE": "未找到内容。",
+            "ACTION": "重置搜索"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "取消发布",
+            "PUBLISH": "发布",
+            "DELETE": "删除"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "类型筛选"
+            },
+            "PRIORITY": {
+              "TITLE": "优先级筛选"
+            },
+            "DUE_DATE": {
+              "TITLE": "截止日期",
+              "START_DATE": "开始日期",
+              "END_DATE": "结束日期"
+            },
+            "APPLY": {
+              "TITLE": "应用"
+            },
+            "RESET": {
+              "TITLE": "重置"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "创建时间"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "暂无项目"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "完成",
+          "REJECT": "拒绝",
+          "RESET": "重置",
+          "SAVE": "保存",
+          "DELETE": "删除"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "类型"
+          },
+          "SUMMARY": {
+            "TITLE": "摘要"
+          },
+          "DESCRIPTION": {
+            "TITLE": "描述"
+          },
+          "PRIORITY": {
+            "TITLE": "优先级"
+          },
+          "DUE_DATE": {
+            "TITLE": "截止日期"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "负责人"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "附件"
+        },
+        "NEW_TITLE": "创建新任务"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "有未保存的更改\n仍要关闭吗？",
+        "DELETE_CONFIRMATION_ASSET": "确定要删除选中的 {count} 个附件吗？",
+        "DELETE_CONFIRMATION": "确定要删除此任务吗？"
+      }
+    },
+    "STATUS": {
+      "TODO": "待办",
+      "CANCELED": "已取消",
+      "DONE": "已完成"
+    }
+  }
+}

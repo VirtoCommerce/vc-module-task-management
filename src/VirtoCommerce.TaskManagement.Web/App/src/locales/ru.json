@@ -1,0 +1,174 @@
+{
+  "language_name": "Русский",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Имя пользователя",
+          "PLACEHOLDER": "Введите логин продавца"
+        },
+        "PASSWORD": {
+          "LABEL": "Пароль",
+          "PLACEHOLDER": "Введите пароль"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Забыли пароль",
+          "LABEL": "Email",
+          "PLACEHOLDER": "Пожалуйста, введите email"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Забыли пароль?",
+      "BUTTON": "Войти",
+      "FORGOT_BUTTON": "Отправить",
+      "BACK_BUTTON": "Назад",
+      "BUTTON_OK": "ОК",
+      "RESET_EMAIL_TEXT": "Мы отправим Вам письмо с инструкциями по сбросу пароля.",
+      "RESET_EMAIL_SENT": "Письмо с инструкциями отправлено."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Войти",
+      "SETTINGS": "Настройки",
+      "HELP": "Справка",
+      "NOTIFICATIONS": "Уведомления",
+      "LANGUAGE": "Выбор языка"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Изменить пароль",
+      "PROFILE": "Профиль",
+      "LOGOUT": "Выйти"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Текущий пароль",
+        "PLACEHOLDER": "Введите пароль"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Новый пароль",
+        "PLACEHOLDER": "Введите пароль"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Подтвердите пароль",
+        "PLACEHOLDER": "Подтвердите пароль"
+      },
+      "CANCEL": "Отменить",
+      "SAVE": "Обновить",
+      "ERRORS": {
+        "Repeat-password": "Пароли не совпадают",
+        "Equal-passwords": "Новый пароль не должен совпадать со старым",
+        "Invalid-token": "Токен недействителен или истёк",
+        "Password-too-weak": "Новый пароль не соответствует одной или нескольким политикам безопасности паролей:",
+        "PasswordTooShort": "Пароль слишком короткий",
+        "PasswordRequiresUniqueChars": "Пароль должен содержать разные символы",
+        "PasswordRequiresLower": "Пароль должен содержать хотя бы одну строчную букву ('a'-'z')",
+        "PasswordRequiresUpper": "Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z')",
+        "PasswordRequiresDigit": "Пароль должен содержать хотя бы одну цифру ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Пароль должен содержать хотя бы один небуквенно-цифровой символ",
+        "Incorrect password.": "Вы ввели неверный пароль",
+        "You have used this password in the past. Choose another one.": "Вы уже использовали этот пароль ранее. Выберите другой."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Активация нового пользователя",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Email"
+        },
+        "PASSWORD": {
+          "LABEL": "Новый пароль",
+          "PLACEHOLDER": "Введите пароль"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Подтвердите пароль",
+          "PLACEHOLDER": "Подтвердите пароль"
+        }
+      },
+      "ACCEPT_INVITATION": "Активировать",
+      "ERRORS": {
+        "Repeat-password": "Пароли не совпадают",
+        "Invalid-token": "Токен недействителен или истёк",
+        "Password-too-weak": "Новый пароль не соответствует одной или нескольким политикам безопасности паролей:",
+        "PasswordTooShort": "Пароль слишком короткий",
+        "PasswordRequiresUniqueChars": "Пароль должен содержать разные символы",
+        "PasswordRequiresLower": "Пароль должен содержать хотя бы одну строчную букву ('a'-'z')",
+        "PasswordRequiresUpper": "Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z')",
+        "PasswordRequiresDigit": "Пароль должен содержать хотя бы одну цифру ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Пароль должен содержать хотя бы один небуквенно-цифровой символ",
+        "recentPasswordUsed": "Вы уже использовали этот пароль ранее. Выберите другой."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Сброс пароля",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Новый пароль",
+          "PLACEHOLDER": "Введите пароль"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Подтвердите пароль",
+          "PLACEHOLDER": "Подтвердите пароль"
+        }
+      },
+      "SAVE_PASSWORD": "Сохранить",
+      "ERRORS": {
+        "Repeat-password": "Пароли не совпадают",
+        "Invalid-token": "Токен недействителен или истёк",
+        "Password-too-weak": "Новый пароль не соответствует одной или нескольким политикам безопасности паролей:",
+        "PasswordTooShort": "Пароль слишком короткий",
+        "PasswordRequiresUniqueChars": "Пароль должен содержать разные символы",
+        "PasswordRequiresLower": "Пароль должен содержать хотя бы одну строчную букву ('a'-'z')",
+        "PasswordRequiresUpper": "Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z')",
+        "PasswordRequiresDigit": "Пароль должен содержать хотя бы одну цифру ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Пароль должен содержать хотя бы один небуквенно-цифровой символ",
+        "recentPasswordUsed": "Вы уже использовали этот пароль ранее. Выберите другой."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Уведомлений пока нет",
+      "ERRORS": "Ошибки",
+      "PROFILE": "Профиль:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Товар",
+          "UPDATE": "обновление статуса",
+          "MORE_DETAILS": "Нажмите на уведомление, чтобы посмотреть подробности"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "ЗАДАЧИ"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Прогресс",
+      "CLOSE_SIDEBAR": "Закрыть боковую панель",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Показать или скрыть выбор",
+        "MENU": "Меню выбора даты",
+        "INPUT": "Поле даты",
+        "OPEN_TIME_PICKER": "Открыть выбор времени",
+        "CLOSE_TIME_PICKER": "Закрыть выбор времени",
+        "INCREMENT": "Увеличить: {unit}",
+        "DECREMENT": "Уменьшить: {unit}",
+        "OPEN_TIME_OVERLAY": "Выбрать: {unit}",
+        "AM_PM": "Переключить AM/PM",
+        "OPEN_YEARS": "Выбрать год",
+        "OPEN_MONTHS": "Выбрать месяц",
+        "NEXT_MONTH": "Следующий месяц",
+        "PREV_MONTH": "Предыдущий месяц",
+        "NEXT_YEAR": "Следующий год",
+        "PREV_YEAR": "Предыдущий год",
+        "CLEAR": "Очистить значение",
+        "CALENDAR_ICON": "Открыть календарь",
+        "TIME_PICKER": "Выбор времени",
+        "MONTH_PICKER": "Выбор месяца",
+        "YEAR_PICKER": "Выбор года",
+        "TIME_OVERLAY": "Выбор: {unit}",
+        "UNITS": {
+          "hours": "часы",
+          "minutes": "минуты",
+          "seconds": "секунды"
+        }
+      }
+    }
+  }
+}

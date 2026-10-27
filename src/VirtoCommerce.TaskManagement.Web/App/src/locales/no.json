@@ -1,0 +1,174 @@
+{
+  "language_name": "Norsk",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Brukernavn",
+          "PLACEHOLDER": "Skriv inn selgerbrukernavnet ditt"
+        },
+        "PASSWORD": {
+          "LABEL": "Passord",
+          "PLACEHOLDER": "Skriv inn passordet ditt"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Glemt passord",
+          "LABEL": "E-post",
+          "PLACEHOLDER": "Skriv inn e-postadressen din"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Glemt passordet?",
+      "BUTTON": "Logg inn",
+      "FORGOT_BUTTON": "Send",
+      "BACK_BUTTON": "Tilbake",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Vi sender deg en e-post med instruksjoner for hvordan du tilbakestiller passordet.",
+      "RESET_EMAIL_SENT": "En e-post med instruksjoner er sendt til deg."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Logg inn",
+      "SETTINGS": "Innstillinger",
+      "HELP": "Hjelp",
+      "NOTIFICATIONS": "Varsler",
+      "LANGUAGE": "Språkvelger"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Endre passord",
+      "PROFILE": "Profil",
+      "LOGOUT": "Logg ut"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Nåværende passord",
+        "PLACEHOLDER": "Skriv inn passord"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nytt passord",
+        "PLACEHOLDER": "Skriv inn passord"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Bekreft passord",
+        "PLACEHOLDER": "Bekreft passord"
+      },
+      "CANCEL": "Avbryt",
+      "SAVE": "Oppdater",
+      "ERRORS": {
+        "Repeat-password": "Passordene er ikke like",
+        "Equal-passwords": "Det nye passordet kan ikke være det samme som det gamle",
+        "Invalid-token": "Tokenet er ugyldig eller utløpt",
+        "Password-too-weak": "Det nye passordet oppfyller ikke én eller flere passordregler:",
+        "PasswordTooShort": "Passordet er for kort",
+        "PasswordRequiresUniqueChars": "Passordet må inneholde forskjellige tegn",
+        "PasswordRequiresLower": "Passordet må inneholde minst én liten bokstav ('a'-'z')",
+        "PasswordRequiresUpper": "Passordet må inneholde minst én stor bokstav ('A'-'Z')",
+        "PasswordRequiresDigit": "Passordet må inneholde minst ett siffer ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passordet må inneholde minst ett tegn som ikke er en bokstav eller et siffer",
+        "Incorrect password.": "Du skrev inn feil passord",
+        "You have used this password in the past. Choose another one.": "Du har brukt dette passordet tidligere. Velg et annet."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Aktivering av ny bruker",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "E-post"
+        },
+        "PASSWORD": {
+          "LABEL": "Nytt passord",
+          "PLACEHOLDER": "Skriv inn passord"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Bekreft passord",
+          "PLACEHOLDER": "Bekreft passord"
+        }
+      },
+      "ACCEPT_INVITATION": "Aktiver",
+      "ERRORS": {
+        "Repeat-password": "Passordene er ikke like",
+        "Invalid-token": "Tokenet er ugyldig eller utløpt",
+        "Password-too-weak": "Det nye passordet oppfyller ikke én eller flere passordregler:",
+        "PasswordTooShort": "Passordet er for kort",
+        "PasswordRequiresUniqueChars": "Passordet må inneholde forskjellige tegn",
+        "PasswordRequiresLower": "Passordet må inneholde minst én liten bokstav ('a'-'z')",
+        "PasswordRequiresUpper": "Passordet må inneholde minst én stor bokstav ('A'-'Z')",
+        "PasswordRequiresDigit": "Passordet må inneholde minst ett siffer ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passordet må inneholde minst ett tegn som ikke er en bokstav eller et siffer",
+        "recentPasswordUsed": "Du har brukt dette passordet tidligere. Velg et annet."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Tilbakestilling av passord",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nytt passord",
+          "PLACEHOLDER": "Skriv inn passord"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Bekreft passord",
+          "PLACEHOLDER": "Bekreft passord"
+        }
+      },
+      "SAVE_PASSWORD": "Lagre",
+      "ERRORS": {
+        "Repeat-password": "Passordene er ikke like",
+        "Invalid-token": "Tokenet er ugyldig eller utløpt",
+        "Password-too-weak": "Det nye passordet oppfyller ikke én eller flere passordregler:",
+        "PasswordTooShort": "Passordet er for kort",
+        "PasswordRequiresUniqueChars": "Passordet må inneholde forskjellige tegn",
+        "PasswordRequiresLower": "Passordet må inneholde minst én liten bokstav ('a'-'z')",
+        "PasswordRequiresUpper": "Passordet må inneholde minst én stor bokstav ('A'-'Z')",
+        "PasswordRequiresDigit": "Passordet må inneholde minst ett siffer ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Passordet må inneholde minst ett tegn som ikke er en bokstav eller et siffer",
+        "recentPasswordUsed": "Du har brukt dette passordet tidligere. Velg et annet."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Ingen varsler ennå",
+      "ERRORS": "Feil",
+      "PROFILE": "Profil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produkt",
+          "UPDATE": "statusoppdatering",
+          "MORE_DETAILS": "Klikk på varselet for å se detaljer"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "OPPGAVER"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Fremdrift",
+      "CLOSE_SIDEBAR": "Lukk sidepanelet",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Vis eller skjul velgeren",
+        "MENU": "Meny for datovelger",
+        "INPUT": "Datofelt",
+        "OPEN_TIME_PICKER": "Åpne tidsvelger",
+        "CLOSE_TIME_PICKER": "Lukk tidsvelger",
+        "INCREMENT": "Øk {unit}",
+        "DECREMENT": "Reduser {unit}",
+        "OPEN_TIME_OVERLAY": "Velg {unit}",
+        "AM_PM": "Bytt AM/PM",
+        "OPEN_YEARS": "Velg år",
+        "OPEN_MONTHS": "Velg måned",
+        "NEXT_MONTH": "Neste måned",
+        "PREV_MONTH": "Forrige måned",
+        "NEXT_YEAR": "Neste år",
+        "PREV_YEAR": "Forrige år",
+        "CLEAR": "Tøm verdi",
+        "CALENDAR_ICON": "Åpne kalender",
+        "TIME_PICKER": "Tidsvelger",
+        "MONTH_PICKER": "Månedsvelger",
+        "YEAR_PICKER": "Årsvelger",
+        "TIME_OVERLAY": "Velger: {unit}",
+        "UNITS": {
+          "hours": "timer",
+          "minutes": "minutter",
+          "seconds": "sekunder"
+        }
+      }
+    }
+  }
+}

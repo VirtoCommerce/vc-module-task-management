@@ -2,41 +2,41 @@
   "TaskManagement": {
     "blades": {
       "hello-world": {
-        "title": "Hello world blade"
+        "title": "Blade 'Hallo Welt'"
       }
     }
   },
   "permissions": {
-    "TaskManagement:access": "Open TaskManagement menu",
-    "TaskManagement:create": "Create TaskManagement related data",
-    "TaskManagement:read": "View TaskManagement related data",
-    "TaskManagement:update": "Update TaskManagement related data",
-    "TaskManagement:delete": "Delete TaskManagement related data"
+    "TaskManagement:access": "Menü der Aufgabenverwaltung öffnen",
+    "TaskManagement:create": "Daten der Aufgabenverwaltung erstellen",
+    "TaskManagement:read": "Daten der Aufgabenverwaltung anzeigen",
+    "TaskManagement:update": "Daten der Aufgabenverwaltung aktualisieren",
+    "TaskManagement:delete": "Daten der Aufgabenverwaltung löschen"
   },
   "settings": {
     "TaskManagement": {
       "TaskNotificationsEnabled": {
-        "title": "Task notification",
-        "description": "(Restart required) Enable/Disable task assignment notification"
+        "title": "Aufgabenbenachrichtigung",
+        "description": "(Neustart erforderlich) Benachrichtigung über Aufgabenzuweisungen aktivieren/deaktivieren"
       },
       "TaskNotificationNoReplyEmail": {
-        "title": "Notification no-reply email",
-        "description": "Used as sender email"
+        "title": "No-Reply-E-Mail-Adresse für Benachrichtigungen",
+        "description": "Wird als Absenderadresse verwendet"
       },
       "TaskAppUrl": {
-        "title": "Tasks portal base URL",
-        "description": "URL of tasks portal, by default use - platformUrl/apps/tasks"
+        "title": "Basis-URL des Aufgabenportals",
+        "description": "URL des Aufgabenportals, standardmäßig platformUrl/apps/tasks"
       },
       "TaskTypes": {
-        "title": "Tasks types",
-        "description": "List of task types that employees can select when creating a new task"
+        "title": "Aufgabentypen",
+        "description": "Liste der Aufgabentypen, die Mitarbeiter beim Erstellen einer neuen Aufgabe auswählen können"
       }
     }
   },
   "notificationTypes": {
     "WorkTaskAssignedEmailNotification": {
-      "displayName": "Notification on assigned work task",
-      "description": "The manager will get an email notification when new work task assigned"
+      "displayName": "Benachrichtigung über zugewiesene Arbeitsaufgabe",
+      "description": "Der Manager erhält eine E-Mail-Benachrichtigung, wenn ihm eine neue Arbeitsaufgabe zugewiesen wird"
     }
   }
 }

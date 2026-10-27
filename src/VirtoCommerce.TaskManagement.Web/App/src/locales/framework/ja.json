@@ -1,0 +1,438 @@
+{
+  "CORE": {
+    "THEMES": {
+      "LIGHT": "ライト",
+      "DARK": "ダーク"
+    }
+  },
+  "SHELL": {
+    "USER": {
+      "ROLE": {
+        "ADMINISTRATOR": "管理者"
+      }
+    },
+    "ACCOUNT": {
+      "SETTINGS": "設定",
+      "CHANGE_PASSWORD": "パスワード変更",
+      "PROFILE": "プロフィール",
+      "LOGOUT": "ログアウト"
+    }
+  },
+  "COMPONENTS": {
+    "ATOMS": {
+      "VC_BANNER": {
+        "SHOW_MORE": "もっと見る",
+        "SHOW_LESS": "折りたたむ"
+      }
+    },
+    "MOLECULES": {
+      "VC_SELECT": {
+        "CLICK_TO_SELECT": "クリックして選択...",
+        "LOADING": "読み込み中...",
+        "LOADING_MORE": "さらに読み込み中...",
+        "NO_OPTIONS": "選択肢がありません"
+      },
+      "VC_FILE_UPLOAD": {
+        "DRAG_HERE": "ここにファイルをドラッグ＆ドロップ、または",
+        "BROWSE": "ファイルを参照",
+        "TAP_TO_UPLOAD": "タップしてファイルを選択",
+        "UPLOADING": "アップロード中..."
+      },
+      "VC_INPUT": {
+        "DATE_PLACEHOLDER": "日付を選択",
+        "DATE_TIME_PLACEHOLDER": "日時を選択"
+      },
+      "VC_PAGINATION": {
+        "JUMP": "ページへ移動:"
+      },
+      "VC_MULTIVALUE": {
+        "ADD": "追加"
+      }
+    },
+    "ORGANISMS": {
+      "VC_DYNAMIC_PROPERTY": {
+        "ADD": "値を追加",
+        "VALUE_TYPE": {
+          "COLOR": {
+            "PLACEHOLDER": "カラーコード",
+            "NAME": "色の名前"
+          }
+        }
+      },
+      "VC_GALLERY": {
+        "INTERNAL": {
+          "VC_GALLERY_ITEM": {
+            "FULLSCREEN": "全画面表示",
+            "EDIT": "編集",
+            "DELETE": "削除"
+          },
+          "VC_GALLERY_PREVIEW": {
+            "COPY_IMAGE_LINK": "画像リンクをコピー"
+          }
+        },
+        "GALLERY_IS_EMPTY": "ギャラリーは空です",
+        "DROP_TO_UPLOAD": "ドロップしてアップロード",
+        "DRAG_IMAGES_HERE": "ここに画像をドラッグ、または",
+        "BROWSE_IMAGES": "ファイルを参照",
+        "UPLOAD": "アップロード",
+        "OR_DROP_HERE": "またはここにドロップ",
+        "SHOW_ALL": "展開 ({count})",
+        "COLLAPSE": "折りたたむ"
+      },
+      "VC_APP": {
+        "INTERNAL": {
+          "VC_APP_BAR": {
+            "BACK": "戻る"
+          },
+          "MOBILE_LAYOUT": {
+            "TAB_MENU": "メニュー",
+            "TAB_HUB": "ハブ"
+          },
+          "APP_HUB": {
+            "SEARCH_PLACEHOLDER": "アプリケーションとウィジェットを検索",
+            "APPLICATIONS": "アプリケーション",
+            "WIDGETS": "ウィジェット",
+            "NO_APPLICATIONS": "アプリケーションが見つかりません",
+            "NO_WIDGETS": "ウィジェットが見つかりません",
+            "LIST_VIEW": "リスト表示",
+            "TILE_VIEW": "タイル表示"
+          }
+        }
+      },
+      "BLADE_NAVIGATION": {
+        "ARIA_LABEL": "ブレードナビゲーション"
+      },
+      "VC_BLADE": {
+        "SEE_DETAILS": "詳細を表示",
+        "UNSAVED_CHANGES": "未保存の変更があります",
+        "ERROR_POPUP": {
+          "TITLE": "エラーの詳細",
+          "COPY_ERROR": "内容をコピー",
+          "CLOSE": "閉じる"
+        },
+        "MORE": "その他",
+        "TOOLBAR": "ツールバーの操作",
+        "CLOSE_MENU": "メニューを閉じる",
+        "PANEL": "パネル"
+      },
+      "VC_BLADE_HEADER": {
+        "UNSAVED_CHANGES": "未保存の変更があります",
+        "NO_CHANGES": "未保存の変更はありません"
+      },
+      "VC_TABLE": {
+        "CURRENT_PAGE_SELECTED": "このページのすべての項目が選択されています。",
+        "SELECT_ALL": "すべての項目を選択",
+        "ALL_SELECTED": "すべての項目が選択されています。",
+        "ALL_SELECTED_COUNT": "{count} 件すべてを選択済み",
+        "SELECT_ALL_COUNT": "{count} 件すべてを選択",
+        "CANCEL": "選択を解除",
+        "ALL_ACTIONS": "すべての操作",
+        "MORE": "その他",
+        "ALL_FILTERS": "フィルター",
+        "SEARCH": "検索...",
+        "EMPTY": "リストは空です。",
+        "EMPTY_TITLE": "データがありません",
+        "EMPTY_DESCRIPTION": "表示する項目がありません",
+        "NOT_FOUND": "見つかりませんでした。",
+        "NOT_FOUND_TITLE": "結果が見つかりません",
+        "NOT_FOUND_DESCRIPTION": "検索条件またはフィルターを変更してください",
+        "TOTALS": "合計:",
+        "ACTIONS": "アクション",
+        "NOT_SET": "未設定",
+        "SELECTED": "選択済み",
+        "SELECT_ALL_TRUNCATED": "すべて選択",
+        "PULL_TO_REFRESH": "引っ張って更新",
+        "RELEASE_TO_REFRESH": "離して更新",
+        "REFRESHING": "更新中...",
+        "ADD_ROW": "行を追加",
+        "LOADING": "読み込み中...",
+        "PAGE_INFO": "{current} / {total} ページ",
+        "COLUMN_FILTER": {
+          "APPLY": "適用",
+          "CLEAR": "クリア",
+          "FROM": "開始",
+          "TO": "終了"
+        },
+        "GLOBAL_FILTERS": {
+          "BUTTON": "フィルター",
+          "TITLE": "フィルター"
+        },
+        "COLUMN_SWITCHER": {
+          "BUTTON": "列",
+          "TITLE": "列の表示/非表示",
+          "SHOW_ALL": "すべて表示",
+          "RESET": "リセット"
+        },
+        "OF": "/",
+        "PAGE": "ページ"
+      },
+      "VC_POPUP": {
+        "OK": "OK",
+        "CONFIRM": "確認",
+        "CANCEL": "キャンセル",
+        "CLOSE": "閉じる",
+        "TITLE": {
+          "CONFIRMATION": "確認",
+          "ERROR": "エラー",
+          "INFO": "情報"
+        }
+      }
+    },
+    "THEME_SELECTOR": {
+      "THEME_CHANGED": " テーマ",
+      "THEME_SELECTOR": "テーマ"
+    },
+    "CHANGE_PASSWORD": {
+      "TITLE": "パスワード変更",
+      "TITLE_FORCED": "パスワードの有効期限切れ",
+      "SUBTITLE_FORCED": "新しいパスワードを設定してください",
+      "FORCED": {
+        "LABEL": "パスワードの有効期限が切れています。引き続き管理画面を使用するには、パスワードを変更する必要があります。"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "現在のパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "新しいパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "パスワードの確認",
+        "PLACEHOLDER": "パスワードを再入力"
+      },
+      "CANCEL": "キャンセル",
+      "SAVE": "更新",
+      "ERRORS": {
+        "Repeat-password": "パスワードが一致しません",
+        "Equal-passwords": "新しいパスワードは古いパスワードと異なるものにしてください",
+        "Invalid-token": "トークンが無効か、有効期限が切れています",
+        "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+        "PasswordTooShort": "パスワードが短すぎます",
+        "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+        "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+        "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+        "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+        "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+        "Incorrect password.": "パスワードが正しくありません",
+        "You have used this password in the past. Choose another one.": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+      }
+    },
+    "APP_HUB": {
+      "TITLE": "アプリケーション"
+    },
+    "NOTIFICATION_DROPDOWN": {
+      "TITLE": "通知",
+      "EMPTY": "通知はまだありません"
+    },
+    "LANGUAGE_SELECTOR": {
+      "TITLE": "言語"
+    },
+    "FILTERS": {
+      "APPLY": "フィルターを適用",
+      "RESET": "リセット"
+    }
+  },
+  "INVITATION": {
+    "TITLE": "招待が届いています！",
+    "SUBTITLE": "アカウントのパスワードを設定してください",
+    "FIELDS": {
+      "EMAIL": {
+        "LABEL": "メールアドレス"
+      },
+      "PASSWORD": {
+        "LABEL": "新しいパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "パスワードの確認",
+        "PLACEHOLDER": "パスワードを再入力"
+      }
+    },
+    "ACCEPT_INVITATION": "有効化",
+    "ERRORS": {
+      "Repeat-password": "パスワードが一致しません",
+      "Invalid-token": "トークンが無効か、有効期限が切れています",
+      "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+      "PasswordTooShort": "パスワードが短すぎます",
+      "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+      "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+      "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+      "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+      "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+      "recentPasswordUsed": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+    }
+  },
+  "LOGIN": {
+    "TITLE": "おかえりなさい",
+    "SUBTITLE": "続行するにはアカウントにサインインしてください",
+    "FIELDS": {
+      "LOGIN": {
+        "LABEL": "メールアドレス",
+        "PLACEHOLDER": "メールアドレスを入力"
+      },
+      "PASSWORD": {
+        "LABEL": "パスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "FORGOT_PASSWORD": {
+        "TITLE": "パスワードをお忘れの場合",
+        "LABEL": "メールアドレス",
+        "PLACEHOLDER": "メールアドレスを入力してください"
+      }
+    },
+    "FORGOT_PASSWORD_BUTTON": "パスワードをお忘れですか？",
+    "BUTTON": "サインイン",
+    "OR": "または",
+    "FORGOT_BUTTON": "送信",
+    "BACK_BUTTON": "戻る",
+    "BUTTON_OK": "OK",
+    "RESET_EMAIL_TEXT": "パスワードのリセット手順を記載したメールをお送りします。",
+    "RESET_EMAIL_SENT": "手順を記載したメールを送信しました。",
+    "SSO_NO_PROVIDERS_ERROR": "SSO 認証が設定されていません。管理者にお問い合わせください。"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "パスワードのリセット",
+    "SUBTITLE": "メールアドレスを入力すると、リセット用のリンクをお送りします",
+    "FIELDS": {
+      "EMAIL": {
+        "LABEL": "メールアドレス",
+        "PLACEHOLDER": "メールアドレスを入力"
+      }
+    },
+    "SEND_BUTTON": "リセットリンクを送信",
+    "BACK_TO_LOGIN": "サインインに戻る",
+    "SUCCESS_TITLE": "メールを確認してください",
+    "SUCCESS_TEXT": "{email} にリセットリンクを送信しました"
+  },
+  "PASSWORDRESET": {
+    "TITLE": "新しいパスワードの設定",
+    "SUBTITLE": "新しいパスワードを入力してください",
+    "FIELDS": {
+      "PASSWORD": {
+        "LABEL": "新しいパスワード",
+        "PLACEHOLDER": "パスワードを入力"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "パスワードの確認",
+        "PLACEHOLDER": "パスワードを再入力"
+      }
+    },
+    "SAVE_PASSWORD": "保存",
+    "ERRORS": {
+      "Repeat-password": "パスワードが一致しません",
+      "Invalid-token": "トークンが無効か、有効期限が切れています",
+      "Password-too-weak": "新しいパスワードが、パスワードのセキュリティポリシーの一部を満たしていません:",
+      "PasswordTooShort": "パスワードが短すぎます",
+      "PasswordRequiresUniqueChars": "パスワードには異なる文字を使用してください",
+      "PasswordRequiresLower": "パスワードには小文字 ('a'-'z') を 1 文字以上含めてください",
+      "PasswordRequiresUpper": "パスワードには大文字 ('A'-'Z') を 1 文字以上含めてください",
+      "PasswordRequiresDigit": "パスワードには数字 ('0'-'9') を 1 文字以上含めてください",
+      "PasswordRequiresNonAlphanumeric": "パスワードには英数字以外の文字を 1 文字以上含めてください",
+      "recentPasswordUsed": "このパスワードは過去に使用されています。別のパスワードを選択してください。"
+    }
+  },
+  "ASSETS_MANAGER": {
+    "TITLE": "リソース",
+    "TOOLBAR": {
+      "SAVE": "保存",
+      "REFRESH": "更新",
+      "ADD": "追加",
+      "DELETE": "選択項目を削除"
+    },
+    "EMPTY": {
+      "NO_ASSETS": "リソースがありません",
+      "UPLOAD_ASSETS": "ここにリソースをドラッグ＆ドロップするか、[アップロード] ボタンをクリックしてください",
+      "UPLOAD": "アップロード"
+    },
+    "TABLE": {
+      "HEADER": {
+        "IMAGE": "画像",
+        "NAME": "名前",
+        "SIZE": "サイズ",
+        "SORT_ORDER": "並び順",
+        "CREATED_DATE": "作成日"
+      },
+      "ACTIONS": {
+        "DELETE": "削除",
+        "EDIT": "編集"
+      }
+    }
+  },
+  "ASSETS": {
+    "PAGES": {
+      "DETAILS": {
+        "SUBTITLE": "リソースの編集",
+        "TOOLBAR": {
+          "SAVE": "保存",
+          "DELETE": "削除"
+        },
+        "FIELDS": {
+          "SIZE": "サイズ",
+          "CREATED_DATE": "作成日",
+          "URL": "URL",
+          "COPY": "リンクをコピー",
+          "NAME": {
+            "TITLE": "リソース名",
+            "PLACEHOLDER": "リソース名を入力"
+          },
+          "ALT": {
+            "TITLE": "画像の代替テキスト",
+            "PLACEHOLDER": "画像の代替テキストを入力",
+            "TOOLTIP": "このテキストは、ページ上の画像が無効または読み込まれていない場合に表示されます"
+          },
+          "DESCRIPTION": {
+            "TITLE": "メタディスクリプション",
+            "PLACEHOLDER": "メタディスクリプションを入力"
+          }
+        }
+      }
+    }
+  },
+  "messages": {
+    "_default": "{field} が無効です",
+    "alpha": "{field} には英字のみ使用できます",
+    "alpha_num": "{field} には英数字のみ使用できます",
+    "alpha_dash": "{field} には英数字、ハイフン、アンダースコアのみ使用できます",
+    "alpha_spaces": "{field} には英字とスペースのみ使用できます",
+    "between": "{field} は 0:{min} から 1:{max} の間で入力してください",
+    "confirmed": "{field} が確認用の値と一致しません",
+    "digits": "{field} は 0:{length} 桁の数字で入力してください",
+    "dimensions": "{field} は幅 0:{width} ピクセル、高さ 1:{height} ピクセルにしてください",
+    "email": "{field} には有効なメールアドレスを入力してください",
+    "not_one_of": "{field} の値が無効です",
+    "ext": "{field} は有効なファイルではありません",
+    "image": "{field} には画像を指定してください",
+    "integer": "{field} には整数を入力してください",
+    "length": "{field} は 0:{length} 文字で入力してください",
+    "max_value": "{field} は 0:{max} 以下で入力してください",
+    "max": "{field} は 0:{length} 文字以内で入力してください",
+    "mimes": "{field} には有効な種類のファイルを指定してください",
+    "min_value": "{field} は 0:{min} 以上で入力してください",
+    "min": "{field} は 0:{length} 文字以上で入力してください",
+    "numeric": "{field} には数字のみ使用できます",
+    "one_of": "{field} の値が無効です",
+    "regex": "{field} の形式が正しくありません",
+    "required_if": "{field} は必須です",
+    "required": "{field} は必須です",
+    "size": "{field} のサイズは 0:{size}KB 未満にしてください",
+    "url": "{field} は有効な URL ではありません",
+    "min_dimensions": {
+      "error": "画像のサイズは {height}*{width} より大きくしてください",
+      "not_image_error": "画像ファイルではありません"
+    },
+    "file_weight": "ファイルサイズは最大 {size} KB です",
+    "before": "終了日は開始日より前にしてください",
+    "after": "終了日は開始日より後にしてください",
+    "bigint": "サポートされていない数値です"
+  },
+  "PERMISSION_MESSAGES": {
+    "ACCESS_RESTRICTED": "アクセスが制限されています"
+  },
+  "AI_AGENT": {
+    "LOADING": "Virto OZ を読み込み中..."
+  },
+  "common": {
+    "no_options": "選択肢がありません"
+  }
+}

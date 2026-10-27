@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "タスク管理",
+    "MENU": {
+      "TITLE": "すべてのタスク"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "更新",
+          "CREATE": "作成",
+          "ADD": "追加",
+          "DELETE": "選択項目を削除"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "キーワードで検索"
+        },
+        "TABLE": {
+          "TOTALS": "件数:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "タイプ",
+            "NAME": "名前",
+            "ASSIGNEE": "担当者",
+            "PRIORITY": "優先度",
+            "STATUS": "ステータス",
+            "DUE_DATE": "期日"
+          },
+          "EMPTY": {
+            "TITLE": "コンテンツはまだありません",
+            "ACTION": "コンテンツを追加"
+          },
+          "NOT_FOUND": {
+            "TITLE": "コンテンツが見つかりません。",
+            "ACTION": "検索をリセット"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "公開を停止",
+            "PUBLISH": "公開",
+            "DELETE": "削除"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "タイプで絞り込み"
+            },
+            "PRIORITY": {
+              "TITLE": "優先度で絞り込み"
+            },
+            "DUE_DATE": {
+              "TITLE": "期日",
+              "START_DATE": "開始日",
+              "END_DATE": "終了日"
+            },
+            "APPLY": {
+              "TITLE": "適用"
+            },
+            "RESET": {
+              "TITLE": "リセット"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "作成日時"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "項目はまだありません"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "完了",
+          "REJECT": "却下",
+          "RESET": "リセット",
+          "SAVE": "保存",
+          "DELETE": "削除"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "タイプ"
+          },
+          "SUMMARY": {
+            "TITLE": "概要"
+          },
+          "DESCRIPTION": {
+            "TITLE": "説明"
+          },
+          "PRIORITY": {
+            "TITLE": "優先度"
+          },
+          "DUE_DATE": {
+            "TITLE": "期日"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "担当者"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "添付ファイル"
+        },
+        "NEW_TITLE": "新しいタスクを作成"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "保存されていない変更があります\nこのまま閉じますか？",
+        "DELETE_CONFIRMATION_ASSET": "選択した {count} 件の添付ファイルを削除してもよろしいですか？",
+        "DELETE_CONFIRMATION": "このタスクを削除してもよろしいですか？"
+      }
+    },
+    "STATUS": {
+      "TODO": "未着手",
+      "CANCELED": "キャンセル済み",
+      "DONE": "完了"
+    }
+  }
+}

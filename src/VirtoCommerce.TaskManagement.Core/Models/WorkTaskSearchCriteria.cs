@@ -11,7 +11,7 @@ namespace VirtoCommerce.TaskManagement.Core.Models
 
         public IList<string> StoreIds { get; set; }
 
-        // The record a task is linked to (WorkTask.ObjectType and ObjectId). Not ObjectIds: those are the tasks' own ids.
+        // The record a task is linked to (WorkTask.ObjectType/ObjectId). Not ObjectIds: those are the tasks' own ids.
         public string LinkedObjectType { get; set; }
         public IList<string> LinkedObjectIds { get; set; }
 
@@ -25,11 +25,8 @@ namespace VirtoCommerce.TaskManagement.Core.Models
         {
             get
             {
-                if (_priorities == null && !string.IsNullOrEmpty(Priority))
-                {
-                    _priorities = new[] { Priority };
-                }
-                return _priorities;
+                // Not stored, unlike ObjectTypes: a criteria searched or cloned once still follows Priority.
+                return _priorities ?? (string.IsNullOrEmpty(Priority) ? null : new[] { Priority });
             }
             set
             {

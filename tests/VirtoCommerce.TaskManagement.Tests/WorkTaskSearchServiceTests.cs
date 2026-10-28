@@ -90,6 +90,31 @@ public class WorkTaskSearchServiceTests
         Assert.Equal(new[] { "order-high", "unlinked-high" }, ids);
     }
 
+    // Every search reads Priorities for its cache key first, and a clone copies the criteria member by member: Priority
+    // must still decide afterwards, as it did when BuildQuery read it directly.
+    [Fact]
+    public void Priorities_FollowAPriorityChangedAfterASearch()
+    {
+        var criteria = new WorkTaskSearchCriteria { Priority = nameof(TaskPriority.High) };
+        Search(criteria);
+
+        criteria.Priority = nameof(TaskPriority.Low);
+
+        Assert.Equal(new[] { "customer-2-low" }, Search(criteria));
+    }
+
+    [Fact]
+    public void Priorities_FollowAPriorityChangedOnAClone()
+    {
+        var criteria = new WorkTaskSearchCriteria { Priority = nameof(TaskPriority.High) };
+        Search(criteria);
+
+        var clone = criteria.CloneTyped();
+        clone.Priority = nameof(TaskPriority.Low);
+
+        Assert.Equal(new[] { "customer-2-low" }, Search(clone));
+    }
+
     [Fact]
     public void Priority_Empty_DoesNotFilter()
     {

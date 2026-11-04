@@ -14,4 +14,10 @@
     <PackageReference Include="VirtoCommerce.Platform.Hangfire" Version="3.1025.0" />
     <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.1025.0" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- Transitive override: MySqlConnector otherwise resolves to 1.0.0 here (via Platform.Hangfire) and to 2.5.0 in Data.MySql (via Platform.Data.MySql), -->
+    <!-- both vulnerable (GHSA-473q-m89c-ghf8); every project that resolves it references this one. Remove once the module no longer references -->
+    <!-- Platform.Hangfire and is on platform 3.1091.0 or later, which pins MySqlConnector 2.6.2. -->
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+  </ItemGroup>
 </Project>

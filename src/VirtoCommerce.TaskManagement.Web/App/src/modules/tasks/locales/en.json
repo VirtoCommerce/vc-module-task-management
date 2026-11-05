@@ -2,11 +2,10 @@
   "TASKS": {
     "TITLE": "Tasks Management",
     "MENU": {
-      "TITLE": "All tasks"
+      "TITLE": "All Tasks"
     },
     "PAGES": {
       "LIST": {
-        "TITLE": "All tasks",
         "TOOLBAR": {
           "REFRESH": "Refresh",
           "CREATE": "Create",

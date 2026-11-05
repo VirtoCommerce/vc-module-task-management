@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Zarządzanie zadaniami",
+    "MENU": {
+      "TITLE": "Wszystkie zadania"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Odśwież",
+          "CREATE": "Utwórz",
+          "ADD": "Dodaj",
+          "DELETE": "Usuń zaznaczone"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Wyszukaj słowa kluczowe"
+        },
+        "TABLE": {
+          "TOTALS": "Liczba:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Typ",
+            "NAME": "Nazwa",
+            "ASSIGNEE": "Osoba przypisana",
+            "PRIORITY": "Priorytet",
+            "STATUS": "Status",
+            "DUE_DATE": "Termin"
+          },
+          "EMPTY": {
+            "TITLE": "Brak treści",
+            "ACTION": "Dodaj treść"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Nie znaleziono treści.",
+            "ACTION": "Resetuj wyszukiwanie"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Cofnij publikację",
+            "PUBLISH": "Opublikuj",
+            "DELETE": "Usuń"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Filtr typu"
+            },
+            "PRIORITY": {
+              "TITLE": "Filtr priorytetu"
+            },
+            "DUE_DATE": {
+              "TITLE": "Termin",
+              "START_DATE": "Data rozpoczęcia",
+              "END_DATE": "Data zakończenia"
+            },
+            "APPLY": {
+              "TITLE": "Zastosuj"
+            },
+            "RESET": {
+              "TITLE": "Resetuj"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Utworzono"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Brak elementów"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Zakończ",
+          "REJECT": "Odrzuć",
+          "RESET": "Resetuj",
+          "SAVE": "Zapisz",
+          "DELETE": "Usuń"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Typ"
+          },
+          "SUMMARY": {
+            "TITLE": "Podsumowanie"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Opis"
+          },
+          "PRIORITY": {
+            "TITLE": "Priorytet"
+          },
+          "DUE_DATE": {
+            "TITLE": "Termin"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Osoba przypisana"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Załączniki"
+        },
+        "NEW_TITLE": "Utwórz nowe zadanie"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Są niezapisane zmiany\nZamknąć mimo to?",
+        "DELETE_CONFIRMATION_ASSET": "Czy na pewno chcesz usunąć zaznaczone załączniki ({count})?",
+        "DELETE_CONFIRMATION": "Czy na pewno chcesz usunąć to zadanie?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Do zrobienia",
+      "CANCELED": "Anulowane",
+      "DONE": "Ukończone"
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "language_name": "العربية",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "اسم المستخدم",
+          "PLACEHOLDER": "أدخل اسم تسجيل الدخول الخاص بالبائع"
+        },
+        "PASSWORD": {
+          "LABEL": "كلمة المرور",
+          "PLACEHOLDER": "أدخل كلمة المرور"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "نسيت كلمة المرور",
+          "LABEL": "البريد الإلكتروني",
+          "PLACEHOLDER": "يُرجى إدخال بريدك الإلكتروني"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "نسيت كلمة المرور؟",
+      "BUTTON": "تسجيل الدخول",
+      "FORGOT_BUTTON": "إرسال",
+      "BACK_BUTTON": "رجوع",
+      "BUTTON_OK": "موافق",
+      "RESET_EMAIL_TEXT": "سنرسل إليك رسالة بريد إلكتروني تتضمن تعليمات إعادة تعيين كلمة المرور.",
+      "RESET_EMAIL_SENT": "تم إرسال رسالة بريد إلكتروني تتضمن التعليمات إليك."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "تسجيل الدخول",
+      "SETTINGS": "الإعدادات",
+      "HELP": "المساعدة",
+      "NOTIFICATIONS": "الإشعارات",
+      "LANGUAGE": "اختيار اللغة"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "تغيير كلمة المرور",
+      "PROFILE": "الملف الشخصي",
+      "LOGOUT": "تسجيل الخروج"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "كلمة المرور الحالية",
+        "PLACEHOLDER": "أدخل كلمة المرور"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "كلمة المرور الجديدة",
+        "PLACEHOLDER": "أدخل كلمة المرور"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "تأكيد كلمة المرور",
+        "PLACEHOLDER": "أكّد كلمة المرور"
+      },
+      "CANCEL": "إلغاء",
+      "SAVE": "تحديث",
+      "ERRORS": {
+        "Repeat-password": "كلمتا المرور غير متطابقتين",
+        "Equal-passwords": "يجب ألا تتطابق كلمة المرور الجديدة مع القديمة",
+        "Invalid-token": "الرمز المميز غير صالح أو منتهي الصلاحية",
+        "Password-too-weak": "كلمة المرور الجديدة لا تستوفي سياسة واحدة أو أكثر من سياسات أمان كلمات المرور:",
+        "PasswordTooShort": "كلمة المرور قصيرة جدًا",
+        "PasswordRequiresUniqueChars": "يجب أن تحتوي كلمة المرور على أحرف مختلفة",
+        "PasswordRequiresLower": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل ('a'-'z')",
+        "PasswordRequiresUpper": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل ('A'-'Z')",
+        "PasswordRequiresDigit": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "يجب أن تحتوي كلمة المرور على رمز واحد على الأقل من غير الحروف والأرقام",
+        "Incorrect password.": "أدخلت كلمة مرور غير صحيحة",
+        "You have used this password in the past. Choose another one.": "سبق لك استخدام كلمة المرور هذه. اختر كلمة مرور أخرى."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "تفعيل مستخدم جديد",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "البريد الإلكتروني"
+        },
+        "PASSWORD": {
+          "LABEL": "كلمة المرور الجديدة",
+          "PLACEHOLDER": "أدخل كلمة المرور"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "تأكيد كلمة المرور",
+          "PLACEHOLDER": "أكّد كلمة المرور"
+        }
+      },
+      "ACCEPT_INVITATION": "تفعيل",
+      "ERRORS": {
+        "Repeat-password": "كلمتا المرور غير متطابقتين",
+        "Invalid-token": "الرمز المميز غير صالح أو منتهي الصلاحية",
+        "Password-too-weak": "كلمة المرور الجديدة لا تستوفي سياسة واحدة أو أكثر من سياسات أمان كلمات المرور:",
+        "PasswordTooShort": "كلمة المرور قصيرة جدًا",
+        "PasswordRequiresUniqueChars": "يجب أن تحتوي كلمة المرور على أحرف مختلفة",
+        "PasswordRequiresLower": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل ('a'-'z')",
+        "PasswordRequiresUpper": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل ('A'-'Z')",
+        "PasswordRequiresDigit": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "يجب أن تحتوي كلمة المرور على رمز واحد على الأقل من غير الحروف والأرقام",
+        "recentPasswordUsed": "سبق لك استخدام كلمة المرور هذه. اختر كلمة مرور أخرى."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "إعادة تعيين كلمة المرور",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "كلمة المرور الجديدة",
+          "PLACEHOLDER": "أدخل كلمة المرور"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "تأكيد كلمة المرور",
+          "PLACEHOLDER": "أكّد كلمة المرور"
+        }
+      },
+      "SAVE_PASSWORD": "حفظ",
+      "ERRORS": {
+        "Repeat-password": "كلمتا المرور غير متطابقتين",
+        "Invalid-token": "الرمز المميز غير صالح أو منتهي الصلاحية",
+        "Password-too-weak": "كلمة المرور الجديدة لا تستوفي سياسة واحدة أو أكثر من سياسات أمان كلمات المرور:",
+        "PasswordTooShort": "كلمة المرور قصيرة جدًا",
+        "PasswordRequiresUniqueChars": "يجب أن تحتوي كلمة المرور على أحرف مختلفة",
+        "PasswordRequiresLower": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل ('a'-'z')",
+        "PasswordRequiresUpper": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل ('A'-'Z')",
+        "PasswordRequiresDigit": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "يجب أن تحتوي كلمة المرور على رمز واحد على الأقل من غير الحروف والأرقام",
+        "recentPasswordUsed": "سبق لك استخدام كلمة المرور هذه. اختر كلمة مرور أخرى."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "لا توجد إشعارات بعد",
+      "ERRORS": "الأخطاء",
+      "PROFILE": "الملف الشخصي:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "المنتج",
+          "UPDATE": "تحديث الحالة",
+          "MORE_DETAILS": "انقر على الإشعار لعرض التفاصيل"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "المهام"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "التقدم",
+      "CLOSE_SIDEBAR": "إغلاق الشريط الجانبي",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "إظهار أداة الاختيار أو إخفاؤها",
+        "MENU": "قائمة منتقي التاريخ",
+        "INPUT": "إدخال التاريخ",
+        "OPEN_TIME_PICKER": "فتح منتقي الوقت",
+        "CLOSE_TIME_PICKER": "إغلاق منتقي الوقت",
+        "INCREMENT": "زيادة {unit}",
+        "DECREMENT": "إنقاص {unit}",
+        "OPEN_TIME_OVERLAY": "اختيار {unit}",
+        "AM_PM": "التبديل بين ص/م",
+        "OPEN_YEARS": "اختيار سنة",
+        "OPEN_MONTHS": "اختيار شهر",
+        "NEXT_MONTH": "الشهر التالي",
+        "PREV_MONTH": "الشهر السابق",
+        "NEXT_YEAR": "السنة التالية",
+        "PREV_YEAR": "السنة السابقة",
+        "CLEAR": "مسح القيمة",
+        "CALENDAR_ICON": "فتح التقويم",
+        "TIME_PICKER": "منتقي الوقت",
+        "MONTH_PICKER": "منتقي الشهر",
+        "YEAR_PICKER": "منتقي السنة",
+        "TIME_OVERLAY": "منتقي {unit}",
+        "UNITS": {
+          "hours": "الساعات",
+          "minutes": "الدقائق",
+          "seconds": "الثواني"
+        }
+      }
+    }
+  }
+}

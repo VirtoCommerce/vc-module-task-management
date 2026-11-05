@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Oppgaveadministrasjon",
+    "MENU": {
+      "TITLE": "Alle oppgaver"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Oppdater",
+          "CREATE": "Opprett",
+          "ADD": "Legg til",
+          "DELETE": "Slett valgte"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Søk etter nøkkelord"
+        },
+        "TABLE": {
+          "TOTALS": "Antall:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Type",
+            "NAME": "Navn",
+            "ASSIGNEE": "Ansvarlig",
+            "PRIORITY": "Prioritet",
+            "STATUS": "Status",
+            "DUE_DATE": "Forfallsdato"
+          },
+          "EMPTY": {
+            "TITLE": "Det finnes ikke noe innhold ennå",
+            "ACTION": "Legg til innhold"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Fant ikke noe innhold.",
+            "ACTION": "Tilbakestill søket"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Avpubliser",
+            "PUBLISH": "Publiser",
+            "DELETE": "Slett"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Typefilter"
+            },
+            "PRIORITY": {
+              "TITLE": "Prioritetsfilter"
+            },
+            "DUE_DATE": {
+              "TITLE": "Forfallsdato",
+              "START_DATE": "Startdato",
+              "END_DATE": "Sluttdato"
+            },
+            "APPLY": {
+              "TITLE": "Bruk"
+            },
+            "RESET": {
+              "TITLE": "Tilbakestill"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Opprettet"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Det finnes ingen elementer ennå"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Fullfør",
+          "REJECT": "Avvis",
+          "RESET": "Tilbakestill",
+          "SAVE": "Lagre",
+          "DELETE": "Slett"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Type"
+          },
+          "SUMMARY": {
+            "TITLE": "Sammendrag"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Beskrivelse"
+          },
+          "PRIORITY": {
+            "TITLE": "Prioritet"
+          },
+          "DUE_DATE": {
+            "TITLE": "Forfallsdato"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Ansvarlig"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Vedlegg"
+        },
+        "NEW_TITLE": "Opprett ny oppgave"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Du har endringer som ikke er lagret\nVil du lukke likevel?",
+        "DELETE_CONFIRMATION_ASSET": "Er du sikker på at du vil slette {count} valgte vedlegg?",
+        "DELETE_CONFIRMATION": "Er du sikker på at du vil slette denne oppgaven?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Å gjøre",
+      "CANCELED": "Avbrutt",
+      "DONE": "Fullført"
+    }
+  }
+}

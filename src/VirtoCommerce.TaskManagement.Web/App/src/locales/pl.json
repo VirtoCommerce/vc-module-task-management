@@ -1,0 +1,174 @@
+{
+  "language_name": "Polski",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Nazwa użytkownika",
+          "PLACEHOLDER": "Wprowadź login sprzedawcy"
+        },
+        "PASSWORD": {
+          "LABEL": "Hasło",
+          "PLACEHOLDER": "Wprowadź hasło"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Zapomniane hasło",
+          "LABEL": "Email",
+          "PLACEHOLDER": "Wprowadź adres email"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Nie pamiętasz hasła?",
+      "BUTTON": "Zaloguj się",
+      "FORGOT_BUTTON": "Wyślij",
+      "BACK_BUTTON": "Wstecz",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Wyślemy wiadomość email z instrukcjami resetowania hasła.",
+      "RESET_EMAIL_SENT": "Wiadomość email z instrukcjami została wysłana."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Zaloguj się",
+      "SETTINGS": "Ustawienia",
+      "HELP": "Pomoc",
+      "NOTIFICATIONS": "Powiadomienia",
+      "LANGUAGE": "Wybór języka"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Zmień hasło",
+      "PROFILE": "Profil",
+      "LOGOUT": "Wyloguj"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Obecne hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nowe hasło",
+        "PLACEHOLDER": "Wprowadź hasło"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Potwierdź hasło",
+        "PLACEHOLDER": "Potwierdź hasło"
+      },
+      "CANCEL": "Anuluj",
+      "SAVE": "Zaktualizuj",
+      "ERRORS": {
+        "Repeat-password": "Hasła nie są identyczne",
+        "Equal-passwords": "Nowe hasło musi się różnić od poprzedniego",
+        "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+        "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+        "PasswordTooShort": "Hasło jest za krótkie",
+        "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+        "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+        "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+        "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+        "Incorrect password.": "Wprowadzono nieprawidłowe hasło",
+        "You have used this password in the past. Choose another one.": "To hasło było już używane. Wybierz inne."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Aktywacja nowego użytkownika",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Email"
+        },
+        "PASSWORD": {
+          "LABEL": "Nowe hasło",
+          "PLACEHOLDER": "Wprowadź hasło"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Potwierdź hasło",
+          "PLACEHOLDER": "Potwierdź hasło"
+        }
+      },
+      "ACCEPT_INVITATION": "Aktywuj",
+      "ERRORS": {
+        "Repeat-password": "Hasła nie są identyczne",
+        "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+        "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+        "PasswordTooShort": "Hasło jest za krótkie",
+        "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+        "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+        "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+        "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+        "recentPasswordUsed": "To hasło było już używane. Wybierz inne."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Resetowanie hasła",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nowe hasło",
+          "PLACEHOLDER": "Wprowadź hasło"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Potwierdź hasło",
+          "PLACEHOLDER": "Potwierdź hasło"
+        }
+      },
+      "SAVE_PASSWORD": "Zapisz",
+      "ERRORS": {
+        "Repeat-password": "Hasła nie są identyczne",
+        "Invalid-token": "Token jest nieprawidłowy lub wygasł",
+        "Password-too-weak": "Nowe hasło nie spełnia co najmniej jednej zasady bezpieczeństwa haseł:",
+        "PasswordTooShort": "Hasło jest za krótkie",
+        "PasswordRequiresUniqueChars": "Hasło musi zawierać różne znaki",
+        "PasswordRequiresLower": "Hasło musi zawierać co najmniej jedną małą literę ('a'-'z')",
+        "PasswordRequiresUpper": "Hasło musi zawierać co najmniej jedną wielką literę ('A'-'Z')",
+        "PasswordRequiresDigit": "Hasło musi zawierać co najmniej jedną cyfrę ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "Hasło musi zawierać co najmniej jeden znak niealfanumeryczny",
+        "recentPasswordUsed": "To hasło było już używane. Wybierz inne."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Brak powiadomień",
+      "ERRORS": "Błędy",
+      "PROFILE": "Profil:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Produkt",
+          "UPDATE": "aktualizacja statusu",
+          "MORE_DETAILS": "Kliknij powiadomienie, aby zobaczyć szczegóły"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "ZADANIA"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Postęp",
+      "CLOSE_SIDEBAR": "Zamknij panel boczny",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Pokaż lub ukryj wybór",
+        "MENU": "Menu wyboru daty",
+        "INPUT": "Pole daty",
+        "OPEN_TIME_PICKER": "Otwórz wybór godziny",
+        "CLOSE_TIME_PICKER": "Zamknij wybór godziny",
+        "INCREMENT": "Zwiększ: {unit}",
+        "DECREMENT": "Zmniejsz: {unit}",
+        "OPEN_TIME_OVERLAY": "Wybierz: {unit}",
+        "AM_PM": "Przełącz AM/PM",
+        "OPEN_YEARS": "Wybierz rok",
+        "OPEN_MONTHS": "Wybierz miesiąc",
+        "NEXT_MONTH": "Następny miesiąc",
+        "PREV_MONTH": "Poprzedni miesiąc",
+        "NEXT_YEAR": "Następny rok",
+        "PREV_YEAR": "Poprzedni rok",
+        "CLEAR": "Wyczyść wartość",
+        "CALENDAR_ICON": "Otwórz kalendarz",
+        "TIME_PICKER": "Wybór godziny",
+        "MONTH_PICKER": "Wybór miesiąca",
+        "YEAR_PICKER": "Wybór roku",
+        "TIME_OVERLAY": "Wybór: {unit}",
+        "UNITS": {
+          "hours": "godziny",
+          "minutes": "minuty",
+          "seconds": "sekundy"
+        }
+      }
+    }
+  }
+}

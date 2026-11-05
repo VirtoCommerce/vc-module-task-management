@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Gerenciamento de tarefas",
+    "MENU": {
+      "TITLE": "Todas as tarefas"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Atualizar",
+          "CREATE": "Criar",
+          "ADD": "Adicionar",
+          "DELETE": "Excluir selecionados"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Pesquisar palavras-chave"
+        },
+        "TABLE": {
+          "TOTALS": "Quantidade:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Tipo",
+            "NAME": "Nome",
+            "ASSIGNEE": "Responsável",
+            "PRIORITY": "Prioridade",
+            "STATUS": "Status",
+            "DUE_DATE": "Data de vencimento"
+          },
+          "EMPTY": {
+            "TITLE": "Ainda não há conteúdo",
+            "ACTION": "Adicionar conteúdo"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Nenhum conteúdo encontrado.",
+            "ACTION": "Redefinir pesquisa"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Cancelar publicação",
+            "PUBLISH": "Publicar",
+            "DELETE": "Excluir"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Filtro de tipo"
+            },
+            "PRIORITY": {
+              "TITLE": "Filtro de prioridade"
+            },
+            "DUE_DATE": {
+              "TITLE": "Data de vencimento",
+              "START_DATE": "Data de início",
+              "END_DATE": "Data de término"
+            },
+            "APPLY": {
+              "TITLE": "Aplicar"
+            },
+            "RESET": {
+              "TITLE": "Redefinir"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Criado em"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Ainda não há itens"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Concluir",
+          "REJECT": "Rejeitar",
+          "RESET": "Redefinir",
+          "SAVE": "Salvar",
+          "DELETE": "Excluir"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Tipo"
+          },
+          "SUMMARY": {
+            "TITLE": "Resumo"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Descrição"
+          },
+          "PRIORITY": {
+            "TITLE": "Prioridade"
+          },
+          "DUE_DATE": {
+            "TITLE": "Prazo"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Responsável"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Anexos"
+        },
+        "NEW_TITLE": "Criar nova tarefa"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Há alterações não salvas\nFechar mesmo assim?",
+        "DELETE_CONFIRMATION_ASSET": "Tem certeza de que deseja excluir os anexos selecionados ({count})?",
+        "DELETE_CONFIRMATION": "Tem certeza de que deseja excluir esta tarefa?"
+      }
+    },
+    "STATUS": {
+      "TODO": "A fazer",
+      "CANCELED": "Cancelada",
+      "DONE": "Concluída"
+    }
+  }
+}

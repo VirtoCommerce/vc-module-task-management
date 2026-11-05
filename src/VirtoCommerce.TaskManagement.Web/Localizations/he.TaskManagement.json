@@ -1,0 +1,42 @@
+{
+  "TaskManagement": {
+    "blades": {
+      "hello-world": {
+        "title": "חלונית 'שלום עולם'"
+      }
+    }
+  },
+  "permissions": {
+    "TaskManagement:access": "פתיחת תפריט ניהול המשימות",
+    "TaskManagement:create": "יצירת נתונים הקשורים לניהול משימות",
+    "TaskManagement:read": "צפייה בנתונים הקשורים לניהול משימות",
+    "TaskManagement:update": "עדכון נתונים הקשורים לניהול משימות",
+    "TaskManagement:delete": "מחיקת נתונים הקשורים לניהול משימות"
+  },
+  "settings": {
+    "TaskManagement": {
+      "TaskNotificationsEnabled": {
+        "title": "התראת משימה",
+        "description": "(נדרשת הפעלה מחדש) הפעלה/השבתה של התראה על הקצאת משימה"
+      },
+      "TaskNotificationNoReplyEmail": {
+        "title": "דוא״ל להתראות (no-reply)",
+        "description": "משמש כדוא״ל השולח"
+      },
+      "TaskAppUrl": {
+        "title": "URL בסיס של פורטל המשימות",
+        "description": "URL של פורטל המשימות, ברירת המחדל: platformUrl/apps/tasks"
+      },
+      "TaskTypes": {
+        "title": "סוגי משימות",
+        "description": "רשימת סוגי המשימות שעובדים יכולים לבחור בעת יצירת משימה חדשה"
+      }
+    }
+  },
+  "notificationTypes": {
+    "WorkTaskAssignedEmailNotification": {
+      "displayName": "התראה על הקצאת משימת עבודה",
+      "description": "המנהל יקבל התראה בדוא״ל כאשר תוקצה משימת עבודה חדשה"
+    }
+  }
+}

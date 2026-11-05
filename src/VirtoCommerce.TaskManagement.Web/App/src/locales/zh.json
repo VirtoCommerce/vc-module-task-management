@@ -1,0 +1,174 @@
+{
+  "language_name": "中文",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "用户名",
+          "PLACEHOLDER": "输入您的卖家登录名"
+        },
+        "PASSWORD": {
+          "LABEL": "密码",
+          "PLACEHOLDER": "输入您的密码"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "忘记密码",
+          "LABEL": "电子邮件",
+          "PLACEHOLDER": "请输入您的电子邮件"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "忘记密码？",
+      "BUTTON": "登录",
+      "FORGOT_BUTTON": "提交",
+      "BACK_BUTTON": "返回",
+      "BUTTON_OK": "确定",
+      "RESET_EMAIL_TEXT": "我们将向您发送一封电子邮件，说明如何重置密码。",
+      "RESET_EMAIL_SENT": "包含操作说明的电子邮件已发送给您。"
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "登录",
+      "SETTINGS": "设置",
+      "HELP": "帮助",
+      "NOTIFICATIONS": "通知",
+      "LANGUAGE": "语言选择"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "更改密码",
+      "PROFILE": "个人资料",
+      "LOGOUT": "退出登录"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "当前密码",
+        "PLACEHOLDER": "输入密码"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "新密码",
+        "PLACEHOLDER": "输入密码"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "确认密码",
+        "PLACEHOLDER": "确认密码"
+      },
+      "CANCEL": "取消",
+      "SAVE": "更新",
+      "ERRORS": {
+        "Repeat-password": "两次输入的密码不一致",
+        "Equal-passwords": "新密码不能与旧密码相同",
+        "Invalid-token": "令牌无效或已过期",
+        "Password-too-weak": "新密码不符合以下一项或多项密码安全策略：",
+        "PasswordTooShort": "密码太短",
+        "PasswordRequiresUniqueChars": "密码必须使用不同的字符",
+        "PasswordRequiresLower": "密码必须至少包含一个小写字母 ('a'-'z')",
+        "PasswordRequiresUpper": "密码必须至少包含一个大写字母 ('A'-'Z')",
+        "PasswordRequiresDigit": "密码必须至少包含一个数字 ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "密码必须至少包含一个非字母数字字符",
+        "Incorrect password.": "您输入的密码不正确",
+        "You have used this password in the past. Choose another one.": "您以前使用过此密码。请选择其他密码。"
+      }
+    },
+    "INVITATION": {
+      "TITLE": "新用户激活",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "电子邮件"
+        },
+        "PASSWORD": {
+          "LABEL": "新密码",
+          "PLACEHOLDER": "输入密码"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "确认密码",
+          "PLACEHOLDER": "确认密码"
+        }
+      },
+      "ACCEPT_INVITATION": "激活",
+      "ERRORS": {
+        "Repeat-password": "两次输入的密码不一致",
+        "Invalid-token": "令牌无效或已过期",
+        "Password-too-weak": "新密码不符合以下一项或多项密码安全策略：",
+        "PasswordTooShort": "密码太短",
+        "PasswordRequiresUniqueChars": "密码必须使用不同的字符",
+        "PasswordRequiresLower": "密码必须至少包含一个小写字母 ('a'-'z')",
+        "PasswordRequiresUpper": "密码必须至少包含一个大写字母 ('A'-'Z')",
+        "PasswordRequiresDigit": "密码必须至少包含一个数字 ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "密码必须至少包含一个非字母数字字符",
+        "recentPasswordUsed": "您以前使用过此密码。请选择其他密码。"
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "密码重置",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "新密码",
+          "PLACEHOLDER": "输入密码"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "确认密码",
+          "PLACEHOLDER": "确认密码"
+        }
+      },
+      "SAVE_PASSWORD": "保存",
+      "ERRORS": {
+        "Repeat-password": "两次输入的密码不一致",
+        "Invalid-token": "令牌无效或已过期",
+        "Password-too-weak": "新密码不符合以下一项或多项密码安全策略：",
+        "PasswordTooShort": "密码太短",
+        "PasswordRequiresUniqueChars": "密码必须使用不同的字符",
+        "PasswordRequiresLower": "密码必须至少包含一个小写字母 ('a'-'z')",
+        "PasswordRequiresUpper": "密码必须至少包含一个大写字母 ('A'-'Z')",
+        "PasswordRequiresDigit": "密码必须至少包含一个数字 ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "密码必须至少包含一个非字母数字字符",
+        "recentPasswordUsed": "您以前使用过此密码。请选择其他密码。"
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "暂无通知",
+      "ERRORS": "错误",
+      "PROFILE": "个人资料：",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "商品",
+          "UPDATE": "状态更新",
+          "MORE_DETAILS": "点击通知查看详情"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "任务"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "进度",
+      "CLOSE_SIDEBAR": "关闭侧边栏",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "显示或隐藏选择器",
+        "MENU": "日期选择菜单",
+        "INPUT": "日期输入",
+        "OPEN_TIME_PICKER": "打开时间选择",
+        "CLOSE_TIME_PICKER": "关闭时间选择",
+        "INCREMENT": "增加{unit}",
+        "DECREMENT": "减少{unit}",
+        "OPEN_TIME_OVERLAY": "选择{unit}",
+        "AM_PM": "切换上午/下午",
+        "OPEN_YEARS": "选择年份",
+        "OPEN_MONTHS": "选择月份",
+        "NEXT_MONTH": "下个月",
+        "PREV_MONTH": "上个月",
+        "NEXT_YEAR": "下一年",
+        "PREV_YEAR": "上一年",
+        "CLEAR": "清除值",
+        "CALENDAR_ICON": "打开日历",
+        "TIME_PICKER": "时间选择",
+        "MONTH_PICKER": "月份选择",
+        "YEAR_PICKER": "年份选择",
+        "TIME_OVERLAY": "{unit}选择",
+        "UNITS": {
+          "hours": "小时",
+          "minutes": "分钟",
+          "seconds": "秒"
+        }
+      }
+    }
+  }
+}

@@ -45,7 +45,7 @@ const { items, pagination, searchQuery, loadWorkTasks, loading, taskTypes, prior
   sort: "createdDate:DESC",
 });
 
-const title = computed(() => t("TASKS.PAGES.LIST.ARCHIVE_TITLE"));
+const title = computed(() => t("TASKS.MENU.ARCHIVE_TITLE"));
 
 // Lifecycle
 onMounted(async () => {

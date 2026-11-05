@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Управление задачами",
+    "MENU": {
+      "TITLE": "Все задачи"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Обновить",
+          "CREATE": "Создать",
+          "ADD": "Добавить",
+          "DELETE": "Удалить выбранные"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Поиск по ключевым словам"
+        },
+        "TABLE": {
+          "TOTALS": "Количество:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Тип",
+            "NAME": "Название",
+            "ASSIGNEE": "Исполнитель",
+            "PRIORITY": "Приоритет",
+            "STATUS": "Статус",
+            "DUE_DATE": "Срок выполнения"
+          },
+          "EMPTY": {
+            "TITLE": "Содержимого пока нет",
+            "ACTION": "Добавить содержимое"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Содержимое не найдено.",
+            "ACTION": "Сбросить поиск"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Снять с публикации",
+            "PUBLISH": "Опубликовать",
+            "DELETE": "Удалить"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Фильтр по типу"
+            },
+            "PRIORITY": {
+              "TITLE": "Фильтр по приоритету"
+            },
+            "DUE_DATE": {
+              "TITLE": "Срок выполнения",
+              "START_DATE": "Дата начала",
+              "END_DATE": "Дата окончания"
+            },
+            "APPLY": {
+              "TITLE": "Применить"
+            },
+            "RESET": {
+              "TITLE": "Сбросить"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Создано"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Элементов пока нет"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Завершить",
+          "REJECT": "Отклонить",
+          "RESET": "Сбросить",
+          "SAVE": "Сохранить",
+          "DELETE": "Удалить"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Тип"
+          },
+          "SUMMARY": {
+            "TITLE": "Тема"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Описание"
+          },
+          "PRIORITY": {
+            "TITLE": "Приоритет"
+          },
+          "DUE_DATE": {
+            "TITLE": "Срок"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Исполнитель"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Вложения"
+        },
+        "NEW_TITLE": "Создать новую задачу"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Есть несохранённые изменения\nВсё равно закрыть?",
+        "DELETE_CONFIRMATION_ASSET": "Вы уверены, что хотите удалить выбранные вложения ({count})?",
+        "DELETE_CONFIRMATION": "Вы уверены, что хотите удалить эту задачу?"
+      }
+    },
+    "STATUS": {
+      "TODO": "К выполнению",
+      "CANCELED": "Отменена",
+      "DONE": "Выполнена"
+    }
+  }
+}

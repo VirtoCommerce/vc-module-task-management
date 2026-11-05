@@ -1,0 +1,174 @@
+{
+  "language_name": "Italiano",
+  "SHELL": {
+    "LOGIN": {
+      "FIELDS": {
+        "LOGIN": {
+          "LABEL": "Nome utente",
+          "PLACEHOLDER": "Inserire il login venditore"
+        },
+        "PASSWORD": {
+          "LABEL": "Password",
+          "PLACEHOLDER": "Inserire la password"
+        },
+        "FORGOT_PASSWORD": {
+          "TITLE": "Password dimenticata",
+          "LABEL": "Email",
+          "PLACEHOLDER": "Inserire l'email"
+        }
+      },
+      "FORGOT_PASSWORD_BUTTON": "Password dimenticata?",
+      "BUTTON": "Accedi",
+      "FORGOT_BUTTON": "Invia",
+      "BACK_BUTTON": "Indietro",
+      "BUTTON_OK": "OK",
+      "RESET_EMAIL_TEXT": "Verrà inviata un'email con le istruzioni per reimpostare la password.",
+      "RESET_EMAIL_SENT": "L'email con le istruzioni è stata inviata."
+    },
+    "MENU": {},
+    "TOOLBAR": {
+      "LOGIN": "Accedi",
+      "SETTINGS": "Impostazioni",
+      "HELP": "Aiuto",
+      "NOTIFICATIONS": "Notifiche",
+      "LANGUAGE": "Selettore lingua"
+    },
+    "ACCOUNT": {
+      "CHANGE_PASSWORD": "Cambia password",
+      "PROFILE": "Profilo",
+      "LOGOUT": "Esci"
+    },
+    "CHANGE_PASSWORD": {
+      "CURRENT_PASSWORD": {
+        "LABEL": "Password attuale",
+        "PLACEHOLDER": "Inserire la password"
+      },
+      "NEW_PASSWORD": {
+        "LABEL": "Nuova password",
+        "PLACEHOLDER": "Inserire la password"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "Conferma password",
+        "PLACEHOLDER": "Confermare la password"
+      },
+      "CANCEL": "Annulla",
+      "SAVE": "Aggiorna",
+      "ERRORS": {
+        "Repeat-password": "Le password non coincidono",
+        "Equal-passwords": "La nuova password deve essere diversa da quella precedente",
+        "Invalid-token": "Il token non è valido o è scaduto",
+        "Password-too-weak": "La nuova password non rispetta uno o più criteri di sicurezza delle password:",
+        "PasswordTooShort": "Password troppo corta",
+        "PasswordRequiresUniqueChars": "La password deve contenere caratteri diversi",
+        "PasswordRequiresLower": "La password deve contenere almeno una lettera minuscola ('a'-'z')",
+        "PasswordRequiresUpper": "La password deve contenere almeno una lettera maiuscola ('A'-'Z')",
+        "PasswordRequiresDigit": "La password deve contenere almeno una cifra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La password deve contenere almeno un carattere non alfanumerico",
+        "Incorrect password.": "La password inserita non è corretta",
+        "You have used this password in the past. Choose another one.": "Questa password è già stata usata in passato. Sceglierne un'altra."
+      }
+    },
+    "INVITATION": {
+      "TITLE": "Attivazione nuovo utente",
+      "FIELDS": {
+        "EMAIL": {
+          "LABEL": "Email"
+        },
+        "PASSWORD": {
+          "LABEL": "Nuova password",
+          "PLACEHOLDER": "Inserire la password"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Conferma password",
+          "PLACEHOLDER": "Confermare la password"
+        }
+      },
+      "ACCEPT_INVITATION": "Attiva",
+      "ERRORS": {
+        "Repeat-password": "Le password non coincidono",
+        "Invalid-token": "Il token non è valido o è scaduto",
+        "Password-too-weak": "La nuova password non rispetta uno o più criteri di sicurezza delle password:",
+        "PasswordTooShort": "Password troppo corta",
+        "PasswordRequiresUniqueChars": "La password deve contenere caratteri diversi",
+        "PasswordRequiresLower": "La password deve contenere almeno una lettera minuscola ('a'-'z')",
+        "PasswordRequiresUpper": "La password deve contenere almeno una lettera maiuscola ('A'-'Z')",
+        "PasswordRequiresDigit": "La password deve contenere almeno una cifra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La password deve contenere almeno un carattere non alfanumerico",
+        "recentPasswordUsed": "Questa password è già stata usata in passato. Sceglierne un'altra."
+      }
+    },
+    "PASSWORDRESET": {
+      "TITLE": "Reimpostazione password",
+      "FIELDS": {
+        "PASSWORD": {
+          "LABEL": "Nuova password",
+          "PLACEHOLDER": "Inserire la password"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Conferma password",
+          "PLACEHOLDER": "Confermare la password"
+        }
+      },
+      "SAVE_PASSWORD": "Salva",
+      "ERRORS": {
+        "Repeat-password": "Le password non coincidono",
+        "Invalid-token": "Il token non è valido o è scaduto",
+        "Password-too-weak": "La nuova password non rispetta uno o più criteri di sicurezza delle password:",
+        "PasswordTooShort": "Password troppo corta",
+        "PasswordRequiresUniqueChars": "La password deve contenere caratteri diversi",
+        "PasswordRequiresLower": "La password deve contenere almeno una lettera minuscola ('a'-'z')",
+        "PasswordRequiresUpper": "La password deve contenere almeno una lettera maiuscola ('A'-'Z')",
+        "PasswordRequiresDigit": "La password deve contenere almeno una cifra ('0'-'9')",
+        "PasswordRequiresNonAlphanumeric": "La password deve contenere almeno un carattere non alfanumerico",
+        "recentPasswordUsed": "Questa password è già stata usata in passato. Sceglierne un'altra."
+      }
+    },
+    "NOTIFICATIONS": {
+      "EMPTY": "Ancora nessuna notifica",
+      "ERRORS": "Errori",
+      "PROFILE": "Profilo:",
+      "TITLE": {
+        "PRODUCT": {
+          "TITLE": "Prodotto",
+          "UPDATE": "aggiornamento dello stato",
+          "MORE_DETAILS": "Fare clic sulla notifica per visualizzare i dettagli"
+        }
+      }
+    },
+    "APP": {
+      "NAME": "ATTIVITÀ"
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Avanzamento",
+      "CLOSE_SIDEBAR": "Chiudi barra laterale",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Mostra o nascondi il selettore",
+        "MENU": "Menu del selettore data",
+        "INPUT": "Campo data",
+        "OPEN_TIME_PICKER": "Apri selettore ora",
+        "CLOSE_TIME_PICKER": "Chiudi selettore ora",
+        "INCREMENT": "Aumenta {unit}",
+        "DECREMENT": "Diminuisci {unit}",
+        "OPEN_TIME_OVERLAY": "Scegli {unit}",
+        "AM_PM": "Cambia AM/PM",
+        "OPEN_YEARS": "Scegli l'anno",
+        "OPEN_MONTHS": "Scegli il mese",
+        "NEXT_MONTH": "Mese successivo",
+        "PREV_MONTH": "Mese precedente",
+        "NEXT_YEAR": "Anno successivo",
+        "PREV_YEAR": "Anno precedente",
+        "CLEAR": "Cancella valore",
+        "CALENDAR_ICON": "Apri calendario",
+        "TIME_PICKER": "Selettore ora",
+        "MONTH_PICKER": "Selettore mese",
+        "YEAR_PICKER": "Selettore anno",
+        "TIME_OVERLAY": "Selettore: {unit}",
+        "UNITS": {
+          "hours": "ore",
+          "minutes": "minuti",
+          "seconds": "secondi"
+        }
+      }
+    }
+  }
+}

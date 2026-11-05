@@ -44,7 +44,7 @@ const { items, pagination, searchQuery, loadWorkTasks, loading, taskTypes, prior
   sort: "createdDate:DESC",
 });
 
-const title = computed(() => t("MY_TASKS.PAGES.LIST.TITLE"));
+const title = computed(() => t("MY_TASKS.MENU.TITLE"));
 
 // Lifecycle
 onMounted(async () => {

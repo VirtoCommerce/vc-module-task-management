@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "إدارة المهام",
+    "MENU": {
+      "TITLE": "جميع المهام"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "تحديث",
+          "CREATE": "إنشاء",
+          "ADD": "إضافة",
+          "DELETE": "حذف المحدد"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "البحث بالكلمات المفتاحية"
+        },
+        "TABLE": {
+          "TOTALS": "العدد:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "النوع",
+            "NAME": "الاسم",
+            "ASSIGNEE": "المسؤول",
+            "PRIORITY": "الأولوية",
+            "STATUS": "الحالة",
+            "DUE_DATE": "تاريخ الاستحقاق"
+          },
+          "EMPTY": {
+            "TITLE": "لا يوجد محتوى بعد",
+            "ACTION": "إضافة محتوى"
+          },
+          "NOT_FOUND": {
+            "TITLE": "لم يتم العثور على محتوى.",
+            "ACTION": "إعادة تعيين البحث"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "إلغاء النشر",
+            "PUBLISH": "نشر",
+            "DELETE": "حذف"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "تصفية حسب النوع"
+            },
+            "PRIORITY": {
+              "TITLE": "تصفية حسب الأولوية"
+            },
+            "DUE_DATE": {
+              "TITLE": "تاريخ الاستحقاق",
+              "START_DATE": "تاريخ البدء",
+              "END_DATE": "تاريخ الانتهاء"
+            },
+            "APPLY": {
+              "TITLE": "تطبيق"
+            },
+            "RESET": {
+              "TITLE": "إعادة تعيين"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "تاريخ الإنشاء"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "لا توجد عناصر بعد"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "إكمال",
+          "REJECT": "رفض",
+          "RESET": "إعادة تعيين",
+          "SAVE": "حفظ",
+          "DELETE": "حذف"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "النوع"
+          },
+          "SUMMARY": {
+            "TITLE": "الملخص"
+          },
+          "DESCRIPTION": {
+            "TITLE": "الوصف"
+          },
+          "PRIORITY": {
+            "TITLE": "الأولوية"
+          },
+          "DUE_DATE": {
+            "TITLE": "موعد الاستحقاق"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "المسؤول"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "المرفقات"
+        },
+        "NEW_TITLE": "إنشاء مهمة جديدة"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "لديك تغييرات غير محفوظة\nهل تريد الإغلاق على أي حال؟",
+        "DELETE_CONFIRMATION_ASSET": "هل تريد بالتأكيد حذف المرفقات المحددة ({count})؟",
+        "DELETE_CONFIRMATION": "هل تريد بالتأكيد حذف هذه المهمة؟"
+      }
+    },
+    "STATUS": {
+      "TODO": "للتنفيذ",
+      "CANCELED": "ملغاة",
+      "DONE": "مكتملة"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "TASKS": {
+    "TITLE": "Tehtävien hallinta",
+    "MENU": {
+      "TITLE": "Kaikki tehtävät"
+    },
+    "PAGES": {
+      "LIST": {
+        "TOOLBAR": {
+          "REFRESH": "Päivitä",
+          "CREATE": "Luo",
+          "ADD": "Lisää",
+          "DELETE": "Poista valitut"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Hae hakusanoilla"
+        },
+        "TABLE": {
+          "TOTALS": "Määrä:",
+          "HEADER": {
+            "NUMBER": "#",
+            "TYPE": "Tyyppi",
+            "NAME": "Nimi",
+            "ASSIGNEE": "Vastuuhenkilö",
+            "PRIORITY": "Prioriteetti",
+            "STATUS": "Tila",
+            "DUE_DATE": "Eräpäivä"
+          },
+          "EMPTY": {
+            "TITLE": "Sisältöä ei ole vielä",
+            "ACTION": "Lisää sisältöä"
+          },
+          "NOT_FOUND": {
+            "TITLE": "Sisältöä ei löytynyt.",
+            "ACTION": "Nollaa haku"
+          },
+          "ACTIONS": {
+            "UNPUBLISH": "Peruuta julkaisu",
+            "PUBLISH": "Julkaise",
+            "DELETE": "Poista"
+          },
+          "FILTER": {
+            "TASK_TYPE": {
+              "TITLE": "Tyyppisuodatin"
+            },
+            "PRIORITY": {
+              "TITLE": "Prioriteettisuodatin"
+            },
+            "DUE_DATE": {
+              "TITLE": "Eräpäivä",
+              "START_DATE": "Alkamispäivä",
+              "END_DATE": "Päättymispäivä"
+            },
+            "APPLY": {
+              "TITLE": "Käytä"
+            },
+            "RESET": {
+              "TITLE": "Nollaa"
+            }
+          }
+        },
+        "MOBILE": {
+          "CREATED": "Luotu"
+        },
+        "EMPTY": {
+          "NO_ITEMS": "Kohteita ei ole vielä"
+        }
+      },
+      "DETAILS": {
+        "TOOLBAR": {
+          "COMPLETE": "Merkitse valmiiksi",
+          "REJECT": "Hylkää",
+          "RESET": "Nollaa",
+          "SAVE": "Tallenna",
+          "DELETE": "Poista"
+        },
+        "FIELDS": {
+          "TYPE": {
+            "TITLE": "Tyyppi"
+          },
+          "SUMMARY": {
+            "TITLE": "Yhteenveto"
+          },
+          "DESCRIPTION": {
+            "TITLE": "Kuvaus"
+          },
+          "PRIORITY": {
+            "TITLE": "Prioriteetti"
+          },
+          "DUE_DATE": {
+            "TITLE": "Erääntyy"
+          },
+          "RESPONSIBLE": {
+            "TITLE": "Vastuuhenkilö"
+          }
+        },
+        "WIDGETS": {
+          "ASSETS": "Liitteet"
+        },
+        "NEW_TITLE": "Luo uusi tehtävä"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Sinulla on tallentamattomia muutoksia\nSuljetaanko silti?",
+        "DELETE_CONFIRMATION_ASSET": "Haluatko varmasti poistaa valitut liitteet ({count})?",
+        "DELETE_CONFIRMATION": "Haluatko varmasti poistaa tämän tehtävän?"
+      }
+    },
+    "STATUS": {
+      "TODO": "Avoin",
+      "CANCELED": "Peruutettu",
+      "DONE": "Valmis"
+    }
+  }
+}

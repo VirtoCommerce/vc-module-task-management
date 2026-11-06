@@ -1,17 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hangfire;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Extensions;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Jobs;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.TaskManagement.Core;
 using VirtoCommerce.TaskManagement.Core.Events;
 using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Notifications;
+using VirtoCommerce.TaskManagement.Data.Jobs;
 
 namespace VirtoCommerce.TaskManagement.Data.Handlers
 {
@@ -34,7 +36,7 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
             _notificationSearchService = notificationSearchService;
         }
 
-        public virtual Task Handle(WorkTaskChangedEvent message)
+        public virtual async Task Handle(WorkTaskChangedEvent message)
         {
             if (_settingsManager.GetValue<bool>(ModuleConstants.Settings.General.TaskNotificationsEnabled))
             {
@@ -48,13 +50,30 @@ namespace VirtoCommerce.TaskManagement.Data.Handlers
                     .Select(changedEntry => changedEntry.NewEntry)
                     .ToList();
 
-                BackgroundJob.Enqueue(() => TryToSendOrderNotificationsAsync(tasks));
-            }
+                if (tasks.Count > 0)
+                {
+                    var payload = AbstractTypeFactory<SendWorkTaskNotificationsJobPayload>.TryCreateInstance();
+                    payload.WorkTasks = tasks;
 
-            return Task.CompletedTask;
+                    //The static facade, not an injected IBackgroundJob: RegisterEventHandler resolves this handler once
+                    //from the root provider and holds it for the process lifetime, so it must not capture a Scoped dependency.
+                    await BackgroundJob.Enqueue<SendWorkTaskNotificationsJobHandler>(payload);
+                }
+            }
         }
 
-        public virtual async Task TryToSendOrderNotificationsAsync(IList<WorkTask> tasks)
+        /// <summary>
+        /// Kept for background jobs enqueued by an earlier version, which reference this method by name.
+        /// New work goes through <see cref="SendWorkTaskNotificationsJobHandler"/>; remove this once no such job
+        /// can still be pending.
+        /// </summary>
+        [Obsolete("Enqueued indirectly by legacy Hangfire jobs only; new work uses SendWorkTaskNotificationsJobHandler.", DiagnosticId = "VC0015", UrlFormat = "https://docs.virtocommerce.org/products/products-virto3-versions")]
+        public virtual Task TryToSendOrderNotificationsAsync(IList<WorkTask> tasks)
+        {
+            return SendNotificationsAsync(tasks);
+        }
+
+        public virtual async Task SendNotificationsAsync(IList<WorkTask> tasks)
         {
             var memberIds = tasks.Select(task => task.ResponsibleId).Distinct().ToArray();
             var contacts = await _memberService.GetByIdsAsync(memberIds, "WithEmails");

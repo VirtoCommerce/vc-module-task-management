@@ -12,6 +12,7 @@ using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Jobs;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -24,6 +25,7 @@ using VirtoCommerce.TaskManagement.Core.Notifications;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
 using VirtoCommerce.TaskManagement.Data.Handlers;
+using VirtoCommerce.TaskManagement.Data.Jobs;
 using VirtoCommerce.TaskManagement.Data.MySql;
 using VirtoCommerce.TaskManagement.Data.PostgreSql;
 using VirtoCommerce.TaskManagement.Data.Repositories;
@@ -76,6 +78,8 @@ namespace VirtoCommerce.TaskManagement.Web
             serviceCollection.AddTransient<Func<IWorkTaskSearchService>>(provider => provider.GetRequiredService<IWorkTaskSearchService>);
 
             serviceCollection.AddTransient<SendNotificationsWorkTaskChangedEventHandler>();
+            // Not triggerable by name: the job emails the responsible persons of a caller-supplied payload.
+            serviceCollection.AddBackgroundJob<SendWorkTaskNotificationsJobHandler, SendWorkTaskNotificationsJobPayload>(triggerable: false);
             serviceCollection.AddTransient<IAuthorizationHandler, TaskAuthorizationHandler>();
 
             // GraphQL

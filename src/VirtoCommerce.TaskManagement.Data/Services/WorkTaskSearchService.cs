@@ -52,9 +52,23 @@ namespace VirtoCommerce.TaskManagement.Data.Services
                     : query.Where(x => criteria.OrganizationIds.Contains(x.OrganizationId));
             }
 
-            if (criteria.Priority != null)
+            if (!criteria.LinkedObjectType.IsNullOrEmpty())
             {
-                query = query.Where(x => x.Priority == criteria.Priority);
+                query = query.Where(x => x.ObjectType == criteria.LinkedObjectType);
+            }
+
+            if (!criteria.LinkedObjectIds.IsNullOrEmpty())
+            {
+                query = criteria.LinkedObjectIds.Count == 1
+                    ? query.Where(x => x.ObjectId == criteria.LinkedObjectIds.First())
+                    : query.Where(x => criteria.LinkedObjectIds.Contains(x.ObjectId));
+            }
+
+            if (!criteria.Priorities.IsNullOrEmpty())
+            {
+                query = criteria.Priorities.Count == 1
+                    ? query.Where(x => x.Priority == criteria.Priorities.First())
+                    : query.Where(x => criteria.Priorities.Contains(x.Priority));
             }
 
             if (criteria.IsActive != null)

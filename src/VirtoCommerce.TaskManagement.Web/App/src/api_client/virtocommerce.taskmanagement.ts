@@ -428,7 +428,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return OK
      */
-    searchAssignMembers(body?: MembersSearchCriteria | undefined): Promise<MemberSearchResult> {
+    searchAssignMembers(body?: MembersSearchCriteria | undefined): Promise<TaskMemberSearchResult> {
         let url_ = this.baseUrl + "/api/task-management/members/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -450,13 +450,13 @@ export class TaskManagementClient extends AuthApiBase {
         });
     }
 
-    protected processSearchAssignMembers(response: Response): Promise<MemberSearchResult> {
+    protected processSearchAssignMembers(response: Response): Promise<TaskMemberSearchResult> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as MemberSearchResult;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TaskMemberSearchResult;
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -470,7 +470,7 @@ export class TaskManagementClient extends AuthApiBase {
     /**
      * @return OK
      */
-    getMemberById(id: string): Promise<Member> {
+    getMemberById(id: string): Promise<TaskMember> {
         let url_ = this.baseUrl + "/api/task-management/members/{id}";
         if (id === undefined || id === null)
             throw new globalThis.Error("The parameter 'id' must be defined.");
@@ -491,13 +491,13 @@ export class TaskManagementClient extends AuthApiBase {
         });
     }
 
-    protected processGetMemberById(response: Response): Promise<Member> {
+    protected processGetMemberById(response: Response): Promise<TaskMember> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Member;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TaskMember;
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -505,7 +505,7 @@ export class TaskManagementClient extends AuthApiBase {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Member>(null as any);
+        return Promise.resolve<TaskMember>(null as any);
     }
 
     /**
@@ -676,6 +676,17 @@ export interface MembersSearchCriteria {
     readonly sortInfos?: SortInfo[] | undefined;
     skip?: number;
     take?: number;
+}
+
+export interface TaskMember {
+    id?: string | undefined;
+    name?: string | undefined;
+    memberType?: string | undefined;
+}
+
+export interface TaskMemberSearchResult {
+    totalCount?: number;
+    results?: TaskMember[] | undefined;
 }
 
 export interface Note {

@@ -15,6 +15,8 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.JsonConverters;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.CustomerModule.Core.Model.Search;
+using VirtoCommerce.TaskManagement.Core.Models;
 using VirtoCommerce.TaskManagement.Core.Services;
 using VirtoCommerce.TaskManagement.Data.Authorization;
 using VirtoCommerce.TaskManagement.Web.Controllers.Api;
@@ -30,6 +32,7 @@ public class TaskManagementControllerTests
     private const string OrganizationId = "organization";
 
     private readonly Mock<IMemberService> _memberService = new();
+    private readonly Mock<IMemberSearchService> _memberSearchService = new();
     private readonly MvcNewtonsoftJsonOptions _jsonOptions = new();
 
     public TaskManagementControllerTests()
@@ -79,7 +82,7 @@ public class TaskManagementControllerTests
 
         var result = await controller.GetMemberById("stranger");
 
-        var member = Assert.IsType<Contact>(Assert.IsType<OkObjectResult>(result.Result).Value);
+        var member = Assert.IsType<TaskMember>(Assert.IsType<OkObjectResult>(result.Result).Value);
         Assert.Equal("stranger", member.Id);
         _memberService.Verify(x => x.GetByIdAsync("stranger", nameof(MemberResponseGroup.Default), null), Times.Once);
         _memberService.Verify(x => x.GetByIdAsync(It.IsAny<string>(), It.Is<string>(r => r != nameof(MemberResponseGroup.Default)), It.IsAny<string>()), Times.Never);
@@ -123,7 +126,52 @@ public class TaskManagementControllerTests
         _memberService.Verify(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
     }
 
-    private static void AssertAllowed(ActionResult<Member> result, bool allowed)
+    [Fact]
+    public async Task SearchAssignMembers_ReturnsOnlyTaskMemberFields_WithDefaultResponseGroup()
+    {
+        MembersSearchCriteria searched = null;
+        _memberSearchService
+            .Setup(x => x.SearchMembersAsync(It.IsAny<MembersSearchCriteria>()))
+            .Callback<MembersSearchCriteria>(x => searched = x)
+            .ReturnsAsync(new MemberSearchResult { TotalCount = 1, Results = [new Contact { Id = "stranger", Name = "Stranger", Emails = ["a@b.c"] }] });
+        var controller = CreateController(CreateUser(new Claim(PlatformConstants.Security.Claims.PermissionClaimType, TaskPermissions.Create)));
+
+        var result = await controller.SearchAssignMembers(new MembersSearchCriteria { ResponseGroup = nameof(MemberResponseGroup.Full) });
+
+        var searchResult = Assert.IsType<TaskMemberSearchResult>(Assert.IsType<OkObjectResult>(result.Result).Value);
+        var member = Assert.Single(searchResult.Results);
+        Assert.Equal(("stranger", "Stranger", nameof(Contact)), (member.Id, member.Name, member.MemberType));
+        Assert.Equal(nameof(MemberResponseGroup.Default), searched.ResponseGroup);
+    }
+
+    [Fact]
+    public async Task SearchAssignMembers_WithTaskToMeScope_IgnoresOtherObjectIds()
+    {
+        var controller = CreateController(CreateUser(CreateScopedClaim(new TaskToMeScope())));
+
+        var result = await controller.SearchAssignMembers(new MembersSearchCriteria { ObjectIds = ["stranger"] });
+
+        var searchResult = Assert.IsType<TaskMemberSearchResult>(Assert.IsType<OkObjectResult>(result.Result).Value);
+        Assert.Empty(searchResult.Results);
+        _memberSearchService.Verify(x => x.SearchMembersAsync(It.IsAny<MembersSearchCriteria>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task SearchAssignMembers_WithTaskToMyOrganizationScope_SearchesOwnOrganizationOnly()
+    {
+        MembersSearchCriteria searched = null;
+        _memberSearchService
+            .Setup(x => x.SearchMembersAsync(It.IsAny<MembersSearchCriteria>()))
+            .Callback<MembersSearchCriteria>(x => searched = x)
+            .ReturnsAsync(new MemberSearchResult { Results = [] });
+        var controller = CreateController(CreateUser(CreateScopedClaim(new TaskToMyOrganizationScope())));
+
+        await controller.SearchAssignMembers(new MembersSearchCriteria { ObjectIds = ["stranger"] });
+
+        Assert.Equal(OrganizationId, searched.MemberId);
+    }
+
+    private static void AssertAllowed(ActionResult<TaskMember> result, bool allowed)
     {
         if (allowed)
         {
@@ -161,7 +209,7 @@ public class TaskManagementControllerTests
             Mock.Of<IWorkTaskService>(),
             Mock.Of<IWorkTaskSearchService>(),
             _memberService.Object,
-            Mock.Of<IMemberSearchService>(),
+            _memberSearchService.Object,
             Mock.Of<ISettingsManager>(),
             Mock.Of<IAuthorizationService>(),
             Options.Create(_jsonOptions));

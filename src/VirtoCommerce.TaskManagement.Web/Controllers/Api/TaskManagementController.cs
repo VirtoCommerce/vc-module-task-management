@@ -24,6 +24,7 @@ using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Securi
 namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
 {
     [Route("api/task-management")]
+    [Authorize]
     public class TaskManagementController : Controller
     {
         private const string MemberIdClaimType = "memberId";
@@ -154,7 +155,12 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet("contact/icon/{id}")]
         public async Task<ActionResult> ContactIcon(string id)
         {
-            var contact = await _memberService.GetByIdAsync(id);
+            if (!HasPermission(User, TaskPermissions.Read, out _))
+            {
+                return Unauthorized();
+            }
+
+            var contact = await _memberService.GetByIdAsync(id, MemberResponseGroup.Default.ToString());
 
             if (contact != null && !string.IsNullOrEmpty(contact.IconUrl))
             {
@@ -207,7 +213,20 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet("members/{id}")]
         public async Task<ActionResult<Member>> GetMemberById([FromRoute] string id)
         {
-            var member = await _memberService.GetByIdAsync(id);
+            // The member is looked up to pick a responsible person for a task, the same as members/search
+            if (!HasPermission(User, TaskPermissions.Create, out var permission))
+            {
+                return Unauthorized();
+            }
+
+            // The task app needs only the member's name
+            var member = await _memberService.GetByIdAsync(id, MemberResponseGroup.Default.ToString());
+
+            if (member != null && !User.HasGlobalPermission(TaskPermissions.Create) && !await CanSeeMemberAsync(permission, member))
+            {
+                return Unauthorized();
+            }
+
             return Ok(member);
         }
 
@@ -218,6 +237,32 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             var result = setting.AllowedValues.Select(x => new TaskType { Name = x as string }).ToList();
 
             return Ok(result);
+        }
+
+        // A scoped permission sees only what members/search returns for it: the user's own member, or their organization and its members
+        private async Task<bool> CanSeeMemberAsync(Permission permission, Member member)
+        {
+            var currentMemberId = User.FindFirstValue(MemberIdClaimType);
+            if (string.IsNullOrEmpty(currentMemberId))
+            {
+                return false;
+            }
+
+            if (member.Id.EqualsIgnoreCase(currentMemberId))
+            {
+                return true;
+            }
+
+            if (!permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().Any())
+            {
+                return false;
+            }
+
+            var currentMember = await _memberService.GetByIdAsync(currentMemberId, MemberResponseGroup.Default.ToString());
+            var organizationId = currentMember.GetMemberOrganizationId();
+
+            return !string.IsNullOrEmpty(organizationId) &&
+                (member.Id.EqualsIgnoreCase(organizationId) || organizationId.EqualsIgnoreCase(member.GetMemberOrganizationId()));
         }
 
         private bool HasPermission(ClaimsPrincipal user, string permissionName, out Permission permission)

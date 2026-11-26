@@ -1,6 +1,6 @@
 import { computed, reactive, ref, Ref, ComputedRef } from "vue";
 import {
-  MemberSearchResult,
+  TaskMemberSearchResult,
   TaskManagementClient,
   WorkTask,
   TaskPriority,
@@ -28,7 +28,7 @@ export interface IUseWorkTaskDetails {
   isReadOnly: ComputedRef<boolean>;
   priorities: ComputedRef<IPriority[]>;
   loadTaskTypes: () => Promise<IWorkTaskTypeResult>;
-  searchContacts: (keyword?: string, skip?: number, ids?: string[]) => Promise<MemberSearchResult>;
+  searchContacts: (keyword?: string, skip?: number, ids?: string[]) => Promise<TaskMemberSearchResult>;
   statusText: ComputedRef<string>;
 }
 

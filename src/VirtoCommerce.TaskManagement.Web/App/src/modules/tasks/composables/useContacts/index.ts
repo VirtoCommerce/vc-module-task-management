@@ -1,7 +1,7 @@
 import { useApiClient } from "@vc-shell/framework";
 import {
-  Member,
-  MemberSearchResult,
+  TaskMember,
+  TaskMemberSearchResult,
   MembersSearchCriteria,
   TaskManagementClient,
 } from "../../../../api_client/virtocommerce.taskmanagement";
@@ -9,8 +9,8 @@ import { computed, Ref, ref } from "vue";
 
 interface IUseContacts {
   readonly loading: Ref<boolean>;
-  getMember(id: string): Promise<Member>;
-  searchContacts(keyword?: string, skip?: number, ids?: string[]): Promise<MemberSearchResult>;
+  getMember(id: string): Promise<TaskMember>;
+  searchContacts(keyword?: string, skip?: number, ids?: string[]): Promise<TaskMemberSearchResult>;
 }
 
 const { getApiClient } = useApiClient(TaskManagementClient);
@@ -18,7 +18,7 @@ const { getApiClient } = useApiClient(TaskManagementClient);
 export default (): IUseContacts => {
   const loading = ref(false);
 
-  async function getMember(id: string): Promise<Member> {
+  async function getMember(id: string): Promise<TaskMember> {
     loading.value = true;
     const client = await getApiClient();
     try {
@@ -31,7 +31,7 @@ export default (): IUseContacts => {
     }
   }
 
-  async function searchContacts(keyword?: string, skip = 0, ids?: string[]): Promise<MemberSearchResult> {
+  async function searchContacts(keyword?: string, skip = 0, ids?: string[]): Promise<TaskMemberSearchResult> {
     loading.value = true;
     const client = await getApiClient();
     try {

@@ -105,6 +105,14 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WorkTask;
             return result200;
             });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -147,6 +155,14 @@ export class TaskManagementClient extends AuthApiBase {
             let result200: any = null;
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WorkTaskSearchResult;
             return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -191,6 +207,14 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WorkTask;
             return result200;
             });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -234,6 +258,14 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WorkTask;
             return result200;
             });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -273,6 +305,14 @@ export class TaskManagementClient extends AuthApiBase {
         if (status === 200) {
             return response.text().then((_responseText) => {
             return;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -326,6 +366,14 @@ export class TaskManagementClient extends AuthApiBase {
             let result200: any = null;
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WorkTask;
             return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -416,6 +464,14 @@ export class TaskManagementClient extends AuthApiBase {
             return response.text().then((_responseText) => {
             return;
             });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -428,7 +484,7 @@ export class TaskManagementClient extends AuthApiBase {
      * @param body (optional) 
      * @return OK
      */
-    searchAssignMembers(body?: MembersSearchCriteria | undefined): Promise<MemberSearchResult> {
+    searchAssignMembers(body?: MembersSearchCriteria | undefined): Promise<TaskMemberSearchResult> {
         let url_ = this.baseUrl + "/api/task-management/members/search";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -450,27 +506,35 @@ export class TaskManagementClient extends AuthApiBase {
         });
     }
 
-    protected processSearchAssignMembers(response: Response): Promise<MemberSearchResult> {
+    protected processSearchAssignMembers(response: Response): Promise<TaskMemberSearchResult> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as MemberSearchResult;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TaskMemberSearchResult;
             return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<MemberSearchResult>(null as any);
+        return Promise.resolve<TaskMemberSearchResult>(null as any);
     }
 
     /**
      * @return OK
      */
-    getMemberById(id: string): Promise<Member> {
+    getMemberById(id: string): Promise<TaskMember> {
         let url_ = this.baseUrl + "/api/task-management/members/{id}";
         if (id === undefined || id === null)
             throw new globalThis.Error("The parameter 'id' must be defined.");
@@ -491,21 +555,29 @@ export class TaskManagementClient extends AuthApiBase {
         });
     }
 
-    protected processGetMemberById(response: Response): Promise<Member> {
+    protected processGetMemberById(response: Response): Promise<TaskMember> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Member;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TaskMember;
             return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Member>(null as any);
+        return Promise.resolve<TaskMember>(null as any);
     }
 
     /**
@@ -538,6 +610,14 @@ export class TaskManagementClient extends AuthApiBase {
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TaskType[];
             return result200;
             });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -547,167 +627,32 @@ export class TaskManagementClient extends AuthApiBase {
     }
 }
 
-export enum AddressType {
-    Undefined = "Undefined",
-    Billing = "Billing",
-    Shipping = "Shipping",
-    BillingAndShipping = "BillingAndShipping",
-    Pickup = "Pickup",
-}
-
-export interface CustomerAddress {
-    addressType?: AddressType;
-    key?: string | undefined;
-    name?: string | undefined;
-    organization?: string | undefined;
-    countryCode?: string | undefined;
-    countryName?: string | undefined;
-    city?: string | undefined;
-    postalCode?: string | undefined;
-    zip?: string | undefined;
-    line1?: string | undefined;
-    line2?: string | undefined;
-    regionId?: string | undefined;
-    regionName?: string | undefined;
-    firstName?: string | undefined;
-    middleName?: string | undefined;
-    lastName?: string | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
-    outerId?: string | undefined;
-    isDefault?: boolean;
-    description?: string | undefined;
-}
-
-export interface DynamicObjectProperty {
-    objectId?: string | undefined;
-    values?: DynamicPropertyObjectValue[] | undefined;
-    name?: string | undefined;
-    description?: string | undefined;
-    objectType?: string | undefined;
-    isArray?: boolean;
-    isDictionary?: boolean;
-    isMultilingual?: boolean;
-    isRequired?: boolean;
-    displayOrder?: number | undefined;
-    valueType?: DynamicPropertyValueType;
-    displayNames?: DynamicPropertyName[] | undefined;
-    createdDate?: Date;
-    modifiedDate?: Date | undefined;
-    createdBy?: string | undefined;
-    modifiedBy?: string | undefined;
-    id?: string | undefined;
-}
-
-export interface DynamicPropertyName {
-    locale?: string | undefined;
-    name?: string | undefined;
-}
-
-export interface DynamicPropertyObjectValue {
-    objectType?: string | undefined;
-    objectId?: string | undefined;
-    locale?: string | undefined;
-    value?: any | undefined;
-    valueId?: string | undefined;
-    valueType?: DynamicPropertyValueType;
-    propertyId?: string | undefined;
-    propertyName?: string | undefined;
-}
-
-export enum DynamicPropertyValueType {
-    Undefined = "Undefined",
-    ShortText = "ShortText",
-    LongText = "LongText",
-    Integer = "Integer",
-    Decimal = "Decimal",
-    DateTime = "DateTime",
-    Boolean = "Boolean",
-    Html = "Html",
-    Image = "Image",
-}
-
-export interface Member {
-    name?: string | undefined;
-    memberType?: string | undefined;
-    outerId?: string | undefined;
-    status?: string | undefined;
-    addresses?: CustomerAddress[] | undefined;
-    phones?: string[] | undefined;
-    emails?: string[] | undefined;
-    notes?: Note[] | undefined;
-    groups?: string[] | undefined;
-    iconUrl?: string | undefined;
-    relevanceScore?: number | undefined;
-    readonly objectType?: string | undefined;
-    dynamicProperties?: DynamicObjectProperty[] | undefined;
-    useDynamicPropertyAccessor?: boolean;
-    dynamicPropertyAccessor?: any | undefined;
-    readonly seoObjectType?: string | undefined;
-    seoInfos?: SeoInfo[] | undefined;
-    createdDate?: Date;
-    modifiedDate?: Date | undefined;
-    createdBy?: string | undefined;
-    modifiedBy?: string | undefined;
-    id?: string | undefined;
-}
-
-export interface MemberSearchResult {
-    totalCount?: number;
-    results?: Member[] | undefined;
-}
-
 export interface MembersSearchCriteria {
     memberType?: string | undefined;
     memberTypes?: string[] | undefined;
     group?: string | undefined;
     groups?: string[] | undefined;
     memberId?: string | undefined;
+    memberIds?: string[] | undefined;
     deepSearch?: boolean;
+    rootMembersOnly?: boolean | undefined;
     outerIds?: string[] | undefined;
+    excludedObjectIds?: string[] | undefined;
     responseGroup?: string | undefined;
+    /** Search object type */
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
     objectIds?: string[] | undefined;
+    /** Search phrase */
     keyword?: string | undefined;
+    /** Property is left for backward compatibility */
     searchPhrase?: string | undefined;
+    /** Search phrase language */
     languageCode?: string | undefined;
     sort?: string | undefined;
     readonly sortInfos?: SortInfo[] | undefined;
     skip?: number;
     take?: number;
-}
-
-export interface Note {
-    title?: string | undefined;
-    body?: string | undefined;
-    outerId?: string | undefined;
-    createdDate?: Date;
-    modifiedDate?: Date | undefined;
-    createdBy?: string | undefined;
-    modifiedBy?: string | undefined;
-    id?: string | undefined;
-}
-
-export interface SeoInfo {
-    name?: string | undefined;
-    semanticUrl?: string | undefined;
-    outline?: string | undefined;
-    pageTitle?: string | undefined;
-    metaDescription?: string | undefined;
-    imageAltDescription?: string | undefined;
-    metaKeywords?: string | undefined;
-    storeId?: string | undefined;
-    organizationId?: string | undefined;
-    objectId?: string | undefined;
-    objectType?: string | undefined;
-    isActive?: boolean;
-    languageCode?: string | undefined;
-    createdDate?: Date;
-    modifiedDate?: Date | undefined;
-    createdBy?: string | undefined;
-    modifiedBy?: string | undefined;
-    id?: string | undefined;
 }
 
 export enum SortDirection {
@@ -718,6 +663,17 @@ export enum SortDirection {
 export interface SortInfo {
     sortColumn?: string | undefined;
     sortDirection?: SortDirection;
+}
+
+export interface TaskMember {
+    id?: string | undefined;
+    name?: string | undefined;
+    memberType?: string | undefined;
+}
+
+export interface TaskMemberSearchResult {
+    totalCount?: number;
+    results?: TaskMember[] | undefined;
 }
 
 export enum TaskPriority {
@@ -748,8 +704,8 @@ export interface WorkTask {
     completed?: boolean | undefined;
     storeId?: string | undefined;
     workflowId?: string | undefined;
-    parameters?: any | undefined;
-    result?: any | undefined;
+    parameters?: any;
+    result?: any;
     objectId?: string | undefined;
     objectType?: string | undefined;
     attachments?: WorkTaskAttachment[] | undefined;
@@ -774,19 +730,26 @@ export interface WorkTaskSearchCriteria {
     responsibleIds?: string[] | undefined;
     organizationIds?: string[] | undefined;
     storeIds?: string[] | undefined;
+    linkedObjectType?: string | undefined;
+    linkedObjectIds?: string[] | undefined;
     startDueDate?: Date | undefined;
     endDueDate?: Date | undefined;
     priority?: string | undefined;
+    priorities?: string[] | undefined;
     type?: string | undefined;
     onlyAssignedToMe?: boolean | undefined;
     isActive?: boolean | undefined;
     completed?: boolean | undefined;
     responseGroup?: string | undefined;
+    /** Search object type */
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
     objectIds?: string[] | undefined;
+    /** Search phrase */
     keyword?: string | undefined;
+    /** Property is left for backward compatibility */
     searchPhrase?: string | undefined;
+    /** Search phrase language */
     languageCode?: string | undefined;
     sort?: string | undefined;
     readonly sortInfos?: SortInfo[] | undefined;

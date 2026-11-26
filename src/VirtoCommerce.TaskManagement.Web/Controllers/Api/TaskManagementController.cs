@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,7 @@ using TaskPermissions = VirtoCommerce.TaskManagement.Core.ModuleConstants.Securi
 namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
 {
     [Route("api/task-management")]
+    [Authorize]
     public class TaskManagementController : Controller
     {
         private const string MemberIdClaimType = "memberId";
@@ -154,7 +156,12 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         [HttpGet("contact/icon/{id}")]
         public async Task<ActionResult> ContactIcon(string id)
         {
-            var contact = await _memberService.GetByIdAsync(id);
+            if (!HasPermission(User, TaskPermissions.Read, out _))
+            {
+                return Unauthorized();
+            }
+
+            var contact = await _memberService.GetByIdAsync(id, MemberResponseGroup.Default.ToString());
 
             if (contact != null && !string.IsNullOrEmpty(contact.IconUrl))
             {
@@ -173,42 +180,53 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
         }
 
         [HttpPost("members/search")]
-        public async Task<ActionResult<MemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
+        public async Task<ActionResult<TaskMemberSearchResult>> SearchAssignMembers([FromBody] MembersSearchCriteria criteria)
         {
-            MemberSearchResult result = null;
             if (!HasPermission(User, TaskPermissions.Create, out var permission) || criteria == null)
             {
                 return Unauthorized();
             }
 
-            if (permission != null && permission.AssignedScopes.Any() && !criteria.ObjectIds.Any())
+            var result = AbstractTypeFactory<TaskMemberSearchResult>.TryCreateInstance();
+            result.Results = new List<TaskMember>();
+
+            if (!User.HasGlobalPermission(TaskPermissions.Create) && !await ApplyScopeAsync(permission, criteria))
             {
-                var assignToMeScope = permission.AssignedScopes.OfType<TaskToMeScope>().FirstOrDefault();
-                var assignToMyOrganizationScope = permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().FirstOrDefault();
-
-                var memberId = User.FindFirstValue(MemberIdClaimType);
-                var member = await _memberService.GetByIdAsync(memberId);
-                var organizationId = member.GetMemberOrganizationId();
-
-                if (!string.IsNullOrEmpty(organizationId) && assignToMyOrganizationScope != null)
-                {
-                    criteria.MemberId = organizationId;
-                }
-                else if (assignToMeScope != null && !string.IsNullOrEmpty(memberId))
-                {
-                    criteria.ObjectIds = new[] { memberId };
-                }
+                return Ok(result);
             }
 
-            result = await _memberSearchService.SearchMembersAsync(criteria);
+            criteria.ResponseGroup = MemberResponseGroup.Default.ToString();
+
+            var searchResult = await _memberSearchService.SearchMembersAsync(criteria);
+
+            result.TotalCount = searchResult.TotalCount;
+            result.Results = searchResult.Results.Select(ToTaskMember).ToList();
+
             return Ok(result);
         }
 
         [HttpGet("members/{id}")]
-        public async Task<ActionResult<Member>> GetMemberById([FromRoute] string id)
+        public async Task<ActionResult<TaskMember>> GetMemberById([FromRoute] string id)
         {
-            var member = await _memberService.GetByIdAsync(id);
-            return Ok(member);
+            // The member is looked up to pick a responsible person for a task, the same as members/search
+            if (!HasPermission(User, TaskPermissions.Create, out var permission))
+            {
+                return Unauthorized();
+            }
+
+            var member = await _memberService.GetByIdAsync(id, MemberResponseGroup.Default.ToString());
+
+            if (member == null)
+            {
+                return Ok(null);
+            }
+
+            if (!User.HasGlobalPermission(TaskPermissions.Create) && !await CanSeeMemberAsync(permission, member))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(ToTaskMember(member));
         }
 
         [HttpGet("tasks/types")]
@@ -218,6 +236,73 @@ namespace VirtoCommerce.TaskManagement.Web.Controllers.Api
             var result = setting.AllowedValues.Select(x => new TaskType { Name = x as string }).ToList();
 
             return Ok(result);
+        }
+
+        private static TaskMember ToTaskMember(Member member)
+        {
+            return AbstractTypeFactory<TaskMember>.TryCreateInstance().FromModel(member);
+        }
+
+        // A scoped permission sees the user's own member, or with the organization scope their organization and its members.
+        // Returns false when the scope leaves nothing to search.
+        private async Task<bool> ApplyScopeAsync(Permission permission, MembersSearchCriteria criteria)
+        {
+            var currentMemberId = User.FindFirstValue(MemberIdClaimType);
+            if (string.IsNullOrEmpty(currentMemberId))
+            {
+                return false;
+            }
+
+            var organizationId = await GetScopedOrganizationIdAsync(permission, currentMemberId);
+            if (!string.IsNullOrEmpty(organizationId))
+            {
+                criteria.MemberId = organizationId;
+                return true;
+            }
+
+            if (!permission.AssignedScopes.OfType<TaskToMeScope>().Any())
+            {
+                return false;
+            }
+
+            if (!criteria.ObjectIds.IsNullOrEmpty() && !criteria.ObjectIds.Contains(currentMemberId, StringComparer.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            criteria.ObjectIds = [currentMemberId];
+            return true;
+        }
+
+        private async Task<bool> CanSeeMemberAsync(Permission permission, Member member)
+        {
+            var currentMemberId = User.FindFirstValue(MemberIdClaimType);
+            if (string.IsNullOrEmpty(currentMemberId))
+            {
+                return false;
+            }
+
+            if (member.Id.EqualsIgnoreCase(currentMemberId))
+            {
+                return true;
+            }
+
+            var organizationId = await GetScopedOrganizationIdAsync(permission, currentMemberId);
+
+            return !string.IsNullOrEmpty(organizationId) &&
+                (member.Id.EqualsIgnoreCase(organizationId) || organizationId.EqualsIgnoreCase(member.GetMemberOrganizationId()));
+        }
+
+        private async Task<string> GetScopedOrganizationIdAsync(Permission permission, string currentMemberId)
+        {
+            if (!permission.AssignedScopes.OfType<TaskToMyOrganizationScope>().Any())
+            {
+                return null;
+            }
+
+            var currentMember = await _memberService.GetByIdAsync(currentMemberId, MemberResponseGroup.Default.ToString());
+
+            return currentMember.GetMemberOrganizationId();
         }
 
         private bool HasPermission(ClaimsPrincipal user, string permissionName, out Permission permission)
